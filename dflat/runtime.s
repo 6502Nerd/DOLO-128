@@ -141,7 +141,7 @@ df_rt_neval_optk
 	lda (df_currlin),y		; Get the byte which could be a token
 	bmi df_rt_neval_tk		; N=1 means it's a keyword token
 	cmp #DFTK_ESCVAL		; >=32 means it's an normal char
-	bcc df_rt_neval_chr
+	bcs df_rt_neval_chr
 df_rt_neval_esc
 	jsr df_rt_eval_esc
 	; move to next byte
