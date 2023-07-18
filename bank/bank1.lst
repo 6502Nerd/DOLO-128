@@ -2132,7 +2132,7 @@ c689 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
-c689 : 4275696c64203a..       db "Build : 27/04/2023\r" 
+c689 : 4275696c64203a..       db "Build : 16/07/2023\r" 
 c69c : 3132384b204272..       db "128K Breadboard Computer\r" 
 c6b5 : 42792040363530..       db "By @6502Nerd\r" 
 c6c2 : 436f7079726967..       db "Copyright (c) 2022\r",0 
