@@ -6487,7 +6487,7 @@ d882 : f03a             [ 3] 	beq df_rt_neval_process
 d884 : b1c8             [ 5] 	lda (df_currlin),y		; Get the byte which could b
 d886 : 3024             [ 3] 	bmi df_rt_neval_tk		; N=1 means it's a keyword t
 d888 : c920             [ 2] 	cmp #DFTK_ESCVAL		; >=32 means it's an normal ch
-d88a : 9007             [ 3] 	bcc df_rt_neval_chr
+d88a : b007             [ 3] 	bcs df_rt_neval_chr
 d88c :                       df_rt_neval_esc
 d88c : 2000d9           [ 6] 	jsr df_rt_eval_esc
                              	; move to next byte
