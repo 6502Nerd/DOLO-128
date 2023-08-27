@@ -3095,19 +3095,12 @@ df_rt_hex
 
 ; $c = dec(x)
 df_rt_dec
-;	inc df_exeoff
-	; create dec digits
 	jsr df_rt_getnval
-	sta df_tmpptra	; Save the high byte
-	txa				; Convert low byte first
-	jsr str_a_to_x	; Hex digits in A,X
-	sta df_tmpptrb
-	txa				; Push low digit of low byte from X
-	pha
-	lda df_tmpptrb	; Get A back from temp
-	; point to seval scratch area
-	ldx df_sevalptr
-	lda df_sevalptr+1
+	clc						; No leading zeros
+	jsr int_to_str
+	; point to num_buf scratch area
+	ldx #lo(num_buf)
+	lda #hi(num_buf)
 	jmp df_ost_pushStr
 
 ; $l = left($s, x)

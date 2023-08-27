@@ -63,17 +63,65 @@ Build quick quide (using powershell as the CLI);
 
 Running under mame quick guide (using powershell as the CLI)
 -	Your need to be in the emu folder of the homebrew directory
--	Invoke;
--       ./hb128bbc hb128bbc *OR*
--       ./hb128bbc hb128bbc -serial
--   This will start mame in normal mode or with a virtual serial terminal.
--	Press enter to skip the mame messages and warnings.
--	Press F12 (reset) with F1 for normal boot with keyboard as input.  If
--   F1 is not pressed during reset the machine boots in to serial I/O mode
--   by default (and therefore you really need to use the -serial option!)
+-	Invoke mame in one of the  following ways;
+-     1. ./hb128bbc hb128bbc *OR*
+-     2. ./hb128bbc hb128bbc -serial terminal *OR*
+-     3. ./hb128bbc hb128bbc -serial null_modem -bitb socket.localhost:6502
 -   The file hb128bbc.exe is actually a minimal build of mame by Nigel Barnes
--   (again, hugely grateful for his help!). Mame is a complex beast with many
+-   (hugely grateful for his help!). Mame is a complex beast with many
 -   options beyond my knowledge, but there are a couple of important things
--   about the SD card emulation you need to know to make best use of emulation.
--   Filesystem;
--       There is a filesystem
+-   about you need to know to make best use of emulation.
+-   Option 1 starts in normal mode (i.e. PC keyboard acts as input).
+-   Option 2 starts with mame's default terminal program
+-   Option 3 starts with a local websocket as the serial port which allows you
+-   to attach regular terimal program such as Tera Term or PuTTY.
+-   When using serial, my preferred is option 3. 
+-	Press enter to skip the mame start up messages and warnings.
+-   Main PC key to know about is F12 which is the reset key which causes the
+-   machine to go through a power up cycle.
+-	Press F12 with F2 to boot with serial port as input.  If no key
+-   is pressed during reset the machine boots to regular keyboard mode by
+-   default.
+-   To control the mame emulator options, you need to enable the UI controls
+-   by activating Scroll-Lock on your keyboard (mame briefly indicates when UI
+-   controls are enabled or disabled).
+-
+-   SD Card;
+-     There is a filesystem image which can be mounted to emulate the SD
+-     card of the real machine.  When the emulator first boots, you need to
+-     do the following;
+-       1. Activate kayboard Scroll-Lock to get enable emulator UI controls
+-       2. Press the TAB key to bring up the emulator menu
+-       3. Select 'File Manager' and press enter on 'harddisk (hard)'
+-       4. Navigate to the software\filesystem folder
+-       5. Select the file 'sdcard64m.img' (press enter on this file)
+-       6. Exit mame menus by pressing ESC until back to the main display
+-       7. Disable emulator UI controls (Scroll-Lock)
+-       8. Reset the machine using F12 (with F2 as needed for serial)
+-     This will reset the machine and there should be no boot up messages
+-     about bad SD card or failed to mount the filesystem.  You can easily
+-     confirm by entering the command 'dir' which will display the
+-     directory.
+-     The image is 64MB to keep the binary size down, but works fine even
+-     though the real machine supports a 1GB card.  This image can also
+-     be mounted using many ISO mount utilities (I use ImDisk) which allows
+-     access to the image as a disk volume.  You must not be in the emulator
+-     to do this, and you must release any images mounted on the PC before
+-     running the emulator.
+-
+-   Serial input/output;
+-     My homebrew computer supports input through a real keyboard or through
+-     the serial port, which Mame supports very well through the start up
+-     options I listed above.
+-     If you use option 3 (local socket) then some quick guidance;
+-     1. Never use the Mame machine reset option as it disconnects serial
+-     2. Always use F12 which will cause the homebrew computer to reboot
+-     3. Start the emulator before the terminal program and press F12 + F2
+-     4. This will start transmitting over the socket and establish comms
+-     Why go through all this hassle vs using Mame's built in terminal?
+-     The answer is that gives a truer experience and access to features
+-     such as XMODEM transfers.  Also Tera Term or PuTTY are much nicer
+-     Than the basic Mame terminal and are not stuck on the side of the
+-     emulation.
+
+

@@ -10,8 +10,6 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
     bankjsr_nul_addr : $c000          49152   *
     bankjsr_nul_bank : $0000              0   *
             bank_num : $c000          49152
-             bcd_str : $ca6d          51821
-          bcd_to_str : $ca66          51814
              buf_adr : $0047             71
               buf_ef : $004a             74
               buf_sz : $0049             73
@@ -63,11 +61,11 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
         DFERR_NOLINE : $0010             16   *
          DFERR_NOORG : $0014             20   *
         DFERR_NOPROC : $0005              5   *
+            DFERR_OK : $0000              0   *
+      DFERR_PROCPARM : $0006              6   *
 AS65 Assembler for R6502 [1.42].                                     Page    2
 -------------------------------- bank\bank3.s --------------------------------
 
-            DFERR_OK : $0000              0   *
-      DFERR_PROCPARM : $0006              6   *
       DFERR_QUANTITY : $0013             19   *
         DFERR_RETURN : $0011             17   *
        DFERR_STRLONG : $000c             12   *
@@ -128,11 +126,11 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           DFTK_STROP : $0004              4   *
           DFTK_TOKEN : $0080            128   *
             DFTK_VAR : $0011             17   *
+        DFTK_VARPARM : $0026             38   *
+          DFVVT_ARRY : $0080            128   *
 AS65 Assembler for R6502 [1.42].                                     Page    3
 -------------------------------- bank\bank3.s --------------------------------
 
-        DFTK_VARPARM : $0026             38   *
-          DFVVT_ARRY : $0080            128   *
            DFVVT_BYT : $0002              2   *
           DFVVT_DIM1 : $0003              3   *
           DFVVT_DIM2 : $0004              4   *
@@ -193,11 +191,11 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
          df_starstrt : $00b4            180
           df_strbuff : $00ba            186
            df_stridx : $00bb            187
+           df_symini : $00c6            198
+           df_symoff : $00c5            197
 AS65 Assembler for R6502 [1.42].                                     Page    4
 -------------------------------- bank\bank3.s --------------------------------
 
-           df_symini : $00c6            198
-           df_symoff : $00c5            197
            df_symtab : $00c3            195
           df_tmpptra : $00e3            227
           df_tmpptrb : $00e5            229
@@ -258,11 +256,11 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           gr_cur_off : $0006              6
           gr_cur_ptr : $0009              9
             gr_cur_x : $0007              7
+            gr_cur_y : $0008              8
+         gr_geom_tmp : $000e             14
 AS65 Assembler for R6502 [1.42].                                     Page    5
 -------------------------------- bank\bank3.s --------------------------------
 
-            gr_cur_y : $0008              8
-         gr_geom_tmp : $000e             14
            gr_pixcol : $000d             13
           gr_pixmask : $000c             12
           gr_pixmode : $000b             11
@@ -286,14 +284,14 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
                 IO_7 : $0780           1920   *
        inc_kb_timers : $c7dd          51165
             infinity : $c683          50819
-                init : $cade          51934
+                init : $cacf          51919
             init_irq : $c6f6          50934
             init_nmi : $c6d6          50902
-            init_ram : $cb39          52025
-       init_ram_fill : $cb4d          52045
-       init_ram_skip : $cb4f          52047
-          init_ram_1 : $cb43          52035
-              init_2 : $cae1          51937
+            init_ram : $cb2a          52010
+       init_ram_fill : $cb3e          52030
+       init_ram_skip : $cb40          52032
+          init_ram_1 : $cb34          52020
+              init_2 : $cad2          51922
              int_brk : $0006              6
          int_do_read : $c794          51092
              int_irq : $0004              4
@@ -301,9 +299,16 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
          int_keys_up : $c7a0          51104
              int_nmi : $0002              2
        int_skip_scan : $c79a          51098
+             int_str : $ca94          51860
           int_to_bcd : $ca01          51713
       int_to_bcd_bit : $ca1a          51738
  int_to_bcd_skip_neg : $ca0f          51727
+          int_to_str : $ca7b          51835
+       int_to_str_ch : $ca66          51814
+   int_to_str_ch_fin : $ca7a          51834
+      int_to_str_fin : $cab3          51891
+       int_to_str_nz : $ca73          51827
+ int_to_str_skip_neg : $ca8f          51855
         int_usercia0 : $000a             10
         int_usercia1 : $000c             12
          int_uservdp : $0008              8
@@ -318,14 +323,14 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
            io_delete : $c554          50516
             io_del_f : $000a             10
           io_devices : $c5a8          50600
+AS65 Assembler for R6502 [1.42].                                     Page    6
+-------------------------------- bank\bank3.s --------------------------------
+
           io_device0 : $c5a8          50600
           io_device1 : $c5b8          50616
           io_device2 : $c5c8          50632
           io_do_echo : $c573          50547
              io_ext1 : $000c             12
-AS65 Assembler for R6502 [1.42].                                     Page    6
--------------------------------- bank\bank3.s --------------------------------
-
              io_ext2 : $000e             14
          io_get_byte : $0000              0
            io_get_ch : $c545          50501
@@ -380,17 +385,17 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           kb_rep_del : $003a             58
           kb_rep_tim : $0039             57
              kb_stat : $0036             54
-         kernel_init : $caea          51946
-      kernel_skip_nv : $cb17          51991
-         kernel_test : $caf9          51961
+         kernel_init : $cadb          51931
+      kernel_skip_nv : $cb08          51976
+         kernel_test : $caea          51946
+AS65 Assembler for R6502 [1.42].                                     Page    7
+-------------------------------- bank\bank3.s --------------------------------
+
           long_delay : $c7ea          51178
         long_delay_1 : $c7f0          51184
        MBR_BootPart1 : $01c6            454   *
     MBR_BytesPerSect : $000b             11   *
             MBR_Code : $0000              0   *
-AS65 Assembler for R6502 [1.42].                                     Page    7
--------------------------------- bank\bank3.s --------------------------------
-
           MBR_DrvNum : $0024             36   *
          MBR_ExeCode : $003e             62   *
          MBR_ExeMark : $01fe            510   *
@@ -420,7 +425,7 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
            mem_start : $0c69           3177
          mod_sz_io_e : $c5d8          50648
          mod_sz_io_s : $c50e          50446
-     mod_sz_kernel_e : $cb5a          52058
+     mod_sz_kernel_e : $cb4b          52043
      mod_sz_kernel_s : $c50e          50446
      msg_hello_world : $c689          50825
              NUM_ANY : $0000              0   *
@@ -437,25 +442,21 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
              num_buf : $0095            149
              num_tmp : $0091            145
                num_x : $008d            141
-             out_bcd : $ca8d          51853
-       out_bcd_digit : $ca94          51860
-         out_bcd_fin : $cab5          51893
-        out_bcd_next : $caa6          51878
-       out_bcd_print : $caa2          51874
                  PCR : $000c             12   *
                  PRA : $0001              1   *
                 PRAH : $000f             15   *
                  PRB : $0000              0   *
-        print_a_to_d : $cabb          51899
-print_a_to_d_skip_neg : $cad4          51924
+        print_a_to_d : $cabe          51902
+     print_a_to_d_ch : $cac3          51907
+    print_a_to_d_fin : $cace          51918
            RAM_ZMASK : $00cf            207   *
            ROM_ZMASK : $003f             63   *
             RTC_ADDR : $0600           1536   *
               RTC_AF : $0020             32   *
-             RTC_AIE : $0020             32   *
 AS65 Assembler for R6502 [1.42].                                     Page    8
 -------------------------------- bank\bank3.s --------------------------------
 
+             RTC_AIE : $0020             32   *
             RTC_DATA : $0601           1537   *
              RTC_DAY : $0007              7   *
               RTC_DM : $0004              4   *
@@ -517,10 +518,10 @@ print_a_to_d_skip_neg : $cad4          51924
             SER_RDRF : $0008              8   *
              SER_REM : $0010             16   *
            SER_RESET : $0581           1409   *
-             SER_SBN : $0080            128   *
 AS65 Assembler for R6502 [1.42].                                     Page    9
 -------------------------------- bank\bank3.s --------------------------------
 
+             SER_SBN : $0080            128   *
              SER_SBR : $000f             15   *
             SER_SBR0 : $0001              1   *
             SER_SBR1 : $0002              2   *
@@ -578,14 +579,14 @@ print_a_to_d_skip_neg : $cad4          51924
              snd_get : $c64c          50764
         snd_get_joy0 : $c67d          50813
              snd_set : $c625          50725
-          str_a_to_d : $caba          51898
+          str_a_to_d : $cabd          51901
           str_a_to_x : $c834          51252
    str_d_digits_done : $c96d          51565
          str_d_error : $c98e          51598
-      str_d_find_end : $c92b          51499
 AS65 Assembler for R6502 [1.42].                                     Page   10
 -------------------------------- bank\bank3.s --------------------------------
 
+      str_d_find_end : $c92b          51499
      str_d_found_end : $c938          51512
         str_d_powers : $c990          51600
  str_d_process_digit : $c944          51524
@@ -647,10 +648,10 @@ twos_complement_skip_X : $ca00          51712
         vdp_mem_wait : $c5f2          50674
     vdp_mem_wait_end : $c5fa          50682
    vdp_mem_wait_loop : $c5f7          50679
-            vdp_peek : $c61c          50716
 AS65 Assembler for R6502 [1.42].                                     Page   11
 -------------------------------- bank\bank3.s --------------------------------
 
+            vdp_peek : $c61c          50716
             vdp_poke : $c610          50704
          vdp_rd_addr : $c5fc          50684
          vdp_rd_vram : $c606          50694
@@ -667,10 +668,10 @@ twos_complement_skip_X : $ca00          51712
             _bankram : <macro>
        _bankram_fast : <macro>
         _bank0_start : $c000          49152   *
-          _bank3_end : $cb5a          52058
+          _bank3_end : $cb4b          52043
                 _bcc : <macro>
                 _bcs : <macro>
-           _code_end : $cb5a          52058
+           _code_end : $cb4b          52043
          _code_start : $c001          49153
        _command_line : $c2b6          49846
           _cpu_stack : $0100            256
@@ -712,10 +713,10 @@ _fs_dir_root_start_w : $c14e          49486
           _init_cia0 : $c1f6          49654
           _init_cia1 : $c20e          49678
             _init_fs : $c226          49702
-      _init_keyboard : $c26e          49774
 AS65 Assembler for R6502 [1.42].                                     Page   12
 -------------------------------- bank\bank3.s --------------------------------
 
+      _init_keyboard : $c26e          49774
         _init_sdcard : $c23e          49726
            _init_snd : $c256          49750
         _kb_read_dip : $c29e          49822
@@ -752,9 +753,9 @@ _fs_dir_root_start_w : $c14e          49486
            _vdp_poke : $c41e          50206
           __65SC02__ : $0001              1
 
-685 labels used
+686 labels used
 
-2993 lines read, no errors in pass 1.
+3060 lines read, no errors in pass 1.
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
 Total size 16384 bytes.

@@ -1,7 +1,7 @@
 AS65 Assembler for R6502 [1.42].                                     Page    1
 -------------------------------- bank\bank3.s --------------------------------
 
-2995 lines read, no errors in pass 1.
+3062 lines read, no errors in pass 1.
 c000 =                       _bank0_start=0xc000
                              	include "kernel\kernel.s"
                              ;************************************************
@@ -1313,7 +1313,7 @@ c000 =                       bankjsr_nul_addr	=	0xc000
                              	data				; Set vectors
 fffa =                       	org 0xfffa			; Vectors lie at addresses
 fffa : dfc6                  	fcw call_nmi_master	; 0xfffa : NMI Vector
-fffc : deca                  	fcw init			; 0xfffc : Reset Vector
+fffc : cfca                  	fcw init			; 0xfffc : Reset Vector
 fffe : 1fc7                  	fcw call_irq_master	; 0xfffe : IRQ Vector
                              	
                              	; ROM code
@@ -1394,52 +1394,52 @@ c02d : 60               [ 6] 	rts
                              ; 
 c02e :                       mod_sz_autogen_s 
 c02e :                       _df_init 
-                               _bankjsr $f1b3, 1 
+                               _bankjsr $f19c, 1 
                              
 c046 :                       _df_pg_dflat 
-                               _bankjsr $d764, 1 
+                               _bankjsr $d755, 1 
                              
 c05e :                       _fs_chdir_w 
-                               _bankjsr $d4df, 2 
+                               _bankjsr $d4d0, 2 
                              
 c076 :                       _fs_mkdir_w 
-                               _bankjsr $d572, 2 
+                               _bankjsr $d563, 2 
                              
 c08e :                       _fs_delete_w 
-                               _bankjsr $d4a2, 2 
+                               _bankjsr $d493, 2 
                              
 c0a6 :                       _fs_close_w 
-                               _bankjsr $d461, 2 
+                               _bankjsr $d452, 2 
                              
 c0be :                       _fs_get_byte_w 
-                               _bankjsr $d185, 2 
+                               _bankjsr $d176, 2 
                              
 c0d6 :                       _fs_open_read_w 
-                               _bankjsr $d34d, 2 
+                               _bankjsr $d33e, 2 
                              
 c0ee :                       _fs_open_write_w 
-                               _bankjsr $d411, 2 
+                               _bankjsr $d402, 2 
                              
 c106 :                       _fs_put_byte_w 
-                               _bankjsr $d2da, 2 
+                               _bankjsr $d2cb, 2 
                              
 c11e :                       _fs_dir_find_entry_w 
-                               _bankjsr $cfc8, 2 
+                               _bankjsr $cfb9, 2 
                              
 c136 :                       _fs_dir_entry_next_w 
-                               _bankjsr $cffe, 2 
+                               _bankjsr $cfef, 2 
 AS65 Assembler for R6502 [1.42].                                     Page   23
 -------------------------------- bank\bank3.s --------------------------------
 
                              
 c14e :                       _fs_dir_root_start_w 
-                               _bankjsr $cf83, 2 
+                               _bankjsr $cf74, 2 
                              
 c166 :                       _get_byte 
-                               _bankjsr $cedb, 0 
+                               _bankjsr $cecc, 0 
                              
 c17e :                       _put_byte 
-                               _bankjsr $cef0, 0 
+                               _bankjsr $cee1, 0 
                              
 c196 :                       _gr_get_key 
                                _bankjsr $df8c, 0 
@@ -1451,34 +1451,34 @@ c1c6 :                       _gr_init_screen
                                _bankjsr $da59, 0 
                              
 c1de :                       _init_acia 
-                               _bankjsr $cefd, 0 
+                               _bankjsr $ceee, 0 
                              
 c1f6 :                       _init_cia0 
-                               _bankjsr $ce88, 0 
+                               _bankjsr $ce79, 0 
                              
 c20e :                       _init_cia1 
-                               _bankjsr $ceb9, 0 
+                               _bankjsr $ceaa, 0 
                              
 c226 :                       _init_fs 
-                               _bankjsr $ce60, 2 
+                               _bankjsr $ce51, 2 
                              
 c23e :                       _init_sdcard 
-                               _bankjsr $cb5a, 2 
+                               _bankjsr $cb4b, 2 
                              
 c256 :                       _init_snd 
-                               _bankjsr $d2bc, 0 
+                               _bankjsr $d2ad, 0 
                              
 c26e :                       _init_keyboard 
-                               _bankjsr $cf0f, 0 
+                               _bankjsr $cf00, 0 
                              
 c286 :                       _kb_read_raw 
-                               _bankjsr $cf1e, 0 
+                               _bankjsr $cf0f, 0 
                              
 c29e :                       _kb_read_dip 
-                               _bankjsr $cf89, 0 
+                               _bankjsr $cf7a, 0 
                              
 c2b6 :                       _command_line 
-                               _bankjsr $cb5a, 0 
+                               _bankjsr $cb4b, 0 
                              
 c2ce :                       _gr_cls 
                                _bankjsr $da6c, 0 
@@ -1514,7 +1514,7 @@ c3a6 :                       _gr_set_cur
                                _bankjsr $dafa, 0 
                              
 c3be :                       _snd_get_note 
-                               _bankjsr $d2b5, 0 
+                               _bankjsr $d2a6, 0 
                              
 c3d6 :                       _snd_get_joy0 
                                _bankjsr $c67d, 0 
@@ -1532,28 +1532,28 @@ c436 :                       _vdp_init
                                _bankjsr $d800, 0 
                              
 c44e :                       _rtc_init 
-                               _bankjsr $d0df, 0 
+                               _bankjsr $d0d0, 0 
                              
 c466 :                       _rtc_gettimedate 
-                               _bankjsr $d246, 0 
+                               _bankjsr $d237, 0 
                              
 c47e :                       _rtc_setdatetime 
-                               _bankjsr $d197, 0 
+                               _bankjsr $d188, 0 
                              
 c496 :                       _rtc_nvread 
-                               _bankjsr $d2ac, 0 
+                               _bankjsr $d29d, 0 
                              
 c4ae :                       _rtc_nvwrite 
-                               _bankjsr $d294, 0 
+                               _bankjsr $d285, 0 
                              
 c4c6 :                       _fs_dir_fhandle_str 
-                               _bankjsr $d586, 2 
+                               _bankjsr $d577, 2 
                              
 c4de :                       _sd_sendcmd17 
-                               _bankjsr $cd32, 2 
+                               _bankjsr $cd23, 2 
                              
 c4f6 :                       _sd_sendcmd24 
-                               _bankjsr $cdab, 2 
+                               _bankjsr $cd9c, 2 
                              
 c50e :                       mod_sz_autogen_e 
                              
@@ -2132,7 +2132,7 @@ c689 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
-c689 : 4275696c64203a..       db "Build : 20/07/2023\r" 
+c689 : 4275696c64203a..       db "Build : 12/08/2023\r" 
 c69c : 3132384b204272..       db "128K Breadboard Computer\r" 
 c6b5 : 42792040363530..       db "By @6502Nerd\r" 
 c6c2 : 436f7079726967..       db "Copyright (c) 2022\r",0 
@@ -2987,10 +2987,89 @@ ca62 : fa               [ 4] 	plx
 ca63 : 68               [ 4] 	pla
 ca64 : 28               [ 4] 	plp
 ca65 : 60               [ 6] 	rts
-                             	
+                             
 AS65 Assembler for R6502 [1.42].                                     Page   47
 -------------------------------- bank\bank3.s --------------------------------
 
+                             ;****************************************
+                             ;* int_to_str_ch
+                             ;* Helper routine to stuff decimal char in to num
+                             ;* Input : A=BCD digit, Y=num_buf index, C=insert
+                             ;* Output : num_buf in ASCII, A=ASCII digit
+                             ;* Regs affected : C cleared if non-zero
+                             ;****************************************
+ca66 :                       int_to_str_ch
+ca66 : 290f             [ 2] 	and #0xf
+ca68 : 0930             [ 2] 	ora #0x30					; Convert to ascii
+ca6a : 4930             [ 2] 	eor #0x30					; Check if zero digit
+ca6c : d005             [ 3] 	bne int_to_str_nz			; If not zero definitely sto
+ca6e : b003             [ 3] 	bcs int_to_str_nz			; Also if C=1
+ca70 : 4930             [ 2] 	eor #0x30					; Restore A
+ca72 : 60               [ 6] 	rts							; Return without storing anything
+ca73 :                       int_to_str_nz
+ca73 : 4930             [ 2] 	eor #0x30					; Restore A
+ca75 : 999500           [ 5] 	sta num_buf,y
+ca78 : c8               [ 2] 	iny
+ca79 : 38               [ 2] 	sec							; Set C as a non-zero encountered
+ca7a :                       int_to_str_ch_fin
+ca7a : 60               [ 6] 	rts
+                             
+                             ;****************************************
+                             ;* int_to_str
+                             ;* Convert int to string
+                             ;* Input : in X,A (low,high), C=leading zeros wan
+                             ;* Output : num_buf in ASCII 6 digits + zero term
+                             ;* Regs affected : P
+                             ;****************************************
+ca7b :                       int_to_str
+                             	_pushAXY
+                             
+ca7e : a000             [ 2] 	ldy #0						; first pos of num_buf
+ca80 : 0900             [ 2] 	ora #0						; Test A for sign bit
+ca82 : 08               [ 3] 	php							; Remember C bit of P
+ca83 : 100a             [ 3] 	bpl int_to_str_skip_neg		; Skip if not (postive 
+ca85 : 20f4c9           [ 6] 	jsr twos_complement			; Flip X,A from 2s complem
+ca88 : 48               [ 3] 	pha							; Remember A
+ca89 : a92d             [ 2] 	lda #'-'					; Put in negative sign
+ca8b : 8595             [ 3] 	sta num_buf
+ca8d : c8               [ 2] 	iny							; Start at second buffer pos
+ca8e : 68               [ 4] 	pla							; Restore A
+ca8f :                       int_to_str_skip_neg
+ca8f : 2037ca           [ 6]  	jsr word_to_bcd				; Convert X,A to BCD
+ca92 : a202             [ 2] 	ldx #2						; Start at BCD high byte
+ca94 :                       int_str
+ca94 : 28               [ 4] 	plp							; Get C but immediately
+ca95 : 08               [ 3] 	php							; Save C (due to loop check later)
+ca96 : b585             [ 4] 	lda num_a,x					; Get BCD digit
+ca98 : 859c             [ 3] 	sta num_buf+7				; Save A it for the units later
+ca9a : 4a               [ 2] 	lsr a						; Tens - shift to lower nibble
+ca9b : 4a               [ 2] 	lsr a
+ca9c : 4a               [ 2] 	lsr a
+ca9d : 4a               [ 2] 	lsr a
+ca9e : 28               [ 4] 	plp							; Get C
+ca9f : 2066ca           [ 6] 	jsr int_to_str_ch			; Put ASCII code in num_buf
+caa2 : a59c             [ 3] 	lda num_buf+7				; Get A for the units
+caa4 : 2066ca           [ 6] 	jsr int_to_str_ch			; Put ASCII code in num_buf
+caa7 : 08               [ 3] 	php							; Save C
+caa8 : ca               [ 2] 	dex
+caa9 : 10e9             [ 3] 	bpl int_str
+AS65 Assembler for R6502 [1.42].                                     Page   48
+-------------------------------- bank\bank3.s --------------------------------
+
+caab : 28               [ 4] 	plp							; Check C
+caac : b005             [ 3] 	bcs	int_to_str_fin			; If set then something pri
+caae : a930             [ 2] 	lda #'0'					; Stuff a zero
+cab0 : 8595             [ 3] 	sta num_buf					; Must be in first position..
+cab2 : c8               [ 2] 	iny
+cab3 :                       int_to_str_fin
+cab3 : a900             [ 2] 	lda #0						; Terminator
+cab5 : 999500           [ 5] 	sta num_buf,y
+cab8 : c8               [ 2] 	iny
+                             	_pullAXY
+                             
+cabc : 60               [ 6] 	rts
+                             
+                             
                              ;****************************************
                              ;* bcd_to_str
                              ;* Convert num_buf to chars
@@ -2999,88 +3078,88 @@ ca65 : 60               [ 6] 	rts
                              ;* Output is big endian, input is not
                              ;* Regs affected : P
                              ;****************************************
-ca66 :                       bcd_to_str
-ca66 : 48               [ 3] 	pha
-ca67 : da               [ 3] 	phx
-ca68 : 5a               [ 3] 	phy
-                             
-ca69 : a205             [ 2] 	ldx #5						; Index in to string
-ca6b : a000             [ 2] 	ldy #0						; Current BCD digit
-ca6d :                       bcd_str
-ca6d : b98500           [ 4] 	lda num_a,y
-                             	; Convert 1s digit of byte
-ca70 : 48               [ 3] 	pha
-ca71 : 290f             [ 2] 	and #0xf
-ca73 : 18               [ 2] 	clc
-ca74 : 6930             [ 2] 	adc #0x30
-ca76 : 9595             [ 4] 	sta num_buf,x
-                             	; Convert 10s digit of byte
-ca78 : 68               [ 4] 	pla
-ca79 : 4a               [ 2] 	lsr a
-ca7a : 4a               [ 2] 	lsr a
-ca7b : 4a               [ 2] 	lsr a
-ca7c : 4a               [ 2] 	lsr a
-ca7d : 18               [ 2] 	clc
-ca7e : 6930             [ 2] 	adc #0x30					; Convert to ASCII
-ca80 : 9594             [ 4] 	sta num_buf-1,x
-ca82 : ca               [ 2] 	dex
-ca83 : ca               [ 2] 	dex
-ca84 : c8               [ 2] 	iny
-ca85 : c003             [ 2] 	cpy #3						; 3 BCD digits max
-ca87 : d0e4             [ 3] 	bne bcd_str
-                             
-ca89 : 7a               [ 4] 	ply
-ca8a : fa               [ 4] 	plx
-ca8b : 68               [ 4] 	pla
-ca8c : 60               [ 6] 	rts
+                             ;bcd_to_str
+                             ;	pha
+                             ;	phx
+                             ;	phy
+                             ;
+                             ;	ldx #5						; Index in to string
+                             ;	ldy #0						; Current BCD digit
+                             ;bcd_str
+                             ;	lda num_a,y
+                             ;	; Convert 1s digit of byte
+                             ;	pha
+                             ;	and #0xf
+                             ;	clc
+                             ;	adc #0x30
+                             ;	sta num_buf,x
+                             ;	; Convert 10s digit of byte
+                             ;	pla
+                             ;	lsr a
+                             ;	lsr a
+                             ;	lsr a
+                             ;	lsr a
+                             ;	clc
+                             ;	adc #0x30					; Convert to ASCII
+                             ;	sta num_buf-1,x
+                             ;	dex
+                             ;	dex
+                             ;	iny
+                             ;	cpy #3						; 3 BCD digits max
+                             ;	bne bcd_str
+                             ;
+                             ;	ply
+                             ;	plx
+                             ;	pla
+                             ;	rts
                              	
                              ;****************************************
                              ;* out_bcd
                              ;* Output a bcd string in num_buf
                              ;* Input : num_buf has the ASCII
                              ;* Input : C=1 print leading zeros else not
+AS65 Assembler for R6502 [1.42].                                     Page   49
+-------------------------------- bank\bank3.s --------------------------------
+
                              ;* Output : num_buf in ASCII 6 digits
                              ;* Output is big endian, input is not, Y=digits p
                              ;* Regs affected : P
                              ;****************************************
-ca8d :                       out_bcd
-ca8d : 48               [ 3] 	pha
-ca8e : da               [ 3] 	phx
-ca8f : 08               [ 3] 	php
-ca90 : a000             [ 2] 	ldy #0						; How many digits printed
-ca92 : a200             [ 2] 	ldx #0						; Index in to string
-ca94 :                       out_bcd_digit
-ca94 : b595             [ 4] 	lda num_buf,x
-ca96 : c000             [ 2] 	cpy #0						; If not in leading zero mode
-ca98 : d008             [ 3] 	bne out_bcd_print			; No then go print
-AS65 Assembler for R6502 [1.42].                                     Page   48
--------------------------------- bank\bank3.s --------------------------------
-
-                             
-ca9a : c930             [ 2] 	cmp #'0'					; else check if zero
-ca9c : d004             [ 3] 	bne out_bcd_print			; No then go print
-                             
-ca9e : 28               [ 4] 	plp
-ca9f : 08               [ 3] 	php
-caa0 : 9004             [ 3] 	bcc out_bcd_next			; If C=0 go to next digit, el
-caa2 :                       out_bcd_print
-caa2 : c8               [ 2] 	iny
-caa3 : 2048c5           [ 6] 	jsr io_put_ch
-caa6 :                       out_bcd_next
-caa6 : e8               [ 2] 	inx
-caa7 : e006             [ 2] 	cpx #6
-caa9 : d0e9             [ 3] 	bne out_bcd_digit
-caab : c000             [ 2] 	cpy #0						; If nothing printed
-caad : d006             [ 3] 	bne out_bcd_fin
-caaf : a930             [ 2] 	lda #'0'					; Need to put out 1 zero
-cab1 : 2048c5           [ 6] 	jsr io_put_ch
-cab4 : c8               [ 2] 	iny
-cab5 :                       out_bcd_fin
-cab5 : 28               [ 4] 	plp
-cab6 : fa               [ 4] 	plx
-cab7 : 68               [ 4] 	pla
-cab8 : 18               [ 2] 	clc
-cab9 : 60               [ 6] 	rts
+                             ;out_bcd
+                             ;	pha
+                             ;	phx
+                             ;	php
+                             ;	ldy #0						; How many digits printed
+                             ;	ldx #0						; Index in to string
+                             ;out_bcd_digit
+                             ;	lda num_buf,x
+                             ;	cpy #0						; If not in leading zero mode
+                             ;	bne out_bcd_print			; No then go print
+                             ;
+                             ;	cmp #'0'					; else check if zero
+                             ;	bne out_bcd_print			; No then go print
+                             ;
+                             ;	plp
+                             ;	php
+                             ;	bcc out_bcd_next			; If C=0 go to next digit, e
+                             ;out_bcd_print
+                             ;	iny
+                             ;	jsr io_put_ch
+                             ;out_bcd_next
+                             ;	inx
+                             ;	cpx #6
+                             ;	bne out_bcd_digit
+                             ;	cpy #0						; If nothing printed
+                             ;	bne out_bcd_fin
+                             ;	lda #'0'					; Need to put out 1 zero
+                             ;	jsr io_put_ch
+                             ;	iny
+                             ;out_bcd_fin
+                             ;	plp
+                             ;	plx
+                             ;	pla
+                             ;	clc
+                             ;	rts
                              	
                              ;****************************************
                              ;* str_a_to_d
@@ -3092,8 +3171,8 @@ cab9 : 60               [ 6] 	rts
                              ;* Output is big endian, input is not
                              ;* Regs affected : P
                              ;****************************************
-caba :                       str_a_to_d
-caba : 60               [ 6] 	rts
+cabd :                       str_a_to_d
+cabd : 60               [ 6] 	rts
                              	
                              ;****************************************
                              ;* print_a_to_d
@@ -3104,125 +3183,118 @@ caba : 60               [ 6] 	rts
                              ;*          Y=digits printed including sign
                              ;* Output is big endian, input is not
                              ;* Regs affected : P
-                             ;****************************************
-cabb :                       print_a_to_d
-cabb : 08               [ 3] 	php
-cabc : c980             [ 2] 	cmp #0x80					; Check if sign bit is set
-cabe : 9014             [ 3] 	bcc print_a_to_d_skip_neg	; Skip if not (postive
-cac0 : 20f4c9           [ 6] 	jsr twos_complement			; Flip from 2s complement
-cac3 : 2001ca           [ 6] 	jsr int_to_bcd				; Convert to BCD
-cac6 : 2066ca           [ 6] 	jsr bcd_to_str				; Convert BCD to string
-cac9 : a92d             [ 2] 	lda #'-'
-cacb : 2048c5           [ 6] 	jsr io_put_ch
-cace : 28               [ 4] 	plp							; Leading zeros preference
-cacf : 208dca           [ 6] 	jsr out_bcd
-cad2 : c8               [ 2] 	iny							; Account for sign
-cad3 : 60               [ 6] 	rts
-AS65 Assembler for R6502 [1.42].                                     Page   49
+AS65 Assembler for R6502 [1.42].                                     Page   50
 -------------------------------- bank\bank3.s --------------------------------
 
-cad4 :                       print_a_to_d_skip_neg
-cad4 : 2001ca           [ 6] 	jsr int_to_bcd				; Convert to BCD
-cad7 : 2066ca           [ 6] 	jsr bcd_to_str				; Convert BCD to string
-cada : 28               [ 4] 	plp							; Leading zeros preference
-cadb : 4c8dca           [ 3] 	jmp out_bcd					; Print +ve string
+                             ;****************************************
+cabe :                       print_a_to_d
+cabe : 207bca           [ 6] 	jsr int_to_str
+cac1 : a000             [ 2] 	ldy #0
+cac3 :                       print_a_to_d_ch
+cac3 : b99500           [ 4] 	lda num_buf,y
+cac6 : f006             [ 3] 	beq print_a_to_d_fin
+cac8 : 2048c5           [ 6] 	jsr io_put_ch
+cacb : c8               [ 2] 	iny
+cacc : d0f5             [ 3] 	bne print_a_to_d_ch
+cace :                       print_a_to_d_fin
+cace : 60               [ 6] 	rts
                              	
                              
                              ;* Reset vector points here - 6502 starts here
-cade :                       init
+cacf :                       init
                              ;	jmp init_test
                              	; First clear ram
                              ;	sei					; No need as disabled on startup
-cade : 4c39cb           [ 3] 	jmp init_ram		; jmp not jsr to ram initialiser
-cae1 :                       init_2					; init_ram will jump back to here
-cae1 : a2ff             [ 2] 	ldx #0xff			; Initialise stack pointer
-cae3 : 9a               [ 2] 	txs
+cacf : 4c2acb           [ 3] 	jmp init_ram		; jmp not jsr to ram initialiser
+cad2 :                       init_2					; init_ram will jump back to here
+cad2 : a2ff             [ 2] 	ldx #0xff			; Initialise stack pointer
+cad4 : 9a               [ 2] 	txs
                              ;	cld					; No need as disabled on startup
                              	
-cae4 : 20eaca           [ 6] 	jsr kernel_init
+cad5 : 20dbca           [ 6] 	jsr kernel_init
                              
-cae7 : 4c83c6           [ 3] 	jmp main
+cad8 : 4c83c6           [ 3] 	jmp main
                              
-caea :                       kernel_init
-caea : 20d6c6           [ 6] 	jsr init_nmi		; Initialise NMI handling
-caed : 20f6c6           [ 6] 	jsr init_irq		; Initialise IRQ handling
-caf0 : 20dec1           [ 6] 	jsr _init_acia		; initialise the serial chip
+cadb :                       kernel_init
+cadb : 20d6c6           [ 6] 	jsr init_nmi		; Initialise NMI handling
+cade : 20f6c6           [ 6] 	jsr init_irq		; Initialise IRQ handling
+cae1 : 20dec1           [ 6] 	jsr _init_acia		; initialise the serial chip
                              	
-caf3 : 20f6c1           [ 6] 	jsr _init_cia0		; initialise cia 0
-caf6 : 200ec2           [ 6] 	jsr _init_cia1		; initialise cia 1
+cae4 : 20f6c1           [ 6] 	jsr _init_cia0		; initialise cia 0
+cae7 : 200ec2           [ 6] 	jsr _init_cia1		; initialise cia 1
                              
-caf9 :                       kernel_test
-caf9 : 2056c2           [ 6] 	jsr _init_snd		; initialise the sound chip
-cafc : 206ec2           [ 6] 	jsr _init_keyboard	; initialise keyboard timer s
-caff : 2036c4           [ 6] 	jsr _vdp_init		; initialise vdp
-cb02 : a900             [ 2] 	lda #0				; Default = 40 column mode - put on st
-cb04 : 48               [ 3] 	pha
-cb05 : a20e             [ 2] 	ldx #0xe			; NV location for default text mode [
-cb07 : 2096c4           [ 6] 	jsr _rtc_nvread		; Try to read location
-cb0a : b00b             [ 3] 	bcs kernel_skip_nv	; If bad NV ram then skip try
-cb0c : aa               [ 2] 	tax					; Save the mode temporarily
-cb0d : 68               [ 4] 	pla					; Get the default mode from stack
-cb0e : 8a               [ 2] 	txa					; And push the NV mode that was read
-cb0f : 48               [ 3] 	pha
-cb10 : a20f             [ 2] 	ldx #0xf			; NV location for the default colour
-cb12 : 2096c4           [ 6] 	jsr _rtc_nvread		; Try to read location (assumed
-cb15 : 8521             [ 3] 	sta vdp_base+vdp_bord_col	; Save it to the borde
-cb17 :                       kernel_skip_nv	
-cb17 : 68               [ 4] 	pla					; Get the mode (either default or the NV
-cb18 : 20c6c1           [ 6] 	jsr _gr_init_screen
-cb1b : 200ec5           [ 6] 	jsr io_init			; Set default input/output device
-cb1e : 58               [ 2] 	cli					; irq interrupts enable
+caea :                       kernel_test
+caea : 2056c2           [ 6] 	jsr _init_snd		; initialise the sound chip
+caed : 206ec2           [ 6] 	jsr _init_keyboard	; initialise keyboard timer s
+caf0 : 2036c4           [ 6] 	jsr _vdp_init		; initialise vdp
+caf3 : a900             [ 2] 	lda #0				; Default = 40 column mode - put on st
+caf5 : 48               [ 3] 	pha
+caf6 : a20e             [ 2] 	ldx #0xe			; NV location for default text mode [
+caf8 : 2096c4           [ 6] 	jsr _rtc_nvread		; Try to read location
+cafb : b00b             [ 4] 	bcs kernel_skip_nv	; If bad NV ram then skip try
+cafd : aa               [ 2] 	tax					; Save the mode temporarily
+cafe : 68               [ 4] 	pla					; Get the default mode from stack
+caff : 8a               [ 2] 	txa					; And push the NV mode that was read
+cb00 : 48               [ 3] 	pha
+cb01 : a20f             [ 2] 	ldx #0xf			; NV location for the default colour
+cb03 : 2096c4           [ 6] 	jsr _rtc_nvread		; Try to read location (assumed
+cb06 : 8521             [ 3] 	sta vdp_base+vdp_bord_col	; Save it to the borde
+cb08 :                       kernel_skip_nv	
+cb08 : 68               [ 4] 	pla					; Get the mode (either default or the NV
+cb09 : 20c6c1           [ 6] 	jsr _gr_init_screen
+cb0c : 200ec5           [ 6] 	jsr io_init			; Set default input/output device
+cb0f : 58               [ 2] 	cli					; irq interrupts enable
                              
                              	; Print the boot up message - requires IO and IR
                              	_println msg_hello_world
                              
-                             
-                             
-cb2c : 204ec4           [ 6] 	jsr _rtc_init		; Initialise RTC - * AFTER INTERR
-cb2f : 203ec2           [ 6] 	jsr _init_sdcard	; initialise the sd card interf
-cb32 : 2026c2           [ 6] 	jsr _init_fs		; initialise the filesystem
-cb35 : 202ec0           [ 6] 	jsr _df_init		; Initialise interpreter
-                             
-AS65 Assembler for R6502 [1.42].                                     Page   50
+AS65 Assembler for R6502 [1.42].                                     Page   51
 -------------------------------- bank\bank3.s --------------------------------
 
-cb38 : 60               [ 6] 	rts
+                             
+                             
+cb1d : 204ec4           [ 6] 	jsr _rtc_init		; Initialise RTC - * AFTER INTERR
+cb20 : 203ec2           [ 6] 	jsr _init_sdcard	; initialise the sd card interf
+cb23 : 2026c2           [ 6] 	jsr _init_fs		; initialise the filesystem
+cb26 : 202ec0           [ 6] 	jsr _df_init		; Initialise interpreter
+                             
+cb29 : 60               [ 6] 	rts
                              
                              	
                              ;* Initialises RAM, skipping pages 4-8 which are 
                              ;* Zeroes all addressable RAM in the default bank
-cb39 :                       init_ram
-cb39 : 6400             [ 3] 	stz 0x00			; Start at page 0
-cb3b : 6401             [ 3] 	stz 0x01
-cb3d : a002             [ 2] 	ldy #0x02			; But Y initially at 2 to not overwr
-cb3f : a200             [ 2] 	ldx #0x00			; Page counter starts at zero
-cb41 : a900             [ 2] 	lda #0				; Normal RAM filled with zero
-cb43 :                       init_ram_1
-cb43 : e004             [ 2] 	cpx	#4				; Page <4 is ok
-cb45 : 9006             [ 3] 	bcc init_ram_fill
-cb47 : e008             [ 2] 	cpx #8				; Page >=8 is ok
-cb49 : b002             [ 3] 	bcs init_ram_fill
-cb4b : 8002             [ 3] 	bra init_ram_skip
-cb4d :                       init_ram_fill
-cb4d : 9100             [ 5] 	sta (0x00),y		; Write initialisation value to RA
-cb4f :                       init_ram_skip
-cb4f : c8               [ 2] 	iny
-cb50 : d0fb             [ 3] 	bne init_ram_fill	; Do a whole page
-cb52 : e8               [ 2] 	inx					; Increment page counter
-cb53 : 8601             [ 3] 	stx 0x01			; Save to address pointer
-cb55 : d0ec             [ 3] 	bne init_ram_1		; Do all pages until page 0xff d
+cb2a :                       init_ram
+cb2a : 6400             [ 3] 	stz 0x00			; Start at page 0
+cb2c : 6401             [ 3] 	stz 0x01
+cb2e : a002             [ 2] 	ldy #0x02			; But Y initially at 2 to not overwr
+cb30 : a200             [ 2] 	ldx #0x00			; Page counter starts at zero
+cb32 : a900             [ 2] 	lda #0				; Normal RAM filled with zero
+cb34 :                       init_ram_1
+cb34 : e004             [ 2] 	cpx	#4				; Page <4 is ok
+cb36 : 9006             [ 3] 	bcc init_ram_fill
+cb38 : e008             [ 2] 	cpx #8				; Page >=8 is ok
+cb3a : b002             [ 3] 	bcs init_ram_fill
+cb3c : 8002             [ 3] 	bra init_ram_skip
+cb3e :                       init_ram_fill
+cb3e : 9100             [ 5] 	sta (0x00),y		; Write initialisation value to RA
+cb40 :                       init_ram_skip
+cb40 : c8               [ 2] 	iny
+cb41 : d0fb             [ 3] 	bne init_ram_fill	; Do a whole page
+cb43 : e8               [ 2] 	inx					; Increment page counter
+cb44 : 8601             [ 3] 	stx 0x01			; Save to address pointer
+cb46 : d0ec             [ 3] 	bne init_ram_1		; Do all pages until page 0xff d
                              	
-cb57 : 4ce1ca           [ 3] 	jmp init_2			; Carry on initialisation
+cb48 : 4cd2ca           [ 3] 	jmp init_2			; Carry on initialisation
                              
-cb5a :                       mod_sz_kernel_e
+cb4b :                       mod_sz_kernel_e
                              
                              
                              
                              ; Bank specific code goes here
                              
                              	; End of Code
-cb5a :                       _code_end
-cb5a :                       _bank3_end
+cb4b :                       _code_end
+cb4b :                       _bank3_end
                              
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
