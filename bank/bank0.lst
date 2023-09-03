@@ -1,7 +1,7 @@
 AS65 Assembler for R6502 [1.42].                                     Page    1
 -------------------------------- bank\bank0.s --------------------------------
 
-7881 lines read, no errors in pass 1.
+7883 lines read, no errors in pass 1.
 c000 =                       _bank0_start=0xc000
                              	include "kernel\kernel.s"
                              ;************************************************
@@ -1442,10 +1442,10 @@ c17e :                       _put_byte
                                _bankjsr $cee1, 0 
                              
 c196 :                       _gr_get_key 
-                               _bankjsr $df8c, 0 
+                               _bankjsr $df90, 0 
                              
 c1ae :                       _gr_put_byte 
-                               _bankjsr $df99, 0 
+                               _bankjsr $df9d, 0 
                              
 c1c6 :                       _gr_init_screen 
                                _bankjsr $da59, 0 
@@ -1487,16 +1487,16 @@ c2e6 :                       _gr_init_hires
                                _bankjsr $da16, 0 
                              
 c2fe :                       _gr_line 
-                               _bankjsr $ddc6, 0 
+                               _bankjsr $ddca, 0 
                              
 c316 :                       _gr_box 
-                               _bankjsr $dc06, 0 
+                               _bankjsr $dc0a, 0 
                              
 c32e :                       _gr_circle 
 AS65 Assembler for R6502 [1.42].                                     Page   24
 -------------------------------- bank\bank0.s --------------------------------
 
-                               _bankjsr $dd11, 0 
+                               _bankjsr $dd15, 0 
                              
 c346 :                       _gr_plot 
                                _bankjsr $dad7, 0 
@@ -2132,7 +2132,7 @@ c689 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
-c689 : 4275696c64203a..       db "Build : 12/08/2023\r" 
+c689 : 4275696c64203a..       db "Build : 03/09/2023\r" 
 c69c : 3132384b204272..       db "128K Breadboard Computer\r" 
 c6b5 : 42792040363530..       db "By @6502Nerd\r" 
 c6c2 : 436f7079726967..       db "Copyright (c) 2022\r",0 
@@ -7117,10 +7117,10 @@ da93 : c928             [ 2] 	cmp #40
 da95 : d011             [ 3] 	bne gr_set_skip_40
                              
 da97 : 18               [ 2] 	clc
-da98 : b9e0df           [ 4] 	lda gr_offset_40lo, y
+da98 : b9e4df           [ 4] 	lda gr_offset_40lo, y
 da9b : 6523             [ 3] 	adc gr_scrngeom+gr_screen_start
 da9d : 8531             [ 3] 	sta gr_scrngeom+gr_geom_tmp
-da9f : b9f8df           [ 4] 	lda gr_offset_40hi, y
+da9f : b9fcdf           [ 4] 	lda gr_offset_40hi, y
 daa2 : 6524             [ 3] 	adc gr_scrngeom+gr_screen_start+1
 daa4 : 8532             [ 3] 	sta gr_scrngeom+gr_geom_tmp+1
 daa6 : 8013             [ 3] 	bra gr_add_x_offset
@@ -7130,10 +7130,10 @@ daa8 :                       gr_set_skip_40
 daa8 : a529             [ 3] 	lda gr_scrngeom+gr_cur_off
 daaa : d01a             [ 3] 	bne gr_calc_hires_ptr
 daac : 18               [ 2] 	clc
-daad : b910e0           [ 4] 	lda gr_offset_32lo, y
+daad : b914e0           [ 4] 	lda gr_offset_32lo, y
 dab0 : 6523             [ 3] 	adc gr_scrngeom+gr_screen_start
 dab2 : 8531             [ 3] 	sta gr_scrngeom+gr_geom_tmp
-dab4 : b928e0           [ 4] 	lda gr_offset_32hi, y
+dab4 : b92ce0           [ 4] 	lda gr_offset_32hi, y
 dab7 : 6524             [ 3] 	adc gr_scrngeom+gr_screen_start+1
 dab9 : 8532             [ 3] 	sta gr_scrngeom+gr_geom_tmp+1
                              
@@ -7419,7 +7419,7 @@ dbc9 : 68               [ 4] 	pla
 dbca : 2907             [ 2] 	and #0x07
                              	; Use this to find the bit number mask and save 
 dbcc : aa               [ 2] 	tax
-dbcd : bdfedb           [ 4] 	lda gr_point_mask,x
+dbcd : bd02dc           [ 4] 	lda gr_point_mask,x
 dbd0 : 8544             [ 3] 	sta tmp_b+1
                              	; Get the mode number in to X
 dbd2 : a62e             [ 3] 	ldx gr_scrngeom+gr_pixmode
@@ -7446,19 +7446,21 @@ dbea : 2010c6           [ 6] 	jsr vdp_poke
                              
                              	; now put in the right colour
                              	; add the x,y offset in to the colour table
-dbed : 18               [ 2] 	clc
-dbee : a519             [ 3] 	lda vdp_base+vdp_addr_col
-dbf0 : 653f             [ 3] 	adc tmp_v1
-dbf2 : aa               [ 2] 	tax
-dbf3 : a51a             [ 3] 	lda vdp_base+vdp_addr_col+1
-dbf5 : 6540             [ 3] 	adc tmp_v1+1
-dbf7 : a8               [ 2] 	tay
-dbf8 : a530             [ 3] 	lda gr_scrngeom+gr_pixcol
-dbfa : 2010c6           [ 6] 	jsr vdp_poke
-                             
-dbfd : 60               [ 6] 	rts
-dbfe :                       gr_point_mask
-dbfe : 8040201008040201      	db 0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01
+dbed : a530             [ 3] 	lda gr_scrngeom+gr_pixcol		; If pixcol zero don'
+dbef : f010             [ 4] 	beq gr_point_exit
+dbf1 : 18               [ 2] 	clc
+dbf2 : a519             [ 3] 	lda vdp_base+vdp_addr_col
+dbf4 : 653f             [ 3] 	adc tmp_v1
+dbf6 : aa               [ 2] 	tax
+dbf7 : a51a             [ 3] 	lda vdp_base+vdp_addr_col+1
+dbf9 : 6540             [ 3] 	adc tmp_v1+1
+dbfb : a8               [ 2] 	tay
+dbfc : a530             [ 3] 	lda gr_scrngeom+gr_pixcol
+dbfe : 4c10c6           [ 3] 	jmp vdp_poke
+dc01 :                       gr_point_exit
+dc01 : 60               [ 6] 	rts
+dc02 :                       gr_point_mask
+dc02 : 8040201008040201      	db 0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01
                              
                              
                              ;****************************************
@@ -7471,165 +7473,165 @@ dbfe : 8040201008040201      	db 0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-dc06 :                       gr_box
-dc06 : a585             [ 3] 	lda num_a					; If x0,x1 in same byte column
 AS65 Assembler for R6502 [1.42].                                     Page  116
 -------------------------------- bank\bank0.s --------------------------------
 
-dc08 : 29f8             [ 2] 	and #0xf8					; then special handling
-dc0a : 8543             [ 3] 	sta tmp_b
-dc0c : a587             [ 3] 	lda num_a+2
-dc0e : 29f8             [ 2] 	and #0xf8
-dc10 : c543             [ 3] 	cmp tmp_b
-dc12 : f05f             [ 3] 	beq gr_box_tiny_width
+dc0a :                       gr_box
+dc0a : a585             [ 3] 	lda num_a					; If x0,x1 in same byte column
+dc0c : 29f8             [ 2] 	and #0xf8					; then special handling
+dc0e : 8543             [ 3] 	sta tmp_b
+dc10 : a587             [ 3] 	lda num_a+2
+dc12 : 29f8             [ 2] 	and #0xf8
+dc14 : c543             [ 3] 	cmp tmp_b
+dc16 : f05f             [ 3] 	beq gr_box_tiny_width
                              	; x0, x1 in different byte columns
-dc14 : a585             [ 3] 	lda num_a					; Get lhs mask
-dc16 : 2907             [ 2] 	and #7
-dc18 : aa               [ 2] 	tax
-dc19 : bd01dd           [ 4] 	lda gr_box_lmask,x
-dc1c : 8543             [ 3] 	sta tmp_b
-dc1e : a685             [ 3] 	ldx num_a					; Do top left
-dc20 : a486             [ 3] 	ldy num_a+1
-dc22 : 20cfdc           [ 6] 	jsr gr_box_plot
-dc25 : a543             [ 3] 	lda tmp_b
-dc27 : a685             [ 3] 	ldx num_a					; Do bottom left
-dc29 : a488             [ 3] 	ldy num_a+3
-dc2b : 20cfdc           [ 6] 	jsr gr_box_plot
-dc2e : a587             [ 3] 	lda num_a+2					; Get rhs mask
-dc30 : 2907             [ 2] 	and #7
-dc32 : aa               [ 2] 	tax
-dc33 : bd09dd           [ 4] 	lda gr_box_rmask,x
-dc36 : 8543             [ 3] 	sta tmp_b
-dc38 : a687             [ 3] 	ldx num_a+2					; Do top right
-dc3a : a486             [ 3] 	ldy num_a+1
-dc3c : 20cfdc           [ 6] 	jsr gr_box_plot
-dc3f : a543             [ 3] 	lda tmp_b
-dc41 : a687             [ 3] 	ldx num_a+2					; Do bottom right
-dc43 : a488             [ 3] 	ldy num_a+3
-dc45 : 20cfdc           [ 6] 	jsr gr_box_plot
+dc18 : a585             [ 3] 	lda num_a					; Get lhs mask
+dc1a : 2907             [ 2] 	and #7
+dc1c : aa               [ 2] 	tax
+dc1d : bd05dd           [ 4] 	lda gr_box_lmask,x
+dc20 : 8543             [ 3] 	sta tmp_b
+dc22 : a685             [ 3] 	ldx num_a					; Do top left
+dc24 : a486             [ 3] 	ldy num_a+1
+dc26 : 20d3dc           [ 6] 	jsr gr_box_plot
+dc29 : a543             [ 3] 	lda tmp_b
+dc2b : a685             [ 3] 	ldx num_a					; Do bottom left
+dc2d : a488             [ 3] 	ldy num_a+3
+dc2f : 20d3dc           [ 6] 	jsr gr_box_plot
+dc32 : a587             [ 3] 	lda num_a+2					; Get rhs mask
+dc34 : 2907             [ 2] 	and #7
+dc36 : aa               [ 2] 	tax
+dc37 : bd0ddd           [ 4] 	lda gr_box_rmask,x
+dc3a : 8543             [ 3] 	sta tmp_b
+dc3c : a687             [ 3] 	ldx num_a+2					; Do top right
+dc3e : a486             [ 3] 	ldy num_a+1
+dc40 : 20d3dc           [ 6] 	jsr gr_box_plot
+dc43 : a543             [ 3] 	lda tmp_b
+dc45 : a687             [ 3] 	ldx num_a+2					; Do bottom right
+dc47 : a488             [ 3] 	ldy num_a+3
+dc49 : 20d3dc           [ 6] 	jsr gr_box_plot
                              	; Do fast horz lines if x0,x1
                              	; are in different byte columns
-dc48 : a585             [ 3] 	lda num_a					; Byte align x0
-dc4a : 29f8             [ 2] 	and #0xf8
-dc4c : 8543             [ 3] 	sta tmp_b
-dc4e : a587             [ 3] 	lda num_a+2					; Byte align x1
-dc50 : 29f8             [ 2] 	and #0xf8
-dc52 : 8544             [ 3] 	sta tmp_b+1
-dc54 :                       gr_box_8line
-dc54 : a544             [ 3] 	lda tmp_b+1					; Move left 1 column
-dc56 : 38               [ 2] 	sec
-dc57 : e908             [ 2] 	sbc #8
-dc59 : 8544             [ 3] 	sta tmp_b+1
-dc5b : c543             [ 3] 	cmp tmp_b
-dc5d : f039             [ 3] 	beq gr_box_do_vert			; if columns same then done
-dc5f : a644             [ 3] 	ldx tmp_b+1					; Do top from right to left
-dc61 : a486             [ 3] 	ldy num_a+1
-dc63 : a9ff             [ 2] 	lda #0xff
-dc65 : 20cfdc           [ 6] 	jsr gr_box_plot
-dc68 : a644             [ 3] 	ldx tmp_b+1					; Do top from right to left
-dc6a : a488             [ 3] 	ldy num_a+3
-dc6c : a9ff             [ 2] 	lda #0xff
-dc6e : 20cfdc           [ 6] 	jsr gr_box_plot
-dc71 : 80e1             [ 3] 	bra gr_box_8line			; Looping
-dc73 :                       gr_box_tiny_width
-dc73 : a585             [ 3] 	lda num_a
-dc75 : 2907             [ 2] 	and #7
-dc77 : 48               [ 3] 	pha
-dc78 : a587             [ 3] 	lda num_a+2
-dc7a : 2907             [ 2] 	and #7
-dc7c : aa               [ 2] 	tax
+dc4c : a585             [ 3] 	lda num_a					; Byte align x0
+dc4e : 29f8             [ 2] 	and #0xf8
+dc50 : 8543             [ 3] 	sta tmp_b
+dc52 : a587             [ 3] 	lda num_a+2					; Byte align x1
+dc54 : 29f8             [ 2] 	and #0xf8
+dc56 : 8544             [ 3] 	sta tmp_b+1
+dc58 :                       gr_box_8line
+dc58 : a544             [ 3] 	lda tmp_b+1					; Move left 1 column
+dc5a : 38               [ 2] 	sec
+dc5b : e908             [ 2] 	sbc #8
+dc5d : 8544             [ 3] 	sta tmp_b+1
+dc5f : c543             [ 3] 	cmp tmp_b
+dc61 : f039             [ 3] 	beq gr_box_do_vert			; if columns same then done
+dc63 : a644             [ 3] 	ldx tmp_b+1					; Do top from right to left
+dc65 : a486             [ 3] 	ldy num_a+1
+dc67 : a9ff             [ 2] 	lda #0xff
+dc69 : 20d3dc           [ 6] 	jsr gr_box_plot
+dc6c : a644             [ 3] 	ldx tmp_b+1					; Do top from right to left
+dc6e : a488             [ 3] 	ldy num_a+3
+dc70 : a9ff             [ 2] 	lda #0xff
+dc72 : 20d3dc           [ 6] 	jsr gr_box_plot
+dc75 : 80e1             [ 3] 	bra gr_box_8line			; Looping
+dc77 :                       gr_box_tiny_width
+dc77 : a585             [ 3] 	lda num_a
+dc79 : 2907             [ 2] 	and #7
+dc7b : 48               [ 3] 	pha
+dc7c : a587             [ 3] 	lda num_a+2
 AS65 Assembler for R6502 [1.42].                                     Page  117
 -------------------------------- bank\bank0.s --------------------------------
 
-dc7d : bd09dd           [ 4] 	lda gr_box_rmask,x			; Get rhs mask
-dc80 : fa               [ 4] 	plx
-dc81 : 3d01dd           [ 4] 	and gr_box_lmask,x			; AND with lhs mask
-dc84 : 8543             [ 3] 	sta tmp_b					; This is the intra column mask
-dc86 : a685             [ 3] 	ldx num_a					; Plot top
-dc88 : a486             [ 3] 	ldy num_a+1
-dc8a : 20cfdc           [ 6] 	jsr gr_box_plot
-dc8d : a687             [ 3] 	ldx num_a+2					; Plot bottom
-dc8f : a488             [ 3] 	ldy num_a+3
-dc91 : c486             [ 3] 	cpy num_a+1					; but only if different from top
-dc93 : f039             [ 3] 	beq gr_box_done				; if top=bottom then finished
-dc95 : 20cfdc           [ 6] 	jsr gr_box_plot
-dc98 :                       gr_box_do_vert
+dc7e : 2907             [ 2] 	and #7
+dc80 : aa               [ 2] 	tax
+dc81 : bd0ddd           [ 4] 	lda gr_box_rmask,x			; Get rhs mask
+dc84 : fa               [ 4] 	plx
+dc85 : 3d05dd           [ 4] 	and gr_box_lmask,x			; AND with lhs mask
+dc88 : 8543             [ 3] 	sta tmp_b					; This is the intra column mask
+dc8a : a685             [ 3] 	ldx num_a					; Plot top
+dc8c : a486             [ 3] 	ldy num_a+1
+dc8e : 20d3dc           [ 6] 	jsr gr_box_plot
+dc91 : a687             [ 3] 	ldx num_a+2					; Plot bottom
+dc93 : a488             [ 3] 	ldy num_a+3
+dc95 : c486             [ 3] 	cpy num_a+1					; but only if different from top
+dc97 : f039             [ 3] 	beq gr_box_done				; if top=bottom then finished
+dc99 : 20d3dc           [ 6] 	jsr gr_box_plot
+dc9c :                       gr_box_do_vert
                              	; Do the vertical sides of the box
-dc98 : a585             [ 3] 	lda num_a					; Find bit position of x0 (left)
-dc9a : 2907             [ 2] 	and #7
-dc9c : aa               [ 2] 	tax							; And get value to write
-dc9d : bdfedb           [ 4] 	lda gr_point_mask,x
-dca0 : 8543             [ 3] 	sta tmp_b
+dc9c : a585             [ 3] 	lda num_a					; Find bit position of x0 (left)
+dc9e : 2907             [ 2] 	and #7
+dca0 : aa               [ 2] 	tax							; And get value to write
+dca1 : bd02dc           [ 4] 	lda gr_point_mask,x
+dca4 : 8543             [ 3] 	sta tmp_b
                              	
-dca2 : a587             [ 3] 	lda num_a+2					; Find bit position of x1 (right
-dca4 : 2907             [ 2] 	and #7
-dca6 : aa               [ 2] 	tax							; And get value to write
-dca7 : bdfedb           [ 4] 	lda gr_point_mask,x
-dcaa : 8544             [ 3] 	sta tmp_b+1
+dca6 : a587             [ 3] 	lda num_a+2					; Find bit position of x1 (right
+dca8 : 2907             [ 2] 	and #7
+dcaa : aa               [ 2] 	tax							; And get value to write
+dcab : bd02dc           [ 4] 	lda gr_point_mask,x
+dcae : 8544             [ 3] 	sta tmp_b+1
                              
-dcac : a486             [ 3] 	ldy num_a+1					; Get y0 coord and save
-dcae : 8491             [ 3] 	sty num_tmp
-dcb0 :                       gr_box_vert
-dcb0 : e691             [ 5] 	inc num_tmp					; Increment y first
-dcb2 : a491             [ 3] 	ldy num_tmp
-dcb4 : c488             [ 3] 	cpy num_a+3					; if thisY>=y1 then done
-dcb6 : b016             [ 3] 	bcs gr_box_vert_done
-dcb8 : a685             [ 3] 	ldx num_a					; Do left side
-dcba : a543             [ 3] 	lda tmp_b
-dcbc : 20cfdc           [ 6] 	jsr gr_box_plot
-dcbf : a687             [ 3] 	ldx num_a+2					; Do right line
-dcc1 : e485             [ 3] 	cpx num_a					; Only if not same as lhs
-dcc3 : f007             [ 3] 	beq gr_box_skip_rhs
-dcc5 : a491             [ 3] 	ldy num_tmp
-dcc7 : a544             [ 3] 	lda tmp_b+1
-dcc9 : 20cfdc           [ 6] 	jsr gr_box_plot
-dccc :                       gr_box_skip_rhs
-dccc : 80e2             [ 3] 	bra gr_box_vert				; looping
-dcce :                       gr_box_vert_done
-dcce :                       gr_box_done
-dcce : 60               [ 6] 	rts
+dcb0 : a486             [ 3] 	ldy num_a+1					; Get y0 coord and save
+dcb2 : 8491             [ 3] 	sty num_tmp
+dcb4 :                       gr_box_vert
+dcb4 : e691             [ 5] 	inc num_tmp					; Increment y first
+dcb6 : a491             [ 3] 	ldy num_tmp
+dcb8 : c488             [ 3] 	cpy num_a+3					; if thisY>=y1 then done
+dcba : b016             [ 3] 	bcs gr_box_vert_done
+dcbc : a685             [ 3] 	ldx num_a					; Do left side
+dcbe : a543             [ 3] 	lda tmp_b
+dcc0 : 20d3dc           [ 6] 	jsr gr_box_plot
+dcc3 : a687             [ 3] 	ldx num_a+2					; Do right line
+dcc5 : e485             [ 3] 	cpx num_a					; Only if not same as lhs
+dcc7 : f007             [ 3] 	beq gr_box_skip_rhs
+dcc9 : a491             [ 3] 	ldy num_tmp
+dccb : a544             [ 3] 	lda tmp_b+1
+dccd : 20d3dc           [ 6] 	jsr gr_box_plot
+dcd0 :                       gr_box_skip_rhs
+dcd0 : 80e2             [ 3] 	bra gr_box_vert				; looping
+dcd2 :                       gr_box_vert_done
+dcd2 :                       gr_box_done
+dcd2 : 60               [ 6] 	rts
                              
                              ; Box draw common draw routine
                              ; x,y is pixel coord
                              ; a is the value to write
-dccf :                       gr_box_plot
-dccf : 853d             [ 3] 	sta tmp_c					; Save mask to write
-dcd1 : 8a               [ 2] 	txa
-dcd2 : 98               [ 2] 	tya
-dcd3 : 2091da           [ 6] 	jsr gr_getXY_ptr
-dcd6 : da               [ 3] 	phx
-dcd7 : 98               [ 2] 	tya							; A=high byte for peek
-dcd8 : 201cc6           [ 6] 	jsr vdp_peek				; Get current screen byte
-dcdb : 853e             [ 3] 	sta tmp_c+1
-dcdd : a62e             [ 3] 	ldx gr_scrngeom+gr_pixmode	; Use screen mode
-dcdf : 053d             [ 3] 	ora tmp_c					; Assume mode 1 (or)
+dcd3 :                       gr_box_plot
+dcd3 : 853d             [ 3] 	sta tmp_c					; Save mask to write
+dcd5 : 8a               [ 2] 	txa
+dcd6 : 98               [ 2] 	tya
+dcd7 : 2091da           [ 6] 	jsr gr_getXY_ptr
+dcda : da               [ 3] 	phx
+dcdb : 98               [ 2] 	tya							; A=high byte for peek
+dcdc : 201cc6           [ 6] 	jsr vdp_peek				; Get current screen byte
+dcdf : 853e             [ 3] 	sta tmp_c+1
 AS65 Assembler for R6502 [1.42].                                     Page  118
 -------------------------------- bank\bank0.s --------------------------------
 
-dce1 : e001             [ 2] 	cpx #1						; Done if correct
-dce3 : f00a             [ 3] 	beq gr_box_write
-dce5 : 453d             [ 3] 	eor tmp_c					; Assume mode 0 (eor erases or)
-dce7 : e000             [ 2] 	cpx #0						; Done if correct
-dce9 : f004             [ 3] 	beq gr_box_write
-dceb : a53e             [ 3] 	lda tmp_c+1					; Else eor with source
-dced : 453d             [ 3] 	eor tmp_c
-dcef :                       gr_box_write
-dcef : fa               [ 4] 	plx							; Restore x, y is intact
-dcf0 : 2010c6           [ 6] 	jsr vdp_poke				; Poke the value
-dcf3 : 18               [ 2] 	clc							; Calculate the colour table offset
-dcf4 : 8a               [ 2] 	txa							; Low byte
-dcf5 : 6519             [ 3] 	adc vdp_base+vdp_addr_col
-dcf7 : aa               [ 2] 	tax
-dcf8 : 98               [ 2] 	tya							; High byte
-dcf9 : 651a             [ 3] 	adc vdp_base+vdp_addr_col+1
-dcfb : a8               [ 2] 	tay
-dcfc : a530             [ 3] 	lda gr_scrngeom+gr_pixcol	; Colour
-dcfe : 4c10c6           [ 3] 	jmp vdp_poke
+dce1 : a62e             [ 3] 	ldx gr_scrngeom+gr_pixmode	; Use screen mode
+dce3 : 053d             [ 3] 	ora tmp_c					; Assume mode 1 (or)
+dce5 : e001             [ 2] 	cpx #1						; Done if correct
+dce7 : f00a             [ 3] 	beq gr_box_write
+dce9 : 453d             [ 3] 	eor tmp_c					; Assume mode 0 (eor erases or)
+dceb : e000             [ 2] 	cpx #0						; Done if correct
+dced : f004             [ 3] 	beq gr_box_write
+dcef : a53e             [ 3] 	lda tmp_c+1					; Else eor with source
+dcf1 : 453d             [ 3] 	eor tmp_c
+dcf3 :                       gr_box_write
+dcf3 : fa               [ 4] 	plx							; Restore x, y is intact
+dcf4 : 2010c6           [ 6] 	jsr vdp_poke				; Poke the value
+dcf7 : 18               [ 2] 	clc							; Calculate the colour table offset
+dcf8 : 8a               [ 2] 	txa							; Low byte
+dcf9 : 6519             [ 3] 	adc vdp_base+vdp_addr_col
+dcfb : aa               [ 2] 	tax
+dcfc : 98               [ 2] 	tya							; High byte
+dcfd : 651a             [ 3] 	adc vdp_base+vdp_addr_col+1
+dcff : a8               [ 2] 	tay
+dd00 : a530             [ 3] 	lda gr_scrngeom+gr_pixcol	; Colour
+dd02 : 4c10c6           [ 3] 	jmp vdp_poke
                              
-dd01 :                       gr_box_lmask
-dd01 : ff7f3f1f0f070301      	db 0xff,0x7f,0x3f,0x1f,0x0f,0x07,0x03,0x01
-dd09 :                       gr_box_rmask
-dd09 : 80c0e0f0f8fcfeff      	db 0x80,0xc0,0xe0,0xf0,0xf8,0xfc,0xfe,0xff
+dd05 :                       gr_box_lmask
+dd05 : ff7f3f1f0f070301      	db 0xff,0x7f,0x3f,0x1f,0x0f,0x07,0x03,0x01
+dd0d :                       gr_box_rmask
+dd0d : 80c0e0f0f8fcfeff      	db 0x80,0xc0,0xe0,0xf0,0xf8,0xfc,0xfe,0xff
                              
                              	
                              ;****************************************
@@ -7641,7 +7643,7 @@ dd09 : 80c0e0f0f8fcfeff      	db 0x80,0xc0,0xe0,0xf0,0xf8,0xfc,0xfe,0xff
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-dd11 :                       gr_circle
+dd15 :                       gr_circle
                              ; Local definitions of temp space to make
                              ; the rest of the code easier to read
 0085 =                       grc_x0 	= (num_a)
@@ -7652,142 +7654,142 @@ dd11 :                       gr_circle
 008b =                       grc_d	= (num_b+2)
                              
                              	;x = radius
-dd11 : a587             [ 3] 	lda grc_r
-dd13 : 8588             [ 3] 	sta grc_x
+dd15 : a587             [ 3] 	lda grc_r
+dd17 : 8588             [ 3] 	sta grc_x
                              	;y = 0
-dd15 : 648a             [ 3] 	stz grc_y
+dd19 : 648a             [ 3] 	stz grc_y
                              	;decision = 1 - x
-dd17 : a901             [ 2] 	lda #1
-dd19 : 38               [ 2] 	sec
-dd1a : e588             [ 3] 	sbc grc_x
-dd1c : 858b             [ 3] 	sta grc_d
-dd1e :                       gr_circle_plot
+dd1b : a901             [ 2] 	lda #1
+dd1d : 38               [ 2] 	sec
+dd1e : e588             [ 3] 	sbc grc_x
+dd20 : 858b             [ 3] 	sta grc_d
+dd22 :                       gr_circle_plot
                              	;while(x >= y)
-dd1e : a588             [ 3] 	lda grc_x
-dd20 : c58a             [ 3] 	cmp grc_y
-dd22 : 9028             [ 3] 	bcc gr_circle_done
-                             	;plot 8 points on current x,y
-dd24 : 204ddd           [ 6] 	jsr gr_circle_points
+dd22 : a588             [ 3] 	lda grc_x
+dd24 : c58a             [ 3] 	cmp grc_y
+dd26 : 9028             [ 3] 	bcc gr_circle_done
 AS65 Assembler for R6502 [1.42].                                     Page  119
 -------------------------------- bank\bank0.s --------------------------------
 
+                             	;plot 8 points on current x,y
+dd28 : 2051dd           [ 6] 	jsr gr_circle_points
                              	;y++
-dd27 : e68a             [ 5] 	inc grc_y
+dd2b : e68a             [ 5] 	inc grc_y
                              	;if d<=0
-dd29 : a58b             [ 3] 	lda grc_d
-dd2b : f013             [ 3] 	beq gr_circle_d_lte0
-dd2d : 3011             [ 3] 	bmi gr_circle_d_lte0
+dd2d : a58b             [ 3] 	lda grc_d
+dd2f : f013             [ 3] 	beq gr_circle_d_lte0
+dd31 : 3011             [ 3] 	bmi gr_circle_d_lte0
                              	;else
                              	;x--
-dd2f : c688             [ 5] 	dec grc_x
+dd33 : c688             [ 5] 	dec grc_x
                              	;decision += 2 * (y - x) + 1
-dd31 : a58a             [ 3] 	lda grc_y
-dd33 : 38               [ 2] 	sec
-dd34 : e588             [ 3] 	sbc grc_x
-dd36 : 0a               [ 2] 	asl a
-dd37 : 18               [ 2] 	clc
-dd38 : 6901             [ 2] 	adc #1
-dd3a : 658b             [ 3] 	adc grc_d
-dd3c : 858b             [ 3] 	sta grc_d
-dd3e : 80de             [ 3] 	bra gr_circle_plot	
-dd40 :                       gr_circle_d_lte0
+dd35 : a58a             [ 3] 	lda grc_y
+dd37 : 38               [ 2] 	sec
+dd38 : e588             [ 3] 	sbc grc_x
+dd3a : 0a               [ 2] 	asl a
+dd3b : 18               [ 2] 	clc
+dd3c : 6901             [ 2] 	adc #1
+dd3e : 658b             [ 3] 	adc grc_d
+dd40 : 858b             [ 3] 	sta grc_d
+dd42 : 80de             [ 3] 	bra gr_circle_plot	
+dd44 :                       gr_circle_d_lte0
                              	;decision += 2 * y + 1
-dd40 : a58a             [ 3] 	lda grc_y
-dd42 : 0a               [ 2] 	asl a
-dd43 : 18               [ 2] 	clc
-dd44 : 6901             [ 2] 	adc #1
-dd46 : 658b             [ 3] 	adc grc_d
-dd48 : 858b             [ 3] 	sta grc_d
-dd4a : 80d2             [ 3] 	bra gr_circle_plot	
-dd4c :                       gr_circle_done
-dd4c : 60               [ 6] 	rts
-dd4d :                       gr_circle_points
+dd44 : a58a             [ 3] 	lda grc_y
+dd46 : 0a               [ 2] 	asl a
+dd47 : 18               [ 2] 	clc
+dd48 : 6901             [ 2] 	adc #1
+dd4a : 658b             [ 3] 	adc grc_d
+dd4c : 858b             [ 3] 	sta grc_d
+dd4e : 80d2             [ 3] 	bra gr_circle_plot	
+dd50 :                       gr_circle_done
+dd50 : 60               [ 6] 	rts
+dd51 :                       gr_circle_points
                              ; Local names of temp storage
                              ; to make code easier to read
                              	;DrawPixel( x + x0,  yh + y0);
-dd4d : a588             [ 3] 	lda grc_x
-dd4f : 18               [ 2] 	clc
-dd50 : 6585             [ 3] 	adc grc_x0
-dd52 : aa               [ 2] 	tax
-dd53 : a58a             [ 3] 	lda grc_y
-dd55 : 18               [ 2] 	clc
-dd56 : 6586             [ 3] 	adc grc_y0
-dd58 : a8               [ 2] 	tay
-dd59 : 20bbdb           [ 6] 	jsr gr_point
+dd51 : a588             [ 3] 	lda grc_x
+dd53 : 18               [ 2] 	clc
+dd54 : 6585             [ 3] 	adc grc_x0
+dd56 : aa               [ 2] 	tax
+dd57 : a58a             [ 3] 	lda grc_y
+dd59 : 18               [ 2] 	clc
+dd5a : 6586             [ 3] 	adc grc_y0
+dd5c : a8               [ 2] 	tay
+dd5d : 20bbdb           [ 6] 	jsr gr_point
                              	;DrawPixel( y + x0,  xh + y0);
-dd5c : a58a             [ 3] 	lda grc_y
-dd5e : 18               [ 2] 	clc
-dd5f : 6585             [ 3] 	adc grc_x0
-dd61 : aa               [ 2] 	tax
-dd62 : a588             [ 3] 	lda grc_x
-dd64 : 18               [ 2] 	clc
-dd65 : 6586             [ 3] 	adc grc_y0
-dd67 : a8               [ 2] 	tay
-dd68 : 20bbdb           [ 6] 	jsr gr_point
+dd60 : a58a             [ 3] 	lda grc_y
+dd62 : 18               [ 2] 	clc
+dd63 : 6585             [ 3] 	adc grc_x0
+dd65 : aa               [ 2] 	tax
+dd66 : a588             [ 3] 	lda grc_x
+dd68 : 18               [ 2] 	clc
+dd69 : 6586             [ 3] 	adc grc_y0
+dd6b : a8               [ 2] 	tay
+dd6c : 20bbdb           [ 6] 	jsr gr_point
                              	;DrawPixel(-x + x0,  yh + y0);
-dd6b : a585             [ 3] 	lda grc_x0
-dd6d : 38               [ 2] 	sec
-dd6e : e588             [ 3] 	sbc grc_x
-dd70 : aa               [ 2] 	tax
-dd71 : a58a             [ 3] 	lda grc_y
-dd73 : 18               [ 2] 	clc
-dd74 : 6586             [ 3] 	adc grc_y0
-dd76 : a8               [ 2] 	tay
+dd6f : a585             [ 3] 	lda grc_x0
+dd71 : 38               [ 2] 	sec
+dd72 : e588             [ 3] 	sbc grc_x
+dd74 : aa               [ 2] 	tax
+dd75 : a58a             [ 3] 	lda grc_y
+dd77 : 18               [ 2] 	clc
 AS65 Assembler for R6502 [1.42].                                     Page  120
 -------------------------------- bank\bank0.s --------------------------------
 
-dd77 : 20bbdb           [ 6] 	jsr gr_point
+dd78 : 6586             [ 3] 	adc grc_y0
+dd7a : a8               [ 2] 	tay
+dd7b : 20bbdb           [ 6] 	jsr gr_point
                              	;DrawPixel(-y + x0,  xh + y0);
-dd7a : a585             [ 3] 	lda grc_x0
-dd7c : 38               [ 2] 	sec
-dd7d : e58a             [ 3] 	sbc grc_y
-dd7f : aa               [ 2] 	tax
-dd80 : a588             [ 3] 	lda grc_x
-dd82 : 18               [ 2] 	clc
-dd83 : 6586             [ 3] 	adc grc_y0
-dd85 : a8               [ 2] 	tay
-dd86 : 20bbdb           [ 6] 	jsr gr_point
+dd7e : a585             [ 3] 	lda grc_x0
+dd80 : 38               [ 2] 	sec
+dd81 : e58a             [ 3] 	sbc grc_y
+dd83 : aa               [ 2] 	tax
+dd84 : a588             [ 3] 	lda grc_x
+dd86 : 18               [ 2] 	clc
+dd87 : 6586             [ 3] 	adc grc_y0
+dd89 : a8               [ 2] 	tay
+dd8a : 20bbdb           [ 6] 	jsr gr_point
                              	;DrawPixel(-x + x0, -yh + y0);
-dd89 : a585             [ 3] 	lda grc_x0
-dd8b : 38               [ 2] 	sec
-dd8c : e588             [ 3] 	sbc grc_x
-dd8e : aa               [ 2] 	tax
-dd8f : a586             [ 3] 	lda grc_y0
-dd91 : 38               [ 2] 	sec
-dd92 : e58a             [ 3] 	sbc grc_y
-dd94 : a8               [ 2] 	tay
-dd95 : 20bbdb           [ 6] 	jsr gr_point
+dd8d : a585             [ 3] 	lda grc_x0
+dd8f : 38               [ 2] 	sec
+dd90 : e588             [ 3] 	sbc grc_x
+dd92 : aa               [ 2] 	tax
+dd93 : a586             [ 3] 	lda grc_y0
+dd95 : 38               [ 2] 	sec
+dd96 : e58a             [ 3] 	sbc grc_y
+dd98 : a8               [ 2] 	tay
+dd99 : 20bbdb           [ 6] 	jsr gr_point
                              	;DrawPixel(-y + x0, -xh + y0);
-dd98 : a585             [ 3] 	lda grc_x0
-dd9a : 38               [ 2] 	sec
-dd9b : e58a             [ 3] 	sbc grc_y
-dd9d : aa               [ 2] 	tax
-dd9e : a586             [ 3] 	lda grc_y0
-dda0 : 38               [ 2] 	sec
-dda1 : e588             [ 3] 	sbc grc_x
-dda3 : a8               [ 2] 	tay
-dda4 : 20bbdb           [ 6] 	jsr gr_point
+dd9c : a585             [ 3] 	lda grc_x0
+dd9e : 38               [ 2] 	sec
+dd9f : e58a             [ 3] 	sbc grc_y
+dda1 : aa               [ 2] 	tax
+dda2 : a586             [ 3] 	lda grc_y0
+dda4 : 38               [ 2] 	sec
+dda5 : e588             [ 3] 	sbc grc_x
+dda7 : a8               [ 2] 	tay
+dda8 : 20bbdb           [ 6] 	jsr gr_point
                              	;DrawPixel( x + x0, -yh + y0);
-dda7 : a588             [ 3] 	lda grc_x
-dda9 : 18               [ 2] 	clc
-ddaa : 6585             [ 3] 	adc grc_x0
-ddac : aa               [ 2] 	tax
-ddad : a586             [ 3] 	lda grc_y0
-ddaf : 38               [ 2] 	sec
-ddb0 : e58a             [ 3] 	sbc grc_y
-ddb2 : a8               [ 2] 	tay
-ddb3 : 20bbdb           [ 6] 	jsr gr_point
+ddab : a588             [ 3] 	lda grc_x
+ddad : 18               [ 2] 	clc
+ddae : 6585             [ 3] 	adc grc_x0
+ddb0 : aa               [ 2] 	tax
+ddb1 : a586             [ 3] 	lda grc_y0
+ddb3 : 38               [ 2] 	sec
+ddb4 : e58a             [ 3] 	sbc grc_y
+ddb6 : a8               [ 2] 	tay
+ddb7 : 20bbdb           [ 6] 	jsr gr_point
                              	;DrawPixel( y + x0, -xh + y0);
-ddb6 : a58a             [ 3] 	lda grc_y
-ddb8 : 18               [ 2] 	clc
-ddb9 : 6585             [ 3] 	adc grc_x0
-ddbb : aa               [ 2] 	tax
-ddbc : a586             [ 3] 	lda grc_y0
-ddbe : 38               [ 2] 	sec
-ddbf : e588             [ 3] 	sbc grc_x
-ddc1 : a8               [ 2] 	tay
-ddc2 : 20bbdb           [ 6] 	jsr gr_point
-ddc5 : 60               [ 6] 	rts
+ddba : a58a             [ 3] 	lda grc_y
+ddbc : 18               [ 2] 	clc
+ddbd : 6585             [ 3] 	adc grc_x0
+ddbf : aa               [ 2] 	tax
+ddc0 : a586             [ 3] 	lda grc_y0
+ddc2 : 38               [ 2] 	sec
+ddc3 : e588             [ 3] 	sbc grc_x
+ddc5 : a8               [ 2] 	tay
+ddc6 : 20bbdb           [ 6] 	jsr gr_point
+ddc9 : 60               [ 6] 	rts
                              
                              	
                              	
@@ -7796,15 +7798,15 @@ ddc5 : 60               [ 6] 	rts
                              ;* Draw a line from x0,y0 -> x1,y1
                              ;* Input :	num_a   = x0
                              ;*			num_a+1 = y0
-                             ;*			num_a+2 = x1
-                             ;*			num_a+3 = y1
 AS65 Assembler for R6502 [1.42].                                     Page  121
 -------------------------------- bank\bank0.s --------------------------------
 
+                             ;*			num_a+2 = x1
+                             ;*			num_a+3 = y1
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-ddc6 :                       gr_line
+ddca :                       gr_line
                              
                              ; Local definitions of temp space to make
                              ; the rest of the code easier to read
@@ -7822,147 +7824,147 @@ ddc6 :                       gr_line
 0094 =                       grl_iny = (num_tmp+3)
 0095 =                       grl_p	= (num_buf)
                              
-ddc6 : 648c             [ 3] 	stz grl_xyyx				; Assume normal xy axis
+ddca : 648c             [ 3] 	stz grl_xyyx				; Assume normal xy axis
                              	
                              ;    int dx, dy, p, x, y;
                              	; check if abs(dy)>abs(dx) if so need to swap xy
                              	; num_b = abs(x), num_b+1 = abs(dy)
-ddc8 : 38               [ 2] 	sec
-ddc9 : a587             [ 3] 	lda grl_x1
-ddcb : e585             [ 3] 	sbc grl_x0
-ddcd : b003             [ 3] 	bcs gr_line_skip_dx_neg
-ddcf : 49ff             [ 2] 	eor #0xff
-ddd1 : 1a               [ 2] 	inc a
-ddd2 :                       gr_line_skip_dx_neg
-ddd2 : 858a             [ 3] 	sta grl_dx
-ddd4 : 38               [ 2] 	sec
-ddd5 : a588             [ 3] 	lda grl_y1
-ddd7 : e586             [ 3] 	sbc grl_y0
-ddd9 : b003             [ 3] 	bcs gr_line_skip_dy_neg
-dddb : 49ff             [ 2] 	eor #0xff
-dddd : 1a               [ 2] 	inc a
-ddde :                       gr_line_skip_dy_neg
-ddde : 858b             [ 3] 	sta grl_dy
-dde0 : c58a             [ 3] 	cmp grl_dx
-dde2 : 901a             [ 3] 	bcc gr_line_skip_xy_swap
+ddcc : 38               [ 2] 	sec
+ddcd : a587             [ 3] 	lda grl_x1
+ddcf : e585             [ 3] 	sbc grl_x0
+ddd1 : b003             [ 3] 	bcs gr_line_skip_dx_neg
+ddd3 : 49ff             [ 2] 	eor #0xff
+ddd5 : 1a               [ 2] 	inc a
+ddd6 :                       gr_line_skip_dx_neg
+ddd6 : 858a             [ 3] 	sta grl_dx
+ddd8 : 38               [ 2] 	sec
+ddd9 : a588             [ 3] 	lda grl_y1
+dddb : e586             [ 3] 	sbc grl_y0
+dddd : b003             [ 3] 	bcs gr_line_skip_dy_neg
+dddf : 49ff             [ 2] 	eor #0xff
+dde1 : 1a               [ 2] 	inc a
+dde2 :                       gr_line_skip_dy_neg
+dde2 : 858b             [ 3] 	sta grl_dy
+dde4 : c58a             [ 3] 	cmp grl_dx
+dde6 : 901a             [ 4] 	bcc gr_line_skip_xy_swap
                              	; swap xy axes and also dx and dy
-dde4 : a585             [ 3] 	lda grl_x0					; swap x0 and y0
-dde6 : a686             [ 3] 	ldx grl_y0
-dde8 : 8586             [ 3] 	sta grl_y0
-ddea : 8685             [ 3] 	stx grl_x0
-ddec : a587             [ 3] 	lda grl_x1					; swap x1 and y1
-ddee : a688             [ 3] 	ldx grl_y1
-ddf0 : 8588             [ 3] 	sta grl_y1
-ddf2 : 8687             [ 3] 	stx grl_x1
-ddf4 : a58a             [ 3] 	lda grl_dx					; swap dy and dx
-ddf6 : a68b             [ 3] 	ldx grl_dy
-ddf8 : 858b             [ 3] 	sta grl_dy
-ddfa : 868a             [ 3] 	stx grl_dx
-ddfc : e68c             [ 5] 	inc grl_xyyx				; set flag to Not Z to know abou
+dde8 : a585             [ 3] 	lda grl_x0					; swap x0 and y0
+ddea : a686             [ 3] 	ldx grl_y0
+ddec : 8586             [ 3] 	sta grl_y0
+ddee : 8685             [ 3] 	stx grl_x0
+ddf0 : a587             [ 3] 	lda grl_x1					; swap x1 and y1
+ddf2 : a688             [ 3] 	ldx grl_y1
+ddf4 : 8588             [ 3] 	sta grl_y1
+ddf6 : 8687             [ 3] 	stx grl_x1
+ddf8 : a58a             [ 3] 	lda grl_dx					; swap dy and dx
+ddfa : a68b             [ 3] 	ldx grl_dy
+ddfc : 858b             [ 3] 	sta grl_dy
+ddfe : 868a             [ 3] 	stx grl_dx
+de00 : e68c             [ 5] 	inc grl_xyyx				; set flag to Not Z to know abou
                              	
-ddfe :                       gr_line_skip_xy_swap	
-                             	; assume going from left to right
-ddfe : a901             [ 2] 	lda #1
+de02 :                       gr_line_skip_xy_swap	
 AS65 Assembler for R6502 [1.42].                                     Page  122
 -------------------------------- bank\bank0.s --------------------------------
 
-de00 : 8593             [ 3] 	sta grl_inx
-de02 : a585             [ 3] 	lda grl_x0
-de04 : c587             [ 3] 	cmp grl_x1
-de06 : 9004             [ 3] 	bcc gr_line_skip_x_swap
-de08 : a9ff             [ 2] 	lda #0xff					; make x increment negative
-de0a : 8593             [ 3] 	sta grl_inx
+                             	; assume going from left to right
+de02 : a901             [ 2] 	lda #1
+de04 : 8593             [ 3] 	sta grl_inx
+de06 : a585             [ 3] 	lda grl_x0
+de08 : c587             [ 3] 	cmp grl_x1
+de0a : 9004             [ 3] 	bcc gr_line_skip_x_swap
+de0c : a9ff             [ 2] 	lda #0xff					; make x increment negative
+de0e : 8593             [ 3] 	sta grl_inx
                              	
-de0c :                       gr_line_skip_x_swap
+de10 :                       gr_line_skip_x_swap
                              	; assume going from top to bottom
-de0c : a901             [ 2] 	lda #1
-de0e : 8594             [ 3] 	sta grl_iny
-de10 : a586             [ 3] 	lda grl_y0
-de12 : c588             [ 3] 	cmp grl_y1
-de14 : 9004             [ 3] 	bcc gr_line_skip_y_up
-de16 : a9ff             [ 2] 	lda #0xff					; make y increment negative
-de18 : 8594             [ 3] 	sta grl_iny
+de10 : a901             [ 2] 	lda #1
+de12 : 8594             [ 3] 	sta grl_iny
+de14 : a586             [ 3] 	lda grl_y0
+de16 : c588             [ 3] 	cmp grl_y1
+de18 : 9004             [ 3] 	bcc gr_line_skip_y_up
+de1a : a9ff             [ 2] 	lda #0xff					; make y increment negative
+de1c : 8594             [ 3] 	sta grl_iny
                              
-de1a :                       gr_line_skip_y_up
-de1a : a58a             [ 3] 	lda grl_dx
-de1c : 0a               [ 2] 	asl a
-de1d : 858d             [ 3] 	sta grl_2dx					; 2*dx (word)
-de1f : 648e             [ 3] 	stz grl_2dx+1
-de21 : 268e             [ 5] 	rol grl_2dx+1
+de1e :                       gr_line_skip_y_up
+de1e : a58a             [ 3] 	lda grl_dx
+de20 : 0a               [ 2] 	asl a
+de21 : 858d             [ 3] 	sta grl_2dx					; 2*dx (word)
+de23 : 648e             [ 3] 	stz grl_2dx+1
+de25 : 268e             [ 5] 	rol grl_2dx+1
                              
-de23 : a58b             [ 3] 	lda grl_dy
-de25 : 0a               [ 2] 	asl a
-de26 : 858f             [ 3] 	sta grl_2dy					; 2*dy (word)
-de28 : 6490             [ 3] 	stz grl_2dy+1
-de2a : 2690             [ 5] 	rol grl_2dy+1
+de27 : a58b             [ 3] 	lda grl_dy
+de29 : 0a               [ 2] 	asl a
+de2a : 858f             [ 3] 	sta grl_2dy					; 2*dy (word)
+de2c : 6490             [ 3] 	stz grl_2dy+1
+de2e : 2690             [ 5] 	rol grl_2dy+1
                              	
                              ;    p=2*dy-dx;					; p (word)
-de2c : 38               [ 2] 	sec
-de2d : a58f             [ 3] 	lda grl_2dy
-de2f : e58a             [ 3] 	sbc grl_dx
-de31 : 8595             [ 3] 	sta grl_p
-de33 : a590             [ 3] 	lda grl_2dy+1
-de35 : e900             [ 2] 	sbc #0
-de37 : 8596             [ 3] 	sta grl_p+1
+de30 : 38               [ 2] 	sec
+de31 : a58f             [ 3] 	lda grl_2dy
+de33 : e58a             [ 3] 	sbc grl_dx
+de35 : 8595             [ 3] 	sta grl_p
+de37 : a590             [ 3] 	lda grl_2dy+1
+de39 : e900             [ 2] 	sbc #0
+de3b : 8596             [ 3] 	sta grl_p+1
                              	
                              ;   2*(dy-dx)					; num_tmp+2 = 2*(dy-dx)
-de39 : 38               [ 2] 	sec
-de3a : a58f             [ 3] 	lda grl_2dy
-de3c : e58d             [ 3] 	sbc grl_2dx
-de3e : 8591             [ 3] 	sta grl_2dxy
-de40 : a590             [ 3] 	lda grl_2dy+1
-de42 : e58e             [ 3] 	sbc grl_2dx+1
-de44 : 8592             [ 3] 	sta grl_2dxy+1
+de3d : 38               [ 2] 	sec
+de3e : a58f             [ 3] 	lda grl_2dy
+de40 : e58d             [ 3] 	sbc grl_2dx
+de42 : 8591             [ 3] 	sta grl_2dxy
+de44 : a590             [ 3] 	lda grl_2dy+1
+de46 : e58e             [ 3] 	sbc grl_2dx+1
+de48 : 8592             [ 3] 	sta grl_2dxy+1
                              
-de46 :                       gr_line_pixel
+de4a :                       gr_line_pixel
                              	; plot the current pixel position
-de46 : a685             [ 3] 	ldx grl_x0
-de48 : a486             [ 3] 	ldy grl_y0
-de4a : a58c             [ 3] 	lda grl_xyyx				; is xy swapped?
-de4c : f004             [ 3] 	beq gr_skip_xy_swap2
-de4e : a686             [ 3] 	ldx grl_y0
-de50 : a485             [ 3] 	ldy grl_x0	
-de52 :                       gr_skip_xy_swap2
-de52 : 20bbdb           [ 6] 	jsr gr_point
+de4a : a685             [ 3] 	ldx grl_x0
+de4c : a486             [ 3] 	ldy grl_y0
+de4e : a58c             [ 3] 	lda grl_xyyx				; is xy swapped?
+de50 : f004             [ 3] 	beq gr_skip_xy_swap2
+de52 : a686             [ 3] 	ldx grl_y0
+de54 : a485             [ 3] 	ldy grl_x0	
+de56 :                       gr_skip_xy_swap2
+de56 : 20bbdb           [ 6] 	jsr gr_point
                              	
-de55 : a585             [ 3] 	lda grl_x0					; Check if done
-de57 : c587             [ 3] 	cmp grl_x1
-de59 : f030             [ 3] 	beq gr_line_done
+de59 : a585             [ 3] 	lda grl_x0					; Check if done
 AS65 Assembler for R6502 [1.42].                                     Page  123
 -------------------------------- bank\bank0.s --------------------------------
 
+de5b : c587             [ 3] 	cmp grl_x1
+de5d : f030             [ 3] 	beq gr_line_done
                              
                              	; check sign of p
-de5b : a596             [ 3] 	lda grl_p+1
-de5d : 3016             [ 3] 	bmi gr_line_neg_p
+de5f : a596             [ 3] 	lda grl_p+1
+de61 : 3016             [ 3] 	bmi gr_line_neg_p
                              
                              	; if p >=0
                              	
                              	; y=y+increment
-de5f : 18               [ 2] 	clc
-de60 : a586             [ 3] 	lda grl_y0
-de62 : 6594             [ 3] 	adc grl_iny
-de64 : 8586             [ 3] 	sta grl_y0
+de63 : 18               [ 2] 	clc
+de64 : a586             [ 3] 	lda grl_y0
+de66 : 6594             [ 3] 	adc grl_iny
+de68 : 8586             [ 3] 	sta grl_y0
                              
                              	; p=p+2*dy-2*dx
                              	_addZPWord grl_p,grl_2dxy
                              
-de73 : 800d             [ 3] 	bra gr_line_incx
+de77 : 800d             [ 3] 	bra gr_line_incx
                              
-de75 :                       gr_line_neg_p
+de79 :                       gr_line_neg_p
                              	; if p < 0
                              	; p=p+2*dy
                              	_addZPWord grl_p,grl_2dy
                              
                              	
-de82 :                       gr_line_incx
-de82 : 18               [ 2] 	clc
-de83 : a585             [ 3] 	lda grl_x0
-de85 : 6593             [ 3] 	adc grl_inx
-de87 : 8585             [ 3] 	sta grl_x0
-de89 : 80bb             [ 3] 	bra gr_line_pixel
-de8b :                       gr_line_done
-de8b : 60               [ 6] 	rts
+de86 :                       gr_line_incx
+de86 : 18               [ 2] 	clc
+de87 : a585             [ 3] 	lda grl_x0
+de89 : 6593             [ 3] 	adc grl_inx
+de8b : 8585             [ 3] 	sta grl_x0
+de8d : 80bb             [ 3] 	bra gr_line_pixel
+de8f :                       gr_line_done
+de8f : 60               [ 6] 	rts
                              	
                              
                              ;    while(x<x1)
@@ -7986,106 +7988,106 @@ de8b : 60               [ 6] 	rts
                              ;* gr_scroll_up
                              ;* Scroll screen one line up
                              ;****************************************
-de8c :                       gr_scroll_up
-de8c : e612             [ 5] 	inc vdp_curoff
+de90 :                       gr_scroll_up
+de90 : e612             [ 5] 	inc vdp_curoff
                              	
                              	; Get VDP Address of line + 1 line (source addr)
-de8e : 18               [ 2] 	clc
-de8f : a523             [ 3] 	lda gr_scrngeom+gr_screen_start
-de91 : 6527             [ 3] 	adc gr_scrngeom+gr_screen_w
+de92 : 18               [ 2] 	clc
 AS65 Assembler for R6502 [1.42].                                     Page  124
 -------------------------------- bank\bank0.s --------------------------------
 
-de93 : 853f             [ 3] 	sta tmp_v1
-de95 : a524             [ 3] 	lda gr_scrngeom+gr_screen_start+1
-de97 : 6900             [ 2] 	adc #0
-de99 : 8540             [ 3] 	sta tmp_v1+1
+de93 : a523             [ 3] 	lda gr_scrngeom+gr_screen_start
+de95 : 6527             [ 3] 	adc gr_scrngeom+gr_screen_w
+de97 : 853f             [ 3] 	sta tmp_v1
+de99 : a524             [ 3] 	lda gr_scrngeom+gr_screen_start+1
+de9b : 6900             [ 2] 	adc #0
+de9d : 8540             [ 3] 	sta tmp_v1+1
                              	
                              	; Get destinaton address = first line of screen
-de9b : a523             [ 3] 	lda gr_scrngeom+gr_screen_start
-de9d : 8543             [ 3] 	sta tmp_b
-de9f : a524             [ 3] 	lda gr_scrngeom+gr_screen_start+1
-dea1 : 8544             [ 3] 	sta tmp_b+1
+de9f : a523             [ 3] 	lda gr_scrngeom+gr_screen_start
+dea1 : 8543             [ 3] 	sta tmp_b
+dea3 : a524             [ 3] 	lda gr_scrngeom+gr_screen_start+1
+dea5 : 8544             [ 3] 	sta tmp_b+1
                              	
-dea3 : a428             [ 3] 	ldy gr_scrngeom+gr_screen_h
-dea5 : 88               [ 2] 	dey
+dea7 : a428             [ 3] 	ldy gr_scrngeom+gr_screen_h
+dea9 : 88               [ 2] 	dey
                              	
-dea6 : 78               [ 2] 	sei						; Stop IRQ as it messes with VDP
+deaa : 78               [ 2] 	sei						; Stop IRQ as it messes with VDP
                              	; Only use vdp primitives inside sei,cli
                              
                              	; Restore what was underneath cursor
-dea7 : a62c             [ 3] 	ldx gr_scrngeom+gr_cur_ptr
-dea9 : a52d             [ 3] 	lda gr_scrngeom+gr_cur_ptr+1
-deab : 20e5c5           [ 6] 	jsr vdp_wr_addr
-deae : a514             [ 3] 	lda vdp_curval
-deb0 : 200bc6           [ 6] 	jsr vdp_wr_vram
+deab : a62c             [ 3] 	ldx gr_scrngeom+gr_cur_ptr
+dead : a52d             [ 3] 	lda gr_scrngeom+gr_cur_ptr+1
+deaf : 20e5c5           [ 6] 	jsr vdp_wr_addr
+deb2 : a514             [ 3] 	lda vdp_curval
+deb4 : 200bc6           [ 6] 	jsr vdp_wr_vram
                              
-deb3 :                       gr_scroll_cpy_ln
+deb7 :                       gr_scroll_cpy_ln
                              	; Set VDP with source address to read
-deb3 : a63f             [ 3] 	ldx tmp_v1
-deb5 : a540             [ 3] 	lda tmp_v1+1
-deb7 : 20fcc5           [ 6] 	jsr vdp_rd_addr
+deb7 : a63f             [ 3] 	ldx tmp_v1
+deb9 : a540             [ 3] 	lda tmp_v1+1
+debb : 20fcc5           [ 6] 	jsr vdp_rd_addr
                              
                              	; Read in a line worth of screen
-deba : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
-debc :                       gr_scroll_read_ln
-debc : 2006c6           [ 6] 	jsr vdp_rd_vram
-debf : 9d8009           [ 5] 	sta scratch+128,x			; +128 to avoid string corru
-dec2 : ca               [ 2] 	dex
-dec3 : d0f7             [ 3] 	bne gr_scroll_read_ln
+debe : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
+dec0 :                       gr_scroll_read_ln
+dec0 : 2006c6           [ 6] 	jsr vdp_rd_vram
+dec3 : 9d8009           [ 5] 	sta scratch+128,x			; +128 to avoid string corru
+dec6 : ca               [ 2] 	dex
+dec7 : d0f7             [ 3] 	bne gr_scroll_read_ln
                              
                              	; Set VDP with destinaton to write
-dec5 : a643             [ 3] 	ldx tmp_b
-dec7 : a544             [ 3] 	lda tmp_b+1
-dec9 : 20e5c5           [ 6] 	jsr vdp_wr_addr
+dec9 : a643             [ 3] 	ldx tmp_b
+decb : a544             [ 3] 	lda tmp_b+1
+decd : 20e5c5           [ 6] 	jsr vdp_wr_addr
                              	
                              	; Write out a line worth of screen
-decc : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
-dece :                       gr_scroll_write_ln
-dece : bd8009           [ 4] 	lda scratch+128,x
-ded1 : 200bc6           [ 6] 	jsr vdp_wr_vram
-ded4 : ca               [ 2] 	dex
-ded5 : d0f7             [ 3] 	bne gr_scroll_write_ln
+ded0 : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
+ded2 :                       gr_scroll_write_ln
+ded2 : bd8009           [ 4] 	lda scratch+128,x
+ded5 : 200bc6           [ 6] 	jsr vdp_wr_vram
+ded8 : ca               [ 2] 	dex
+ded9 : d0f7             [ 3] 	bne gr_scroll_write_ln
                              
                              	; Update source address
-ded7 : 18               [ 2] 	clc
-ded8 : a53f             [ 3] 	lda tmp_v1
-deda : 6527             [ 3] 	adc gr_scrngeom+gr_screen_w
-dedc : 853f             [ 3] 	sta tmp_v1
-dede : a540             [ 3] 	lda tmp_v1+1
-dee0 : 6900             [ 2] 	adc #0
-dee2 : 8540             [ 3] 	sta tmp_v1+1
+dedb : 18               [ 2] 	clc
+dedc : a53f             [ 3] 	lda tmp_v1
+dede : 6527             [ 3] 	adc gr_scrngeom+gr_screen_w
+dee0 : 853f             [ 3] 	sta tmp_v1
+dee2 : a540             [ 3] 	lda tmp_v1+1
+dee4 : 6900             [ 2] 	adc #0
+dee6 : 8540             [ 3] 	sta tmp_v1+1
                              	; Update destinaton address
-dee4 : 18               [ 2] 	clc
-dee5 : a543             [ 3] 	lda tmp_b
 AS65 Assembler for R6502 [1.42].                                     Page  125
 -------------------------------- bank\bank0.s --------------------------------
 
-dee7 : 6527             [ 3] 	adc gr_scrngeom+gr_screen_w
-dee9 : 8543             [ 3] 	sta tmp_b
-deeb : a544             [ 3] 	lda tmp_b+1
-deed : 6900             [ 2] 	adc #0
-deef : 8544             [ 3] 	sta tmp_b+1
+dee8 : 18               [ 2] 	clc
+dee9 : a543             [ 3] 	lda tmp_b
+deeb : 6527             [ 3] 	adc gr_scrngeom+gr_screen_w
+deed : 8543             [ 3] 	sta tmp_b
+deef : a544             [ 3] 	lda tmp_b+1
+def1 : 6900             [ 2] 	adc #0
+def3 : 8544             [ 3] 	sta tmp_b+1
                              
                              	; One line complete
-def1 : 88               [ 2] 	dey
-def2 : d0bf             [ 3] 	bne gr_scroll_cpy_ln
+def5 : 88               [ 2] 	dey
+def6 : d0bf             [ 3] 	bne gr_scroll_cpy_ln
                              	
                              	; VDP is pointing at last line
                              	; Needs to be filled with blank
-def4 : a515             [ 3] 	lda vdp_blank
-def6 : 8514             [ 3] 	sta vdp_curval			; Also this is the cursor value
-def8 : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
-defa :                       gr_scroll_erase_ln
-defa : 200bc6           [ 6] 	jsr vdp_wr_vram
-defd : ca               [ 2] 	dex
-defe : d0fa             [ 3] 	bne gr_scroll_erase_ln
+def8 : a515             [ 3] 	lda vdp_blank
+defa : 8514             [ 3] 	sta vdp_curval			; Also this is the cursor value
+defc : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
+defe :                       gr_scroll_erase_ln
+defe : 200bc6           [ 6] 	jsr vdp_wr_vram
+df01 : ca               [ 2] 	dex
+df02 : d0fa             [ 4] 	bne gr_scroll_erase_ln
                              
-df00 : 58               [ 2] 	cli			; Enable IRQ
+df04 : 58               [ 2] 	cli			; Enable IRQ
                              
-df01 : c612             [ 5] 	dec vdp_curoff
+df05 : c612             [ 5] 	dec vdp_curoff
                              
-df03 : 60               [ 6] 	rts
+df07 : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* gr_cur_right
@@ -8094,38 +8096,38 @@ df03 : 60               [ 6] 	rts
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-df04 :                       gr_cur_right
+df08 :                       gr_cur_right
                              	_pushAXY
                              
                              	; Load cursor x,y position
-df07 : a62a             [ 3] 	ldx gr_scrngeom+gr_cur_x
-df09 : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
+df0b : a62a             [ 3] 	ldx gr_scrngeom+gr_cur_x
+df0d : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
                              
                              	; Move cursor right
-df0b : e8               [ 2] 	inx
+df0f : e8               [ 2] 	inx
                              	; Check if reached past edge of line
-df0c : e427             [ 3] 	cpx gr_scrngeom+gr_screen_w
-df0e : d00f             [ 3] 	bne gr_adv_skip_nl
+df10 : e427             [ 3] 	cpx gr_scrngeom+gr_screen_w
+df12 : d00f             [ 3] 	bne gr_adv_skip_nl
                              	; If got here then wrap to next line
-df10 : a200             [ 2] 	ldx #0
-df12 : c8               [ 2] 	iny
-df13 : c428             [ 3] 	cpy gr_scrngeom+gr_screen_h
-df15 : d008             [ 3] 	bne gr_adv_skip_nl
+df14 : a200             [ 2] 	ldx #0
+df16 : c8               [ 2] 	iny
+df17 : c428             [ 3] 	cpy gr_scrngeom+gr_screen_h
+df19 : d008             [ 3] 	bne gr_adv_skip_nl
                              	; If got here then screen needs to scroll
-df17 : 88               [ 2] 	dey					; First put y back in bound
-df18 : da               [ 3] 	phx
-df19 : 5a               [ 3] 	phy
-df1a : 208cde           [ 6] 	jsr gr_scroll_up
-df1d : 7a               [ 4] 	ply
-df1e : fa               [ 4] 	plx
-df1f :                       gr_adv_skip_nl
-df1f : 20fada           [ 6] 	jsr gr_set_cur
+df1b : 88               [ 2] 	dey					; First put y back in bound
+df1c : da               [ 3] 	phx
+df1d : 5a               [ 3] 	phy
+df1e : 2090de           [ 6] 	jsr gr_scroll_up
+df21 : 7a               [ 4] 	ply
+df22 : fa               [ 4] 	plx
+df23 :                       gr_adv_skip_nl
+df23 : 20fada           [ 6] 	jsr gr_set_cur
                              	_pullAXY
-                             
-df25 : 60               [ 6] 	rts
 AS65 Assembler for R6502 [1.42].                                     Page  126
 -------------------------------- bank\bank0.s --------------------------------
 
+                             
+df29 : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* gr_cur_left
@@ -8134,28 +8136,28 @@ df25 : 60               [ 6] 	rts
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-df26 :                       gr_cur_left
+df2a :                       gr_cur_left
                              	_pushAXY
                              
                              	; Load cursor x,y position, load X last to check
-df29 : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
-df2b : a62a             [ 3] 	ldx gr_scrngeom+gr_cur_x
+df2d : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
+df2f : a62a             [ 3] 	ldx gr_scrngeom+gr_cur_x
                              	
                              	; Decrement screen pointer
                              	; Move cursor left
-df2d : d007             [ 3] 	bne gr_cur_skip_at_left		; If already at the lef
-df2f : c000             [ 2] 	cpy #0						; If already at the top left
-df31 : f007             [ 3] 	beq gr_cur_skip_at_tl
-df33 : 88               [ 2] 	dey
-df34 : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
-df36 :                       gr_cur_skip_at_left
-df36 : ca               [ 2] 	dex
-df37 : 20fada           [ 6] 	jsr gr_set_cur
+df31 : d007             [ 3] 	bne gr_cur_skip_at_left		; If already at the lef
+df33 : c000             [ 2] 	cpy #0						; If already at the top left
+df35 : f007             [ 3] 	beq gr_cur_skip_at_tl
+df37 : 88               [ 2] 	dey
+df38 : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
+df3a :                       gr_cur_skip_at_left
+df3a : ca               [ 2] 	dex
+df3b : 20fada           [ 6] 	jsr gr_set_cur
                              
-df3a :                       gr_cur_skip_at_tl	
+df3e :                       gr_cur_skip_at_tl	
                              	_pullAXY
                              
-df3d : 60               [ 6] 	rts
+df41 : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* gr_cur_up
@@ -8164,21 +8166,21 @@ df3d : 60               [ 6] 	rts
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-df3e :                       gr_cur_up
+df42 :                       gr_cur_up
                              	_pushAXY
                              
                              	; Load cursor x,y position, load Y last to check
-df41 : a62a             [ 3] 	ldx gr_scrngeom+gr_cur_x
-df43 : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
+df45 : a62a             [ 3] 	ldx gr_scrngeom+gr_cur_x
+df47 : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
                              	
-df45 : f004             [ 3] 	beq gr_cur_skip_at_top	; If already at the top, 
-df47 : 88               [ 2] 	dey
-df48 : 20fada           [ 6] 	jsr gr_set_cur
+df49 : f004             [ 3] 	beq gr_cur_skip_at_top	; If already at the top, 
+df4b : 88               [ 2] 	dey
+df4c : 20fada           [ 6] 	jsr gr_set_cur
                              	
-df4b :                       gr_cur_skip_at_top	
+df4f :                       gr_cur_skip_at_top	
                              	_pullAXY
                              
-df4e : 60               [ 6] 	rts
+df52 : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* gr_cur_down
@@ -8186,26 +8188,26 @@ df4e : 60               [ 6] 	rts
                              ;* Input : None
                              ;* Output : None
                              ;* Regs affected : None
-                             ;****************************************
-df4f :                       gr_cur_down
 AS65 Assembler for R6502 [1.42].                                     Page  127
 -------------------------------- bank\bank0.s --------------------------------
 
+                             ;****************************************
+df53 :                       gr_cur_down
                              	_pushAXY
                              
                              	; Load cursor x,y position
-df52 : a62a             [ 3] 	ldx gr_scrngeom+gr_cur_x
-df54 : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
-df56 : c8               [ 2] 	iny
-df57 : c428             [ 3] 	cpy gr_scrngeom+gr_screen_h			; If already at  b
-df59 : f003             [ 3] 	beq gr_cur_skip_at_bot				; then don't do anythi
+df56 : a62a             [ 3] 	ldx gr_scrngeom+gr_cur_x
+df58 : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
+df5a : c8               [ 2] 	iny
+df5b : c428             [ 3] 	cpy gr_scrngeom+gr_screen_h			; If already at  b
+df5d : f003             [ 3] 	beq gr_cur_skip_at_bot				; then don't do anythi
                              	
-df5b : 20fada           [ 6] 	jsr gr_set_cur
+df5f : 20fada           [ 6] 	jsr gr_set_cur
                              
-df5e :                       gr_cur_skip_at_bot
+df62 :                       gr_cur_skip_at_bot
                              	_pullAXY
                              
-df61 : 60               [ 6] 	rts
+df65 : 60               [ 6] 	rts
                              
                              
                              ;****************************************
@@ -8215,27 +8217,27 @@ df61 : 60               [ 6] 	rts
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-df62 :                       gr_new_ln
+df66 :                       gr_new_ln
                              	_pushAXY
                              
                              	; X pos is zero, Y needs to increment
-df65 : a200             [ 2] 	ldx #0
-df67 : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
-df69 : c8               [ 2] 	iny
-df6a : c428             [ 3] 	cpy gr_scrngeom+gr_screen_h
-df6c : d008             [ 3] 	bne gr_nl_skip_nl
+df69 : a200             [ 2] 	ldx #0
+df6b : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
+df6d : c8               [ 2] 	iny
+df6e : c428             [ 3] 	cpy gr_scrngeom+gr_screen_h
+df70 : d008             [ 3] 	bne gr_nl_skip_nl
                              	; If got here then screen needs to scroll
-df6e : 88               [ 2] 	dey
-df6f : da               [ 3] 	phx
-df70 : 5a               [ 3] 	phy
-df71 : 208cde           [ 6] 	jsr gr_scroll_up
-df74 : 7a               [ 4] 	ply
-df75 : fa               [ 4] 	plx
-df76 :                       gr_nl_skip_nl
-df76 : 20fada           [ 6] 	jsr gr_set_cur
+df72 : 88               [ 2] 	dey
+df73 : da               [ 3] 	phx
+df74 : 5a               [ 3] 	phy
+df75 : 2090de           [ 6] 	jsr gr_scroll_up
+df78 : 7a               [ 4] 	ply
+df79 : fa               [ 4] 	plx
+df7a :                       gr_nl_skip_nl
+df7a : 20fada           [ 6] 	jsr gr_set_cur
                              	_pullAXY
                              
-df7c : 60               [ 6] 	rts
+df80 : 60               [ 6] 	rts
                              	
                              ;****************************************
                              ;* gr_del
@@ -8244,18 +8246,18 @@ df7c : 60               [ 6] 	rts
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-df7d :                       gr_del
+df81 :                       gr_del
                              	_pushAXY
                              
-df80 : 2026df           [ 6] 	jsr gr_cur_left
-df83 : a920             [ 2] 	lda #' '							; Put a space
-df85 : 20e0da           [ 6] 	jsr gr_put
+df84 : 202adf           [ 6] 	jsr gr_cur_left
+df87 : a920             [ 2] 	lda #' '							; Put a space
+df89 : 20e0da           [ 6] 	jsr gr_put
                              	_pullAXY
-                             
-df8b : 60               [ 6] 	rts
 AS65 Assembler for R6502 [1.42].                                     Page  128
 -------------------------------- bank\bank0.s --------------------------------
 
+                             
+df8f : 60               [ 6] 	rts
                              
                              
                              ;****************************************
@@ -8263,16 +8265,16 @@ df8b : 60               [ 6] 	rts
                              ;* Waits for a key press, C=1 synchronous
                              ;* A = Key code
                              ;****************************************
-df8c :                       gr_get_key
-df8c : 2000d0           [ 6] 	jsr kb_get_key
-df8f : b007             [ 3] 	bcs gr_key_no_key
-df91 : c906             [ 2] 	cmp #UTF_ACK						; Copy key pressed?
-df93 : d002             [ 3] 	bne gr_not_copy
-df95 : a514             [ 3] 	lda vdp_curval						; If yes the get char under 
-df97 :                       gr_not_copy
-df97 : 18               [ 2] 	clc
-df98 :                       gr_key_no_key
-df98 : 60               [ 6] 	rts	
+df90 :                       gr_get_key
+df90 : 2000d0           [ 6] 	jsr kb_get_key
+df93 : b007             [ 3] 	bcs gr_key_no_key
+df95 : c906             [ 2] 	cmp #UTF_ACK						; Copy key pressed?
+df97 : d002             [ 3] 	bne gr_not_copy
+df99 : a514             [ 3] 	lda vdp_curval						; If yes the get char under 
+df9b :                       gr_not_copy
+df9b : 18               [ 2] 	clc
+df9c :                       gr_key_no_key
+df9c : 60               [ 6] 	rts	
                              	
                              ;****************************************
                              ;* gr_put_byte
@@ -8281,99 +8283,99 @@ df98 : 60               [ 6] 	rts
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-df99 :                       gr_put_byte
-df99 : c97f             [ 2] 	cmp #UTF_DEL			; Del key
-df9b : f004             [ 3] 	beq gr_process_special
-df9d : c920             [ 2] 	cmp #32					; Special char?
-df9f : b032             [ 3] 	bcs gr_pb_notspecial	; >=32 == carry clear
+df9d :                       gr_put_byte
+df9d : c97f             [ 2] 	cmp #UTF_DEL			; Del key
+df9f : f004             [ 3] 	beq gr_process_special
+dfa1 : c920             [ 2] 	cmp #32					; Special char?
+dfa3 : b032             [ 3] 	bcs gr_pb_notspecial	; >=32 == carry clear
                              
-dfa1 :                       gr_process_special
-dfa1 : c90d             [ 2] 	cmp #UTF_CR				; New line?
-dfa3 : d003             [ 3] 	bne gr_skip_new_ln
-dfa5 : 4c62df           [ 3] 	jmp gr_new_ln
-dfa8 :                       gr_skip_new_ln
-dfa8 : c97f             [ 2] 	cmp #UTF_DEL			; Delete?
-dfaa : d003             [ 3] 	bne gr_skip_del
-dfac : 4c7ddf           [ 3] 	jmp gr_del
-dfaf :                       gr_skip_del
-dfaf : c908             [ 2] 	cmp #CRSR_LEFT
-dfb1 : d003             [ 3] 	bne gr_skip_left
-dfb3 : 4c26df           [ 3] 	jmp gr_cur_left
-dfb6 :                       gr_skip_left
-dfb6 : c909             [ 2] 	cmp #CRSR_RIGHT
-dfb8 : d003             [ 3] 	bne gr_skip_right
-dfba : 4c04df           [ 3] 	jmp gr_cur_right
-dfbd :                       gr_skip_right
-dfbd : c90b             [ 2] 	cmp #CRSR_UP
-dfbf : d003             [ 3] 	bne gr_skip_up
-dfc1 : 4c3edf           [ 3] 	jmp gr_cur_up
-dfc4 :                       gr_skip_up
-dfc4 : c90a             [ 2] 	cmp #CRSR_DOWN
-dfc6 : d003             [ 3] 	bne gr_skip_down
-dfc8 : 4c4fdf           [ 3] 	jmp gr_cur_down
-dfcb :                       gr_skip_down
-dfcb : c90c             [ 2] 	cmp #UTF_FF
-dfcd : d003             [ 3] 	bne gr_skip_cls
-dfcf : 4c6cda           [ 3] 	jmp gr_cls
-dfd2 :                       gr_skip_cls
-dfd2 : 60               [ 6] 	rts
-                             
+dfa5 :                       gr_process_special
+dfa5 : c90d             [ 2] 	cmp #UTF_CR				; New line?
+dfa7 : d003             [ 3] 	bne gr_skip_new_ln
+dfa9 : 4c66df           [ 3] 	jmp gr_new_ln
+dfac :                       gr_skip_new_ln
+dfac : c97f             [ 2] 	cmp #UTF_DEL			; Delete?
+dfae : d003             [ 3] 	bne gr_skip_del
+dfb0 : 4c81df           [ 3] 	jmp gr_del
+dfb3 :                       gr_skip_del
+dfb3 : c908             [ 2] 	cmp #CRSR_LEFT
+dfb5 : d003             [ 3] 	bne gr_skip_left
+dfb7 : 4c2adf           [ 3] 	jmp gr_cur_left
+dfba :                       gr_skip_left
+dfba : c909             [ 2] 	cmp #CRSR_RIGHT
+dfbc : d003             [ 3] 	bne gr_skip_right
+dfbe : 4c08df           [ 3] 	jmp gr_cur_right
+dfc1 :                       gr_skip_right
+dfc1 : c90b             [ 2] 	cmp #CRSR_UP
+dfc3 : d003             [ 3] 	bne gr_skip_up
+dfc5 : 4c42df           [ 3] 	jmp gr_cur_up
+dfc8 :                       gr_skip_up
+dfc8 : c90a             [ 2] 	cmp #CRSR_DOWN
+dfca : d003             [ 3] 	bne gr_skip_down
+dfcc : 4c53df           [ 3] 	jmp gr_cur_down
+dfcf :                       gr_skip_down
+dfcf : c90c             [ 2] 	cmp #UTF_FF
+dfd1 : d003             [ 3] 	bne gr_skip_cls
+dfd3 : 4c6cda           [ 3] 	jmp gr_cls
+dfd6 :                       gr_skip_cls
 AS65 Assembler for R6502 [1.42].                                     Page  129
 -------------------------------- bank\bank0.s --------------------------------
 
+dfd6 : 60               [ 6] 	rts
+                             
                              ;	Normal caracter processing here.
-dfd3 :                       gr_pb_notspecial
+dfd7 :                       gr_pb_notspecial
                              	_pushAXY
                              
                              	
                              	; Place in current position and move right
-dfd6 : 20e0da           [ 6] 	jsr gr_put
-dfd9 : 2004df           [ 6] 	jsr gr_cur_right
+dfda : 20e0da           [ 6] 	jsr gr_put
+dfdd : 2008df           [ 6] 	jsr gr_cur_right
                              
                              	_pullAXY
                              
                              	
-dfdf : 60               [ 6] 	rts
+dfe3 : 60               [ 6] 	rts
                              
                              ;* These tables are to speed up calculating the 
                              ;* offset for plot commands, rather than using
                              ;* a series of left shifts and additions.
                              ;* Not sure if it is worth the 96 bytes :-O
-dfe0 :                       gr_offset_40lo
-dfe0 : 00285078              	db lo(0*40), lo(1*40), lo(2*40), lo(3*40)
-dfe4 : a0c8f018              	db lo(4*40), lo(5*40), lo(6*40), lo(7*40)
-dfe8 : 406890b8              	db lo(8*40), lo(9*40), lo(10*40), lo(11*40)
-dfec : e0083058              	db lo(12*40), lo(13*40), lo(14*40), lo(15*40)
-dff0 : 80a8d0f8              	db lo(16*40), lo(17*40), lo(18*40), lo(19*40)
-dff4 : 20487098              	db lo(20*40), lo(21*40), lo(22*40), lo(23*40)
-dff8 :                       gr_offset_40hi
-dff8 : 00000000              	db hi(0*40), hi(1*40), hi(2*40), hi(3*40)
-dffc : 00000001              	db hi(4*40), hi(5*40), hi(6*40), hi(7*40)
-e000 : 01010101              	db hi(8*40), hi(9*40), hi(10*40), hi(11*40)
-e004 : 01020202              	db hi(12*40), hi(13*40), hi(14*40), hi(15*40)
-e008 : 02020202              	db hi(16*40), hi(17*40), hi(18*40), hi(19*40)
-e00c : 03030303              	db hi(20*40), hi(21*40), hi(22*40), hi(23*40)
-e010 :                       gr_offset_32lo
-e010 : 00204060              	db lo(0*32), lo(1*32), lo(2*32), lo(3*32)
-e014 : 80a0c0e0              	db lo(4*32), lo(5*32), lo(6*32), lo(7*32)
-e018 : 00204060              	db lo(8*32), lo(9*32), lo(10*32), lo(11*32)
-e01c : 80a0c0e0              	db lo(12*32), lo(13*32), lo(14*32), lo(15*32)
-e020 : 00204060              	db lo(16*32), lo(17*32), lo(18*32), lo(19*32)
-e024 : 80a0c0e0              	db lo(20*32), lo(21*32), lo(22*32), lo(23*32)
-e028 :                       gr_offset_32hi
-e028 : 00000000              	db hi(0*32), hi(1*32), hi(2*32), hi(3*32)
-e02c : 00000000              	db hi(4*32), hi(5*32), hi(6*32), hi(7*32)
-e030 : 01010101              	db hi(8*32), hi(9*32), hi(10*32), hi(11*32)
-e034 : 01010101              	db hi(12*32), hi(13*32), hi(14*32), hi(15*32)
-e038 : 02020202              	db hi(16*32), hi(17*32), hi(18*32), hi(19*32)
-e03c : 02020202              	db hi(20*32), hi(21*32), hi(22*32), hi(23*32)
+dfe4 :                       gr_offset_40lo
+dfe4 : 00285078              	db lo(0*40), lo(1*40), lo(2*40), lo(3*40)
+dfe8 : a0c8f018              	db lo(4*40), lo(5*40), lo(6*40), lo(7*40)
+dfec : 406890b8              	db lo(8*40), lo(9*40), lo(10*40), lo(11*40)
+dff0 : e0083058              	db lo(12*40), lo(13*40), lo(14*40), lo(15*40)
+dff4 : 80a8d0f8              	db lo(16*40), lo(17*40), lo(18*40), lo(19*40)
+dff8 : 20487098              	db lo(20*40), lo(21*40), lo(22*40), lo(23*40)
+dffc :                       gr_offset_40hi
+dffc : 00000000              	db hi(0*40), hi(1*40), hi(2*40), hi(3*40)
+e000 : 00000001              	db hi(4*40), hi(5*40), hi(6*40), hi(7*40)
+e004 : 01010101              	db hi(8*40), hi(9*40), hi(10*40), hi(11*40)
+e008 : 01020202              	db hi(12*40), hi(13*40), hi(14*40), hi(15*40)
+e00c : 02020202              	db hi(16*40), hi(17*40), hi(18*40), hi(19*40)
+e010 : 03030303              	db hi(20*40), hi(21*40), hi(22*40), hi(23*40)
+e014 :                       gr_offset_32lo
+e014 : 00204060              	db lo(0*32), lo(1*32), lo(2*32), lo(3*32)
+e018 : 80a0c0e0              	db lo(4*32), lo(5*32), lo(6*32), lo(7*32)
+e01c : 00204060              	db lo(8*32), lo(9*32), lo(10*32), lo(11*32)
+e020 : 80a0c0e0              	db lo(12*32), lo(13*32), lo(14*32), lo(15*32)
+e024 : 00204060              	db lo(16*32), lo(17*32), lo(18*32), lo(19*32)
+e028 : 80a0c0e0              	db lo(20*32), lo(21*32), lo(22*32), lo(23*32)
+e02c :                       gr_offset_32hi
+e02c : 00000000              	db hi(0*32), hi(1*32), hi(2*32), hi(3*32)
+e030 : 00000000              	db hi(4*32), hi(5*32), hi(6*32), hi(7*32)
+e034 : 01010101              	db hi(8*32), hi(9*32), hi(10*32), hi(11*32)
+e038 : 01010101              	db hi(12*32), hi(13*32), hi(14*32), hi(15*32)
+e03c : 02020202              	db hi(16*32), hi(17*32), hi(18*32), hi(19*32)
+e040 : 02020202              	db hi(20*32), hi(21*32), hi(22*32), hi(23*32)
                              	
-e040 :                       mod_sz_graph_e
+e044 :                       mod_sz_graph_e
                              
                              
                              	; End of Code
-e040 :                       _code_end
-e040 :                       _bank0_end
+e044 :                       _code_end
+e044 :                       _bank0_end
                              
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.

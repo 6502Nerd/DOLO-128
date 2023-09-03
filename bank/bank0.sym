@@ -345,45 +345,45 @@ cmd_dumpmem_parm_err : $cc6b          52331
             grl_2dxy : $0091            145   *
              grl_2dy : $008f            143   *
      gr_add_x_offset : $dabb          55995
-      gr_adv_skip_nl : $df1f          57119
-              gr_box : $dc06          56326
-         gr_box_done : $dcce          56526
-      gr_box_do_vert : $dc98          56472
-        gr_box_lmask : $dd01          56577
-         gr_box_plot : $dccf          56527
-        gr_box_rmask : $dd09          56585
-     gr_box_skip_rhs : $dccc          56524
-   gr_box_tiny_width : $dc73          56435
-         gr_box_vert : $dcb0          56496
-    gr_box_vert_done : $dcce          56526
-        gr_box_write : $dcef          56559
-        gr_box_8line : $dc54          56404
+      gr_adv_skip_nl : $df23          57123
+              gr_box : $dc0a          56330
+         gr_box_done : $dcd2          56530
+      gr_box_do_vert : $dc9c          56476
+        gr_box_lmask : $dd05          56581
+         gr_box_plot : $dcd3          56531
+        gr_box_rmask : $dd0d          56589
+     gr_box_skip_rhs : $dcd0          56528
+   gr_box_tiny_width : $dc77          56439
+         gr_box_vert : $dcb4          56500
+    gr_box_vert_done : $dcd2          56530
+        gr_box_write : $dcf3          56563
+        gr_box_8line : $dc58          56408
    gr_calc_hires_ptr : $dac6          56006
-           gr_circle : $dd11          56593
-      gr_circle_done : $dd4c          56652
-    gr_circle_d_lte0 : $dd40          56640
-      gr_circle_plot : $dd1e          56606
-    gr_circle_points : $dd4d          56653
+           gr_circle : $dd15          56597
+      gr_circle_done : $dd50          56656
+    gr_circle_d_lte0 : $dd44          56644
+      gr_circle_plot : $dd22          56610
+    gr_circle_points : $dd51          56657
               gr_cls : $da6c          55916
          gr_cls_loop : $da7d          55933
         gr_cls_skipy : $da84          55940
-         gr_cur_down : $df4f          57167
-         gr_cur_left : $df26          57126
+         gr_cur_down : $df53          57171
+         gr_cur_left : $df2a          57130
           gr_cur_off : $0006              6
           gr_cur_ptr : $0009              9
-        gr_cur_right : $df04          57092
-  gr_cur_skip_at_bot : $df5e          57182
- gr_cur_skip_at_left : $df36          57142
-   gr_cur_skip_at_tl : $df3a          57146
-  gr_cur_skip_at_top : $df4b          57163
-           gr_cur_up : $df3e          57150
+        gr_cur_right : $df08          57096
+  gr_cur_skip_at_bot : $df62          57186
+ gr_cur_skip_at_left : $df3a          57146
+   gr_cur_skip_at_tl : $df3e          57150
+  gr_cur_skip_at_top : $df4f          57167
+           gr_cur_up : $df42          57154
             gr_cur_x : $0007              7
             gr_cur_y : $0008              8
-              gr_del : $df7d          57213
+              gr_del : $df81          57217
          gr_geom_tmp : $000e             14
               gr_get : $daf2          56050
         gr_getXY_ptr : $da91          55953
-          gr_get_key : $df8c          57228
+          gr_get_key : $df90          57232
             gr_hchar : $db15          56085
    gr_hchar_getimage : $db57          56151
 gr_hchar_getimage_plot : $db79          56185
@@ -405,59 +405,60 @@ gr_init_screen_skip_g1 : $d9e0          55776
   gr_init_screen_txt : $d9fb          55803
    gr_init_screen_32 : $d9d7          55767
     gr_init_skip_txt : $da66          55910
-       gr_key_no_key : $df98          57240
-             gr_line : $ddc6          56774
-        gr_line_done : $de8b          56971
-        gr_line_incx : $de82          56962
-       gr_line_neg_p : $de75          56949
-       gr_line_pixel : $de46          56902
- gr_line_skip_dx_neg : $ddd2          56786
- gr_line_skip_dy_neg : $ddde          56798
-gr_line_skip_xy_swap : $ddfe          56830
- gr_line_skip_x_swap : $de0c          56844
-   gr_line_skip_y_up : $de1a          56858
-           gr_new_ln : $df62          57186
-       gr_nl_skip_nl : $df76          57206
-         gr_not_copy : $df97          57239
-      gr_offset_32hi : $e028          57384
-      gr_offset_32lo : $e010          57360
-      gr_offset_40hi : $dff8          57336
-      gr_offset_40lo : $dfe0          57312
-    gr_pb_notspecial : $dfd3          57299
+       gr_key_no_key : $df9c          57244
+             gr_line : $ddca          56778
+        gr_line_done : $de8f          56975
+        gr_line_incx : $de86          56966
+       gr_line_neg_p : $de79          56953
+       gr_line_pixel : $de4a          56906
+ gr_line_skip_dx_neg : $ddd6          56790
+ gr_line_skip_dy_neg : $dde2          56802
+gr_line_skip_xy_swap : $de02          56834
+ gr_line_skip_x_swap : $de10          56848
+   gr_line_skip_y_up : $de1e          56862
+           gr_new_ln : $df66          57190
+       gr_nl_skip_nl : $df7a          57210
+         gr_not_copy : $df9b          57243
+      gr_offset_32hi : $e02c          57388
+      gr_offset_32lo : $e014          57364
+      gr_offset_40hi : $dffc          57340
+      gr_offset_40lo : $dfe4          57316
+    gr_pb_notspecial : $dfd7          57303
            gr_pixcol : $000d             13
           gr_pixmask : $000c             12
           gr_pixmode : $000b             11
              gr_plot : $dad7          56023
             gr_point : $dbbb          56251
        gr_point_done : $dbe6          56294
-       gr_point_mask : $dbfe          56318
-  gr_process_special : $dfa1          57249
+       gr_point_exit : $dc01          56321
+       gr_point_mask : $dc02          56322
+  gr_process_special : $dfa5          57253
               gr_put : $dae0          56032
-         gr_put_byte : $df99          57241
+         gr_put_byte : $df9d          57245
            gr_screen : $0010             16
          gr_screen_h : $0005              5
       gr_screen_size : $0002              2
      gr_screen_start : $0000              0
          gr_screen_w : $0004              4
          gr_scrngeom : $0023             35
-    gr_scroll_cpy_ln : $deb3          57011
-  gr_scroll_erase_ln : $defa          57082
-   gr_scroll_read_ln : $debc          57020
-        gr_scroll_up : $de8c          56972
-  gr_scroll_write_ln : $dece          57038
+    gr_scroll_cpy_ln : $deb7          57015
+  gr_scroll_erase_ln : $defe          57086
+   gr_scroll_read_ln : $dec0          57024
+        gr_scroll_up : $de90          56976
+  gr_scroll_write_ln : $ded2          57042
           gr_set_cur : $dafa          56058
       gr_set_skip_40 : $daa8          55976
-         gr_skip_cls : $dfd2          57298
-         gr_skip_del : $dfaf          57263
-        gr_skip_down : $dfcb          57291
-        gr_skip_left : $dfb6          57270
-      gr_skip_new_ln : $dfa8          57256
-       gr_skip_right : $dfbd          57277
+         gr_skip_cls : $dfd6          57302
+         gr_skip_del : $dfb3          57267
+        gr_skip_down : $dfcf          57295
+        gr_skip_left : $dfba          57274
+      gr_skip_new_ln : $dfac          57260
 AS65 Assembler for R6502 [1.42].                                     Page    8
 -------------------------------- bank\bank0.s --------------------------------
 
-          gr_skip_up : $dfc4          57284
-    gr_skip_xy_swap2 : $de52          56914
+       gr_skip_right : $dfc1          57281
+          gr_skip_up : $dfc8          57288
+    gr_skip_xy_swap2 : $de56          56918
                  IER : $000e             14   *
                  IFR : $000d             13   *
              IFR_CA1 : $0002              2   *
@@ -517,10 +518,10 @@ gr_line_skip_xy_swap : $ddfe          56830
  int_to_str_skip_neg : $ca8f          51855
         int_usercia0 : $000a             10
         int_usercia1 : $000c             12
-         int_uservdp : $0008              8
 AS65 Assembler for R6502 [1.42].                                     Page    9
 -------------------------------- bank\bank0.s --------------------------------
 
+         int_uservdp : $0008              8
          int_vdp_fin : $c7d6          51158
      int_vdp_handler : $c7ab          51115
     io_active_device : $c52d          50477
@@ -582,10 +583,10 @@ gr_line_skip_xy_swap : $ddfe          56830
           KB_SHIFTLK : $0002              2   *
                 KB_W : $0001              1   *
         kb_caps_lock : $cfef          53231
-        kb_check_dip : $cf7f          53119
 AS65 Assembler for R6502 [1.42].                                     Page   10
 -------------------------------- bank\bank0.s --------------------------------
 
+        kb_check_dip : $cf7f          53119
       kb_check_w_col : $cf15          53013
       kb_check_w_key : $cf18          53016
              kb_code : $0035             53
@@ -647,16 +648,16 @@ gr_line_skip_xy_swap : $ddfe          56830
                MM_X0 : $0010             16   *
                MM_X1 : $0020             32   *
                MM_Y0 : $0040             64   *
-               MM_Y1 : $0080            128   *
 AS65 Assembler for R6502 [1.42].                                     Page   11
 -------------------------------- bank\bank0.s --------------------------------
 
+               MM_Y1 : $0080            128   *
                 main : $c683          50819
         mem_clr_byte : $c82c          51244
            mem_start : $0c69           3177
         mod_sz_cia_e : $cecc          52940
         mod_sz_cia_s : $ce4c          52812
-      mod_sz_graph_e : $e040          57408
+      mod_sz_graph_e : $e044          57412
       mod_sz_graph_s : $d9bc          55740
          mod_sz_io_e : $c5d8          50648
          mod_sz_io_s : $c50e          50446
@@ -712,10 +713,10 @@ gr_line_skip_xy_swap : $ddfe          56830
              RTC_DV2 : $0040             64   *
               RTC_HR : $0004              4   *
              RTC_HRA : $0005              5   *
-            RTC_IRQF : $0080            128   *
 AS65 Assembler for R6502 [1.42].                                     Page   12
 -------------------------------- bank\bank0.s --------------------------------
 
+            RTC_IRQF : $0080            128   *
              RTC_MIN : $0002              2   *
             RTC_MINA : $0003              3   *
              RTC_MTH : $0008              8   *
@@ -777,10 +778,10 @@ gr_line_skip_xy_swap : $ddfe          56830
             SER_DSRB : $0040             64   *
              SER_DTR : $0001              1   *
               SER_FE : $0002              2   *
-             SER_IRD : $0002              2   *
 AS65 Assembler for R6502 [1.42].                                     Page   13
 -------------------------------- bank\bank0.s --------------------------------
 
+             SER_IRD : $0002              2   *
              SER_IRQ : $0080            128   *
             SER_OVRN : $0004              4   *
               SER_PE : $0001              1   *
@@ -842,10 +843,10 @@ gr_line_skip_xy_swap : $ddfe          56830
            ser_first : $000e             14
             ser_last : $000f             15
             set_led0 : $ce4c          52812
-            set_led1 : $ce5b          52827
 AS65 Assembler for R6502 [1.42].                                     Page   14
 -------------------------------- bank\bank0.s --------------------------------
 
+            set_led1 : $ce5b          52827
             set_led2 : $ce6a          52842
           skip_a_f_1 : $c840          51264
           skip_a_f_2 : $c84f          51279
@@ -907,10 +908,10 @@ twos_complement_skip_X : $ca00          51712
         util_clr_mem : $c824          51236
             VDP_ADDR : $0501           1281   *
            VDP_FLASH : $0010             16   *
-       VDP_LONGDELAY : $0002              2   *
 AS65 Assembler for R6502 [1.42].                                     Page   15
 -------------------------------- bank\bank0.s --------------------------------
 
+       VDP_LONGDELAY : $0002              2   *
            VDP_MODE0 : $0500           1280   *
            VDP_MODE1 : $0501           1281   *
       VDP_SHORTDELAY : $0001              1   *
@@ -966,16 +967,16 @@ vdp_set_hires_fill_nme : $d8ad          55469
             _bankjsr : <macro>
             _bankram : <macro>
        _bankram_fast : <macro>
-          _bank0_end : $e040          57408
+          _bank0_end : $e044          57412
         _bank0_start : $c000          49152   *
                 _bcc : <macro>
                 _bcs : <macro>
-           _code_end : $e040          57408
+           _code_end : $e044          57412
          _code_start : $c001          49153
-       _command_line : $c2b6          49846
 AS65 Assembler for R6502 [1.42].                                     Page   16
 -------------------------------- bank\bank0.s --------------------------------
 
+       _command_line : $c2b6          49846
           _cpu_stack : $0100            256
           _cpyZPWord : <macro>
           _decZPWord : <macro>
@@ -1037,10 +1038,10 @@ _fs_dir_root_start_w : $c14e          49486
     _rtc_gettimedate : $c466          50278
            _rtc_init : $c44e          50254
          _rtc_nvread : $c496          50326
-        _rtc_nvwrite : $c4ae          50350
 AS65 Assembler for R6502 [1.42].                                     Page   17
 -------------------------------- bank\bank0.s --------------------------------
 
+        _rtc_nvwrite : $c4ae          50350
     _rtc_setdatetime : $c47e          50302
           _sbcZPByte : <macro>
        _sd_sendcmd17 : $c4de          50398
@@ -1055,9 +1056,9 @@ _fs_dir_root_start_w : $c14e          49486
            _vdp_poke : $c41e          50206
           __65SC02__ : $0001              1
 
-973 labels used
+974 labels used
 
-7879 lines read, no errors in pass 1.
+7881 lines read, no errors in pass 1.
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
 Total size 16384 bytes.

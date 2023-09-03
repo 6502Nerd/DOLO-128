@@ -31,9 +31,9 @@ _get_byte
 _put_byte 
   _bankjsr $cee1, 0 
 _gr_get_key 
-  _bankjsr $df8c, 0 
+  _bankjsr $df90, 0 
 _gr_put_byte 
-  _bankjsr $df99, 0 
+  _bankjsr $df9d, 0 
 _gr_init_screen 
   _bankjsr $da59, 0 
 _init_acia 
@@ -61,11 +61,11 @@ _gr_cls
 _gr_init_hires 
   _bankjsr $da16, 0 
 _gr_line 
-  _bankjsr $ddc6, 0 
+  _bankjsr $ddca, 0 
 _gr_box 
-  _bankjsr $dc06, 0 
+  _bankjsr $dc0a, 0 
 _gr_circle 
-  _bankjsr $dd11, 0 
+  _bankjsr $dd15, 0 
 _gr_plot 
   _bankjsr $dad7, 0 
 _gr_hchar 

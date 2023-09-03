@@ -1442,10 +1442,10 @@ c17e :                       _put_byte
                                _bankjsr $cee1, 0 
                              
 c196 :                       _gr_get_key 
-                               _bankjsr $df8c, 0 
+                               _bankjsr $df90, 0 
                              
 c1ae :                       _gr_put_byte 
-                               _bankjsr $df99, 0 
+                               _bankjsr $df9d, 0 
                              
 c1c6 :                       _gr_init_screen 
                                _bankjsr $da59, 0 
@@ -1487,16 +1487,16 @@ c2e6 :                       _gr_init_hires
                                _bankjsr $da16, 0 
                              
 c2fe :                       _gr_line 
-                               _bankjsr $ddc6, 0 
+                               _bankjsr $ddca, 0 
                              
 c316 :                       _gr_box 
-                               _bankjsr $dc06, 0 
+                               _bankjsr $dc0a, 0 
                              
 c32e :                       _gr_circle 
 AS65 Assembler for R6502 [1.42].                                     Page   24
 -------------------------------- bank\bank1.s --------------------------------
 
-                               _bankjsr $dd11, 0 
+                               _bankjsr $dd15, 0 
                              
 c346 :                       _gr_plot 
                                _bankjsr $dad7, 0 
@@ -2132,7 +2132,7 @@ c689 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
-c689 : 4275696c64203a..       db "Build : 12/08/2023\r" 
+c689 : 4275696c64203a..       db "Build : 03/09/2023\r" 
 c69c : 3132384b204272..       db "128K Breadboard Computer\r" 
 c6b5 : 42792040363530..       db "By @6502Nerd\r" 
 c6c2 : 436f7079726967..       db "Copyright (c) 2022\r",0 
