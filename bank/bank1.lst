@@ -1450,10 +1450,17 @@ c17e :                       _put_byte
                                _bankjsr $d1e6, 0 
                              
 c196 :                       _gr_get_key 
+<<<<<<< HEAD
                                _bankjsr $e28c, 0 
                              
 c1ae :                       _gr_put_byte 
                                _bankjsr $e299, 0 
+=======
+                               _bankjsr $df90, 0 
+                             
+c1ae :                       _gr_put_byte 
+                               _bankjsr $df9d, 0 
+>>>>>>> 17e390f07d4b2c6af368e42796b6bdaed80a3e2e
                              
 c1c6 :                       _gr_init_screen 
                                _bankjsr $dd59, 0 
@@ -1492,6 +1499,7 @@ c2ce :                       _gr_cls
                                _bankjsr $dd6c, 0 
                              
 c2e6 :                       _gr_init_hires 
+<<<<<<< HEAD
                                _bankjsr $dd16, 0 
 AS65 Assembler for R6502 [1.42].                                     Page   24
 -------------------------------- bank\bank1.s --------------------------------
@@ -1505,6 +1513,21 @@ c316 :                       _gr_box
                              
 c32e :                       _gr_circle 
                                _bankjsr $e011, 0 
+=======
+                               _bankjsr $da16, 0 
+                             
+c2fe :                       _gr_line 
+                               _bankjsr $ddca, 0 
+                             
+c316 :                       _gr_box 
+                               _bankjsr $dc0a, 0 
+                             
+c32e :                       _gr_circle 
+AS65 Assembler for R6502 [1.42].                                     Page   24
+-------------------------------- bank\bank1.s --------------------------------
+
+                               _bankjsr $dd15, 0 
+>>>>>>> 17e390f07d4b2c6af368e42796b6bdaed80a3e2e
                              
 c346 :                       _gr_plot 
                                _bankjsr $ddd7, 0 
@@ -2143,6 +2166,7 @@ c6a1 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
+<<<<<<< HEAD
 AS65 Assembler for R6502 [1.42].                                     Page   34
 -------------------------------- bank\bank1.s --------------------------------
 
@@ -2150,6 +2174,12 @@ c6a1 : 4275696c64203a..       db "Build : 26/09/2024\r"
 c6b4 : 3132384b204272..       db "128K Breadboard Computer\r" 
 c6cd : 42792040363530..       db "By @6502Nerd\r" 
 c6da : 436f7079726967..       db "Copyright (c) 2024\r",0 
+=======
+c689 : 4275696c64203a..       db "Build : 03/09/2023\r" 
+c69c : 3132384b204272..       db "128K Breadboard Computer\r" 
+c6b5 : 42792040363530..       db "By @6502Nerd\r" 
+c6c2 : 436f7079726967..       db "Copyright (c) 2022\r",0 
+>>>>>>> 17e390f07d4b2c6af368e42796b6bdaed80a3e2e
                              
                              
                              	include "kernel\irq.s"

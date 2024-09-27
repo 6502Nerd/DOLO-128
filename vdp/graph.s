@@ -553,6 +553,8 @@ gr_point_done
 
 	; now put in the right colour
 	; add the x,y offset in to the colour table
+	lda gr_scrngeom+gr_pixcol		; If pixcol zero don't bother
+	beq gr_point_exit
 	clc
 	lda vdp_base+vdp_addr_col
 	adc tmp_v1
@@ -561,8 +563,8 @@ gr_point_done
 	adc tmp_v1+1
 	tay
 	lda gr_scrngeom+gr_pixcol
-	jsr vdp_poke
-
+	jmp vdp_poke
+gr_point_exit
 	rts
 gr_point_mask
 	db 0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01
