@@ -185,6 +185,7 @@ df_tk_read
 	rts
 
 df_tk_dim
+df_tk_redim
 	; tokenise a variable
 	jsr df_tk_variable
 	jsr df_tk_arrvar
@@ -274,6 +275,7 @@ df_tk_datetime
 df_tk_len
 df_tk_chr
 df_tk_key
+df_tk_get
 df_tk_stick
 df_tk_deek
 df_tk_vpeek
@@ -380,6 +382,7 @@ df_tk_save
 df_tk_pixmode
 df_tk_pixmask
 df_tk_pixcol
+df_tk_put
 df_tk_himem
 df_tk_font
 df_tk_device

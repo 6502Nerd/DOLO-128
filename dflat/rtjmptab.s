@@ -103,6 +103,8 @@ df_rt_tokenjmp
 	dw	df_rt_font
 	dw	df_rt_device
 	dw	df_rt_fclose
+	dw	df_rt_redim
+	dw  df_rt_put
 
 	dw	df_rt_vpeek
 	dw	df_rt_peek
@@ -129,6 +131,7 @@ df_rt_tokenjmp
 	dw	df_rt_nvpeek
 	dw	df_rt_fcreate
 	dw	df_rt_fopen
+	dw  df_rt_get
 	
 	dw	df_rt_mult
 	dw	df_rt_div

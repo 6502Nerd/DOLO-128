@@ -244,22 +244,15 @@ df_rt_def_initialise_parm
 	; load type
 	ldy #DFVVT_TYPE
 	lda (df_tmpptra),y
-	; if array or string type then pop pointer from operator stack
-	and #DFVVT_STR|DFVVT_ARRY
-	beq df_rt_def_load_var_int
-	jsr df_ost_popPtr
-	jmp df_rt_def_load_var_int_skip
-df_rt_def_load_var_int
-	; must be int pop it from operator stack
-	jsr df_ost_popInt
-df_rt_def_load_var_int_skip
+	tay					; Put the type into Y
+	jsr df_ost_popParmX	; Try to get this off the stack
 	; update the variable
 	ldy #DFVVT_HI
 	sta (df_tmpptra),y
 	dey
 	txa
 	sta (df_tmpptra),y
-	
+
 	jmp df_rt_def_load_var
 df_rt_def_load_var_done
 	; save the number of local parameters found so they can

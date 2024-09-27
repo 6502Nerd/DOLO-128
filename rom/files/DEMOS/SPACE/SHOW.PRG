@@ -1,0 +1,1 @@
+10 def_show(max)20 dim a$[10]30 repeat40  a=150  repeat60  if a<10:a$="":else:a$=chr(a/10+48):endif70  a$=a$+chr((a\10)+48)80 println a$90   vload 0,a$100  wait 100110  a=a+1120 until a>max130 until 0140 enddef

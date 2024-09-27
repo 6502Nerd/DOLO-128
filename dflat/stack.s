@@ -106,7 +106,7 @@ df_ost_pushStr
 ;* X,A - int
 ;****************************************
 df_ost_pushPtr
-	ldy #0xff
+	ldy #DFST_PTR
 	bne df_ost_pushParmX		; ALWAYS!
 	
 ;****************************************

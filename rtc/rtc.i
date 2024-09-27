@@ -56,4 +56,7 @@ RTC_VRT		= 0x80
 RTC_ADDR	= 0x600
 RTC_DATA	= 0x601
 
-NV_RAMSZ    = 63            ; Checksum byte in NV ram
+NV_MODE     = 0x0e          ; Default boot up screen mode
+NV_COLOUR   = 0x0f          ; Default boot up colour
+
+NV_RAMSZ    = 63            ; Checksum byte in NV ram.  127 in real hardware but 63 for compatibility with MAME emulation.

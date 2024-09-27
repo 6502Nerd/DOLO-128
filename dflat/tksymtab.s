@@ -50,7 +50,7 @@ df_tokensyms
 	db	"endi",'f'+0x80				; endif
 	db	"eli",'f'+0x80				; elif condition
 	db	"dat",'a'+0x80				; data
-	db	'.'+0x80					; assembler command
+	db	0xff						; assembler command (non standard parse)
 	db	"ru",'n'+0x80				; run
 	db	"lis",'t'+0x80				; list _proc-|*|line,line
 	db	"inpu",'t'+0x80				; input var
@@ -103,6 +103,8 @@ df_tokensyms
 	db	"fon",'t'+0x80				; font <font file>
 	db	"devic",'e'+0x80			; device <devnum>
 	db	"fclos",'e'+0x80			; fclose
+	db	"redi",'m'+0x80				; redim varlist
+	db  "pu",'t'+0x80				; put(byte)
 ; Functions
 	db	"vpeek",'('+0x80			; vpeek(x)
 	db	"peek",'('+0x80				; peek(x)
@@ -129,6 +131,7 @@ df_tokensyms
 	db  "nvpeek",'('+0x80			; nvpeek(addr)
 	db	"fcreate",'('+0x80			; success=fcreate(filename)
 	db	"fopen",'('+0x80			; success=fopen(filename)
+	db	"get",'('+0x80				; alias for key()
 ; Numeric operators, in priority
 	db	'*'+0x80					; Multiply
 	db 	'/'+0x80					; Divide

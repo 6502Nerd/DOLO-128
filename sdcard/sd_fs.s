@@ -791,6 +791,11 @@ fs_get_byte_w
 ; With ASCII code in A, make upper
 ;****************************************
 fs_to_upper
+	cmp #FS_FOLDERCH
+	bne fs_to_upper_nz
+	lda #0
+	rts
+fs_to_upper_nz
 	cmp #'a'				; If >='a'
 	bcc fs_to_upper_done
 	cmp #'z'+1				; If <='z'
@@ -1190,28 +1195,29 @@ fs_dir_copy_entry_sd_byte
 ;* Regs affected : None
 ;****************************************
 fs_find_named
-	clc							; Find active file
-	jsr fs_dir_find_entry		; Find entry from current position
-	bcs	fs_name_not_found		; If C then no more entries
-	ldy #0						; Index to filespec
-	ldx #0						; Index to filename
+	clc								; Find active file
+	jsr fs_dir_find_entry			; Find entry from current position
+	bcs	fs_name_not_found			; If C then no more entries
+	ldy #0							; Index to filespec
+	ldx #0							; Index to filename
 fs_find_check_name
 	lda (fh_handle+FH_FSpecPtr),y	; File spec char
 	jsr fs_to_upper					; Case insensitive
 	cmp fh_handle,x					; compare with this filehandle
 	bne fs_find_next
-	cmp #0						; If no more bytes in name to check
+	cmp #0							; If no more bytes in name to check
 	beq fs_name_found
 	inx
 	iny
 	bra fs_find_check_name
 fs_find_next
-	jsr fs_dir_next_entry		; Get next entry to check
+	jsr fs_dir_next_entry			; Get next entry to check
 	bra fs_find_named
 fs_name_found
-	clc							; C=0 file found
+	clc								; C=0 file found
+	; Y=index to terminating ch, A=terminating ch
 	rts
-fs_name_not_found				; If C already set then not found
+fs_name_not_found					; If C already set then not found
 	sec
 	rts
 
@@ -1349,15 +1355,6 @@ fs_stamptimedate_ms
 
 	rts
 	
-;****************************************
-;* fs_unpack_string
-;* Open a file for reading
-;* Input : X,A points to 4 bytes of time/date in FAT16 format
-;* Output : None
-;* Regs affected : None
-;****************************************
-fs_unpack_string
-
 
 ;****************************************
 ;* fs_create_filedir
@@ -1671,20 +1668,42 @@ fs_chdir_direct_sect
 ;* Regs affected : None
 ;****************************************
 fs_chdir
-	lda (fh_handle+FH_FSpecPtr)	; First byte of name != 0?
-	bne fs_chdir_find			; Then find the file
-	sta fh_handle+FH_FirstClust	; Else use zero to indicate root
-	sta fh_handle+FH_FirstClust+1
-	beq fs_chdir_go				; To go to the root directory
-
-fs_chdir_find
-	jsr fs_dir_root_start		; Start at root of current directory
-	jsr fs_find_named			; Try to find the file
-	bcs fs_chdir_not_found		; C=1 not found
-
-fs_chdir_go
-	; Use populated cluster number to go directly
+	lda (fh_handle+FH_FSpecPtr)		; First byte of name..
+	beq fs_chdir_root				; If zero then goto root for backward compat
+	cmp #FS_FOLDERCH				; Is it '/'
+	bne fs_chdir_find				; If not then find the file
+fs_chdir_root
+	pha								; Remember the 1st char
+	stz fh_handle+FH_FirstClust		; Else use zero to indicate root
+	stz fh_handle+FH_FirstClust+1
 	jsr fs_chdir_direct
+	pla								; If 1st char is zero then done
+	beq fs_chdir_fin
+	clc								; Add 1 to filespec pointer base
+	lda fh_handle+FH_FSpecPtr
+	adc #1
+	sta fh_handle+FH_FSpecPtr
+	lda fh_handle+FH_FSpecPtr+1
+	sta fh_handle+FH_FSpecPtr+1
+	; Drop through to processing rest of file spec
+	
+fs_chdir_find
+	jsr fs_dir_root_start			; Start at root of current directory
+	jsr fs_find_named				; Try to find the file
+	bcs fs_chdir_not_found			; C=1 not found
+	phy								; Remember where we got to in filespec
+	jsr fs_chdir_direct				; Go to the found folder
+	ply
+	lda (fh_handle+FH_FSpecPtr),y	; What was the last char we go to
+	beq fs_chdir_fin				; If an actual zero then we're done
+	iny								; Else move past '/'
+	tya								; Pull index but into A
+	clc								; Add this index to filespec pointer base
+	adc fh_handle+FH_FSpecPtr
+	sta fh_handle+FH_FSpecPtr
+	lda fh_handle+FH_FSpecPtr+1
+	sta fh_handle+FH_FSpecPtr+1
+	bra fs_chdir_find				; And go and try to navigate the next dir
 
 fs_chdir_fin
 	clc

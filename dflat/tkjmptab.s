@@ -50,7 +50,7 @@ df_tk_tokenjmp
 	dw	df_tk_endif
 	dw	df_tk_elseif
 	dw	df_tk_data
-	dw	df_tk_asm_parse_command
+	dw	df_trap_monitor
 	dw	df_tk_run
 	dw	df_tk_list
 	dw	df_tk_input
@@ -103,6 +103,8 @@ df_tk_tokenjmp
 	dw	df_tk_font
 	dw	df_tk_device
 	dw	df_tk_fclose
+	dw	df_tk_redim
+	dw  df_tk_put
 
 	dw	df_tk_vpeek
 	dw	df_tk_peek
@@ -129,6 +131,7 @@ df_tk_tokenjmp
 	dw	df_tk_nvpeek
 	dw	df_tk_fcreate
 	dw	df_tk_fopen
+	dw  df_tk_get
 	
 	dw	df_tk_mult
 	dw	df_tk_div

@@ -1,0 +1,1 @@
+10 def_dump(addr,t)20  repeat30   c=peek(addr)40   if c>3250    print chr(c&127)60    if c&12870     print chr(t)80    endif90   endif95   addr=addr+198  until c==099 enddef

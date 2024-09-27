@@ -93,11 +93,11 @@ init
 ;	jmp init_test
 	; First clear ram
 ;	sei					; No need as disabled on startup
-	jmp init_ram		; jmp not jsr to ram initialiser
-init_2					; init_ram will jump back to here
+;	cld					; No need as disabled on startup
 	ldx #0xff			; Initialise stack pointer
 	txs
-;	cld					; No need as disabled on startup
+	jmp init_ram		; jmp not jsr to ram initialiser
+init_2					; init_ram will jump back to here
 	
 	jsr kernel_init
 
@@ -117,14 +117,14 @@ kernel_test
 	jsr _vdp_init		; initialise vdp
 	lda #0				; Default = 40 column mode - put on stack
 	pha
-	ldx #0xe			; NV location for default text mode [can read NV ram without initialising RTC]
+	ldx #NV_MODE		; NV location for default text mode [can read NV ram without initialising RTC]
 	jsr _rtc_nvread		; Try to read location
 	bcs kernel_skip_nv	; If bad NV ram then skip trying to read settings
 	tax					; Save the mode temporarily
 	pla					; Get the default mode from stack
 	txa					; And push the NV mode that was read
 	pha
-	ldx #0xf			; NV location for the default colour
+	ldx #NV_COLOUR		; NV location for the default colour
 	jsr _rtc_nvread		; Try to read location (assumed good as previous was good)
 	sta vdp_base+vdp_bord_col	; Save it to the border colour
 kernel_skip_nv	
@@ -154,16 +154,15 @@ init_ram
 	ldx #0x00			; Page counter starts at zero
 	lda #0				; Normal RAM filled with zero
 init_ram_1
-	cpx	#4				; Page <4 is ok
+	cpx	#5				; Page <5 is ok (zeroes out VIA0 and 1)
 	bcc init_ram_fill
 	cpx #8				; Page >=8 is ok
-	bcs init_ram_fill
-	bra init_ram_skip
+	bcc init_ram_skip	; But >=5 and <8 do not initialise
 init_ram_fill
 	sta (0x00),y		; Write initialisation value to RAM
-init_ram_skip
 	iny
 	bne init_ram_fill	; Do a whole page
+init_ram_skip
 	inx					; Increment page counter
 	stx 0x01			; Save to address pointer
 	bne init_ram_1		; Do all pages until page 0xff done and X wraps to 0

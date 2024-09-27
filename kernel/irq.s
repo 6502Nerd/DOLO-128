@@ -28,7 +28,7 @@ init_nmi
 
 ;* Calls the master IRQ handler
 call_nmi_master
-	jmp (int_nmi)
+;	jmp (int_nmi)
 
 ;* Master NMI handler
 ;* Only the 6551 uses this - fills the receive buffer

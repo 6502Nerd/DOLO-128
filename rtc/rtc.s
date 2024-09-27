@@ -26,8 +26,11 @@ mod_sz_rtc_s
 ;* Inputs; X=location, A=Value
 ;****************************************
 rtc_write
+	php
+	sei
 	stx RTC_ADDR
 	sta RTC_DATA
+	plp
 	rts
 
 
@@ -38,8 +41,11 @@ rtc_write
 ;* Output; A=Value
 ;****************************************
 rtc_read
+	php
+	sei
 	stx RTC_ADDR
 	lda RTC_DATA
+	plp
 	rts
 
 
@@ -81,7 +87,8 @@ rtc_init
 	; Check VRT - if zero then bad battery / RAM!
 	ldx #RTC_REGD
 	jsr rtc_read
-	bmi rtc_badbattery_ok
+	and #RTC_VRT
+	bne rtc_badbattery_ok
 	jsr rtc_badbattery
 rtc_badbattery_ok
 	; Check NV ram - if C=1 then corrupted!
@@ -102,6 +109,7 @@ rtc_badbattery
 	; Print message
 	ldx #lo(rtc_badbattery_msg)
 	lda #hi(rtc_badbattery_msg)
+rtc_printerror
 	jsr io_print_line
 	; Signifiy bad battery
 	sec
@@ -118,10 +126,7 @@ rtc_badnvram
 	; Print message
 	ldx #lo(rtc_badnvram_msg)
 	lda #hi(rtc_badnvram_msg)
-	jsr io_print_line
-	; Signify bad NV ram
-	sec
-	rts
+	bra rtc_printerror
 
 
 ;****************************************
@@ -302,7 +307,7 @@ rtc_gettimedate
 	ldx #RTC_YR
 	jsr rtc_read
 	sta (tmp_v1),y
-	jsr rtc_resumeupdate
+	jmp rtc_resumeupdate
 
 ;**************************************
 ;* rtc_nvvalid
@@ -316,13 +321,16 @@ rtc_gettimedate
 rtc_nvvalid
 	ldx #14
 	lda #0
+	sta tmp_v1
 rtc_nvvalid_loop
-	stx RTC_ADDR
+	jsr rtc_read
 	clc
-	adc RTC_DATA
+	adc tmp_v1
+	sta tmp_v1
 	inx
 	cpx #NV_RAMSZ+1
 	bne rtc_nvvalid_loop
+	lda tmp_v1
 	; A-1 will be C=1 if A>=1
 	cmp #1
 	rts

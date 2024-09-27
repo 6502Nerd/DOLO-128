@@ -235,6 +235,12 @@ df_pg_getcommand
 	sec
 	jsr df_pg_inputline
 	bcs df_pg_prompt	; If no input then back to prompt
+	lda df_linbuff		; Check if first char is ! to escape to monitor
+	cmp #'!'
+	bne df_pg_skip_mon
+	jsr _cmd_immediate	; If so call monitor immediately then back to normal
+	bra df_pg_prompt
+df_pg_skip_mon
 	jsr df_pg_tokenise
 	lda df_immed
 	beq df_pg_getcommand

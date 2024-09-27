@@ -26,15 +26,18 @@ mod_sz_tkasm_s
 
 	; if didn't find regular keywords then try assenbler
 df_tk_asm_parse_command
-	; skip the white space after the dot
-	jsr df_tk_skip_ws
+;	; skip the white space after the dot
+;	jsr df_tk_skip_ws
 	; find the assembler symbol
 	jsr df_tk_asm_matchtok
-	; if not found then must be a label assignment
-	bcs df_tk_asm_parse_command_symbol
-	; Get the assembler symbol and put the token
+	; if no match with asm token they maybe a label?
+	bcs df_tk_asm_label
+df_tk_asm_found_command
+	; Before asm keyword, put the asm handler token
+	lda #DFRT_ASM
+	jsr df_tk_put_tok
+	; Set the MSB of found symbol index
 	lda df_symoff
-	; Set the MSB
 	ora #0x80
 	jsr df_tk_put_tok
 	; check the first addressing mode code
@@ -46,24 +49,26 @@ df_tk_asm_parse_command
 	bne df_tk_asm_mnemonic
 	; if directive then process it
 	lda df_symoff
-	jsr df_tk_asm_exec_parser
-	bcs df_tk_asm_parse_command_err
-	; [1] ignore white space but keep it
-	jsr df_tk_skip_ws
-	; No error in parsing this command
-	clc
+	jmp df_tk_asm_exec_parser
 df_tk_asm_parse_command_err
 	rts
 df_tk_asm_mnemonic
 	; for all nmemonics, work out the addressing mode
-	jsr df_tk_asm_addr_mode
+	jmp df_tk_asm_addr_mode
+
+; try to tokenise a label
+df_tk_asm_label
+	; labels must start with '.'
+	lda #'.'
+	jsr df_tk_expect
 	bcs df_tk_asm_parse_command_err
-	rts
-df_tk_asm_parse_command_symbol
-	; No mask
+	; Before asm label, put the asm handler token
+	lda #DFRT_ASM
+	jsr df_tk_put_tok
+	inc df_linoff			;Skip the '.'
+	; Tokenise a variable
 	lda #0
-	jsr df_tk_var
-	rts
+	jmp df_tk_var
 
 
 ;****************************************
@@ -80,14 +85,16 @@ df_tk_asm_matchtok
 	sta df_symtab
 	lda #hi(df_asm_tokensyms)
 	sta df_symtab+1
-	stz df_symoff
+	lda #0
+	sta df_symoff
+	ldx #0
 df_tk_asm_checknexttok
 	; From the line buffer current pointer
 	; Check for a token match
 	ldy df_linoff
 df_tk_asm_checktokch
 	; Get symtable char
-	lda (df_symtab)
+	lda (df_symtab,x)
 	; if less than ascii ' ' then reached end of
 	; this symbol and everything matched so found!
 	cmp #' '
@@ -100,17 +107,17 @@ df_tk_asm_checktokch
 	; so increment line buffer pointers
 	_incZPWord df_symtab
 	iny
-	bra df_tk_asm_checktokch
+	jmp df_tk_asm_checktokch
 df_tk_asm_symnomatch
 	; Increment symbol counter to next symbol
 	inc df_symoff
 df_tk_asm_symnextentry
-	lda (df_symtab)
+	lda (df_symtab,x)
 	; End of symbol is < ' '
 	cmp #' '
 	bcc  df_tk_asm_foundsymend
 	_incZPWord df_symtab
-	bra df_tk_asm_symnextentry
+	jmp df_tk_asm_symnextentry
 df_tk_asm_foundsymend
 	; Now at the offset to jump over addressing
 	; mode and opcode values. Add offset to ptr
@@ -124,12 +131,12 @@ df_tk_asm_foundsymend
 	sta df_symtab+1
 	; If next char is not zero then
 	; try and match with line buffer
-	lda (df_symtab)
+	lda (df_symtab,x)
 	bne df_tk_asm_checknexttok
 	; else symbol table exhausted
 	; so no match found
 	; Zero symbol counter
-	stz df_symoff
+	sta df_symoff		; Relies on A=0
 	; Set C to indicate error (no match)
 	sec
 	rts
@@ -149,6 +156,7 @@ df_tk_asm_symfound
 	sty df_linoff
 	lda df_symoff
 	; df_symtab points to the offset
+df_tk_asm_addr_mode_ok
 	clc
 	rts
 
@@ -200,7 +208,6 @@ df_tk_asm_addr_mode_2
 	; got to here, must be y
 	lda #'y'
 	jsr df_tk_expect_tok_err
-df_tk_asm_addr_mode_ok
 	clc
 	rts
 	

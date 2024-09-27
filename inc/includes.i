@@ -166,6 +166,7 @@ KB_REP_TIM	= 3				; Number of VB periods for the repeat speed
 KB_REP_DEL	= 20			; Number of VB periods before repeat activates
 KB_DEBOUNCE	= 2				; Number of VB periods before debounce
 
+UTF_SOH		= 0x01
 UTF_ETX		= 0x03			; Break character
 UTF_BEL		= 0x07
 CRSR_LEFT	= 0x08
@@ -175,6 +176,8 @@ CRSR_UP		= 0x0b
 UTF_ACK		= 0x06			; Used for the copy key in this implementation
 UTF_FF		= 0x0c
 UTF_CR		= 0x0d
+UTF_NACK	= 0x15
+UTF_ETB		= 0x17
 UTF_BRK		= 0x1a			; Debug - drop in to monitor
 UTF_DEL		= 0x7f
 UTF_SPECIAL = 0x20

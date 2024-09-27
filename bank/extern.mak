@@ -50,3 +50,4 @@ rtc_nvwrite
 fs_dir_fhandle_str
 sd_sendcmd17
 sd_sendcmd24
+cmd_immediate

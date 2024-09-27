@@ -15,7 +15,7 @@ echo Assembly started   : %date% %time%
 echo  db "Build : %date%\r" > kernel\build.s
 echo  db "128K Breadboard Computer\r" >> kernel\build.s
 echo  db "By @6502Nerd\r" >> kernel\build.s
-echo  db "Copyright (c) 2022\r",0 >> kernel\build.s
+echo  db "Copyright (c) 2024\r",0 >> kernel\build.s
 
 
 REM Initial binary creating symbol table with dummy values

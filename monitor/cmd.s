@@ -18,9 +18,18 @@ CMD_ERR_VAL				= 0x03
 cmd_lo					= df_currdat
 cmd_hi					= (df_currdat+1)
 cmd_mem					= df_datoff
+cmd_msg_ptr				= df_lineptr
 
 	; ROM code
 	code  
+
+; Immediate call to monitor from outside of monitor shell
+cmd_immediate
+	jsr cmd_parse				; Find command and execute
+	bcs cmd_imerror				; Carry set = error condition
+	rts
+cmd_imerror
+	jmp cmd_print_error
 
 command_line
 	lda #0						; Initialise monitor
@@ -99,6 +108,10 @@ cmd_parse
 	ldx #0
 find_cmd_loop
 	ldy #0
+	lda df_linbuff,y		; Need to check for ! now
+	cmp #'!'
+	bne find_cmd_byte
+	iny						; Skip over ! if needed
 find_cmd_byte
 	lda cmd_list,x			; Check the command list
 	cmp #0x80				; If not end of this command in list
@@ -563,7 +576,71 @@ cmd_next_parm_err
 	sec
 	rts
 
-	
+;****************************************
+;* cmd_dcolour
+;* Set default boot up colour
+;****************************************
+cmd_dcolour
+	phx
+	pha
+	jsr cmd_parse_byte
+	bcs cmd_dcolour_fin
+	ldx #NV_COLOUR
+	jsr _rtc_nvwrite
+	clc
+cmd_dcolour_fin
+	pla
+	plx
+	rts
+
+;****************************************
+;* cmd_dmode
+;* Set default boot up mode
+;****************************************
+cmd_dmode
+	phx
+	pha
+	jsr cmd_parse_byte
+	bcs cmd_dmode_fin
+	ldx #NV_COLOUR
+	jsr _rtc_nvwrite
+	clc
+cmd_dmode_fin
+	pla
+	plx
+	rts
+
+;****************************************
+;* cmd_help
+;* Display help text
+;****************************************
+cmd_help
+	lda #lo(msg_help)
+	sta cmd_msg_ptr
+	lda #hi(msg_help)
+	sta cmd_msg_ptr+1
+	ldy #0
+cmd_msg_char
+	lda (cmd_msg_ptr),y
+	beq cmd_msg_line_done
+	jsr io_put_ch
+	iny
+	bne cmd_msg_char
+cmd_msg_line_done
+	iny
+	clc
+	tya
+	adc cmd_msg_ptr
+	sta cmd_msg_ptr
+	lda cmd_msg_ptr+1
+	adc #0
+	sta cmd_msg_ptr+1
+	ldy #0
+	lda (cmd_msg_ptr),y
+	bne cmd_msg_char
+	rts
+
+
 cmd_list
 	db "memtype",	0x80,	lo(cmd_memtype), 	hi(cmd_memtype)
 	db "dump", 		0x80, 	lo(cmd_dumpmem), 	hi(cmd_dumpmem)
@@ -571,6 +648,10 @@ cmd_list
 	db "sector",	0x80,	lo(cmd_sector),		hi(cmd_sector)
 	db "quit",		0x80,	lo(cmd_dflat),		hi(cmd_dflat)
 	db "time",		0x80,	lo(cmd_time),		hi(cmd_time)
+	db "recv",		0x80,	lo(cmd_recv),		hi(cmd_recv)
+	db "dmode",		0x80,	lo(cmd_dmode),		hi(cmd_dmode)
+	db "dcolour",	0x80,	lo(cmd_dcolour),	hi(cmd_dcolour)
+	db "help",		0x80,	lo(cmd_help),		hi(cmd_help)
 	db 0x00,		0x00,	0xff
 
 
@@ -580,9 +661,24 @@ cmd_error_messages
 	dw msg_errmsg_parm
 	dw msg_errmsg_val
 
-msg_ready				db "cmd->",0
+msg_ready				db "#>",0
 msg_errmsg_none			db "No error",0
 msg_errmsg_notfound		db "Command not found",0
 msg_errmsg_parm			db "Parameter error",0
 msg_errmsg_val			db "Illegal value",0
-	
+
+msg_help				db "Monitor commands:",UTF_CR,0
+						db "recv            RX file from PC",UTF_CR,0
+						db "memtype v|m     Select VRAM|RAM",UTF_CR,0
+						db "dump xxxx       Dump memory",UTF_CR,0
+						db "set  xxxx [zz]* Set memory",UTF_CR,0
+						db "time            Set clock",UTF_CR,0
+						db "dmode xx        Default mode",UTF_CR,0
+						db "dcolour xx      Default colour",UTF_CR,0
+						db "sector rw xxxx  SD sector",UTF_CR,0
+						db "quit            Have a guess",UTF_CR,0,0
+
+
+
+	include "monitor\recv.s"
+

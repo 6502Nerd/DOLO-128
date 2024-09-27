@@ -769,7 +769,14 @@ df_rt_local_done
 ;	clc
 ;	rts
 	
+df_rt_redim
+	sec
+	bcs df_rt_dim_main
 df_rt_dim
+	clc
+df_rt_dim_main
+	php
+df_rt_dim_loop
 	ldy df_exeoff
 	dey
 df_rt_dim_findesc
@@ -794,10 +801,15 @@ df_rt_dim_findesc
 	; move to open bracket
 	iny
 	sty df_exeoff
+	; If re-dim, don't check for existing dimensions
+	plp
+	php
+	bcs df_rt_skip_dim_chk
 	; check if already dim'd
 	ldy #DFVVT_DIM1
 	lda (df_tmpptra),y
 	bne df_rt_dim_err
+df_rt_skip_dim_chk
 	; Save slot address found earlier
 	lda df_tmpptra
 	pha
@@ -819,6 +831,9 @@ df_rt_dim_findesc
 	iny
 	pla
 	sta (df_tmpptra),y	
+	plp
+	php
+	bcs df_rt_dim_set_type
 df_rt_dim_alloc
 	; ok we have up to 2 dimensions
 	; mult dim 1 and 2 if dim 2 <> 0
@@ -854,16 +869,18 @@ df_rt_dim2_mul2
 	dey
 	sta (df_tmpptra),y
 	; finally, update the type to indicate array
+df_rt_dim_set_type
 	lda (df_tmpptra)
-	ora #DFVVT_ARRY
+	ora #DFVVT_PTR
 	sta (df_tmpptra)
 	; don't increment byte again - go check for more vars
-	bra df_rt_dim	
+	bra df_rt_dim_loop	
 df_rt_dim_next_byte
 	inc df_exeoff
 	bra df_rt_dim
 df_rt_dim_done
 ;	clc
+	plp
 	rts
 df_rt_dim_err
 	SWBRK DFERR_DIM
@@ -895,7 +912,8 @@ df_rt_plot
 	; check the type on the stack
 	_df_ost_peekType
 	; if >=0x80 then a pointer / string
-	bmi df_rt_plotstr
+	and #DFST_STR
+	bne df_rt_plotstr
 	; else it is int
 	jsr df_ost_popInt
 	; put low byte of pop result in a
@@ -1004,6 +1022,13 @@ df_rt_pixcol
 	jsr df_rt_getnval
 	stx gr_scrngeom+gr_pixcol
 ;	clc
+	rts
+
+df_rt_put
+	; evaluate the byte to put
+	jsr df_rt_getnval
+	txa
+	jsr io_put_ch
 	rts
 
 df_rt_point
@@ -1168,24 +1193,25 @@ df_rt_print_ws
 	sty df_exeoff
 	
 	; if starts with string literal then process seval
-	cmp #DFTK_STRLIT
-	beq df_rt_print_string
+;	cmp #DFTK_STRLIT
+;	beq df_rt_print_string
 	; else evaluate a numeric
 	jsr df_rt_neval
 	; check what is on the argument stack
 	_df_ost_peekType
-	bmi df_rt_print_gotstr
+	and #DFST_STR
+	bne df_rt_print_gotstr
 	jsr df_rt_print_num
 	bra df_rt_print
 df_rt_print_gotstr
 	jsr df_rt_print_str
 	bra df_rt_print
-df_rt_print_string
-	; point to string accumulator
-	ldx df_sevalptr
-	lda df_sevalptr+1
-	jsr df_rt_seval
-	bra df_rt_print_gotstr
+;df_rt_print_string
+;	; point to string accumulator
+;	ldx df_sevalptr
+;	lda df_sevalptr+1
+;	jsr df_rt_seval
+;	bra df_rt_print_gotstr
 df_rt_print_done
 	sty df_exeoff
 	rts
@@ -1855,21 +1881,13 @@ df_rt_list_got_sym
 
 ;** Decode assembler token in A **
 df_rt_asm_decode_token
-	lda #'.'			;Always put out the . symbol
+	inc df_linoff		; Point to token after asm token
+	ldy df_linoff
+	lda (df_tmpptra),y	;If token N=1 then keyword
+	bmi df_rt_asm_decode_token_keyword
+	lda #'.'			;Put the '.' before escape processing
 	jsr io_put_ch
-	ldy df_linoff		;Print out any whitespace
-df_rt_asm_decode_token_ws
-	iny					;Point to char after the asm token
-	sty df_linoff
-	lda (df_tmpptra),y	;What is the char?
-	jsr df_tk_isws		;If not then found the keyword
-	bcc df_rt_asm_decode_token_found
-	jsr io_put_ch		;Print the space
-	bra df_rt_asm_decode_token_ws
-df_rt_asm_decode_token_found
-	cmp #DFTK_VAR		; If is a label variable?
-	bne df_rt_asm_decode_token_keyword
-	; if so then process as normal escape handling
+	lda (df_tmpptra),y	;Get asm token back
 	jmp df_rt_list_decode_esc
 df_rt_asm_decode_token_keyword
 	and #0x7f			; Mask off MSB
@@ -2884,6 +2902,7 @@ df_rt_mem_calc
 	jmp df_ost_pushInt
 
 ; %k=key(%sync) %sync>=1 means sync
+df_rt_get					; get is alias for key
 df_rt_key
 ;	inc df_exeoff
 	jsr df_rt_getnval

@@ -77,7 +77,7 @@ df_rt_init_vvt_slot_undim
 	; Scalar variables are not initialised
 	ldy #0
 	lda (df_tmpptra),y
-	and #DFVVT_PROC|DFVVT_ARRY
+	and #DFVVT_PROC|DFVVT_PTR
 	beq df_rt_init_vvt_skip
 	; skip over the first byte which is variable type
 	iny
@@ -576,9 +576,9 @@ df_rt_arry_parm2_skiparry2
 ;****************************************
 df_rt_eval_var
 	; save carry bit
-;	php
+	php
 	; if lvar mode then already passed escape token
-	bcs df_rt_eval_skip_init
+	bcs df_rt_eval_lvskip
 	; move past var escape token
 	iny
 	; get var vvt address
@@ -588,37 +588,32 @@ df_rt_eval_var
 	sty df_exeoff
 	lda (df_currlin),y
 	sta df_tmpptra+1
-df_rt_eval_skip_init
 	; push vvt type first as this is the last thing we need
-;	ldx #0
-;	lda (df_tmpptra,x)
 	lda (df_tmpptra)
-	bpl df_rt_eval_simple_var
-	tax					; Keep A (type) in X for later
-;	pha
-;	; Test A
-;	tax
-;	; simple variable
-;	bpl df_rt_eval_simple_var
+df_rt_eval_lvskip
+	pha
+	; Test A for array or string
+	and #DFVVT_PTR|DFVVT_STR
+	; simple variable
+	beq df_rt_eval_var_notarry
 	; even if an array if no dimensions then return base pointer
 	; if at end of statement or line then simple copy
-;	cpy df_eolidx
-;	beq df_rt_eval_var_simple
-	php			; Save lvar pref for later
 	cpy df_nxtstidx
-	beq df_rt_eval_var_ptr
+	beq df_rt_eval_var_simple
 	; if next ch is not [ then simple copy
 	iny
 	lda (df_currlin),y
 	dey
 	cmp #'['
-	bne df_rt_eval_var_ptr
+	bne df_rt_eval_var_simple
 	; go do array handling
 	beq df_rt_eval_var_do_arry
-df_rt_eval_simple_var
+df_rt_eval_var_notarry
+	; pull the type, not needed here
+	pla
 	; pull C and check if lvar wanted rather than rvar
-;	plp
-	bcs df_rt_eval_simple_lvar
+	plp
+	bcs df_rt_eval_lvar
 	; just push the vvt lo,hi value
 	ldy #DFVVT_LO
 	lda (df_tmpptra),y
@@ -628,21 +623,23 @@ df_rt_eval_simple_var
 
 	jmp df_ost_pushInt
 
-df_rt_eval_simple_lvar
+df_rt_eval_lvar
 	; it's not an array, push the address of DFVVT_LO
 	; add DFVVT_LO offset to slot address in X,A
-	; C=1
-;	clc
-	lda #DFVVT_LO-1
+	clc
+	lda #DFVVT_LO
 	adc df_tmpptra
 	tax
 	lda df_tmpptra+1
 	adc #0
+
 	; push pointer to lo,hi
 	jmp df_ost_pushPtr
 
-df_rt_eval_var_ptr
+	; Simple push of pointer, needs to be valid
+df_rt_eval_var_simple
 	; clean up stack
+	pla
 	pla
 	; simply get lo,hi and push ptr on stack
 	ldy #DFVVT_LO
@@ -650,11 +647,10 @@ df_rt_eval_var_ptr
 	tax
 	ldy #DFVVT_HI
 	lda (df_tmpptra),y
+	beq df_rt_not_dimed
 	jmp df_ost_pushPtr
 
 df_rt_eval_var_do_arry
-	; X on stack = type
-	phx
 	; move past var index
 	inc df_exeoff
 	; zero out x,y as they have dimension info
@@ -662,6 +658,7 @@ df_rt_eval_var_do_arry
 	ldy #0
 
 	; ** Array handling routine **
+	; A on stack = type
 	; save vvt address
 	lda df_tmpptra+1
 	pha
@@ -753,6 +750,7 @@ df_rt_eval_var_push
 	lda (df_tmpptra),y
 	bne df_rt_array_exists
 	; if vvt address hi is zero then array not dimensioned
+df_rt_not_dimed
 	SWBRK DFERR_DIM
 df_rt_array_exists
 	adc num_a+1

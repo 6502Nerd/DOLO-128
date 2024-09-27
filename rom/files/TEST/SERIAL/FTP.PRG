@@ -1,0 +1,1 @@
+10 def_test()20 repeat30 device 040 k=key(1)50 device 160 print right(hex(k),2)70 until k==375 device 0:print chr(3):device 1 80 enddef
