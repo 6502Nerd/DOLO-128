@@ -31,15 +31,9 @@ _get_byte
 _put_byte 
   _bankjsr $d1e6, 0 
 _gr_get_key 
-<<<<<<< HEAD
   _bankjsr $e28c, 0 
 _gr_put_byte 
   _bankjsr $e299, 0 
-=======
-  _bankjsr $df90, 0 
-_gr_put_byte 
-  _bankjsr $df9d, 0 
->>>>>>> 17e390f07d4b2c6af368e42796b6bdaed80a3e2e
 _gr_init_screen 
   _bankjsr $dd59, 0 
 _init_acia 
