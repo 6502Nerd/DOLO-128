@@ -1,0 +1,1 @@
+100 def_demo()105  mode 1110  dim src$[100],dst$[100]115  dim map[100]120  src$="abcdefghabcdefghabcdefghabcdefgh"140  dst$="hello":dst$=dst$ + chr(65)150  println dst$160  println "Hello"170 enddef

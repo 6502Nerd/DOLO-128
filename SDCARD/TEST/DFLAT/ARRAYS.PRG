@@ -1,0 +1,1 @@
+100 def_test()110  dim name$[7,4],score[7]120  for i=1,7,1130   println i140   input name$[i]150   input score[i]160  next170  for i=1,7,1180   println i," ",$name[i]," ",score[i]190  next200 enddef

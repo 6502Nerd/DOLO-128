@@ -1,1 +1,0 @@
-10 def_test()20 dim t$[20],u$[20]30 repeat40  datetime t$45  if t$<>u$50  println t$52  u$=t$55  endif60 until 070 enddef

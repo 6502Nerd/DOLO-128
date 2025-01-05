@@ -1,1 +1,0 @@
-100 def_demo(w,s,d)110 hires 0x61115 x=0120 repeat140   _draw(x,1)150   wait(d)160   _draw(x,0)170  x=x+s175  if x>=w:x=0:endif180 until 0190 enddef200;500 def_draw(x,c)505  pixmode c510  line x,0,w,x520  line w,x,w-x,w530  line w-x,w,0,w-x540  line 0,w-x,x,0550 enddef

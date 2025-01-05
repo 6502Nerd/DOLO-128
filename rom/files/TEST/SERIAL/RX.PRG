@@ -1,1 +1,0 @@
-10 def_test()20 repeat30  device 0:k=key(1)50  device -1:print chr(k)60 until k==370 enddef

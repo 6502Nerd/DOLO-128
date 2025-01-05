@@ -1,1 +1,0 @@
-10 def_test()20 dim t$[20]30 repeat40  datetime t$50  println t$60 until 070 enddef

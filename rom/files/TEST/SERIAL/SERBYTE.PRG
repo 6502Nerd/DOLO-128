@@ -1,1 +1,0 @@
-10 def_start()15 p=0:q=0:r=020 repeat30  device 040  k=key(1)45  p=p+1:if p<0:p=0:q=q+1:endif50  device -160  if k<>34:r=r+1:println r," ",p,":",q:endif70 until k==1380 enddef

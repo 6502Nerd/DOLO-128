@@ -1,0 +1,2742 @@
+AS65 Assembler for R6502 [1.42].                                     Page    1
+----------------------------------- ppt3.s -----------------------------------
+
+-------------------------------- Symbol Table --------------------------------
+
+              Symbol   Value        Decimal
+
+                .bss : $8d52          36178
+             ACOnOff : $8d5c          36188
+             ACrAmSl : $8d54          36180
+             ACrEnSl : $8d56          36182
+             ACrNsSl : $8d55          36181
+             ACrTnSl : $8d58          36184
+             AddToEn : $8b42          35650
+             AddToNs : $8dae          36270
+             AdInPtA : $89c9          35273
+             AdInPtB : $8a8d          35469
+             AdInPtC : $8aaf          35503
+             AEnv_En : $8d66          36198
+              AFlags : $8d67          36199
+                Ampl : $8db9          36281   *
+               AmplA : $0008              8   *
+               AmplB : $0009              9   *
+               AmplC : $000a             10   *
+             ANNtSkp : $8d63          36195
+               ANote : $8d64          36196
+             ANtSkCn : $8d6d          36205
+             AOffOnD : $8d5e          36190
+             AOnOffD : $8d5d          36189
+             AOrnPtr : $8d5f          36191
+             APsInOr : $8d52          36178
+             APsInSm : $8d53          36179
+             ASamPtr : $8d61          36193
+             ASlToNt : $8d65          36197
+              ATnAcc : $8d5a          36186
+             ATnDelt : $8d6b          36203
+             ATnSlDl : $8d68          36200
+             ATSlCnt : $8d57          36183
+             ATSlStp : $8d69          36201
+             AVolume : $8d6e          36206
+              AYREGS : $8daf          36271
+             BCOnOff : $8d79          36217
+             BCrAmSl : $8d71          36209
+             BCrEnSl : $8d73          36211
+             BCrNsSl : $8d72          36210
+             BCrTnSl : $8d75          36213
+             BEnv_En : $8d83          36227
+              BFlags : $8d84          36228
+             BNNtSkp : $8d80          36224
+               BNote : $8d81          36225
+             BNtSkCn : $8d8a          36234
+             BOffOnD : $8d7b          36219
+             BOnOffD : $8d7a          36218
+             BOrnPtr : $8d7c          36220
+             BPsInOr : $8d6f          36207
+             BPsInSm : $8d70          36208
+             BSamPtr : $8d7e          36222
+             BSlToNt : $8d82          36226
+              BTnAcc : $8d77          36215
+             BTnDelt : $8d88          36232
+             BTnSlDl : $8d85          36229
+             BTSlCnt : $8d74          36212
+             BTSlStp : $8d86          36230
+             BVolume : $8d8b          36235
+                bres : $846c          33900
+AS65 Assembler for R6502 [1.42].                                     Page    2
+----------------------------------- ppt3.s -----------------------------------
+
+             CCOnOff : $8d96          36246
+             CCrAmSl : $8d8e          36238
+             CCrEnSl : $8d90          36240
+             CCrNsSl : $8d8f          36239
+             CCrTnSl : $8d92          36242
+             CEnv_En : $8da0          36256
+              CFlags : $8da1          36257
+             CHECKLP : $8024          32804
+              CHREGS : $86c9          34505
+             CH_AMIN : $88ae          34990
+              CH_AMP : $8890          34960
+             CH_APOS : $88cc          35020
+              CH_ENV : $88ef          35055
+             CH_EXIT : $8960          35168
+              CH_MIX : $8959          35161
+             CH_NOAC : $87cc          34764
+             CH_NOAM : $88bd          35005
+             CH_NOEN : $88fd          35069
+              CH_NOK : $8743          34627
+              CH_NTP : $873d          34621
+             CH_ONDL : $89a7          35239
+             CH_ORPS : $872d          34605
+             CH_SMPS : $878b          34699
+             CH_STPP : $886c          34924
+             CH_SVAM : $88b7          34999
+              CH_VOL : $88d2          35026
+               ChanA : $8d52          36178
+               ChanB : $8d6f          36207
+               ChanC : $8d8c          36236
+             CNNtSkp : $8d9d          36253
+               CNote : $8d9e          36254
+             CNtSkCn : $8da7          36263
+             COffOnD : $8d98          36248
+              COnOff : $000a             10   *
+             COnOffD : $8d97          36247
+              CORR_1 : $8272          33394
+              CORR_2 : $8291          33425
+             COrnPtr : $8d99          36249
+             CPsInOr : $8d8c          36236
+             CPsInSm : $8d8d          36237
+              CrAmSl : $0002              2   *
+              CrEnSl : $0004              4   *
+              CrNsSl : $0003              3   *
+             CrPsPtr : $800d          32781
+              CrTnSl : $0006              6   *
+             CSamPtr : $8d9b          36251
+             CSlToNt : $8d9f          36255
+              CTnAcc : $8d94          36244
+             CTnDelt : $8da5          36261
+             CTnSlDl : $8da2          36258
+             CTSlCnt : $8d91          36241
+             CTSlStp : $8da3          36259
+             CurEDel : $8dac          36268
+             CurESld : $8daa          36266
+             CVolume : $8da8          36264
+             C_DELAY : $862f          34351
+             C_ENGLS : $8609          34313
+             C_GLISS : $8576          34166
+               C_NOP : $8679          34425
+             C_ORPOS : $85cc          34252
+             C_PORTM : $847a          33914
+             C_SMPOS : $85bd          34237
+AS65 Assembler for R6502 [1.42].                                     Page    3
+----------------------------------- ppt3.s -----------------------------------
+
+             C_VIBRT : $85db          34267
+                DDRA : $0003              3   *
+                DDRB : $0002              2   *
+               Delay : $8ac4          35524
+             DelyCnt : $8da9          36265
+         EMPTYSAMORN : $8cec          36076   *
+                 Env : $000b             11   *
+             EnvBase : $8dbd          36285   *
+               EnvTp : $000d             13   *
+             Env_Del : $8b89          35721
+              Env_En : $0014             20   *
+             ESldAdd : $8b8e          35726
+            FILE_END : $8d52          36178   *
+             FIN_RTS : $8c25          35877
+           FIX16BITS : $8c26          35878
+               Flags : $0015             21   *
+                GL36 : $85a0          34208
+                INIT : $804b          32843
+              INITV1 : $82ee          33518
+              INITV2 : $82d8          33496
+                IO_1 : $0480           1152   *
+           LOOP_LDIR : $80e3          32995
+             LPosPtr : $89fb          35323
+                  L1 : $81e0          33248
+                  L2 : $8210          33296
+                 L20 : $8154          33108
+                 L21 : $8156          33110
+                  L3 : $8214          33300
+             MDADDR2 : $8698          34456
+               Mixer : $0007              7   *
+             MODADDR : $8355          33621
+                MUTE : $8039          32825
+                  M1 : $82c9          33481
+                  M2 : $82f0          33520
+                  M3 : $8321          33569
+              NNtSkp : $0011             17   *
+               NOSIG : $853b          34107
+             NO_ENAC : $892c          35116
+             NO_ENSL : $8940          35136
+               Noise : $0006              6   *
+                Note : $0012             18   *
+             Ns_Base : $8dad          36269
+     Ns_Base_AddToNs : $8dad          36269
+                 NT_ : $8eaf          36527
+             NT_DATA : $8c9c          35996
+              NtSkCn : $001b             27   *
+              OffOnD : $000c             12   *
+             OLDPRTM : $8511          34065
+              OnOffD : $000b             11   *
+              OrnPtr : $000d             13   *
+             OrnPtrs : $8687          34439
+             PatsPtr : $8a22          35362
+              PD_ENV : $839e          33694
+             PD_EOff : $837b          33659
+             PD_ESAM : $83aa          33706
+              PD_FIN : $8471          33905
+             PD_LOOP : $83da          33754
+              PD_LP2 : $83de          33758
+             PD_NOIS : $8447          33863
+             PD_NOTE : $8458          33880
+              PD_ORN : $83a4          33700
+             PD_OrSm : $8329          33577
+AS65 Assembler for R6502 [1.42].                                     Page    4
+----------------------------------- ppt3.s -----------------------------------
+
+              PD_REL : $844d          33869
+              PD_RES : $8464          33892
+              PD_SAM : $8341          33601
+             PD_SAM_ : $8342          33602
+             PD_SorE : $8386          33670
+              PD_VOL : $8368          33640
+                PLAY : $89ac          35244
+               PLNLP : $8a0c          35340
+                PL1A : $8a6b          35435
+                PL1B : $8a80          35456
+                PL1C : $8aa2          35490
+                PL1D : $8ac4          35524
+                 PL2 : $8ac9          35529
+                 PRA : $0001              1   *
+                 PRB : $0000              0   *
+              PrNote : $84be          33982
+             PrSlide : $8504          34052
+                PSP_ : $8a6b          35435
+              PsInOr : $0000              0   *
+              PsInSm : $0001              1   *
+             PTDECOD : $83c6          33734
+            Revision : $0030             48   *
+                ROUT : $8b9d          35741
+              SamPtr : $000f             15   *
+             SamPtrs : $8344          33604
+              SETENV : $863d          34365
+              SETORN : $867a          34426
+               SETUP : $00ed            237
+             SET_STP : $855f          34143
+              SlToNt : $0013             19   *
+           SND_ADBUS : $0481           1153   *
+   SND_DESELECT_MASK : $00bd            189   *
+            SND_MODE : $0480           1152   *
+         SND_SELREAD : $0040             64   *
+      SND_SELSETADDR : $0042             66   *
+        SND_SELWRITE : $0002              2   *
+             SPCCOMS : $86a9          34473
+               START : $8000          32768
+                  sa : $819c          33180
+                 saa : $85a0          34208
+                 sac : $85ba          34234
+                 sad : $85c7          34247
+                 sae : $85d6          34262
+                 saf : $85e5          34277
+                 sag : $85f7          34295
+                 sah : $862e          34350
+                 sak : $8639          34361
+                 sam : $8664          34404
+                 saq : $86e7          34535
+                saq1 : $8815          34837
+                saq2 : $8973          35187
+                 sar : $89ef          35311
+                 sas : $8988          35208
+                 sat : $8994          35220
+                sat1 : $89c1          35265
+                sat2 : $89c9          35273
+                sat3 : $89da          35290
+                 sau : $8b4d          35661
+                sau1 : $8b4f          35663
+                  sb : $81a0          33184
+                 sb1 : $81a2          33186
+                  sc : $81f0          33264
+AS65 Assembler for R6502 [1.42].                                     Page    5
+----------------------------------- ppt3.s -----------------------------------
+
+                  sd : $8221          33313
+                  sf : $8244          33348
+                  sg : $8250          33360
+                 sg1 : $825d          33373
+                  sh : $82ab          33451
+                  si : $82fd          33533
+                  sj : $833c          33596
+                 sj1 : $8341          33601
+                  sl : $8397          33687
+                  sm : $83b9          33721
+                  sn : $83c3          33731
+             snd_set : $8c75          35957
+                  so : $83e8          33768
+                 so1 : $83f2          33778
+                so11 : $83f9          33785
+                 so2 : $83fe          33790
+                 so3 : $8407          33799
+                 so4 : $840e          33806
+                 so5 : $8413          33811
+                 so6 : $8420          33824
+                 so7 : $842d          33837
+                  st : $8499          33945
+                  sw : $8527          34087
+                  sy : $858a          34186
+                  sz : $859e          34206
+                  s1 : $8031          32817
+                  s2 : $80a5          32933
+                 s7b : $8161          33121
+                 s8b : $8162          33122
+                 s9b : $8198          33176
+                 TA1 : $00f8            248   *
+                 TA2 : $00f9            249   *
+                 TB1 : $00fa            250   *
+                 TB2 : $00fb            251   *
+                 TB3 : $00fe            254   *
+             TCNEW_0 : $8cd6          36054
+             TCNEW_1 : $8cb8          36024   *
+             TCNEW_2 : $8ce1          36065
+             TCNEW_3 : $8ccc          36044
+             TCOLD_0 : $8cac          36012
+             TCOLD_1 : $8cb8          36024
+             TCOLD_2 : $8cba          36026
+             TCOLD_3 : $8ccd          36045
+                 TC1 : $00fc            252   *
+                 TC2 : $00fd            253   *
+                 TC3 : $00ff            255   *
+             TC_EXIT : $82ae          33454
+               TnAcc : $0008              8   *
+              TnDelt : $0019             25   *
+              TnSlDl : $0016             22   *
+                TonA : $0000              0   *
+                TonB : $0002              2   *
+                TonC : $0004              4   *
+              TSlCnt : $0005              5   *
+              TSlStp : $0017             23   *
+                 T1_ : $8cf0          36080
+                  T_ : $8cac          36012
+             T_NEW_0 : $8d22          36130   *
+             T_NEW_1 : $8cf0          36080   *
+             T_NEW_2 : $8d3a          36154   *
+             T_NEW_3 : $8d20          36128   *
+             T_OLD_0 : $8d22          36130   *
+AS65 Assembler for R6502 [1.42].                                     Page    6
+----------------------------------- ppt3.s -----------------------------------
+
+             T_OLD_1 : $8cf0          36080   *
+             T_OLD_2 : $8d08          36104   *
+             T_OLD_3 : $8d20          36128   *
+                VARS : $8d52          36178
+            VARS_END : $8f6f          36719   *
+             VAR0END : $8dbf          36287   *
+             Version : $84fc          34044
+              Volume : $001c             28   *
+                 VT_ : $8daf          36271
+                val1 : $00f8            248
+                val2 : $00fa            250
+                val3 : $00fc            252
+                val4 : $00fe            254
+               z80_A : $00ee            238
+              z80_AP : $00f7            247
+               z80_B : $00f0            240
+               z80_C : $00ef            239
+               z80_D : $00f2            242
+               z80_E : $00f1            241
+               z80_H : $00f4            244
+              z80_IX : $00f5            245
+               z80_L : $00f3            243
+          __65SC02__ : $0001              1
+
+329 labels used
+
+2271 lines read, no errors in pass 1.
+AS65 Assembler for R6502 [1.42].                                     Page    7
+----------------------------------- ppt3.s -----------------------------------
+
+                             ; ===============================================
+                             ; Vortex Tracker II v1.0 PT3 player for 6502
+                             ; ORIC 1/ATMOS (6502) version
+                             ; Updated for HB-BBC-128 Homebrew Computer by 650
+                             ; ScalexTrixx (A.C) - (c)2018
+                             ;
+                             ; Translated and adapted from ZX Spectrum Player 
+                             ; by S.V.Bulba (with Ivan Roshin for some parts/a
+                             ; https://bulba.untergrund.net/main_e.htm (c)2004
+                             ;
+0030 =                       Revision = "0" 
+                             ; ===============================================
+                             ; REV 0: 
+                             ; ======
+                             ; rev 0.34 (WK/TS)  - correction / 1.773 (288=x25
+                             ;                   => file_end = $8E68
+                             ;
+                             ; rev 0.33 (WK)     - optimizations: PTDECOD
+                             ;                   => file_end = $8E53
+                             ;
+                             ; rev 0.32 (WK)     - optimizations: PLAY
+                             ;                   => file_end = $8F43
+                             ;
+                             ; rev 0.31 (WK)     - optimizations: CHREGS
+                             ;                   => file_end = $8FC4
+                             ;
+                             ; rev 0.30 (WK)     - New base "full working" ver
+                             ;                   - optimizations: zp variables
+                             ;                   => file_end = $9027
+                             ;
+                             ; --------------------------------
+                             ; WK: working / TS: test version |
+                             ; ===============================================
+                             ; TODO:
+                             ; - lda ($AC),y -> lda ($AC,x)
+                             ; - NOISE Register opt (/2 ?)
+                             ; - déplacer / 1.773 avant CHREGS (cf CPC versio
+                             ; - dans PD_LOOP: vérifier si des jmp relatifs s
+                             ; - fix .bbs address
+                             ; - check zero pages addresses
+                             ; ===============================================
+                             ;
+                             ;	ORG $8000
+                             ;
+                             ; -------------------------------------
+                                     bss
+                             
+00ed =                       	org $ed
+                                 
+00ed =                       SETUP   ds 1      ; set bit0 to 1, if you want to
+                                                ; bit7 is set each time, when 
+                             ; "registers" Z80
+                             ; A = A
+                             ; F = flags
+                             
+00ee =                       z80_A   ds 1      ; save A
+00ef =                       z80_C   ds 1
+00f0 =                       z80_B   ds 1
+00f1 =                       z80_E   ds 1
+00f2 =                       z80_D   ds 1
+00f3 =                       z80_L   ds 1
+00f4 =                       z80_H   ds 1
+AS65 Assembler for R6502 [1.42].                                     Page    8
+----------------------------------- ppt3.s -----------------------------------
+
+00f5 =                       z80_IX  ds 2
+00f7 =                       z80_AP  ds 1      ; save A'
+                             ; temp variable used during play
+00f8 =                       val1    ds 2
+00fa =                       val2    ds 2
+00fc =                       val3    ds 2
+00fe =                       val4    ds 2
+00f8 =                       TA1 = val1
+00f9 =                       TA2 = val1+1
+00fa =                       TB1 = val2
+00fb =                       TB2 = val2+1
+00fc =                       TC1 = val3
+00fd =                       TC2 = val3+1
+00fe =                       TB3 = val4
+00ff =                       TC3 = val4+1
+                             ; =====================================
+                             ; module PT3 address
+                             ;MDLADDR = $2000
+                             ; =====================================
+                                     code
+                             ; For dflat, allow build of code for other locati
+                              if RELOCADDR
+                                     org RELOCADDR
+                              else
+8000 =                               org $8000
+                              endif
+                             
+                             ; START = $8000
+                             ; START+00 : INIT
+                             ; START+10 : PLAY
+                             ; START+13 : MUTE
+                             
+8000 :                       START
+                             ; For dflat, assume that A,X provides address of 
+                             ;        lda #lo(MDLADDR)                        
+                             ;        sta z80_L
+                             ;        lda #hi(MDLADDR)
+                             ;        sta z80_H
+8000 : 85f3             [ 3]         sta z80_L
+8002 : 86f4             [ 3]         stx z80_H
+8004 : 18               [ 2]         clc
+8005 : 9044             [ 3] 	bcc INIT            ; always                    
+8007 : 4cac89           [ 3] 	jmp PLAY                                        
+800a : 4c3980           [ 3] 	jmp MUTE                                        
+                                  
+800d : 0000                  CrPsPtr	fcw 0 ; current position in PT3 module
+                             
+                             ;Identifier
+800f : 3d565449492050..      	    db "=VTII PT3 Player r.",Revision,"="
+                             
+8024 :                       CHECKLP
+                             	                                                
+8024 : a5ed             [ 3]         lda SETUP                                
+8026 : 0980             [ 2]         ora #%10000000                           
+8028 : 85ed             [ 3]         sta SETUP
+802a : a901             [ 2] 	lda #%00000001                                  
+802c : 24ed             [ 3]         bit SETUP
+802e : d001             [ 3]         bne s1                                   
+8030 : 60               [ 6] 	rts
+8031 : 68               [ 4] s1	pla                                           
+8032 : 68               [ 4]         pla       ; dépile 2 fois puisque rts sh
+8033 : eea98d           [ 6] 	inc DelyCnt                                     
+AS65 Assembler for R6502 [1.42].                                     Page    9
+----------------------------------- ppt3.s -----------------------------------
+
+8036 : ee6d8d           [ 6]         inc ANtSkCn                              
+8039 :                       MUTE	                                            
+8039 : a900             [ 2]         lda #00                                  
+803b : 85f4             [ 3]         sta z80_H                                
+803d : 85f3             [ 3] 	sta z80_L                                       
+803f : 8db78d           [ 4] 	sta AYREGS+AmplA                                
+8042 : 8db88d           [ 4] 	sta AYREGS+AmplB                                
+8045 : 8db98d           [ 4]         sta AYREGS+AmplC
+8048 : 4c9d8b           [ 3] 	jmp ROUT                                        
+                             
+804b :                       INIT
+                             
+804b : a5f3             [ 3] 	lda z80_L                                       
+804d : 8d5683           [ 4] 	sta MODADDR+1
+8050 : 8d9986           [ 4]         sta MDADDR2+1
+8053 : 85f5             [ 3]         sta z80_IX
+8055 : 48               [ 3]         pha
+8056 : a5f4             [ 3]         lda z80_H
+8058 : 8d5c83           [ 4]         sta MODADDR+7
+805b : 8d9f86           [ 4]         sta MDADDR2+7
+805e : 85f6             [ 3]         sta z80_IX+1
+8060 : 48               [ 3]         pha
+8061 : a964             [ 2]         lda #lo(100)                             
+8063 : 85f1             [ 3]         sta z80_E
+8065 : a900             [ 2]         lda #00
+8067 : 85f2             [ 3]         sta z80_D
+8069 : a8               [ 2]         tay
+806a : 18               [ 2] 	clc                                             
+806b : a5f1             [ 3]         lda z80_E
+806d : 65f3             [ 3]         adc z80_L
+806f : 85f3             [ 3]         sta z80_L
+8071 : a5f4             [ 3]         lda z80_H
+8073 : 6900             [ 2]         adc #00
+8075 : 85f4             [ 3]         sta z80_H
+8077 : b1f3             [ 5]         lda (z80_L),y                            
+8079 : 8dc58a           [ 4] 	sta Delay+1                                     
+807c : a5f1             [ 3]         lda z80_E
+807e : 65f3             [ 3]         adc z80_L
+8080 : 85f3             [ 3]         sta z80_L
+8082 : 8d0d80           [ 4]         sta CrPsPtr                              
+8085 : a5f4             [ 3]         lda z80_H
+8087 : 6900             [ 2]         adc #00
+8089 : 85f4             [ 3]         sta z80_H    
+808b : 8d0e80           [ 4]         sta CrPsPtr+1
+808e : a066             [ 2] 	ldy #102               
+8090 : b1f5             [ 5]         lda (z80_IX),y
+8092 : 85f1             [ 3]         sta z80_E
+8094 : 18               [ 2] 	clc                                             
+8095 : 65f3             [ 3]         adc z80_L
+8097 : 85f3             [ 3]         sta z80_L
+8099 : a5f4             [ 3]         lda z80_H
+809b : 6900             [ 2]         adc #00
+809d : 85f4             [ 3]         sta z80_H       
+809f : e6f3             [ 5] 	inc z80_L                                       
+80a1 : d002             [ 3]         bne s2
+80a3 : e6f4             [ 5]         inc z80_H
+80a5 : a5f3             [ 3] s2	lda z80_L                                     
+80a7 : 8dfc89           [ 4]         sta LPosPtr+1
+80aa : a5f4             [ 3]         lda z80_H
+80ac : 8d008a           [ 4]         sta LPosPtr+5
+80af : 68               [ 4] 	pla                                             
+80b0 : 85f2             [ 3]         sta z80_D
+AS65 Assembler for R6502 [1.42].                                     Page   10
+----------------------------------- ppt3.s -----------------------------------
+
+80b2 : 68               [ 4]         pla
+80b3 : 85f1             [ 3]         sta z80_E
+80b5 : a067             [ 2] 	ldy #103               
+80b7 : b1f5             [ 5]         lda (z80_IX),y
+80b9 : 18               [ 2] 	clc                                             
+80ba : 65f1             [ 3]         adc z80_E
+80bc : 8d238a           [ 4]         sta PatsPtr+1   
+80bf : a068             [ 2]         ldy #104                  
+80c1 : b1f5             [ 5]         lda (z80_IX),y
+80c3 : 65f2             [ 3]         adc z80_D
+80c5 : 8d2a8a           [ 4]         sta PatsPtr+8
+80c8 : a9a9             [ 2]         lda #lo(169)                             
+80ca : 18               [ 2]         clc                                      
+80cb : 65f1             [ 3]         adc z80_E
+80cd : 8d8886           [ 4]         sta OrnPtrs+1   
+80d0 : a900             [ 2]         lda #00
+80d2 : 65f2             [ 3]         adc z80_D
+80d4 : 8d8f86           [ 4]         sta OrnPtrs+8
+80d7 : a969             [ 2]         lda #lo(105)                             
+80d9 : 18               [ 2]         clc                                      
+80da : 65f1             [ 3]         adc z80_E
+80dc : 8d4583           [ 4]         sta SamPtrs+1
+80df : a900             [ 2]         lda #00
+                                     ;INIT zeroes from VARS to VAR0END-1 (area
+80e1 : a06c             [ 2]         ldy #(VAR0END-VARS-1)
+80e3 :                       LOOP_LDIR 
+80e3 : 99528d           [ 5]         sta VARS,y
+80e6 : 88               [ 2]         dey         ; (carry not modified)
+80e7 : 10fa             [ 3]         bpl LOOP_LDIR
+                                     ; A = #00  
+80e9 : 65f2             [ 3]         adc z80_D
+80eb : 8d4c83           [ 4]         sta SamPtrs+8                            
+80ee : a5ed             [ 3]         lda SETUP                                
+80f0 : 297f             [ 2]         and #%01111111
+80f2 : 85ed             [ 3]         sta SETUP
+                                     
+80f4 : a9f0             [ 2] 	lda #lo(T1_)
+80f6 : 85f1             [ 3]         sta z80_E
+80f8 : a98c             [ 2]         lda #hi(T1_)
+80fa : 85f2             [ 3]         sta z80_D
+80fc : a901             [ 2]         lda #$01                                 
+80fe : 8da98d           [ 4] 	sta DelyCnt                                     
+8101 : 8d6d8d           [ 4]         sta ANtSkCn
+8104 : 8d8a8d           [ 4]         sta BNtSkCn
+8107 : 8da78d           [ 4]         sta CNtSkCn
+810a : a9f0             [ 2]         lda #$F0
+810c : 8d6e8d           [ 4] 	sta AVolume                                     
+810f : 8d8b8d           [ 4] 	sta BVolume                                     
+8112 : 8da88d           [ 4] 	sta CVolume                                     
+8115 : a9ec             [ 2]         lda #lo(EMPTYSAMORN)                     
+8117 : 85f3             [ 3]         sta z80_L
+8119 : 8dca89           [ 4]         sta AdInPtA+1
+811c : 8d5f8d           [ 4]         sta AOrnPtr
+811f : 8d7c8d           [ 4]         sta BOrnPtr
+8122 : 8d998d           [ 4]         sta COrnPtr
+8125 : 8d618d           [ 4]         sta ASamPtr
+8128 : 8d7e8d           [ 4]         sta BSamPtr
+812b : 8d9b8d           [ 4]         sta CSamPtr
+812e : a98c             [ 2]         lda #hi(EMPTYSAMORN)
+8130 : 85f4             [ 3]         sta z80_H
+8132 : 8dce89           [ 4] 	sta AdInPtA+5                                   
+8135 : 8d608d           [ 4] 	sta AOrnPtr+1                                   
+AS65 Assembler for R6502 [1.42].                                     Page   11
+----------------------------------- ppt3.s -----------------------------------
+
+8138 : 8d7d8d           [ 4] 	sta BOrnPtr+1                                   
+813b : 8d9a8d           [ 4] 	sta COrnPtr+1                                   
+813e : 8d628d           [ 4] 	sta ASamPtr+1                                   
+8141 : 8d7f8d           [ 4] 	sta BSamPtr+1                                   
+8144 : 8d9c8d           [ 4] 	sta CSamPtr+1                                   
+                             	    			                                         
+                                     
+8147 : a00d             [ 2] 	ldy #13                    
+8149 : b1f5             [ 5]         lda (z80_IX),y
+814b : 38               [ 2]         sec                                      
+814c : e930             [ 2]         sbc #$30        ; ascii value - 30 = vers
+814e : 9004             [ 3] 	bcc L20         ; inverse (pour SUB aussi)      
+8150 : c90a             [ 2] 	cmp #10                                         
+8152 : 9002             [ 3] 	bcc L21         ; < 10                          
+8154 :                       L20	    
+8154 : a906             [ 2]         lda #6          ; version par defaut si i
+8156 :                       L21	    
+8156 : 8dfd84           [ 4]         sta Version+1                            
+8159 : 48               [ 3] 	pha             ; save version nb
+815a : c904             [ 2]         cmp #4          ; version 4 ?            
+815c : 9003             [ 3]         bcc s7b         ; < 4 (inverse carry)
+815e : 18               [ 2]         clc
+815f : 9001             [ 3]         bcc s8b         ; always
+8161 : 38               [ 2] s7b     sec
+8162 : a063             [ 2] s8b     ldy #99                 
+8164 : b1f5             [ 5]         lda (z80_IX),y  
+8166 : 2a               [ 2]         rol a           ; carry !                
+8167 : 2907             [ 2] 	and #7          ; clear all bit except 0-1-2    
+8169 : aa               [ 2]         tax             ; save A
+                             ;NoteTableCreator (c) Ivan Roshin
+                             ;A - NoteTableNumber*2+VersionForNoteTable
+                             ;(xx1b - 3.xx..3.4r, xx0b - 3.4x..3.6x..VTII1.0)
+                             
+816a : a99c             [ 2]      	lda #lo(NT_DATA)											    
+816c : 85f3             [ 3]      	sta z80_L
+816e : a98c             [ 2]      	lda #hi(NT_DATA)
+8170 : 85f4             [ 3]      	sta z80_H
+8172 : a5f1             [ 3]      	lda z80_E													
+8174 : 85ef             [ 3]      	sta z80_C
+8176 : a5f2             [ 3]      	lda z80_D
+8178 : 85f0             [ 3]      	sta z80_B
+817a : a900             [ 2]      	lda #00
+817c : a8               [ 2]         tay           ; ldy #00	        
+817d : 85f2             [ 3]      	sta z80_D
+817f : 8a               [ 2]      	txa           ; restore A									
+8180 : 0a               [ 2]      	asl a															
+8181 : 85f1             [ 3]      	sta z80_E													
+8183 : 18               [ 2]      	clc                                        
+8184 : 65f3             [ 3]         adc z80_L
+8186 : 85f3             [ 3]         sta z80_L
+8188 : a5f2             [ 3]         lda z80_D
+818a : 65f4             [ 3]         adc z80_H
+818c : 85f4             [ 3]         sta z80_H													
+818e : b1f3             [ 5]      	lda (z80_L),y												
+8190 : 85f1             [ 3]      	sta z80_E
+8192 : e6f3             [ 5]      	inc z80_L                                  
+8194 : d002             [ 3]         bne s9b
+8196 : e6f4             [ 5]         inc z80_H
+8198 :                       s9b 
+8198 : 46f1             [ 5] 	lsr z80_E											    				     				
+819a : b004             [ 3] 	bcs sb		; si c = 0 => $EA (NOP) / si c = 1 => $1
+819c : a9ea             [ 2] sa  	lda #$EA 	; -> $EA (NOP)
+AS65 Assembler for R6502 [1.42].                                     Page   12
+----------------------------------- ppt3.s -----------------------------------
+
+819e : d002             [ 3]         bne sb1		; always	
+81a0 : a918             [ 2] sb	lda #$18	; -> $18 (clc) 									
+81a2 : 8d1482           [ 4] sb1	sta L3		            									
+81a5 : a5f1             [ 3] 	lda z80_E													
+81a7 : a6f3             [ 3] 	ldx z80_L
+81a9 : 85f3             [ 3] 	sta z80_L
+81ab : 86f1             [ 3] 	stx z80_E
+81ad : a5f2             [ 3] 	lda z80_D
+81af : a6f4             [ 3] 	ldx z80_H
+81b1 : 85f4             [ 3] 	sta z80_H
+81b3 : 86f2             [ 3] 	stx z80_D
+81b5 : 18               [ 2] 	clc                                             
+81b6 : a5ef             [ 3]     	lda z80_C
+81b8 : 65f3             [ 3]     	adc z80_L
+81ba : 85f3             [ 3]     	sta z80_L
+81bc : a5f0             [ 3]     	lda z80_B
+81be : 65f4             [ 3]     	adc z80_H
+81c0 : 85f4             [ 3]     	sta z80_H
+                             
+81c2 : b1f1             [ 5] 	lda (z80_E),y												
+81c4 : 18               [ 2] 	clc                                             
+81c5 : 69ac             [ 2]         adc #lo(T_)
+81c7 : 85ef             [ 3] 	sta z80_C
+81c9 : 48               [ 3]         pha                                      
+81ca : 698c             [ 2]         adc #hi(T_)                              
+81cc : 38               [ 2] 	sec                                             
+81cd : e5ef             [ 3]         sbc z80_C
+81cf : 85f0             [ 3]         sta z80_B                                
+81d1 : 48               [ 3] 	pha
+                             
+81d2 : a9af             [ 2] 	lda #lo(NT_)											
+81d4 : 85f1             [ 3] 	sta z80_E
+81d6 : 48               [ 3] 	pha															
+81d7 : a98e             [ 2] 	lda #hi(NT_)
+81d9 : 85f2             [ 3] 	sta z80_D
+81db : 48               [ 3] 	pha
+81dc : a90c             [ 2] 	lda #12														
+81de : 85f0             [ 3] 	sta z80_B
+81e0 :                       L1	    
+81e0 : a5ef             [ 3]         lda z80_C													
+81e2 : 48               [ 3] 	pha
+81e3 : a5f0             [ 3] 	lda z80_B
+81e5 : 48               [ 3] 	pha
+81e6 : b1f3             [ 5] 	lda (z80_L),y												
+81e8 : 85ef             [ 3] 	sta z80_C
+81ea : e6f3             [ 5] 	inc z80_L                                       
+81ec : d002             [ 3]         bne sc
+81ee : e6f4             [ 5]         inc z80_H
+81f0 :                       sc     
+81f0 : a5f3             [ 3] 	lda z80_L												    
+81f2 : 48               [ 3] 	pha
+81f3 : a5f4             [ 3] 	lda z80_H
+81f5 : 48               [ 3] 	pha
+81f6 : b1f3             [ 5] 	lda (z80_L),y												
+81f8 : 85f0             [ 3] 	sta z80_B
+                             
+81fa : a5f1             [ 3] 	lda z80_E       												
+81fc : 85f3             [ 3] 	sta z80_L
+81fe : 48               [ 3]         pha
+81ff : a5f2             [ 3] 	lda z80_D
+8201 : 85f4             [ 3] 	sta z80_H
+8203 : 48               [ 3]         pha
+AS65 Assembler for R6502 [1.42].                                     Page   13
+----------------------------------- ppt3.s -----------------------------------
+
+8204 : a917             [ 2] 	lda #lo(23)		    										
+8206 : 85f1             [ 3] 	sta z80_E
+8208 : a900             [ 2] 	lda #hi(23)
+820a : 85f2             [ 3] 	sta z80_D
+820c : a908             [ 2] 	lda #8														
+820e : 85f6             [ 3] 	sta z80_IX+1
+                                     
+8210 :                       L2	    
+8210 : 46f0             [ 5]         lsr z80_B													
+8212 : 66ef             [ 5] 	ror z80_C													
+8214 :                       L3	    
+8214 : ac                    	fcb $AC			; clc ($18) or NOP ($EA)
+8215 : a5ef             [ 3] 	lda z80_C													
+8217 : 6900             [ 2] 	adc #00  		    								    	
+8219 : 91f3             [ 5] 	sta (z80_L),y												
+821b : e6f3             [ 5] 	inc z80_L                                       
+821d : d002             [ 3]         bne sd
+821f : e6f4             [ 5]         inc z80_H
+8221 :                       sd      
+8221 : a5f0             [ 3]         lda z80_B													
+8223 : 6900             [ 2] 	adc #00 													
+8225 : 91f3             [ 5] 	sta (z80_L),y												
+8227 : 18               [ 2] 	clc                                             
+8228 : a5f1             [ 3]         lda z80_E
+822a : 65f3             [ 3]         adc z80_L
+822c : 85f3             [ 3]         sta z80_L
+822e : a5f2             [ 3]         lda z80_D
+8230 : 65f4             [ 3]         adc z80_H
+8232 : 85f4             [ 3]         sta z80_H
+8234 : c6f6             [ 5] 	dec z80_IX+1											    
+8236 : d0d8             [ 3] 	bne L2														
+                             
+8238 : 68               [ 4] 	pla															
+8239 : 85f2             [ 3] 	sta z80_D
+823b : 68               [ 4] 	pla         
+823c : 6902             [ 2]         adc #02     
+823e : 85f1             [ 3]         sta z80_E   
+8240 : 9002             [ 3]         bcc sf      
+8242 : e6f2             [ 5]         inc z80_D 
+                             
+8244 :                       sf     
+8244 : 68               [ 4] 	pla												    	    
+8245 : 85f4             [ 3] 	sta z80_H
+8247 : 68               [ 4] 	pla
+8248 : 85f3             [ 3] 	sta z80_L
+824a : e6f3             [ 5] 	inc z80_L                                       
+824c : d002             [ 3]         bne sg
+824e : e6f4             [ 5]         inc z80_H
+8250 :                       sg     
+8250 : 68               [ 4] 	pla												    	    
+8251 : 85f0             [ 3] 	sta z80_B
+8253 : 68               [ 4] 	pla
+8254 : 85ef             [ 3] 	sta z80_C
+8256 : c6f0             [ 5] 	dec z80_B													
+8258 : f003             [ 3] 	beq sg1
+825a : 4ce081           [ 3]         jmp L1
+825d :                       sg1        
+825d : 68               [ 4] 	pla															
+825e : 85f4             [ 3] 	sta z80_H
+8260 : 68               [ 4] 	pla
+8261 : 85f3             [ 3] 	sta z80_L
+8263 : 68               [ 4] 	pla															
+AS65 Assembler for R6502 [1.42].                                     Page   14
+----------------------------------- ppt3.s -----------------------------------
+
+8264 : 85f2             [ 3] 	sta z80_D
+8266 : 68               [ 4] 	pla
+8267 : 85f1             [ 3] 	sta z80_E
+                                     								
+8269 : c9b8             [ 2] 	cmp #lo(TCOLD_1)		        								
+826b : d005             [ 3]         bne CORR_1													
+826d : a9fd             [ 2] 	lda #$FD													
+826f : 8ddd8e           [ 4] 	sta NT_+$2E									 				
+                             
+8272 :                       CORR_1	
+8272 : 18               [ 2]         clc                                      
+8273 : b1f1             [ 5]         lda (z80_E),y																										
+8275 : f037             [ 3] 	beq TC_EXIT													
+8277 : 6a               [ 2] 	ror a															
+8278 : 08               [ 3] 	php			    ; save carry														
+8279 : 0a               [ 2] 	asl a															
+827a : 85ef             [ 3] 	sta z80_C													
+827c : 18               [ 2] 	clc                                             
+827d : 65f3             [ 3]         adc z80_L
+827f : 85f3             [ 3]         sta z80_L
+8281 : a5f0             [ 3]         lda z80_B
+8283 : 65f4             [ 3]         adc z80_H
+8285 : 85f4             [ 3]         sta z80_H                                
+8287 : 28               [ 4] 	plp             ; restore carry (du ror)	       
+8288 : 9007             [ 3] 	bcc CORR_2                                      
+828a : b1f3             [ 5] 	lda (z80_L),y												
+828c : 38               [ 2] 	sec															
+828d : e902             [ 2] 	sbc #$02
+828f : 91f3             [ 5] 	sta (z80_L),y
+                             	
+8291 :                       CORR_2	
+8291 : b1f3             [ 5]         lda (z80_L),y												
+8293 : 18               [ 2] 	clc			
+8294 : 6901             [ 2] 	adc #$01
+8296 : 91f3             [ 5] 	sta (z80_L),y
+8298 : 38               [ 2]         sec   		                                 
+8299 : a5f3             [ 3] 	lda z80_L                                       
+829b : e5ef             [ 3] 	sbc z80_C
+829d : 85f3             [ 3] 	sta z80_L
+829f : a5f4             [ 3] 	lda z80_H
+82a1 : e5f0             [ 3] 	sbc z80_B
+82a3 : 85f4             [ 3] 	sta z80_H
+82a5 : e6f1             [ 5] 	inc z80_E                                       
+82a7 : d002             [ 3]         bne sh
+82a9 : e6f2             [ 5]         inc z80_D
+82ab :                       sh     
+82ab : 4c7282           [ 3] 	jmp CORR_1												    
+                             
+82ae :                       TC_EXIT
+82ae : 68               [ 4] 	pla			; restore version number						
+                             
+                             ;VolTableCreator (c) Ivan Roshin
+                             ;A - VersionForVolumeTable (0..4 - 3.xx..3.4x;
+                             ;5.. - 3.5x..3.6x..VTII1.0)
+                             
+82af : c905             [ 2] 	cmp #5		; version 										
+82b1 : a911             [ 2] 	lda #lo($11)                                    
+82b3 : 85f3             [ 3] 	sta z80_L
+82b5 : a900             [ 2]         lda #hi($11)													
+82b7 : 85f4             [ 3] 	sta z80_H													
+82b9 : 85f2             [ 3] 	sta z80_D                                       
+82bb : 85f1             [ 3] 	sta z80_E													
+AS65 Assembler for R6502 [1.42].                                     Page   15
+----------------------------------- ppt3.s -----------------------------------
+
+82bd : a92a             [ 2] 	lda #$2A	; ($2A = rol A)								    
+82bf : b008             [ 3] 	bcs M1		; CP -> carry inverse (CP 5)					
+82c1 : c6f3             [ 5] 	dec z80_L													
+82c3 : a5f3             [ 3] 	lda z80_L													
+82c5 : 85f1             [ 3] 	sta z80_E
+82c7 : a9ea             [ 2] 	lda #$EA	; ($EA = NOP)			    					
+82c9 :                       M1          
+82c9 : 8df082           [ 4]         sta M2														
+82cc : a9bf             [ 2] 	lda #lo(VT_+16)												
+82ce : 85f5             [ 3] 	sta z80_IX
+82d0 : a98d             [ 2] 	lda #hi(VT_+16)
+82d2 : 85f6             [ 3] 	sta z80_IX+1
+82d4 : a910             [ 2] 	lda #$10													
+82d6 : 85ef             [ 3] 	sta z80_C
+                             
+82d8 :                       INITV2  
+82d8 : 18               [ 2]         clc
+82d9 : a5f3             [ 3]         lda z80_L													
+82db : 48               [ 3] 	pha
+82dc : 65f1             [ 3]         adc z80_E
+82de : 85f1             [ 3]         sta z80_E
+82e0 : a5f4             [ 3] 	lda z80_H
+82e2 : 48               [ 3] 	pha
+82e3 : 65f2             [ 3]         adc z80_D
+82e5 : 85f2             [ 3]         sta z80_D
+                             	    
+82e7 : a900             [ 2]         lda #00														
+82e9 : 85f3             [ 3] 	sta z80_L
+82eb : 85f4             [ 3] 	sta z80_H
+82ed : 18               [ 2]         clc
+82ee :                       INITV1  
+82ee : a5f3             [ 3]         lda z80_L													
+82f0 :                       M2          
+82f0 : ac                            fcb $AC	    ; $EA (nop) ou $2A (rol)
+82f1 : a5f4             [ 3] 	lda z80_H													
+82f3 : 6900             [ 2] 	adc #00			; + carry                             
+82f5 : 91f5             [ 5] 	sta (z80_IX),y												
+82f7 : e6f5             [ 5] 	inc z80_IX                                      
+82f9 : d002             [ 3]         bne si
+82fb : e6f6             [ 5]         inc z80_IX+1
+82fd :                       si     
+82fd : 18               [ 2] 	clc                                             
+82fe : a5f1             [ 3]         lda z80_E
+8300 : 65f3             [ 3]         adc z80_L
+8302 : 85f3             [ 3]         sta z80_L
+8304 : a5f2             [ 3]         lda z80_D
+8306 : 65f4             [ 3]         adc z80_H
+8308 : 85f4             [ 3]         sta z80_H
+830a : e6ef             [ 5] 	inc z80_C												    
+830c : a5ef             [ 3] 	lda z80_C													
+830e : 290f             [ 2] 	and #15														
+8310 : 18               [ 2]         clc         ; carry cleared by and
+8311 : d0db             [ 4] 	bne INITV1													
+                             
+8313 : 68               [ 4] 	pla															
+8314 : 85f4             [ 3] 	sta z80_H
+8316 : 68               [ 4] 	pla
+8317 : 85f3             [ 3] 	sta z80_L
+8319 : a5f1             [ 3] 	lda z80_E													
+831b : c977             [ 2] 	cmp #$77													
+831d : d002             [ 3] 	bne M3														
+831f : e6f1             [ 5] 	inc z80_E													
+AS65 Assembler for R6502 [1.42].                                     Page   16
+----------------------------------- ppt3.s -----------------------------------
+
+8321 :                       M3      
+8321 : 18               [ 2]         clc                                      
+8322 : a5ef             [ 3]         lda z80_C																								
+8324 : d0b2             [ 4] 	bne	INITV2													
+                             
+8326 : 4c9d8b           [ 3] 	jmp ROUT													
+                             ; ===============================================
+                             ; Pattern Decoder
+8329 :                       PD_OrSm	
+8329 : a014             [ 2]         ldy #Env_En     										    
+832b : a900             [ 2] 	lda #00
+832d : 91f5             [ 5] 	sta (z80_IX),y
+832f : 207a86           [ 6] 	jsr SETORN													
+8332 : a000             [ 2] 	ldy #00					; lda ($AC,x)									
+8334 : b1ef             [ 5] 	lda (z80_C),y
+8336 : e6ef             [ 5] 	inc z80_C                                       
+8338 : d002             [ 3]         bne sj
+833a : e6f0             [ 5]         inc z80_B
+833c :                       sj     
+833c : 4a               [ 2] 	lsr a 													    
+833d : 9002             [ 3]         bcc sj1
+833f : 0980             [ 2]         ora #$80
+8341 :                       sj1     
+8341 :                       PD_SAM	
+8341 : 0a               [ 2]         asl a 											    		
+8342 :                       PD_SAM_	
+8342 : 85f1             [ 3]         sta z80_E													
+8344 :                       SamPtrs		
+8344 : a9ac             [ 2] 	lda #$AC				
+8346 : 18               [ 2]         clc
+8347 : 65f1             [ 3]         adc z80_E
+8349 : 85f3             [ 3] 	sta z80_L
+834b : a9ac             [ 2] 	lda #$AC
+834d : 6900             [ 2]         adc #00
+834f : 85f4             [ 3] 	sta z80_H
+                             
+8351 : a000             [ 2]         ldy #00
+8353 : b1f3             [ 5] 	lda (z80_L),y
+8355 :                       MODADDR		
+8355 : 69ac             [ 2] 	adc #$AC												
+8357 : aa               [ 2] 	tax             ; save
+8358 : c8               [ 2] 	iny                                             
+8359 : b1f3             [ 5] 	lda (z80_L),y
+835b : 69ac             [ 2]         adc #$AC								    			
+                             
+835d : a010             [ 2] 	ldy #SamPtr+1         										
+835f : 91f5             [ 5] 	sta (z80_IX),y
+8361 : 88               [ 2] 	dey															
+8362 : 8a               [ 2] 	txa         
+8363 : 91f5             [ 5] 	sta (z80_IX),y
+8365 : 4cda83           [ 3] 	jmp PD_LOOP													
+                             
+8368 :                       PD_VOL	
+8368 : 0a               [ 2]         asl a															
+8369 : 6900             [ 2]         adc #00
+836b : 0a               [ 2] 	asl a															
+836c : 6900             [ 2]         adc #00
+836e : 0a               [ 2] 	asl a															
+836f : 6900             [ 2]         adc #00
+8371 : 0a               [ 2] 	asl a															
+8372 : 6900             [ 2]         adc #00
+8374 : a01c             [ 2] 	ldy #Volume         										
+AS65 Assembler for R6502 [1.42].                                     Page   17
+----------------------------------- ppt3.s -----------------------------------
+
+8376 : 91f5             [ 5] 	sta (z80_IX),y
+8378 : 4cde83           [ 3]         jmp PD_LP2													
+                             	
+837b :                       PD_EOff	
+837b : a014             [ 2]         ldy #Env_En		    	        							
+837d : 91f5             [ 5] 	sta (z80_IX),y
+837f : a000             [ 2] 	ldy #PsInOr   			    					    		
+8381 : 91f5             [ 5] 	sta (z80_IX),y
+8383 : 4cde83           [ 3] 	jmp PD_LP2													
+                             
+8386 :                       PD_SorE	
+8386 : 38               [ 2]         sec															
+8387 : e901             [ 2] 	sbc #01
+8389 : 85ee             [ 3]         sta z80_A
+838b : d011             [ 3] 	bne PD_ENV													
+838d : a000             [ 2] 	ldy #00			        ; lda ($AC,x)												
+838f : b1ef             [ 5] 	lda (z80_C),y
+8391 : e6ef             [ 5] 	inc z80_C                                       
+8393 : d002             [ 3]         bne sl
+8395 : e6f0             [ 5]         inc z80_B
+8397 :                       sl     
+8397 : a011             [ 2] 	ldy #NNtSkp    		        								
+8399 : 91f5             [ 5] 	sta (z80_IX),y
+839b : 4cde83           [ 3]         jmp PD_LP2													
+                             
+839e :                       PD_ENV	
+839e : 203d86           [ 6]         jsr SETENV													
+83a1 : 4cde83           [ 3] 	jmp PD_LP2													
+                             
+83a4 :                       PD_ORN	
+83a4 : 207a86           [ 6]         jsr SETORN													
+83a7 : 4cda83           [ 3] 	jmp PD_LOOP													
+                             
+83aa :                       PD_ESAM	
+83aa : a014             [ 2]         ldy #Env_En	             									
+83ac : 91f5             [ 5] 	sta (z80_IX),y
+83ae : a000             [ 2] 	ldy #PsInOr	    		        							
+83b0 : 91f5             [ 5] 	sta (z80_IX),y
+83b2 : a5ee             [ 3] 	lda z80_A           
+83b4 : f003             [ 3]         beq sm														
+83b6 : 203d86           [ 6] 	jsr SETENV
+83b9 : a000             [ 2] sm	ldy #00			    ; lda ($AC,x)												
+83bb : b1ef             [ 5] 	lda (z80_C),y
+83bd : e6ef             [ 5] 	inc z80_C                                       
+83bf : d002             [ 3]         bne sn
+83c1 : e6f0             [ 5]         inc z80_B
+83c3 :                       sn     
+83c3 : 4c4283           [ 3]         jmp PD_SAM_								     			    
+                             
+83c6 :                       PTDECOD 
+83c6 : a012             [ 2]         ldy #Note   							    				
+83c8 : b1f5             [ 5] 	lda (z80_IX),y
+83ca : 8dbf84           [ 4] 	sta PrNote+1												
+83cd : a006             [ 2] 	ldy #CrTnSl    		    						    		
+83cf : b1f5             [ 5] 	lda (z80_IX),y                                  
+83d1 : 8d0585           [ 4] 	sta PrSlide+1												
+83d4 : c8               [ 2]         iny 
+83d5 : b1f5             [ 5] 	lda (z80_IX),y											
+83d7 : 8d0c85           [ 4] 	sta PrSlide+8
+                             
+83da :                       PD_LOOP	
+83da : a910             [ 2]         lda #$10													
+AS65 Assembler for R6502 [1.42].                                     Page   18
+----------------------------------- ppt3.s -----------------------------------
+
+83dc : 85f1             [ 3] 	sta z80_E
+                             	
+83de :                       PD_LP2	
+83de : a000             [ 2]         ldy #00			    ; lda ($AC,x)												
+83e0 : b1ef             [ 5] 	lda (z80_C),y
+83e2 : e6ef             [ 5] 	inc z80_C                                       
+83e4 : d002             [ 3]         bne so
+83e6 : e6f0             [ 5]         inc z80_B
+83e8 :                       so
+83e8 : 18               [ 2] 	clc															
+83e9 : 6910             [ 2] 	adc #$10
+83eb : 9005             [ 3] 	bcc so1
+83ed : 85ee             [ 3]         sta z80_A            
+83ef : 4c2983           [ 3]         jmp PD_OrSm
+83f2 : 6920             [ 2] so1     adc #$20                                 
+83f4 : d003             [ 3] 	bne so11													
+83f6 : 4c7184           [ 3]         jmp PD_FIN
+83f9 : 9003             [ 3] so11	bcc so2													    
+83fb : 4c4183           [ 3]         jmp PD_SAM
+83fe : 6910             [ 2] so2	adc #$10                                     
+8400 : f04b             [ 3] 	beq PD_REL													
+8402 : 9003             [ 3] 	bcc so3 													
+8404 : 4c6883           [ 3]         jmp PD_VOL
+8407 : 6910             [ 2] so3	adc #$10                                     
+8409 : d003             [ 3] 	bne so4										    			
+840b : 4c7b83           [ 3]         jmp PD_EOff
+840e : 9003             [ 3] so4	bcc	so5												    	
+8410 : 4c8683           [ 3] 	jmp PD_SorE
+8413 : 6960             [ 2] so5     adc #96                                  
+8415 : b041             [ 3] 	bcs PD_NOTE													
+8417 : 6910             [ 2] 	adc #$10                                        
+8419 : 9005             [ 3] 	bcc so6
+841b : 85ee             [ 3]         sta z80_A												    	
+841d : 4ca483           [ 3]         jmp PD_ORN													
+8420 : 6920             [ 2] so6	adc #$20                                     
+8422 : b023             [ 3] 	bcs PD_NOIS													 														
+8424 : 6910             [ 2] 	adc #$10                                        
+8426 : 9005             [ 3]         bcc so7
+8428 : 85ee             [ 3]         sta z80_A												    	
+842a : 4caa83           [ 3]         jmp PD_ESAM
+842d : 0a               [ 2] so7	asl a															
+842e : 85f1             [ 3] 	sta z80_E
+8430 : 18               [ 2]         clc                                      
+8431 : 69c9             [ 2]         adc #lo(SPCCOMS+$FF20)							        
+8433 : 85f3             [ 3]         sta z80_L
+8435 : a985             [ 2] 	lda #hi(SPCCOMS+$FF20)
+8437 : 6900             [ 2]         adc #00
+8439 : 85f4             [ 3] 	sta z80_H
+                                     ; on doit inverser le PUSH car l'adresse 
+843b : a001             [ 2]         ldy #01	
+843d : b1f3             [ 5] 	lda (z80_L),y												
+843f : 48               [ 3] 	pha             ; push D
+8440 : 88               [ 2] 	dey                                             
+8441 : b1f3             [ 5] 	lda (z80_L),y										        
+8443 : 48               [ 3] 	pha             ; push E
+8444 : 4cda83           [ 3] 	jmp PD_LOOP													
+                             
+8447 :                       PD_NOIS									
+8447 : 8dad8d           [ 4]         sta Ns_Base                              
+844a : 4cde83           [ 3] 	jmp PD_LP2													
+                             
+844d :                       PD_REL	
+AS65 Assembler for R6502 [1.42].                                     Page   19
+----------------------------------- ppt3.s -----------------------------------
+
+844d : a015             [ 2]         ldy #Flags   								    			
+844f : b1f5             [ 5] 	lda (z80_IX),y
+8451 : 29fe             [ 2] 	and #%11111110
+8453 : 91f5             [ 5] 	sta (z80_IX),y
+8455 : 4c6484           [ 3] 	jmp PD_RES													
+                             	
+8458 :                       PD_NOTE	
+8458 : a012             [ 2]         ldy #Note    	 				    						
+845a : 91f5             [ 5] 	sta (z80_IX),y	
+845c : a015             [ 2] 	ldy #Flags      											
+845e : b1f5             [ 5] 	lda (z80_IX),y
+8460 : 0901             [ 2] 	ora #%00000001
+8462 : 91f5             [ 5] 	sta (z80_IX),y
+                             	    													
+8464 :                       PD_RES												
+8464 : a900             [ 2]         lda #00	
+8466 : 85f3             [ 3]         sta z80_L
+8468 : 85f4             [ 3] 	sta z80_H
+846a : a00b             [ 2] 	ldy #11
+846c :                       bres
+846c : 91f5             [ 5] 	sta (z80_IX),y          
+846e : 88               [ 2] 	dey
+846f : 10fb             [ 3]         bpl bres
+8471 :                       PD_FIN	
+8471 : a011             [ 2] 	ldy #NNtSkp     						    				
+8473 : b1f5             [ 5] 	lda (z80_IX),y
+8475 : a01b             [ 2] 	ldy #NtSkCn     		    								
+8477 : 91f5             [ 5] 	sta (z80_IX),y
+8479 : 60               [ 6] 	rts 														
+                             
+847a :                       C_PORTM
+847a : a015             [ 2] 	ldy #Flags  												
+847c : b1f5             [ 5] 	lda (z80_IX),y
+847e : 29fb             [ 2] 	and #%11111011
+8480 : 91f5             [ 5] 	sta (z80_IX),y
+8482 : a000             [ 2] 	ldy #00			    ; lda ($AC,x)												
+8484 : b1ef             [ 5] 	lda (z80_C),y
+8486 : a016             [ 2]         ldy #TnSlDl     				    			    		
+8488 : 91f5             [ 5] 	sta (z80_IX),y
+848a : a005             [ 2]         ldy #TSlCnt	        			    						
+848c : 91f5             [ 5] 	sta (z80_IX),y
+                             
+848e : 18               [ 2]         clc
+848f : a5ef             [ 3]         lda z80_C
+8491 : 6903             [ 2]         adc #03
+8493 : 85ef             [ 3]         sta z80_C
+8495 : 9002             [ 3]         bcc st
+8497 : e6f0             [ 5]         inc z80_B
+8499 :                       st     
+8499 : a9af             [ 2] 	lda #lo(NT_)			; OPT										
+849b : 85f1             [ 3] 	sta z80_E
+849d : a98e             [ 2] 	lda #hi(NT_)           ; OPT
+849f : 85f2             [ 3] 	sta z80_D
+84a1 : a012             [ 2] 	ldy #Note	        										
+84a3 : b1f5             [ 5] 	lda (z80_IX),y
+84a5 : a013             [ 2] 	ldy #SlToNt         										
+84a7 : 91f5             [ 5] 	sta (z80_IX),y
+84a9 : 0a               [ 2] 	asl a																																											
+84aa : 18               [ 2] 	clc                                             
+84ab : 65f1             [ 3]         adc z80_E           ; OPT
+84ad : 85f3             [ 3]         sta z80_L
+84af : a5f2             [ 3]         lda z80_D           ; OPT
+AS65 Assembler for R6502 [1.42].                                     Page   20
+----------------------------------- ppt3.s -----------------------------------
+
+84b1 : 6900             [ 2]         adc #00           
+84b3 : 85f4             [ 3]         sta z80_H
+84b5 : a000             [ 2]         ldy #00	
+84b7 : b1f3             [ 5] 	lda (z80_L),y 												
+84b9 : 48               [ 3] 	pha	
+84ba : c8               [ 2] 	iny                                             
+84bb : b1f3             [ 5] 	lda (z80_L),y 												
+84bd : 48               [ 3] 	pha
+84be :                       PrNote	
+84be : a93e             [ 2]         lda #$3E													
+84c0 : a012             [ 2] 	ldy #Note   					    						
+84c2 : 91f5             [ 5] 	sta (z80_IX),y
+84c4 : 0a               [ 2] 	asl a																																			
+84c5 : 18               [ 2] 	clc                                             
+84c6 : 65f1             [ 3]         adc z80_E           ; OPT
+84c8 : 85f3             [ 3]         sta z80_L
+84ca : a5f2             [ 3]         lda z80_D           ; OPT
+84cc : 6900             [ 2]         adc #00
+84ce : 85f4             [ 3]         sta z80_H
+84d0 : a000             [ 2] 	ldy #00
+84d2 : b1f3             [ 5]         lda (z80_L),y												
+84d4 : 85f1             [ 3] 	sta z80_E
+84d6 : c8               [ 2] 	iny                                             
+84d7 : b1f3             [ 5] 	lda (z80_L),y											    
+84d9 : 85f2             [ 3] 	sta z80_D
+84db : a019             [ 2] 	ldy #TnDelt 
+84dd : 68               [ 4]         pla															
+84de : 85f4             [ 3] 	sta z80_H
+84e0 : 68               [ 4] 	pla       
+84e1 : 38               [ 2] 	sec                                             
+84e2 : e5f1             [ 3]         sbc z80_E
+84e4 : 85f3             [ 3]         sta z80_L
+84e6 : 91f5             [ 5]         sta (z80_IX),y
+84e8 : a5f4             [ 3]         lda z80_H
+84ea : e5f2             [ 3]         sbc z80_D
+84ec : 85f4             [ 3]         sta z80_H 
+84ee : c8               [ 2]         iny                                      
+84ef : 91f5             [ 5]         sta (z80_IX),y
+84f1 : a006             [ 2] 	ldy #CrTnSl                                     
+84f3 : b1f5             [ 5]         lda (z80_IX),y
+84f5 : 85f1             [ 3]         sta z80_E
+84f7 : c8               [ 2] 	iny                                             
+84f8 : b1f5             [ 5]         lda (z80_IX),y
+84fa : 85f2             [ 3]         sta z80_D
+84fc :                       Version
+84fc : a93e             [ 2] 	lda #$3E                                        
+84fe : c906             [ 2] 	cmp #6                                          
+8500 : 900f             [ 3] 	bcc OLDPRTM     ; < 6
+8502 : a006             [ 2]         ldy #CrTnSl                              
+8504 :                       PrSlide	
+8504 : a9ac             [ 2]         lda #$AC                                 
+8506 : 85f1             [ 3]         sta z80_E
+8508 : 91f5             [ 5]         sta (z80_IX),y
+850a : c8               [ 2]         iny
+850b : a9ac             [ 2]         lda #$AC
+850d : 85f2             [ 3]         sta z80_D
+850f : 91f5             [ 5]         sta (z80_IX),y
+                             	                                                
+8511 :                       OLDPRTM	
+8511 : a000             [ 2]         ldy #00                                  
+8513 : b1ef             [ 5]         lda (z80_C),y
+8515 : c8               [ 2]         iny                                      
+AS65 Assembler for R6502 [1.42].                                     Page   21
+----------------------------------- ppt3.s -----------------------------------
+
+8516 : 85f7             [ 3]         sta z80_AP                               
+8518 : b1ef             [ 5] 	lda (z80_C),y                                   
+851a : 85ee             [ 3] 	sta z80_A
+851c : a5ef             [ 3]         lda z80_C
+851e : 18               [ 2]         clc
+851f : 6902             [ 2]         adc #02
+8521 : 85ef             [ 3]         sta z80_C
+8523 : 9002             [ 3]         bcc sw
+8525 : e6f0             [ 5]         inc z80_B
+8527 :                       sw
+8527 : a5ee             [ 3] 	lda z80_A                                       
+8529 : f010             [ 3] 	beq NOSIG                                       
+852b : a5f1             [ 3] 	lda z80_E													
+852d : a6f3             [ 3] 	ldx z80_L
+852f : 85f3             [ 3] 	sta z80_L
+8531 : 86f1             [ 3] 	stx z80_E
+8533 : a5f2             [ 3] 	lda z80_D
+8535 : a6f4             [ 3] 	ldx z80_H
+8537 : 85f4             [ 3] 	sta z80_H
+8539 : 86f2             [ 3] 	stx z80_D
+853b :                       NOSIG	
+853b : 38               [ 2]         sec                            
+853c : a5f3             [ 3]         lda z80_L
+853e : e5f1             [ 3]         sbc z80_E
+8540 : 85f3             [ 3]         sta z80_L
+8542 : a5f4             [ 3]         lda z80_H
+8544 : e5f2             [ 3]         sbc z80_D
+8546 : 85f4             [ 3]         sta z80_H
+8548 : 1015             [ 3] 	bpl SET_STP                                     
+854a : a5ee             [ 3] 	lda z80_A                                       
+854c : 49ff             [ 2]         eor #$FF                                 
+854e : a6f7             [ 3]         ldx z80_AP                               
+8550 : 85f7             [ 3]         sta z80_AP
+8552 : 8a               [ 2]         txa
+8553 : 49ff             [ 2] 	eor #$FF                                        
+8555 : 18               [ 2]         clc             
+8556 : 6901             [ 2]         adc #01                                  
+8558 : aa               [ 2]         tax                                      
+8559 : a5f7             [ 3]         lda z80_AP
+855b : 86f7             [ 3]         stx z80_AP
+855d : 85ee             [ 3]         sta z80_A
+855f :                       SET_STP	
+855f : a018             [ 2]         ldy #(TSlStp+1)                          
+8561 : a5ee             [ 3]         lda z80_A
+8563 : 91f5             [ 5]         sta (z80_IX),y                           
+8565 : aa               [ 2]         tax                                      
+8566 : a5f7             [ 3]         lda z80_AP
+8568 : 86f7             [ 3]         stx z80_AP
+856a : 85ee             [ 3]         sta z80_A
+856c : 88               [ 2] 	    dey                       
+856d : 91f5             [ 5]         sta (z80_IX),y
+856f : a00a             [ 2]         ldy #COnOff                              
+8571 : a900             [ 2]         lda #00
+8573 : 91f5             [ 5]         sta (z80_IX),y
+8575 : 60               [ 6] 	rts                                             
+                             
+8576 :                       C_GLISS	
+8576 : a015             [ 2]         ldy #Flags       											
+8578 : b1f5             [ 5] 	lda (z80_IX),y
+857a : 0904             [ 2] 	ora #%00000100
+857c : 91f5             [ 5] 	sta (z80_IX),y
+857e : a000             [ 2] 	ldy #00                 ; lda ($AC,x)	          
+AS65 Assembler for R6502 [1.42].                                     Page   22
+----------------------------------- ppt3.s -----------------------------------
+
+8580 : b1ef             [ 5]         lda (z80_C),y
+8582 : 85ee             [ 3]         sta z80_A
+8584 : e6ef             [ 5]         inc z80_C                                
+8586 : d002             [ 3]         bne sy
+8588 : e6f0             [ 5]         inc z80_B
+858a :                       sy     
+858a : a016             [ 2] 	ldy #TnSlDl                                     
+858c : 91f5             [ 5]         sta (z80_IX),y
+858e : 18               [ 2] 	clc                                             
+858f : a5ee             [ 3]         lda z80_A                                
+8591 : d00d             [ 3] 	bne GL36                                        
+8593 : adfd84           [ 4] 	lda Version+1                                   
+8596 : c907             [ 2] 	cmp #7                                          
+8598 : b004             [ 3] 	bcs sz                                          
+859a : a900             [ 2]         lda #00         ; si A < 7  , A = 0 ($FF+
+859c : f002             [ 3]         beq saa
+859e : a901             [ 2] sz      lda #01         ; si A >= 7 , A = 1 ($00+
+85a0 :                       saa	    
+85a0 :                       GL36	
+85a0 : a005             [ 2]         ldy #TSlCnt                              
+85a2 : 91f5             [ 5] 	sta (z80_IX),y                                  
+85a4 : a000             [ 2]         ldy #00                                  
+85a6 : b1ef             [ 5]         lda (z80_C),y
+85a8 : 85f7             [ 3]         sta z80_AP
+85aa : c8               [ 2]         iny
+85ab : b1ef             [ 5]         lda (z80_C),y
+85ad : 85ee             [ 3]         sta z80_A
+85af : 18               [ 2]         clc
+85b0 : a5ef             [ 3]         lda z80_C
+85b2 : 6902             [ 2]         adc #02
+85b4 : 85ef             [ 3]         sta z80_C                                
+85b6 : 9002             [ 3]         bcc sac
+85b8 : e6f0             [ 5]         inc z80_B
+85ba :                       sac     
+85ba : 4c5f85           [ 3] 	jmp SET_STP                                     
+                             
+85bd :                       C_SMPOS	
+85bd : a000             [ 2]         ldy #00                  ; lda ($AC,x)	  
+85bf : b1ef             [ 5]         lda (z80_C),y
+85c1 : e6ef             [ 5]         inc z80_C                                
+85c3 : d002             [ 3]         bne sad
+85c5 : e6f0             [ 5]         inc z80_B
+85c7 :                       sad     
+85c7 : a001             [ 2] 	ldy #PsInSm                                     
+85c9 : 91f5             [ 5]         sta (z80_IX),y
+85cb : 60               [ 6] 	rts                                             
+                             
+85cc :                       C_ORPOS	
+85cc : a000             [ 2]         ldy #00                 ; lda ($AC,x)	   
+85ce : b1ef             [ 5]         lda (z80_C),y
+85d0 : e6ef             [ 5]         inc z80_C                                
+85d2 : d002             [ 3]         bne sae
+85d4 : e6f0             [ 5]         inc z80_B
+85d6 :                       sae     
+85d6 : a000             [ 2] 	ldy #PsInOr                                     
+85d8 : 91f5             [ 5]         sta (z80_IX),y
+85da : 60               [ 6] 	rts                                             
+                                 
+85db :                       C_VIBRT	
+85db : a000             [ 2]         ldy #00                 ; lda ($AC,x)	   
+85dd : b1ef             [ 5]         lda (z80_C),y
+85df : e6ef             [ 5]         inc z80_C                                
+AS65 Assembler for R6502 [1.42].                                     Page   23
+----------------------------------- ppt3.s -----------------------------------
+
+85e1 : d002             [ 3]         bne saf
+85e3 : e6f0             [ 5]         inc z80_B
+85e5 :                       saf     
+85e5 : a00b             [ 2] 	ldy #OnOffD                                     
+85e7 : 91f5             [ 5]         sta (z80_IX),y
+85e9 : a00a             [ 2]         ldy #COnOff                              
+85eb : 91f5             [ 5]         sta (z80_IX),y
+85ed : a000             [ 2] 	ldy #00                 ; lda ($AC,x)	          
+85ef : b1ef             [ 5]         lda (z80_C),y
+85f1 : e6ef             [ 5]         inc z80_C                                
+85f3 : d002             [ 3]         bne sag
+85f5 : e6f0             [ 5]         inc z80_B
+85f7 : a00c             [ 2] sag     ldy #OffOnD                              
+85f9 : 91f5             [ 5]         sta (z80_IX),y
+85fb : a900             [ 2]         lda #00                                  
+85fd : a005             [ 2]         ldy #TSlCnt                              
+85ff : 91f5             [ 5]         sta (z80_IX),y
+8601 : a006             [ 2] 	ldy #CrTnSl                                     
+8603 : 91f5             [ 5]         sta (z80_IX),y
+8605 : c8               [ 2] 	iny                                             
+8606 : 91f5             [ 5]         sta (z80_IX),y
+8608 : 60               [ 6] 	rts                                             
+                             
+8609 :                       C_ENGLS	
+8609 : a000             [ 2]         ldy #00                                  
+860b : b1ef             [ 5]         lda (z80_C),y
+860d : 8d8a8b           [ 4]         sta Env_Del+1                            
+8610 : 8dac8d           [ 4] 	sta CurEDel
+8613 : c8               [ 2]         iny
+8614 : b1ef             [ 5]         lda (z80_C),y
+8616 : 85f3             [ 3]         sta z80_L                                
+8618 : 8d8f8b           [ 4]         sta ESldAdd+1
+861b : c8               [ 2]         iny
+861c : b1ef             [ 5]         lda (z80_C),y
+861e : 85f4             [ 3]         sta z80_H                                
+8620 : 8d978b           [ 4] 	sta ESldAdd+9
+8623 : 18               [ 2]         clc
+8624 : a5ef             [ 3]         lda z80_C 
+8626 : 6903             [ 2]         adc #03
+8628 : 85ef             [ 3]         sta z80_C
+862a : 9002             [ 3]         bcc sah
+862c : e6f0             [ 5]         inc z80_B
+862e :                       sah	                                             
+862e : 60               [ 6] 	rts                                             
+                             
+862f :                       C_DELAY	
+862f : a000             [ 2]         ldy #00                 ; lda ($AC,x)	   
+8631 : b1ef             [ 5]         lda (z80_C),y
+8633 : e6ef             [ 5]         inc z80_C                                
+8635 : d002             [ 3]         bne sak
+8637 : e6f0             [ 5]         inc z80_B
+8639 :                       sak
+8639 : 8dc58a           [ 4] 	sta Delay+1                                     
+863c : 60               [ 6] 	rts                                             
+                             
+863d :                       SETENV	
+863d : a014             [ 2]         ldy #Env_En                              
+863f : a5f1             [ 3]         lda z80_E
+8641 : 91f5             [ 5]         sta (z80_IX),y
+8643 : a5ee             [ 3]         lda z80_A                ; OPT (inverser 
+8645 : 8dbc8d           [ 4]         sta AYREGS+EnvTp
+8648 : a000             [ 2] 	ldy #00                                         
+AS65 Assembler for R6502 [1.42].                                     Page   24
+----------------------------------- ppt3.s -----------------------------------
+
+864a : b1ef             [ 5]         lda (z80_C),y           
+864c : 85f4             [ 3] 	sta z80_H                                       
+864e : 8dbe8d           [ 4]         sta EnvBase+1                            
+8651 : c8               [ 2] 	iny                                             
+8652 : b1ef             [ 5]         lda (z80_C),y
+8654 : 85f3             [ 3] 	sta z80_L                                       
+8656 : 8dbd8d           [ 4] 	sta EnvBase
+8659 : a5ef             [ 3]         lda z80_C
+865b : 18               [ 2]         clc
+865c : 6902             [ 2]         adc #02
+865e : 85ef             [ 3]         sta z80_C
+8660 : 9002             [ 3]         bcc sam
+8662 : e6f0             [ 5]         inc z80_B                                
+8664 : a900             [ 2] sam	lda #00                                      
+8666 : a000             [ 2] 	ldy #PsInOr                                     
+8668 : 91f5             [ 5]         sta (z80_IX),y
+866a : 8dac8d           [ 4] 	sta CurEDel                                     
+866d : 85f4             [ 3] 	sta z80_H                                       
+866f : 8dab8d           [ 4]         sta CurESld+1                            
+8672 : 85f3             [ 3] 	sta z80_L                                       
+8674 : 85ee             [ 3]         sta z80_A
+8676 : 8daa8d           [ 4] 	sta CurESld                                     
+8679 :                       C_NOP	
+8679 : 60               [ 6]         rts                                      
+                             
+867a :                       SETORN	
+867a : a5ee             [ 3]         lda z80_A
+867c : 0a               [ 2]         asl a                                    
+867d : 85f1             [ 3] 	sta z80_E                                       
+867f : a900             [ 2] 	lda #00             ; OPT (inutile ?)           
+8681 : 85f2             [ 3]         sta z80_D
+8683 : a000             [ 2] 	ldy #PsInOr                                     
+8685 : 91f5             [ 5]         sta (z80_IX),y
+8687 :                       OrnPtrs
+8687 : a9ac             [ 2] 	    lda #$AC           
+8689 : 18               [ 2]         clc
+868a : 65f1             [ 3]         adc z80_E                                
+868c : 85f3             [ 3]         sta z80_L
+868e : a9ac             [ 2]         lda #$AC
+8690 : 6900             [ 2]         adc #00
+8692 : 85f4             [ 3]         sta z80_H
+8694 : a000             [ 2] 	ldy #00                                         
+8696 : b1f3             [ 5]         lda (z80_L),y
+8698 :                       MDADDR2
+8698 : 69ac             [ 2] 	adc #$AC
+869a : aa               [ 2]         tax             ; save
+869b : c8               [ 2] 	iny                                             
+869c : b1f3             [ 5] 	lda (z80_L),y
+869e : 69ac             [ 2]         adc #$AC                                 
+                             	    
+86a0 : a00e             [ 2] 	ldy #OrnPtr+1                                   
+86a2 : 91f5             [ 5]         sta (z80_IX),y
+86a4 : 88               [ 2]         dey
+86a5 : 8a               [ 2] 	txa                                             
+86a6 : 91f5             [ 5]         sta (z80_IX),y
+86a8 : 60               [ 6] 	rts                                             
+                             
+                             ;ALL 16 ADDRESSES TO PROTECT FROM BROKEN PT3 MODU
+86a9 :                       SPCCOMS 
+86a9 : 7886                          fcw C_NOP-1
+86ab : 7585                  	fcw C_GLISS-1
+86ad : 7984                  	fcw C_PORTM-1
+AS65 Assembler for R6502 [1.42].                                     Page   25
+----------------------------------- ppt3.s -----------------------------------
+
+86af : bc85                  	fcw C_SMPOS-1
+86b1 : cb85                  	fcw C_ORPOS-1
+86b3 : da85                  	fcw C_VIBRT-1
+86b5 : 7886                  	fcw C_NOP-1
+86b7 : 7886                  	fcw C_NOP-1
+86b9 : 0886                  	fcw C_ENGLS-1
+86bb : 2e86                  	fcw C_DELAY-1
+86bd : 7886                  	fcw C_NOP-1
+86bf : 7886                  	fcw C_NOP-1
+86c1 : 7886                  	fcw C_NOP-1
+86c3 : 7886                  	fcw C_NOP-1
+86c5 : 7886                  	fcw C_NOP-1
+86c7 : 7886                  	fcw C_NOP-1
+                             ; ===============================================
+86c9 :                       CHREGS	
+86c9 : a900             [ 2]         lda #00                                  
+86cb : 85ee             [ 3] 	    sta z80_A       ; save
+86cd : 8db98d           [ 4]         sta Ampl                                 
+86d0 : a5f3             [ 3] 	    lda z80_L                                   
+86d2 : 85fc             [ 3]         sta val3                                 
+86d4 : a5f4             [ 3]         lda z80_H
+86d6 : 85fd             [ 3]         sta val3+1
+86d8 : a015             [ 2]         ldy #Flags                               
+86da : a901             [ 2]         lda #%00000001
+86dc : 85f8             [ 3]         sta val1
+86de : b1f5             [ 5]         lda (z80_IX),y
+86e0 : 24f8             [ 3]         bit val1
+86e2 : d003             [ 3] 	    bne saq
+86e4 : 4c6089           [ 3]         jmp CH_EXIT                              
+86e7 :                       saq     	
+                                                                              
+86e7 : a00d             [ 2] 	    ldy #OrnPtr                                 
+86e9 : b1f5             [ 5]         lda (z80_IX),y
+86eb : 85f3             [ 3]         sta z80_L
+86ed : 85f8             [ 3]         sta val1            ; save L
+86ef : c8               [ 2]         iny                                      
+86f0 : b1f5             [ 5]         lda (z80_IX),y
+86f2 : 85f4             [ 3]         sta z80_H
+86f4 : 85f9             [ 3]         sta val1+1          ; save H
+                             	                                                
+86f6 : a000             [ 2]         ldy #00
+86f8 : b1f3             [ 5]         lda (z80_L),y                            
+86fa : 85f1             [ 3]         sta z80_E
+86fc : c8               [ 2]         iny
+86fd : b1f3             [ 5]         lda (z80_L),y
+86ff : 85f2             [ 3]         sta z80_D
+8701 : a000             [ 2] 	    ldy #PsInOr                                 
+8703 : b1f5             [ 5]         lda (z80_IX),y
+8705 : 85f3             [ 3] 	    sta z80_L                                   
+8707 : 85ee             [ 3]         sta z80_A                                
+8709 : 18               [ 2] 	    clc
+870a : a5f8             [ 3]         lda val1
+870c : 65f3             [ 3]         adc z80_L
+870e : 85f3             [ 3]         sta z80_L
+8710 : a5f9             [ 3]         lda val1+1
+8712 : 6900             [ 2]         adc #00                
+8714 : 85f4             [ 3]         sta z80_H                                
+8716 : a5f3             [ 3]         lda z80_L
+8718 : 6902             [ 2]         adc #02
+871a : 85f3             [ 3]         sta z80_L
+871c : a5f4             [ 3]         lda z80_H
+871e : 6900             [ 2]         adc #00
+AS65 Assembler for R6502 [1.42].                                     Page   26
+----------------------------------- ppt3.s -----------------------------------
+
+8720 : 85f4             [ 3]         sta z80_H
+8722 : a5ee             [ 3]         lda z80_A                                
+8724 : 6901             [ 2]         adc #01
+8726 : c5f2             [ 3]         cmp z80_D                                
+8728 : 9003             [ 3] 	    bcc CH_ORPS                                 
+872a : 18               [ 2] 	    clc
+872b : a5f1             [ 3]         lda z80_E                                
+872d :                       CH_ORPS	
+872d : a000             [ 2]         ldy #PsInOr                              
+872f : 91f5             [ 5]         sta (z80_IX),y
+8731 : a012             [ 2] 	    ldy #Note                                   
+8733 : b1f5             [ 5]         lda (z80_IX),y
+8735 : a000             [ 2] 	    ldy #00                                     
+8737 : 71f3             [ 5]         adc (z80_L),y       ; adc ($AC,x)	
+8739 : 1002             [ 3] 	    bpl CH_NTP                                  
+873b : a900             [ 2] 	    lda #00                                     
+873d :                       CH_NTP	
+873d : c960             [ 2]         cmp #96                                  
+873f : 9002             [ 3] 	    bcc CH_NOK                                  
+8741 : a95f             [ 2] 	    lda #95                                     
+8743 :                       CH_NOK	
+8743 : 0a               [ 2]         asl a                                    
+8744 : 85f7             [ 3]         sta z80_AP                               
+8746 : a00f             [ 2] 	    ldy #SamPtr                                 
+8748 : b1f5             [ 5]         lda (z80_IX),y
+874a : 85f3             [ 3]         sta z80_L
+874c : 85f8             [ 3] 	    sta val1            ; save L
+874e : c8               [ 2]         iny                                      
+874f : b1f5             [ 5]         lda (z80_IX),y
+8751 : 85f4             [ 3]         sta z80_H
+8753 : 85f9             [ 3]         sta val1+1          ; save H
+8755 : a000             [ 2] 	    ldy #00
+8757 : b1f3             [ 5]         lda (z80_L),y                            
+8759 : 85f1             [ 3]         sta z80_E   
+875b : c8               [ 2]         iny
+875c : b1f3             [ 5]         lda (z80_L),y
+875e : 85f2             [ 3]         sta z80_D   
+                             
+8760 : a001             [ 2] 	    ldy #PsInSm                                 
+8762 : b1f5             [ 5]         lda (z80_IX),y
+8764 : 85f0             [ 3] 	    sta z80_B                                   
+8766 : 0a               [ 2] 	    asl a                                       
+8767 : 0a               [ 2] 	    asl a                                       
+8768 : 85f3             [ 3] 	    sta z80_L                                   
+876a : 18               [ 2]         clc
+876b : 65f8             [ 3]         adc val1
+876d : 85f3             [ 3]         sta z80_L
+876f : a5f9             [ 3]         lda val1+1
+8771 : 6900             [ 2]         adc #00
+8773 : 85f4             [ 3]         sta z80_H                                
+8775 : a5f3             [ 3]         lda z80_L
+8777 : 6902             [ 2]         adc #02
+8779 : 85f3             [ 3]         sta z80_L
+877b : a5f4             [ 3]         lda z80_H
+877d : 6900             [ 2]         adc #00
+877f : 85f4             [ 3]         sta z80_H
+                             
+8781 : a5f0             [ 3] 	    lda z80_B                                   
+8783 : 6901             [ 2]         adc #01
+8785 : c5f2             [ 3] 	    cmp z80_D                                   
+8787 : 9002             [ 3] 	    bcc CH_SMPS                                 
+8789 : a5f1             [ 3] 	    lda z80_E                                   
+AS65 Assembler for R6502 [1.42].                                     Page   27
+----------------------------------- ppt3.s -----------------------------------
+
+878b :                       CH_SMPS	
+878b : a001             [ 2]         ldy #PsInSm                              
+878d : 91f5             [ 5]         sta (z80_IX),y
+878f : a000             [ 2]         ldy #00
+8791 : b1f3             [ 5]         lda (z80_L),y                            
+8793 : 85ef             [ 3]         sta z80_C
+8795 : c8               [ 2]         iny
+8796 : b1f3             [ 5]         lda (z80_L),y
+8798 : 85f0             [ 3]         sta z80_B
+                             
+879a : a008             [ 2]         ldy #TnAcc                               
+879c : b1f5             [ 5]         lda (z80_IX),y
+879e : 85f1             [ 3]         sta z80_E
+87a0 : c8               [ 2]         iny
+87a1 : b1f5             [ 5]         lda (z80_IX),y
+87a3 : 85f2             [ 3] 	    sta z80_D                                   
+87a5 : 18               [ 2] 	    clc                                         
+87a6 : a002             [ 2]         ldy #02
+87a8 : b1f3             [ 5]         lda (z80_L),y                            
+87aa : 65f1             [ 3]         adc z80_E
+87ac : aa               [ 2]         tax
+87ad : c8               [ 2]         iny
+87ae : b1f3             [ 5]         lda (z80_L),y
+87b0 : 65f2             [ 3]         adc z80_D
+87b2 : 85f4             [ 3]         sta z80_H
+87b4 : 85f2             [ 3]         sta z80_D
+87b6 : 8a               [ 2]         txa
+87b7 : 85f3             [ 3]         sta z80_L
+87b9 : 85f1             [ 3]         sta z80_E
+                             
+87bb : a940             [ 2]         lda #%01000000                           
+87bd : 24f0             [ 3]         bit z80_B
+87bf : f00b             [ 3] 	    beq CH_NOAC                                 
+87c1 : a008             [ 2] 	    ldy #TnAcc                                  
+87c3 : a5f3             [ 3]         lda z80_L
+87c5 : 91f5             [ 5]         sta (z80_IX),y
+87c7 : c8               [ 2] 	    iny                                         
+87c8 : a5f4             [ 3]         lda z80_H
+87ca : 91f5             [ 5]         sta (z80_IX),y
+87cc :                       CH_NOAC 												             
+87cc : a5f7             [ 3]         lda z80_AP                               
+87ce : 85ee             [ 3]         sta z80_A                                
+87d0 : 85f3             [ 3]         sta z80_L                                
+87d2 : 18               [ 2]         clc
+87d3 : a9af             [ 2]         lda #lo(NT_)
+87d5 : 65f3             [ 3]         adc z80_L
+87d7 : 85f3             [ 3]         sta z80_L
+87d9 : a98e             [ 2]         lda #hi(NT_)
+87db : 6900             [ 2]         adc #00
+87dd : 85f4             [ 3]         sta z80_H
+87df : a000             [ 2]         ldy #00
+87e1 : b1f3             [ 5]         lda (z80_L),y                            
+87e3 : 65f1             [ 3]         adc z80_E
+87e5 : aa               [ 2]         tax
+87e6 : c8               [ 2]         iny
+87e7 : b1f3             [ 5]         lda (z80_L),y
+87e9 : 65f2             [ 3]         adc z80_D                                
+87eb : 85f4             [ 3]         sta z80_H
+87ed : 8a               [ 2]         txa
+87ee : 85f3             [ 3]         sta z80_L
+87f0 : 18               [ 2]         clc
+87f1 : a006             [ 2] 	    ldy #CrTnSl                                 
+AS65 Assembler for R6502 [1.42].                                     Page   28
+----------------------------------- ppt3.s -----------------------------------
+
+87f3 : b1f5             [ 5]         lda (z80_IX),y
+87f5 : 85f1             [ 3]         sta z80_E
+87f7 : 65f3             [ 3]         adc z80_L
+87f9 : 85f3             [ 3]         sta z80_L
+87fb : 85fc             [ 3] 	    sta val3
+87fd : c8               [ 2]         iny                                      
+87fe : b1f5             [ 5]         lda (z80_IX),y
+8800 : 85f2             [ 3]         sta z80_D
+8802 : 65f4             [ 3]         adc z80_H
+8804 : 85f4             [ 3]         sta z80_H
+8806 : 85fd             [ 3]         sta val3+1
+                             ;CSP_	    
+                             	   
+8808 : a900             [ 2]         lda #00                                  
+880a : a005             [ 2] 	    ldy #TSlCnt                                 
+880c : 11f5             [ 5]         ora (z80_IX),y
+880e : 85ee             [ 3] 	    sta z80_A
+8810 : d003             [ 3]         bne saq1                                 
+8812 : 4c9088           [ 3]         jmp CH_AMP
+8815 : b1f5             [ 5] saq1	lda (z80_IX),y                              
+8817 : 38               [ 2]         sec
+8818 : e901             [ 2]         sbc #01
+881a : 91f5             [ 5]         sta (z80_IX),y
+881c : d072             [ 3] 	    bne CH_AMP                                  
+881e : a016             [ 2] 	    ldy #TnSlDl                                 
+8820 : b1f5             [ 5]         lda (z80_IX),y
+8822 : a005             [ 2]         ldy #TSlCnt                              
+8824 : 91f5             [ 5]         sta (z80_IX),y
+8826 : 18               [ 2] 	    clc
+8827 : a017             [ 2]         ldy #TSlStp                              
+8829 : b1f5             [ 5]         lda (z80_IX),y
+882b : 65f1             [ 3]         adc z80_E
+882d : 85f3             [ 3]         sta z80_L
+882f : c8               [ 2] 	    iny                                         
+8830 : b1f5             [ 5]         lda (z80_IX),y
+8832 : 65f2             [ 3]         adc z80_D
+8834 : 85f4             [ 3]         sta z80_H 
+8836 : 85ee             [ 3] 	    sta z80_A       ; save                      
+8838 : a007             [ 2] 	    ldy #CrTnSl+1                               
+883a : 91f5             [ 5]         sta (z80_IX),y
+883c : 88               [ 2]         dey                                      
+883d : a5f3             [ 3]         lda z80_L
+883f : 91f5             [ 5]         sta (z80_IX),y
+8841 : a904             [ 2] 	    lda #%00000100                              
+8843 : 85f8             [ 3]         sta val1
+8845 : a015             [ 2]         ldy #Flags
+8847 : b1f5             [ 5]         lda (z80_IX),y
+8849 : 24f8             [ 3]         bit val1
+884b : d043             [ 3] 	    bne CH_AMP  	                               
+884d : a019             [ 2] 	    ldy #TnDelt                                 
+884f : b1f5             [ 5]         lda (z80_IX),y
+8851 : 85f1             [ 3]         sta z80_E
+8853 : c8               [ 2] 	    iny                                         
+8854 : b1f5             [ 5]         lda (z80_IX),y
+8856 : 85f2             [ 3]         sta z80_D
+8858 : a5ee             [ 3] 	lda z80_A                                       
+885a : f010             [ 3] 	beq CH_STPP                                     
+885c : a5f1             [ 3] 	lda z80_E												
+885e : a6f3             [ 3] 	ldx z80_L
+8860 : 85f3             [ 3] 	sta z80_L
+8862 : 86f1             [ 3] 	stx z80_E
+8864 : a5f2             [ 3] 	lda z80_D
+AS65 Assembler for R6502 [1.42].                                     Page   29
+----------------------------------- ppt3.s -----------------------------------
+
+8866 : a6f4             [ 3] 	ldx z80_H
+8868 : 85f4             [ 3] 	sta z80_H
+886a : 86f2             [ 3] 	stx z80_D
+886c :                       CH_STPP
+886c : 38               [ 2]         sec           ; carry = 0 becoze And A   
+886d : a5f3             [ 3]         lda z80_L
+886f : e5f1             [ 3]         sbc z80_E
+8871 : 85f3             [ 3]         sta z80_L
+8873 : a5f4             [ 3]         lda z80_H
+8875 : e5f2             [ 3]         sbc z80_D
+8877 : 85f4             [ 3]         sta z80_H
+8879 : 3015             [ 3]         bmi CH_AMP                               
+887b : a013             [ 2] 	ldy #SlToNt                                     
+887d : b1f5             [ 5]         lda (z80_IX),y
+887f : a012             [ 2] 	ldy #Note                                       
+8881 : 91f5             [ 5]         sta (z80_IX),y
+8883 : a900             [ 2] 	lda #00                                         
+8885 : a005             [ 2] 	ldy #TSlCnt                                     
+8887 : 91f5             [ 5]         sta (z80_IX),y
+8889 : a006             [ 2] 	ldy #CrTnSl                                     
+888b : 91f5             [ 5]         sta (z80_IX),y
+888d : c8               [ 2]         iny                                      
+888e : 91f5             [ 5]         sta (z80_IX),y
+                             
+8890 :                       CH_AMP	
+8890 : a002             [ 2]         ldy #CrAmSl                              
+8892 : b1f5             [ 5]         lda (z80_IX),y
+8894 : 85ee             [ 3] 	    sta z80_A       ; save
+8896 : a980             [ 2]         lda #%10000000                           
+8898 : 24ef             [ 3]         bit z80_C
+889a : f021             [ 3] 	    beq CH_NOAM                                 
+889c : a940             [ 2] 	    lda #%01000000                              
+889e : 24ef             [ 3]         bit z80_C
+88a0 : f00c             [ 3] 	    beq CH_AMIN                                 
+88a2 : a5ee             [ 3] 	    lda z80_A                                   
+88a4 : c90f             [ 2]         cmp #15
+88a6 : f015             [ 3] 	    beq CH_NOAM                                 
+88a8 : 18               [ 2] 	    clc                                         
+88a9 : 6901             [ 2]         adc #01
+88ab : 4cb788           [ 3] 	    jmp CH_SVAM                                 
+88ae :                       CH_AMIN	
+88ae : a5ee             [ 3]         lda z80_A                                
+88b0 : c9f1             [ 2]         cmp #$F1            ; -15
+88b2 : f009             [ 3] 	    beq CH_NOAM                                 
+88b4 : 38               [ 2] 	    sec                                         
+88b5 : e901             [ 2]         sbc #01
+88b7 :                       CH_SVAM	
+88b7 : a002             [ 2]         ldy #CrAmSl                              
+88b9 : 91f5             [ 5]         sta (z80_IX),y
+88bb : 85ee             [ 3]         sta z80_A
+88bd :                       CH_NOAM	
+88bd : a5ee             [ 3]         lda z80_A
+88bf : 85f3             [ 3]         sta z80_L                                
+88c1 : a5f0             [ 3] 	    lda z80_B                                   
+88c3 : 290f             [ 2] 	    and #15                                     
+88c5 : 18               [ 2] 	    clc                                         
+88c6 : 65f3             [ 3]         adc z80_L
+88c8 : 1002             [ 3] 	    bpl CH_APOS                                 
+88ca : a900             [ 2] 	    lda #00                                     
+88cc :                       CH_APOS	
+88cc : c910             [ 2]         cmp #16                                  
+88ce : 9002             [ 3] 	    bcc CH_VOL                                  
+AS65 Assembler for R6502 [1.42].                                     Page   30
+----------------------------------- ppt3.s -----------------------------------
+
+88d0 : a90f             [ 2] 	    lda #15                                     
+88d2 :                       CH_VOL	
+88d2 : a01c             [ 2]         ldy #Volume                              
+88d4 : 11f5             [ 5]         ora (z80_IX),y
+88d6 : 85f3             [ 3] 	    sta z80_L
+88d8 : 18               [ 2]         clc                                      
+88d9 : a9af             [ 2] 	lda #lo(VT_)                                    
+88db : 85f1             [ 3]         sta z80_E
+88dd : 65f3             [ 3]         adc z80_L
+88df : 85f3             [ 3]         sta z80_L
+88e1 : a98d             [ 2]         lda #hi(VT_)
+88e3 : 85f2             [ 3]         sta z80_D
+88e5 : 6900             [ 2]         adc #00
+88e7 : 85f4             [ 3]         sta z80_H
+88e9 : a000             [ 2] 	    ldy #00                                     
+88eb : b1f3             [ 5]         lda (z80_L),y       ; lda ($AC,x)	
+88ed : 85ee             [ 3]         sta z80_A       ; save
+88ef :                       CH_ENV	
+88ef : a901             [ 2]         lda #%00000001                           
+88f1 : 24ef             [ 3]         bit z80_C
+88f3 : d008             [ 3] 	    bne CH_NOEN                                 
+88f5 : a014             [ 2] 	    ldy #Env_En                                 
+88f7 : a5ee             [ 3]         lda z80_A
+88f9 : 11f5             [ 5]         ora (z80_IX),y
+88fb : 85ee             [ 3]         sta z80_A
+                             
+88fd :                       CH_NOEN	
+88fd : a5ee             [ 3]         lda z80_A
+88ff : 8db98d           [ 4]         sta Ampl                                 
+8902 : a5ef             [ 3]         lda z80_C                                
+8904 : 85ee             [ 3]         sta z80_A
+8906 : a980             [ 2]         lda #%10000000                           
+8908 : 24f0             [ 3]         bit z80_B
+890a : f034             [ 3] 	    beq NO_ENSL                                 
+890c : a5ee             [ 3]         lda z80_A
+890e : 2a               [ 2]         rol a                                    
+890f : 2a               [ 2] 	    rol a                                       
+8910 : c980             [ 2] 	    cmp #$80                                    
+8912 : 6a               [ 2]         ror a
+8913 : c980             [ 2] 	    cmp #$80                                    
+8915 : 6a               [ 2]         ror a
+8916 : c980             [ 2] 	    cmp #$80                                    
+8918 : 6a               [ 2]         ror a
+8919 : a004             [ 2] 	    ldy #CrEnSl                                 
+891b : 18               [ 2]         clc
+891c : 71f5             [ 5]         adc (z80_IX),y
+891e : 85ee             [ 3]         sta z80_A
+8920 : a920             [ 2]         lda #%00100000                           
+8922 : 24f0             [ 3]         bit z80_B
+8924 : f006             [ 3] 	    beq NO_ENAC                                 
+8926 : a004             [ 2] 	    ldy #CrEnSl                                 
+8928 : a5ee             [ 3]         lda z80_A
+892a : 91f5             [ 5]         sta (z80_IX),y
+892c :                       NO_ENAC	
+892c : a943             [ 2]         lda #lo(AddToEn+1)       ; OPT ?         
+892e : 85f3             [ 3]         sta z80_L
+8930 : a98b             [ 2]         lda #hi(AddToEn+1)
+8932 : 85f4             [ 3]         sta z80_H
+8934 : a5ee             [ 3]         lda z80_A
+8936 : a000             [ 2]         ldy #00                                  
+                             		                                               
+8938 : 18               [ 2]         clc
+AS65 Assembler for R6502 [1.42].                                     Page   31
+----------------------------------- ppt3.s -----------------------------------
+
+8939 : 71f3             [ 5]         adc (z80_L),y           ; OPT ?
+893b : 91f3             [ 5]         sta (z80_L),y                            
+893d : 4c5989           [ 3] 	    jmp CH_MIX                                  
+8940 :                       NO_ENSL 
+8940 : a5ee             [ 3]         lda z80_A
+8942 : 6a               [ 2]         ror a                                    
+8943 : a003             [ 2] 	    ldy #CrNsSl                                 
+8945 : 18               [ 2]         clc
+8946 : 71f5             [ 5]         adc (z80_IX),y
+8948 : 8dae8d           [ 4] 	    sta AddToNs                                 
+894b : 85ee             [ 3]         sta z80_A       ; save
+894d : a920             [ 2] 	    lda #%00100000                              
+894f : 24f0             [ 3]         bit z80_B
+8951 : f006             [ 3] 	    beq CH_MIX                                  
+8953 : a003             [ 2] 	    ldy #CrNsSl                                 
+8955 : a5ee             [ 3]         lda z80_A
+8957 : 91f5             [ 5]         sta (z80_IX),y
+8959 :                       CH_MIX	
+8959 : a5f0             [ 3]         lda z80_B                                
+895b : 6a               [ 2] 	    ror a                                       
+895c : 2948             [ 2] 	    and #$48                                    
+895e : 85ee             [ 3]         sta z80_A
+8960 :                       CH_EXIT	
+8960 : a9b6             [ 2]         lda #lo(AYREGS+Mixer)                    
+8962 : 85f3             [ 3]         sta z80_L
+8964 : a98d             [ 2]         lda #hi(AYREGS+Mixer)
+8966 : 85f4             [ 3]         sta z80_H
+8968 : a5ee             [ 3] 	    lda z80_A
+896a : a000             [ 2]         ldy #00                                  
+896c : 11f3             [ 5]         ora (z80_L),y       ; ora ($AC,x)	
+896e : 4a               [ 2] 	    lsr a                                       
+896f : 9002             [ 3]         bcc saq2
+8971 : 0980             [ 2]         ora #$80
+8973 : 91f3             [ 5] saq2	sta (z80_L),y                               
+8975 : a5fd             [ 3] 	    lda val3+1                                  
+8977 : 85f4             [ 3]         sta z80_H
+8979 : a5fc             [ 3]         lda val3 
+897b : 85f3             [ 3]         sta z80_L
+897d : a900             [ 2] 	    lda #00                                     
+897f : a00a             [ 2] 	    ldy #COnOff                                 
+8981 : 11f5             [ 5]         ora (z80_IX),y
+8983 : 85ee             [ 3] 	    sta z80_A       ; save
+8985 : d001             [ 3]         bne sas                                  
+8987 : 60               [ 6]         rts
+8988 : a00a             [ 2] sas 	ldy #COnOff                                 
+898a : b1f5             [ 5]         lda (z80_IX),y
+898c : 38               [ 2]         sec
+898d : e901             [ 2]         sbc #01
+898f : 91f5             [ 5]         sta (z80_IX),y
+8991 : f001             [ 3] 	    beq sat                                     
+8993 : 60               [ 6]         rts
+8994 : a015             [ 2] sat 	ldy #Flags                                  
+8996 : a5ee             [ 3]         lda z80_A
+8998 : 51f5             [ 5]         eor (z80_IX),y                           
+899a : 91f5             [ 5]         sta (z80_IX),y                           
+899c : 6a               [ 2] 	    ror a                                       
+899d : a00b             [ 2] 	    ldy #OnOffD                                 
+899f : b1f5             [ 5]         lda (z80_IX),y
+89a1 : b004             [ 3] 	    bcs CH_ONDL                                 
+89a3 : a00c             [ 2] 	    ldy #OffOnD                                 
+89a5 : b1f5             [ 5]         lda (z80_IX),y
+89a7 :                       CH_ONDL	
+AS65 Assembler for R6502 [1.42].                                     Page   32
+----------------------------------- ppt3.s -----------------------------------
+
+89a7 : a00a             [ 2]         ldy #COnOff                              
+89a9 : 91f5             [ 5]         sta (z80_IX),y
+89ab : 60               [ 6]         rts                                      
+                             ; ===============================================
+89ac :                       PLAY    
+89ac : a900             [ 2]         lda #00                                  
+89ae : 8d438b           [ 4] 	    sta AddToEn+1                               
+89b1 : 8db68d           [ 4] 	    sta AYREGS+Mixer                            
+89b4 : a9ff             [ 2] 	    lda #$FF                                    
+89b6 : 8dbc8d           [ 4] 	    sta AYREGS+EnvTp                            
+89b9 : cea98d           [ 6] 	    dec DelyCnt                                 
+89bc : f003             [ 3] 	    beq sat1                                    
+89be : 4cc98a           [ 3]         jmp PL2
+89c1 : ce6d8d           [ 6] sat1	dec ANtSkCn                                 
+89c4 : f003             [ 3] 	    beq sat2                                    
+89c6 : 4c808a           [ 3]         jmp PL1B
+89c9 :                       AdInPtA
+89c9 : a901             [ 2] sat2	lda #01                                     
+89cb : 85ef             [ 3]         sta z80_C
+89cd : a901             [ 2]         lda #01
+89cf : 85f0             [ 3]         sta z80_B
+89d1 : a000             [ 2] 	    ldy #00                                     
+89d3 : b1ef             [ 5]         lda (z80_C),y       ; lda ($AC,x)	       
+89d5 : f003             [ 3] 	    beq sat3            ; test 0                
+89d7 : 4c6b8a           [ 3]         jmp PL1A
+89da : 85f2             [ 3] sat3	sta z80_D                                   
+89dc : 8dad8d           [ 4] 	    sta Ns_Base                                 
+89df : ad0d80           [ 4] 	    lda CrPsPtr                                 
+89e2 : 85f3             [ 3]         sta z80_L
+89e4 : ad0e80           [ 4]         lda CrPsPtr+1
+89e7 : 85f4             [ 3]         sta z80_H
+89e9 : e6f3             [ 5] 	    inc z80_L                                   
+89eb : d002             [ 3]         bne sar
+89ed : e6f4             [ 5]         inc z80_H
+89ef :                       sar                                              
+89ef : b1f3             [ 5]         lda (z80_L),y                            
+89f1 : 18               [ 2] 	    clc                                         
+89f2 : 6901             [ 2]         adc #01
+89f4 : 85ee             [ 3]         sta z80_A
+89f6 : d014             [ 4]         bne PLNLP                                
+89f8 : 202480           [ 6] 	    jsr CHECKLP                                 
+89fb :                       LPosPtr
+89fb : a9ac             [ 2] 	    lda #$AC                                    
+89fd : 85f3             [ 3]         sta z80_L
+89ff : a9ac             [ 2]         lda #$AC
+8a01 : 85f4             [ 3]         sta z80_H
+8a03 : a000             [ 2] 	    ldy #00                 ; OPT ?             
+8a05 : b1f3             [ 5]         lda (z80_L),y       ; lda ($AC,x)	       
+8a07 : 18               [ 2] 	    clc                                         
+8a08 : 6901             [ 2]         adc #01
+8a0a : 85ee             [ 3]         sta z80_A           ; save
+8a0c :                       PLNLP	
+8a0c : a5f3             [ 3]         lda z80_L                                
+8a0e : 8d0d80           [ 4]         sta CrPsPtr
+8a11 : a5f4             [ 3]         lda z80_H
+8a13 : 8d0e80           [ 4]         sta CrPsPtr+1
+8a16 : a5ee             [ 3] 	    lda z80_A                                   
+8a18 : 38               [ 2]         sec
+8a19 : e901             [ 2]         sbc #01
+8a1b : 0a               [ 2] 	    asl a                                       
+8a1c : 85f1             [ 3] 	    sta z80_E                                   
+8a1e : 85ee             [ 3]         sta z80_A
+AS65 Assembler for R6502 [1.42].                                     Page   33
+----------------------------------- ppt3.s -----------------------------------
+
+8a20 : 26f2             [ 5] 	    rol z80_D                                   
+8a22 :                       PatsPtr
+8a22 : a9ac             [ 2] 	    lda #$AC
+8a24 : 18               [ 2]         clc
+8a25 : 65f1             [ 3]         adc z80_E                                
+8a27 : 85f3             [ 3]         sta z80_L
+8a29 : a9ac             [ 2]         lda #$AC
+8a2b : 65f2             [ 3]         adc z80_D
+8a2d : 85f4             [ 3]         sta z80_H
+                             	    
+8a2f : ad5683           [ 4] 	    lda MODADDR+1                               
+8a32 : 85f1             [ 3]         sta z80_E
+8a34 : ad5c83           [ 4]         lda MODADDR+7
+8a37 : 85f2             [ 3]         sta z80_D
+                                                    	                         
+8a39 : a000             [ 2] 	    ldy #00                 ; OPT ?
+8a3b : b1f3             [ 5]         lda (z80_L),y           ; lda ($AC,x)	   
+8a3d : 18               [ 2]         clc                                      
+8a3e : 65f1             [ 3]         adc z80_E               ; OPT (adc MODADD
+8a40 : 85ef             [ 3]         sta z80_C
+8a42 : c8               [ 2]         iny
+8a43 : b1f3             [ 5]         lda (z80_L),y
+8a45 : 65f2             [ 3]         adc z80_D               ; OPT (adc MODADD
+8a47 : 85f0             [ 3]         sta z80_B   
+8a49 : c8               [ 2]         iny
+8a4a : b1f3             [ 5]         lda (z80_L),y                            
+8a4c : 18               [ 2]         clc                     ; OPT ?
+8a4d : 65f1             [ 3]         adc z80_E               ; IDEM...
+8a4f : 8d8e8a           [ 4]         sta AdInPtB+1   
+8a52 : c8               [ 2]         iny
+8a53 : b1f3             [ 5]         lda (z80_L),y
+8a55 : 65f2             [ 3]         adc z80_D
+8a57 : 8d928a           [ 4]         sta AdInPtB+5     
+8a5a : c8               [ 2]         iny
+8a5b : b1f3             [ 5]         lda (z80_L),y                            
+8a5d : 18               [ 2]         clc
+8a5e : 65f1             [ 3]         adc z80_E               ; IDEM
+8a60 : 8db08a           [ 4]         sta AdInPtC+1   
+8a63 : c8               [ 2]         iny
+8a64 : b1f3             [ 5]         lda (z80_L),y
+8a66 : 65f2             [ 3]         adc z80_D
+8a68 : 8db48a           [ 4]         sta AdInPtC+5
+                                                                              
+8a6b :                       PSP_	
+                             
+8a6b :                       PL1A	
+8a6b : a952             [ 2]         lda #lo(ChanA)                           
+8a6d : 85f5             [ 3]         sta z80_IX
+8a6f : a98d             [ 2]         lda #hi(ChanA)
+8a71 : 85f6             [ 3]         sta z80_IX+1
+8a73 : 20c683           [ 6] 	jsr PTDECOD                                     
+8a76 : a5ef             [ 3] 	lda z80_C                                       
+8a78 : 8dca89           [ 4]         sta AdInPtA+1
+8a7b : a5f0             [ 3]         lda z80_B
+8a7d : 8dce89           [ 4]         sta AdInPtA+5
+                             
+8a80 :                       PL1B	
+8a80 : ce8a8d           [ 6]         dec BNtSkCn                              
+8a83 : d01d             [ 3] 	bne PL1C                                        
+8a85 : a96f             [ 2] 	lda #lo(ChanB)                                  
+8a87 : 85f5             [ 3]         sta z80_IX
+8a89 : a98d             [ 2]         lda #hi(ChanB)
+AS65 Assembler for R6502 [1.42].                                     Page   34
+----------------------------------- ppt3.s -----------------------------------
+
+8a8b : 85f6             [ 3]         sta z80_IX+1
+8a8d :                       AdInPtB
+8a8d : a901             [ 2] 	lda #01                                         
+8a8f : 85ef             [ 3]         sta z80_C
+8a91 : a901             [ 2]         lda #01
+8a93 : 85f0             [ 3]         sta z80_B
+8a95 : 20c683           [ 6] 	jsr PTDECOD                                     
+8a98 : a5ef             [ 3] 	lda z80_C                                       
+8a9a : 8d8e8a           [ 4]         sta AdInPtB+1
+8a9d : a5f0             [ 3]         lda z80_B
+8a9f : 8d928a           [ 4]         sta AdInPtB+5
+                             
+8aa2 :                       PL1C	
+8aa2 : cea78d           [ 6]         dec CNtSkCn                              
+8aa5 : d01d             [ 3] 	bne PL1D                                        
+8aa7 : a98c             [ 2] 	lda #lo(ChanC)                                  
+8aa9 : 85f5             [ 3]         sta z80_IX
+8aab : a98d             [ 2]         lda #hi(ChanC)
+8aad : 85f6             [ 3]         sta z80_IX+1
+8aaf :                       AdInPtC
+8aaf : a901             [ 2] 	lda #01                                         
+8ab1 : 85ef             [ 3]         sta z80_C
+8ab3 : a901             [ 2]         lda #01
+8ab5 : 85f0             [ 3]         sta z80_B
+8ab7 : 20c683           [ 6] 	jsr PTDECOD                                     
+8aba : a5ef             [ 3] 	lda z80_C                                       
+8abc : 8db08a           [ 4]         sta AdInPtC+1
+8abf : a5f0             [ 3]         lda z80_B
+8ac1 : 8db48a           [ 4]         sta AdInPtC+5
+                             
+8ac4 :                       Delay
+8ac4 :                       PL1D	
+8ac4 : a93e             [ 2]         lda #$3E                                 
+8ac6 : 8da98d           [ 4] 	    sta DelyCnt                                 
+                             
+8ac9 :                       PL2	
+8ac9 : a952             [ 2]         lda #lo(ChanA)                           
+8acb : 85f5             [ 3]         sta z80_IX
+8acd : a98d             [ 2]         lda #hi(ChanA)
+8acf : 85f6             [ 3]         sta z80_IX+1
+8ad1 : adaf8d           [ 4] 	    lda AYREGS+TonA                             
+8ad4 : 85f3             [ 3]         sta z80_L
+8ad6 : adb08d           [ 4]         lda AYREGS+TonA+1
+8ad9 : 85f4             [ 3]         sta z80_H
+8adb : 20c986           [ 6] 	    jsr CHREGS                                  
+8ade : a5f3             [ 3] 	    lda z80_L                                   
+8ae0 : 8daf8d           [ 4]         sta AYREGS+TonA
+8ae3 : a5f4             [ 3]         lda z80_H
+8ae5 : 8db08d           [ 4]         sta AYREGS+TonA+1
+8ae8 : adb98d           [ 4] 	    lda Ampl                                    
+8aeb : 8db78d           [ 4] 	    sta AYREGS+AmplA                            
+                             	
+8aee : a96f             [ 2]         lda #lo(ChanB)                           
+8af0 : 85f5             [ 3]         sta z80_IX
+8af2 : a98d             [ 2]         lda #hi(ChanB)
+8af4 : 85f6             [ 3]         sta z80_IX+1
+8af6 : adb18d           [ 4] 	    lda AYREGS+TonB                             
+8af9 : 85f3             [ 3]         sta z80_L
+8afb : adb28d           [ 4]         lda AYREGS+TonB+1
+8afe : 85f4             [ 3]         sta z80_H
+8b00 : 20c986           [ 6] 	    jsr CHREGS                                  
+8b03 : a5f3             [ 3] 	    lda z80_L                                   
+AS65 Assembler for R6502 [1.42].                                     Page   35
+----------------------------------- ppt3.s -----------------------------------
+
+8b05 : 8db18d           [ 4]         sta AYREGS+TonB
+8b08 : a5f4             [ 3]         lda z80_H
+8b0a : 8db28d           [ 4]         sta AYREGS+TonB+1
+8b0d : adb98d           [ 4] 	    lda Ampl                                    
+8b10 : 8db88d           [ 4] 	    sta AYREGS+AmplB                            
+                             	    
+8b13 : a98c             [ 2]         lda #lo(ChanC)                           
+8b15 : 85f5             [ 3]         sta z80_IX
+8b17 : a98d             [ 2]         lda #hi(ChanC)
+8b19 : 85f6             [ 3]         sta z80_IX+1
+8b1b : adb38d           [ 4] 	    lda AYREGS+TonC                             
+8b1e : 85f3             [ 3]         sta z80_L
+8b20 : adb48d           [ 4]         lda AYREGS+TonC+1
+8b23 : 85f4             [ 3]         sta z80_H
+8b25 : 20c986           [ 6] 	    jsr CHREGS                                  
+8b28 : a5f3             [ 3] 	    lda z80_L                                   
+8b2a : 8db38d           [ 4]         sta AYREGS+TonC
+8b2d : a5f4             [ 3]         lda z80_H
+8b2f : 8db48d           [ 4]         sta AYREGS+TonC+1
+                             
+8b32 : adad8d           [ 4] 	    lda Ns_Base_AddToNs                         
+8b35 : 85f3             [ 3]         sta z80_L
+8b37 : adae8d           [ 4]         lda Ns_Base_AddToNs+1
+8b3a : 85f4             [ 3]         sta z80_H                                
+8b3c : 18               [ 2] 	    clc                                         
+8b3d : 65f3             [ 3]         adc z80_L
+8b3f : 8db58d           [ 4] 	    sta AYREGS+Noise                            
+                             
+8b42 :                       AddToEn
+8b42 : a93e             [ 2] 	    lda #$3E                                    
+8b44 : 85f1             [ 3] 	    sta z80_E                                   
+8b46 : 0a               [ 2] 	    asl a                                       
+8b47 : 9004             [ 3] 	    bcc sau                                     
+8b49 : a9ff             [ 2]         lda #$FF
+8b4b : d002             [ 3]         bne sau1      ; always
+8b4d : a900             [ 2] sau     lda #00
+8b4f : 85f2             [ 3] sau1	sta z80_D                                   
+8b51 : adbe8d           [ 4]         lda EnvBase+1
+8b54 : 85f4             [ 3]         sta z80_H           ; OPT ?
+8b56 : adbd8d           [ 4]         lda EnvBase                              
+8b59 : 85f3             [ 3]         sta z80_L           ; OPT ?
+8b5b : 18               [ 2] 	    clc                                         
+8b5c : 65f1             [ 3]         adc z80_E
+8b5e : 85f3             [ 3]         sta z80_L
+8b60 : a5f2             [ 3]         lda z80_D
+8b62 : 65f4             [ 3]         adc z80_H           ; OPT ?
+8b64 : 85f4             [ 3]         sta z80_H 
+8b66 : adab8d           [ 4]         lda CurESld+1
+8b69 : 85f2             [ 3]         sta z80_D
+8b6b : adaa8d           [ 4]         lda CurESld                              
+8b6e : 85f1             [ 3]         sta z80_E
+8b70 : 18               [ 2] 	    clc                                         
+8b71 : 65f3             [ 3]         adc z80_L
+8b73 : 8dba8d           [ 4]         sta AYREGS+Env                           
+8b76 : a5f2             [ 3]         lda z80_D
+8b78 : 65f4             [ 3]         adc z80_H
+8b7a : 8dbb8d           [ 4] 	    sta AYREGS+Env+1                            
+                             
+8b7d : a900             [ 2]         lda #00                                  
+8b7f : 0dac8d           [ 4]         ora CurEDel         ; OPT ?              
+8b82 : f019             [ 3] 	    beq ROUT                                    
+8b84 : ceac8d           [ 6] 	    dec CurEDel                                 
+AS65 Assembler for R6502 [1.42].                                     Page   36
+----------------------------------- ppt3.s -----------------------------------
+
+8b87 : d014             [ 3] 	    bne ROUT                                    
+8b89 :                       Env_Del
+8b89 : a93e             [ 2] 	    lda #$3E                                    
+8b8b : 8dac8d           [ 4] 	    sta CurEDel                                 
+8b8e :                       ESldAdd
+8b8e : a9ac             [ 2] 	    lda #$AC                                    
+8b90 : 18               [ 2]         clc
+8b91 : 65f1             [ 3]         adc z80_E       
+8b93 : 8daa8d           [ 4]         sta CurESld
+8b96 : a9ac             [ 2]         lda #$AC
+8b98 : 65f2             [ 3]         adc z80_D
+8b9a : 8dab8d           [ 4] 	    sta CurESld+1
+                             ; ===============================================
+                             
+8b9d :                       ROUT
+8b9d : aeb08d           [ 4]         ldx AYREGS+1    ; hi ToneA
+8ba0 : adaf8d           [ 4]         lda AYREGS+0    ; lo ToneA
+8ba3 : 20268c           [ 6]         jsr FIX16BITS
+                                     
+8ba6 : a901             [ 2]         lda #01             
+8ba8 : 20758c           [ 6]         jsr snd_set
+8bab : 98               [ 2]         tya
+8bac : aa               [ 2]         tax
+8bad : a900             [ 2]         lda #00
+8baf : 20758c           [ 6]         jsr snd_set
+                             
+8bb2 : aeb28d           [ 4]         ldx AYREGS+3    ; hi ToneA
+8bb5 : adb18d           [ 4]         lda AYREGS+2    ; lo ToneA
+8bb8 : 20268c           [ 6]         jsr FIX16BITS 
+                             
+8bbb : a903             [ 2]         lda #03             
+8bbd : 20758c           [ 6]         jsr snd_set
+8bc0 : 98               [ 2]         tya
+8bc1 : aa               [ 2]         tax
+8bc2 : a902             [ 2]         lda #02             
+8bc4 : 20758c           [ 6]         jsr snd_set
+                             
+8bc7 : aeb48d           [ 4]         ldx AYREGS+5    ; hi ToneA
+8bca : adb38d           [ 4]         lda AYREGS+4    ; lo ToneA
+8bcd : 20268c           [ 6]         jsr FIX16BITS 
+                             
+8bd0 : a905             [ 2]         lda #05             
+8bd2 : 20758c           [ 6]         jsr snd_set
+8bd5 : 98               [ 2]         tya
+8bd6 : aa               [ 2]         tax
+8bd7 : a904             [ 2]         lda #04             
+8bd9 : 20758c           [ 6]         jsr snd_set
+                             
+8bdc : adb58d           [ 4]         lda AYREGS+6    ; data
+                                     ;jsr FIX8BITS
+8bdf : 4a               [ 2]         lsr a             ; /2 
+8be0 : aa               [ 2]         tax
+8be1 : a906             [ 2]         lda #06             
+8be3 : 20758c           [ 6]         jsr snd_set
+                             
+8be6 : aeb68d           [ 4]         ldx AYREGS+7    ; data
+8be9 : a907             [ 2]         lda #07
+8beb : 20758c           [ 6]         jsr snd_set
+                             
+8bee : aeb78d           [ 4]         ldx AYREGS+8    ; data
+8bf1 : a908             [ 2]         lda #08             
+8bf3 : 20758c           [ 6]         jsr snd_set
+AS65 Assembler for R6502 [1.42].                                     Page   37
+----------------------------------- ppt3.s -----------------------------------
+
+                             
+8bf6 : aeb88d           [ 4]         ldx AYREGS+9    ; data
+8bf9 : a909             [ 2]         lda #09             
+8bfb : 20758c           [ 6]         jsr snd_set
+                             
+8bfe : aeb98d           [ 4]         ldx AYREGS+10   ; data
+8c01 : a90a             [ 2]         lda #10             
+8c03 : 20758c           [ 6]         jsr snd_set
+                             
+8c06 : aebb8d           [ 4]         ldx AYREGS+12   ; hi Env
+8c09 : adba8d           [ 4]         lda AYREGS+11   ; lo Env
+8c0c : 20268c           [ 6]         jsr FIX16BITS 
+                             
+8c0f : a90c             [ 2]         lda #12             
+8c11 : 20758c           [ 6]         jsr snd_set
+8c14 : 98               [ 2]         tya
+8c15 : aa               [ 2]         tax
+8c16 : a90b             [ 2]         lda #11             
+8c18 : 20758c           [ 6]         jsr snd_set
+                             
+                                     ; shunte R13 si $FF (Y=13) => plus géné
+8c1b : aebc8d           [ 4]         ldx AYREGS+13
+8c1e : 3005             [ 3]         bmi FIN_RTS
+8c20 : a90d             [ 2]         lda #13
+8c22 : 20758c           [ 6]         jsr snd_set
+8c25 :                       FIN_RTS
+8c25 : 60               [ 6]         rts
+                             ; -------------------------------------
+8c26 :                       FIX16BITS       ; INT(256*2*1000/1773) = 289 = 25
+                                             ; IN:  register A is low byte
+                                             ;      register X is high byte
+                                             ; OUT: register Y is low byte
+                                             ;      register X is high byte
+                             
+                                     ; x256
+8c26 : 86f8             [ 3]         stx TA1
+8c28 : 85fa             [ 3]         sta TB1
+8c2a : 86fb             [ 3]         stx TB2
+8c2c : 85fd             [ 3]         sta TC2
+8c2e : 86fe             [ 3]         stx TB3
+8c30 : 85ff             [ 3]         sta TC3
+8c32 : a900             [ 2]         lda #00
+8c34 : 85f9             [ 3]         sta TA2
+                                     
+                                     ; x32
+8c36 : 06fd             [ 5]         asl TC2
+8c38 : 26fb             [ 5]         rol TB2
+8c3a : 26f9             [ 5]         rol TA2
+8c3c : 06fd             [ 5]         asl TC2
+8c3e : 26fb             [ 5]         rol TB2
+8c40 : 26f9             [ 5]         rol TA2
+8c42 : 06fd             [ 5]         asl TC2
+8c44 : 26fb             [ 5]         rol TB2
+8c46 : 26f9             [ 5]         rol TA2
+8c48 : 06fd             [ 5]         asl TC2
+8c4a : 26fb             [ 5]         rol TB2
+8c4c : 26f9             [ 5]         rol TA2
+8c4e : 06fd             [ 5]         asl TC2
+8c50 : 26fb             [ 5]         rol TB2
+8c52 : 26f9             [ 5]         rol TA2
+                                     
+                                     ; x32 + x01
+AS65 Assembler for R6502 [1.42].                                     Page   38
+----------------------------------- ppt3.s -----------------------------------
+
+8c54 : 18               [ 2]         clc
+8c55 : a5ff             [ 3]         lda TC3
+8c57 : 65fd             [ 3]         adc TC2
+                                     ; sta TC2
+8c59 : a5fe             [ 3]         lda TB3
+8c5b : 65fb             [ 3]         adc TB2
+8c5d : 85fb             [ 3]         sta TB2
+8c5f : a5f9             [ 3]         lda TA2
+8c61 : 6900             [ 2]         adc #00
+8c63 : 85f9             [ 3]         sta TA2
+                             
+                                     ; + x256 
+8c65 : 18               [ 2]         clc         
+8c66 : a5fb             [ 3]         lda TB2
+8c68 : 65fa             [ 3]         adc TB1
+8c6a : a8               [ 2]         tay         ; sta TB1
+8c6b : a5f9             [ 3]         lda TA2
+8c6d : 65f8             [ 3]         adc TA1
+                                     ; sta TA1
+                             
+                                     ; / 2 (16bits)
+8c6f : 4a               [ 2]         lsr a         ; lsr TA1
+8c70 : aa               [ 2]         tax         ; ldx TA1
+8c71 : 98               [ 2]         tya         ; lda TB1     
+8c72 : 6a               [ 2]         ror a         ; ror TB1
+8c73 : a8               [ 2]         tay         ; ldy TB1
+8c74 : 60               [ 6]         rts 
+                             
+                             ; HB-BBC-128 settings:
+                             ;* AY-3-8910 definitions
+                             ;* The sound chip is accessed through VIA 2
+0480 =                       IO_1		= 0x0480
+0000 =                       PRB		= 0x00
+0001 =                       PRA		= 0x01
+0002 =                       DDRB		= 0x02
+0003 =                       DDRA		= 0x03
+0481 =                       SND_ADBUS	= IO_1+PRA
+0480 =                       SND_MODE	= IO_1+PRB
+                             
+0040 =                       SND_SELREAD		= 0x40
+0002 =                       SND_SELWRITE		= 0x02
+0042 =                       SND_SELSETADDR		= (SND_SELREAD|SND_SELWRITE)
+00bd =                       SND_DESELECT_MASK	= (0xff-SND_SELREAD-SND_SELWRIT
+                             
+                             
+                             ;****************************************
+                             ;* snd_set
+                             ;* Set AY register A to value X
+                             ;* Input : A = Reg no, X = Value
+                             ;* Output : None
+                             ;* Regs affected : None
+                             ;****************************************
+8c75 :                       snd_set
+8c75 : 48               [ 3]         pha
+                             
+8c76 : a9ff             [ 2] 	lda #0xff			; Set Port A to output
+8c78 : 8d8304           [ 4] 	sta IO_1 + DDRA
+                             
+8c7b : 68               [ 4]         pla
+8c7c : 8d8104           [ 4] 	sta SND_ADBUS			; Put A on the sound bus (A = re
+                             
+8c7f : ad8004           [ 4] 	lda SND_MODE			; Need to preserve contents of ot
+AS65 Assembler for R6502 [1.42].                                     Page   39
+----------------------------------- ppt3.s -----------------------------------
+
+8c82 : 29bd             [ 2] 	and #SND_DESELECT_MASK	        ; Mask off mode b
+8c84 : 0942             [ 2] 	ora #SND_SELSETADDR		; Select AY mode to latch a
+8c86 : 8d8004           [ 4] 	sta SND_MODE			; This write will process the dat
+                             
+8c89 : 29bd             [ 2] 	and #SND_DESELECT_MASK	        ; Mask off mode b
+8c8b : 8d8004           [ 4] 	sta SND_MODE			; This write will deselect the AY
+                             	
+8c8e : 8e8104           [ 4] 	stx SND_ADBUS			; Put X on the sound bus (X = va
+8c91 : 0902             [ 2] 	ora #SND_SELWRITE		; Select mode for writing dat
+8c93 : 8d8004           [ 4] 	sta SND_MODE			; This write will process the dat
+                             	
+8c96 : 29bd             [ 2] 	and #SND_DESELECT_MASK	        ; Mask off mode b
+8c98 : 8d8004           [ 4] 	sta SND_MODE			; This write will deselect the AY
+                             
+8c9b : 60               [ 6] 	rts
+                             
+                             ; ===============================================
+8c9c :                       NT_DATA	
+8c9c : 64                            fcb (T_NEW_0-T1_)*2
+8c9d : 2a                    	    fcb TCNEW_0-T_
+8c9e : 65                    	    fcb (T_OLD_0-T1_)*2+1
+8c9f : 00                    	    fcb TCOLD_0-T_
+8ca0 : 01                    	    fcb (T_NEW_1-T1_)*2+1
+8ca1 : 0c                    	    fcb TCNEW_1-T_
+8ca2 : 01                    	    fcb (T_OLD_1-T1_)*2+1
+8ca3 : 0c                    	    fcb TCOLD_1-T_
+8ca4 : 94                    	    fcb (T_NEW_2-T1_)*2
+8ca5 : 35                    	    fcb TCNEW_2-T_
+8ca6 : 30                    	    fcb (T_OLD_2-T1_)*2
+8ca7 : 0e                    	    fcb TCOLD_2-T_
+8ca8 : 60                    	    fcb (T_NEW_3-T1_)*2
+8ca9 : 20                    	    fcb TCNEW_3-T_
+8caa : 60                    	    fcb (T_OLD_3-T1_)*2
+8cab : 21                    	    fcb TCOLD_3-T_
+                             
+8cac :                       T_
+                             
+8cac : 0105090b0d0f1315      TCOLD_0	fcb $00+1,$04+1,$08+1,$0A+1,$0C+1,$0E+1,$
+8cb4 : 19253d00              	    fcb $18+1,$24+1,$3C+1,0
+8cb8 : 5d00                  TCOLD_1	fcb $5C+1,0
+8cba : 31374d535f7182..      TCOLD_2	fcb $30+1,$36+1,$4C+1,$52+1,$5E+1,$70+1,$
+8cc3 : 9ea0a6a8aaacae..      	    fcb $9E,$A0,$A6,$A8,$AA,$AC,$AE,$AE,0
+8ccc : 57                    TCNEW_3	fcb $56+1
+8ccd : 1f2325292d2f33..      TCOLD_3	fcb $1E+1,$22+1,$24+1,$28+1,$2C+1,$2E+1,$
+8cd6 : 1d2123272b2d3155      TCNEW_0	fcb $1C+1,$20+1,$22+1,$26+1,$2A+1,$2C+1,$
+8cde : bdbf00                	    fcb $BC+1,$BE+1,0
+8cb8 =                       TCNEW_1 = TCOLD_1
+8ce1 : 1b2125292b3b4d5f      TCNEW_2	fcb $1A+1,$20+1,$24+1,$28+1,$2A+1,$3A+1,$
+8ce9 : bbbdbf00              	    fcb $BA+1,$BC+1,$BE+1,0
+                             
+8cec =                       EMPTYSAMORN = *-1
+8ced : 010090                	    fcb 1,0,$90 ;delete #90 if you don't need de
+                             
+                             ;first 12 values of tone tables
+                             
+8cf0 :                       T1_ 	
+8cf0 : f01d                          fcw $1DF0
+8cf2 : 201c                          fcw $1C20
+8cf4 : c01a                          fcw $1AC0
+8cf6 : 0019                          fcw $1900
+8cf8 : b017                          fcw $17B0
+8cfa : 5016                          fcw $1650
+AS65 Assembler for R6502 [1.42].                                     Page   40
+----------------------------------- ppt3.s -----------------------------------
+
+8cfc : 1015                          fcw $1510
+8cfe : e013                          fcw $13E0
+                             
+8d00 : c012                          fcw $12C0
+8d02 : c011                          fcw $11C0
+8d04 : b010                          fcw $10B0
+8d06 : c00f                          fcw $0FC0
+8d08 : 7c1a                          fcw $1A7C
+8d0a : 0019                          fcw $1900
+8d0c : 9817                          fcw $1798
+8d0e : 4416                          fcw $1644
+                             
+8d10 : 0415                          fcw $1504
+8d12 : d813                          fcw $13D8
+8d14 : b812                          fcw $12B8
+8d16 : ac11                          fcw $11AC
+8d18 : b010                          fcw $10B0
+8d1a : c00f                          fcw $0FC0
+8d1c : dc0e                          fcw $0EDC
+8d1e : 080e                          fcw $0E08
+                             
+8d20 : b419                          fcw $19B4
+8d22 : 4418                          fcw $1844
+8d24 : e616                          fcw $16E6
+8d26 : 9e15                          fcw $159E
+8d28 : 6614                          fcw $1466
+8d2a : 4213                          fcw $1342
+8d2c : 2e12                          fcw $122E
+8d2e : 2811                          fcw $1128
+                             
+8d30 : 3210                          fcw $1032
+8d32 : 480f                          fcw $0F48
+8d34 : 6e0e                          fcw $0E6E
+8d36 : 9e0d                          fcw $0D9E
+8d38 : da0c                          fcw $0CDA
+8d3a : 201a                          fcw $1A20
+8d3c : aa18                          fcw $18AA
+8d3e : 4817                          fcw $1748
+                             
+8d40 : f815                          fcw $15F8
+8d42 : be14                          fcw $14BE
+8d44 : 9413                          fcw $1394
+8d46 : 7a12                          fcw $127A
+8d48 : 7011                          fcw $1170
+8d4a : 7610                          fcw $1076
+8d4c : 8a0f                          fcw $0F8A
+8d4e : aa0e                          fcw $0EAA
+                             
+8d50 : d80d                          fcw $0DD8
+                             
+8cf0 =                       T_OLD_1	= T1_
+8d08 =                       T_OLD_2	= T_OLD_1+24
+8d20 =                       T_OLD_3	= T_OLD_2+24
+8d22 =                       T_OLD_0	= T_OLD_3+2
+8d22 =                       T_NEW_0	= T_OLD_0
+8cf0 =                       T_NEW_1	= T_OLD_1
+8d3a =                       T_NEW_2	= T_NEW_0+24
+8d20 =                       T_NEW_3	= T_OLD_3
+                             
+8d52 =                       FILE_END =*
+                             ; ===========================
+                             
+AS65 Assembler for R6502 [1.42].                                     Page   41
+----------------------------------- ppt3.s -----------------------------------
+
+8d52 :                       .bss        ; uninitialized data stuff
+                             
+                             ;vars from here can be stripped
+                             ;you can move VARS to any other address
+                             
+8d52 :                       VARS
+                             ;ChannelsVars
+                             
+                             ; STRUCT "CHP"
+0000 =                       PsInOr	= 0
+0001 =                       PsInSm	= 1
+0002 =                       CrAmSl  = 2
+0003 =                       CrNsSl	= 3
+0004 =                       CrEnSl	= 4
+0005 =                       TSlCnt	= 5
+0006 =                       CrTnSl	= 6
+0008 =                       TnAcc	= 8
+000a =                       COnOff	= 10
+000b =                       OnOffD	= 11
+000c =                       OffOnD	= 12
+000d =                       OrnPtr	= 13
+000f =                       SamPtr	= 15
+0011 =                       NNtSkp	= 17
+0012 =                       Note	= 18
+0013 =                       SlToNt	= 19
+0014 =                       Env_En	= 20
+0015 =                       Flags	= 21
+0016 =                       TnSlDl	= 22
+0017 =                       TSlStp	= 23
+0019 =                       TnDelt	= 25
+001b =                       NtSkCn	= 27
+001c =                       Volume	= 28
+                             ; end STRUCT
+                             
+                             ; CHANNEL A
+8d52 :                       ChanA	
+                             ;reset group
+8d52 : 00                    APsInOr	fcb 0
+8d53 : 00                    APsInSm	fcb 0
+8d54 : 00                    ACrAmSl	fcb 0
+8d55 : 00                    ACrNsSl	fcb 0
+8d56 : 00                    ACrEnSl	fcb 0
+8d57 : 00                    ATSlCnt	fcb 0
+8d58 : 0000                  ACrTnSl	fcw 0
+8d5a : 0000                  ATnAcc	fcw 0
+8d5c : 00                    ACOnOff	fcb 0
+                             ;reset group
+                             
+8d5d : 00                    AOnOffD	fcb 0
+                             
+8d5e : 00                    AOffOnD	fcb 0
+8d5f : 0000                  AOrnPtr	fcw 0
+8d61 : 0000                  ASamPtr	fcw 0
+8d63 : 00                    ANNtSkp	fcb 0
+8d64 : 00                    ANote	fcb 0
+8d65 : 00                    ASlToNt	fcb 0
+8d66 : 00                    AEnv_En	fcb 0
+8d67 : 00                    AFlags	fcb 0
+                              ;Enabled - 0,SimpleGliss - 2
+8d68 : 00                    ATnSlDl	fcb 0
+8d69 : 0000                  ATSlStp	fcw 0
+8d6b : 0000                  ATnDelt	fcw 0
+AS65 Assembler for R6502 [1.42].                                     Page   42
+----------------------------------- ppt3.s -----------------------------------
+
+8d6d : 00                    ANtSkCn	fcb 0
+8d6e : 00                    AVolume	fcb 0
+                             	
+                             ; CHANNEL B
+8d6f :                       ChanB
+                             ;reset group
+8d6f : 00                    BPsInOr	fcb 0
+8d70 : 00                    BPsInSm	fcb 0
+8d71 : 00                    BCrAmSl	fcb 0
+8d72 : 00                    BCrNsSl	fcb 0
+8d73 : 00                    BCrEnSl	fcb 0
+8d74 : 00                    BTSlCnt	fcb 0
+8d75 : 0000                  BCrTnSl	fcw 0
+8d77 : 0000                  BTnAcc	fcw 0
+8d79 : 00                    BCOnOff	fcb 0
+                             ;reset group
+                             
+8d7a : 00                    BOnOffD	fcb 0
+                             
+8d7b : 00                    BOffOnD	fcb 0
+8d7c : 0000                  BOrnPtr	fcw 0
+8d7e : 0000                  BSamPtr	fcw 0
+8d80 : 00                    BNNtSkp	fcb 0
+8d81 : 00                    BNote	fcb 0
+8d82 : 00                    BSlToNt	fcb 0
+8d83 : 00                    BEnv_En	fcb 0
+8d84 : 00                    BFlags	fcb 0
+                              ;Enabled - 0,SimpleGliss - 2
+8d85 : 00                    BTnSlDl	fcb 0
+8d86 : 0000                  BTSlStp	fcw 0
+8d88 : 0000                  BTnDelt	fcw 0
+8d8a : 00                    BNtSkCn	fcb 0
+8d8b : 00                    BVolume	fcb 0
+                             
+                             ; CHANNEL C
+8d8c :                       ChanC
+                             ;reset group
+8d8c : 00                    CPsInOr	fcb 0
+8d8d : 00                    CPsInSm	fcb 0
+8d8e : 00                    CCrAmSl	fcb 0
+8d8f : 00                    CCrNsSl	fcb 0
+8d90 : 00                    CCrEnSl	fcb 0
+8d91 : 00                    CTSlCnt	fcb 0
+8d92 : 0000                  CCrTnSl	fcw 0
+8d94 : 0000                  CTnAcc	fcw 0
+8d96 : 00                    CCOnOff	fcb 0
+                             ;reset group
+                             
+8d97 : 00                    COnOffD	fcb 0
+                             
+8d98 : 00                    COffOnD	fcb 0
+8d99 : 0000                  COrnPtr	fcw 0
+8d9b : 0000                  CSamPtr	fcw 0
+8d9d : 00                    CNNtSkp	fcb 0
+8d9e : 00                    CNote	fcb 0
+8d9f : 00                    CSlToNt	fcb 0
+8da0 : 00                    CEnv_En	fcb 0
+8da1 : 00                    CFlags	fcb 0
+                              ;Enabled - 0,SimpleGliss - 2
+8da2 : 00                    CTnSlDl	fcb 0
+8da3 : 0000                  CTSlStp	fcw 0
+8da5 : 0000                  CTnDelt	fcw 0
+AS65 Assembler for R6502 [1.42].                                     Page   43
+----------------------------------- ppt3.s -----------------------------------
+
+8da7 : 00                    CNtSkCn	fcb 0
+8da8 : 00                    CVolume	fcb 0
+                             
+                             ; ------------
+                             
+                             ;GlobalVars
+8da9 : 00                    DelyCnt	fcb 0
+8daa : 0000                  CurESld	fcw 0
+8dac : 00                    CurEDel	fcb 0
+8dad :                       Ns_Base_AddToNs
+8dad : 00                    Ns_Base	fcb 0
+8dae : 00                    AddToNs	fcb 0
+                             
+                             ; ===========================
+8daf :                       AYREGS ; AY registers
+                             
+0000 =                       TonA	= 0
+0002 =                       TonB	= 2
+0004 =                       TonC	= 4
+0006 =                       Noise	= 6
+0007 =                       Mixer	= 7
+0008 =                       AmplA	= 8
+0009 =                       AmplB	= 9
+000a =                       AmplC	= 10
+000b =                       Env	    = 11
+000d =                       EnvTp	= 13
+                             ; ---
+                             
+8db9 =                       Ampl	= AYREGS+AmplC
+                             ; ===========================
+8daf : 00000000000000..      VT_	ds 256 ;CreatedVolumeTableAddress
+                             
+8dbd =                       EnvBase	= VT_+14
+8dbf =                       VAR0END	= VT_+16 ;INIT zeroes from VARS to VAR0EN
+                             
+                             ; ===========================
+8eaf : 00000000000000..      NT_	ds 192 ;CreatedNoteTableAddress
+                             
+8f6f =                       VARS_END = *
+                             
+No errors in pass 2.
+Wrote binary from address $8000 through $8f6e.
+Total size 3951 bytes.
+

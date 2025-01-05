@@ -1,1 +1,0 @@
-10 def_start()15 dim a$[255]20 repeat30  device 040  input a$50  device -160  println a$70 until a$==""
