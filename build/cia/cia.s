@@ -21,6 +21,7 @@
 ;*			PB5			- Output bit X1 RAM bank selector
 ;*			PB6			- Output bit Y0 ROM bank selector
 ;*			PB7			- Output bit Y1 ROM bank selector
+;*						- IRQ is connected to 6502 **IRQ** line
 ;*
 ;*  VIA2 is for AY-3-8910 sound chip, SD Card interface and ROM Disable
 ;*		Port A
@@ -34,6 +35,7 @@
 ;*			PB5			- Output - ROM Disable (active low)
 ;*			PB6			- Output - Sound read select
 ;*			PB7			- Input - Data in to VIA from SD Card
+;*						- IRQ is connected to 6502 **NMI** line
 ;*
 ;* On startup;
 ;* 	 		VIA0 PB4..7 are high (with weak pull-ups)

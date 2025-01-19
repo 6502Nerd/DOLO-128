@@ -51,3 +51,7 @@ fs_dir_fhandle_str
 sd_sendcmd17
 sd_sendcmd24
 cmd_immediate
+PT3INIT
+PT3START
+PT3PAUSE
+PT3RESUME

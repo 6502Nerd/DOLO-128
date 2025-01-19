@@ -110,7 +110,7 @@ kernel_init
 	
 	jsr _init_cia0		; initialise cia 0
 	jsr _init_cia1		; initialise cia 1
-
+	jsr _PT3INIT		; Load PT3 player code into shadow RAM
 kernel_test
 	jsr _init_snd		; initialise the sound chip
 	jsr _init_keyboard	; initialise keyboard timer settings

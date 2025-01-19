@@ -92,7 +92,7 @@ df_tokensyms
 	db	"circl",'e'+0x80			; circle x0,y0,r
 	db	"shap",'e'+0x80				; shape x,y,coords[]
 	db	"vloa",'d'+0x80				; vload addr,filename
-	db	"bloa",'d'+0x80				; bload mem,hrd,addr,filename
+	db	"bloa",'d'+0x80				; bload mem,hdr,addr,filename
 	db	"bsav",'e'+0x80				; bsave mem,hdr,addr,len,filename
 	db	"hime",'m'+0x80				; himem addr
 	db	"monito",'r'+0x80			; monitor
@@ -105,6 +105,9 @@ df_tokensyms
 	db	"fclos",'e'+0x80			; fclose
 	db	"redi",'m'+0x80				; redim varlist
 	db  "pu",'t'+0x80				; put(byte)
+;	db	"ptloa,",'d'+0x80			; ptload addr,filename
+;	db	"ptstar",'t'+0x80			; ptstart
+;	db	"pr"
 ; Functions
 	db	"vpeek",'('+0x80			; vpeek(x)
 	db	"peek",'('+0x80				; peek(x)

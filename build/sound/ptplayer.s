@@ -1,6 +1,6 @@
 ; =======================================================================================
 ; Vortex Tracker II v1.0 PT3 player for 6502
-; ORIC 1/ATMOS (6502) version
+; Based on ORIC 1/ATMOS (6502) version
 ; Updated for HB-BBC-128 Homebrew Computer by 6502Nerd
 ; ScalexTrixx (A.C) - (c)2018
 ;
@@ -45,7 +45,7 @@ Revision = "0"
 ; -------------------------------------
         bss
 
-	org $ed
+	org $ed         ; Uses *all* of zero page from here!
     
 SETUP   ds 1      ; set bit0 to 1, if you want to play without looping
                    ; bit7 is set each time, when loop point is passed
@@ -75,49 +75,114 @@ TC1 = val3
 TC2 = val3+1
 TB3 = val4
 TC3 = val4+1
+
 ; =====================================
 ; module PT3 address
-;MDLADDR = $2000
 ; =====================================
         code
 ; For dflat, allow build of code for other locations
- if RELOCADDR
-        org RELOCADDR
- else
-        org $e000
- endif
+; default is 0xe000
 
-; START = $8000 or RELOCADDR
+ if !PT3RELOCADDR
+PT3RELOCADDR = 0xe000
+ endif
+        org $e000
+
+; START = $e000 or PT3RELOCADDR
 ; START+00 : Initialise a tune and start
 ; START+03 : Disable tune and stop
+; START+06 : Mute sound every interrupt
+; START+09 : Pause but allow other sounds while paused
+; START+0C : Resume tune
+; All will be extern routines
+PT3START
+        jmp _doStart
+PT3PAUSE
+        jmp _doPause
+PT3RESUME
+        jmp _doResume
 
-START
-        jmp _start
-STOP
-        jmp _stop
+; We need to copy all this code to shadow RAM behind ROM!
+; Also ensure we're in **Bank 2** (not Bank 3) of RAM!
+; This is an extern routine needs to be callable from anywhere
+; Is called at power-on / reset
+PT3INIT
+        ; Swtich to RAM bank 2 don't touch anything else
+        lda IO_0+PRB
+        pha                     ; Remember the bank #
+        and #0b11001111         ; mask out old bank #
+        ora #0b00100000         ; mask in bank binary 10 = 2dec
+        sta IO_0+PRB
+
+        ; Copy from PT3START to PT3END
+        ; To shadow RAM directly underneath
+        ldy #lo(PT3START)
+        ldy #0x00
+        sty tmp_a               ; Page + Y index, page lo always 0
+        ldx #hi(PT3START)
+        ldx #0xc0
+        stx tmp_a+1
+
+PT3INIT_COPY
+        lda (tmp_a),y           ; Get ROM byte
+        sta (tmp_a),y           ; Write to memory address always goes to active RAM bank
+        iny
+        bne PT3INIT_COPY
+        inx
+        stx tmp_a+1             ; Increment page number
+        bne PT3INIT_COPY
+
+        ; Ok all code in this file copied from ROM to RAM
+        pla
+        sta IO_0+PRB            ; Restore RAM bank #
+        rts
 
 
-_start
-        ; Now VIA int is on the NMI line!
-userIrq=12
-via1=0x480
+; Can play other sounds while paused
+_doPause
+        ; Disable T1 interrupt on VIA 1
+        lda #0b01000000
+        sta IO_1+IER
+
+        ; Kill the channels with the sound through control register
+        ldy #0b00111111
+        ldx #SND_REG_CTL
+        jsr snd_set
+        rts
+
+; Reinstate the PT3 IRQ
+_doResume
+        ; Enable T1 interrupt on VIA 1
+        lda #0b11000000
+        sta IO_1+IER
+        rts
+
+
+; Initialise the player to start using A,X as song address
+
+_doStart
 ; For dflat, assume that A,X provides address of song module
         sta z80_L
         stx z80_H
+        ; Swtich to RAM bank 2 don't touch anything else
+        lda IO_0+PRB
+        pha                     ; Remember the bank #
+        and #0b11001111
+        ora #0b00100000
+        sta IO_0+PRB
+        ; Switch out ROM for RAM
+        lda IO_1+PRB                    ; Get current ROM / PRB state
+        pha
+        and #(0xff ^ MM_DIS)            ; Switch off ROM bit
+        sta IO_1+PRB                    ; Update port to activate setting
+;        bra _doStart_test
+
 	jsr INIT
-        ; Homebre specific - set up 50Hz interrupt
-        php
-        sei
         ; Remember previous user irq
-        lda userIrq
+        lda int_usercia1
         sta oldIrq
-        lda userIrq+1
+        lda int_usercia1+1
         sta oldIrq+1
-        ; Instate PT3 irq
-        lda #lo(pt3Irq)
-        sta userIrq
-        lda #hi(pt3Irq)
-        sta userIrq+1
         ; Set up timer for 50Hz (20ms) interrupts
         ; @5.36MHz it is 107,200 cycles
         ; which doesn't fit into 16 bits!
@@ -126,22 +191,30 @@ via1=0x480
         ; invoke the sound player every other
         ; interrupt!
         ; 53,600 = 0xd160
+        ; Timre 1 of VIA 1
         lda #0x60
-        sta via1+4
+        sta IO_1+T1CL
         lda #0xd1
-        sta via1+5
+        sta IO_1+T1CH
         ; T1 of VIA1 set to continuous
         lda #0b01000000
-        sta via1+11
+        sta IO_1+ACR
+        ; Instate PT3 irq
+        lda #lo(pt3Irq)
+        sta int_usercia1
+        lda #hi(pt3Irq)
+        sta int_usercia1+1
         ; Enable T1 interrupt
         lda #0b11000000
-        sta via1+14
-        ; Restore P (enables interrupts)
-        plp
+        sta IO_1+IER
+;_doStart_test
+        ; Restore ROM
+        pla                             ; Get original port setting
+        sta IO_1+PRB                    ; Update port to activate setting
+        ; Restore RAM bank
+        pla                             ; Get original port setting
+        sta IO_0+PRB                    ; Update port to activate setting
         rts
-
-;	jmp PLAY                                                    
-;	jmp MUTE                                                    
      
 CrPsPtr	fcw 0 ; current position in PT3 module
 intCount fcb 0      ; byte flag to call player only every other interrupt
@@ -150,36 +223,18 @@ oldIrq fcw 0    ; Remember old IRQ vector
 ;Identifier
 	    db "=VTII PT3 Player r.",Revision,"="
 
+;
+; Call pt3 player every interrupt
 pt3Irq
-        ;
-        ; Call pt3 player every interrupt
-        ; Reset interrupt by reading T1C-L
-        lda via1+4
         ; Call player every other interrupt
         lda #0x80
         eor intCount
         sta intCount
-        bpl skipInt 
+        bpl skipInt_1
         ; Call the player each tick
         jsr PLAY
+skipInt_1
 skipInt
-        rts
-
-_stop
-        php
-        sei
-        ; Disable T1 interrupt
-        lda #0b01000000
-        sta via1+14
-        ; Restore previous irq
-        lda oldIrq
-        sta userIrq
-        lda oldIrq+1
-        sta userIrq+1
-        ; immediately stop sound
-        jsr MUTE
-        ; Restore P (enables interrupts)
-        plp
         rts
 
 CHECKLP
@@ -195,17 +250,17 @@ s1	pla
         pla       ; dépile 2 fois puisque rts shunté
 	inc DelyCnt                                                                                                                                    
         inc ANtSkCn                                                 
-MUTE	                                                            
+_MUTE	                                                            
         lda #00                                                     
         sta z80_H                                                   
 	sta z80_L                                                   
 	sta AYREGS+AmplA                                            
 	sta AYREGS+AmplB                                            
         sta AYREGS+AmplC
+        sta AYREGS+Mixer  ; This is the daddy - switch off all channels and noise
 	jmp ROUT                                              
 
 INIT
-_init
 	lda z80_L                                                   
 	sta MODADDR+1
         sta MDADDR2+1
@@ -1888,73 +1943,73 @@ ROUT
         jsr FIX16BITS
         
         lda #01             
-        jsr snd_set
+        jsr ay_set
         tya
         tax
         lda #00
-        jsr snd_set
+        jsr ay_set
 
         ldx AYREGS+3    ; hi ToneA
         lda AYREGS+2    ; lo ToneA
         jsr FIX16BITS 
 
         lda #03             
-        jsr snd_set
+        jsr ay_set
         tya
         tax
         lda #02             
-        jsr snd_set
+        jsr ay_set
 
         ldx AYREGS+5    ; hi ToneA
         lda AYREGS+4    ; lo ToneA
         jsr FIX16BITS 
 
         lda #05             
-        jsr snd_set
+        jsr ay_set
         tya
         tax
         lda #04             
-        jsr snd_set
+        jsr ay_set
 
         lda AYREGS+6    ; data
         ;jsr FIX8BITS
         lsr a             ; /2 
         tax
         lda #06             
-        jsr snd_set
+        jsr ay_set
 
         ldx AYREGS+7    ; data
         lda #07
-        jsr snd_set
+        jsr ay_set
 
         ldx AYREGS+8    ; data
         lda #08             
-        jsr snd_set
+        jsr ay_set
 
         ldx AYREGS+9    ; data
         lda #09             
-        jsr snd_set
+        jsr ay_set
 
         ldx AYREGS+10   ; data
         lda #10             
-        jsr snd_set
+        jsr ay_set
 
         ldx AYREGS+12   ; hi Env
         lda AYREGS+11   ; lo Env
         jsr FIX16BITS 
 
         lda #12             
-        jsr snd_set
+        jsr ay_set
         tya
         tax
         lda #11             
-        jsr snd_set
+        jsr ay_set
 
         ; shunte R13 si $FF (Y=13) => plus généralement >=$80
         ldx AYREGS+13
         bmi FIN_RTS
         lda #13
-        jsr snd_set
+        jsr ay_set
 FIN_RTS
         rts
 ; -------------------------------------
@@ -2038,13 +2093,13 @@ SND_DESELECT_MASK	= (0xff-SND_SELREAD-SND_SELWRITE)
 
 
 ;****************************************
-;* snd_set
+;* ay_set
 ;* Set AY register A to value X
 ;* Input : A = Reg no, X = Value
 ;* Output : None
 ;* Regs affected : None
 ;****************************************
-snd_set
+ay_set
         pha
 
 	lda #0xff			; Set Port A to output
@@ -2341,3 +2396,4 @@ VAR0END	= VT_+16 ;INIT zeroes from VARS to VAR0END-1
 NT_	ds 192 ;CreatedNoteTableAddress
 
 VARS_END = *
+PT3END

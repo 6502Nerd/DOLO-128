@@ -23,7 +23,7 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
            AM_ZPINDY : $0009              9   *
               AM_ZPX : $0005              5   *
               AM_ZPY : $0006              6   *
-            asm_init : $fb61          64353
+            asm_init : $fbe7          64487
                BANK1 : $0001              1
     bankjsr_nul_addr : $c000          49152   *
     bankjsr_nul_bank : $0000              0   *
@@ -39,36 +39,36 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
            CRSR_LEFT : $0008              8   *
           CRSR_RIGHT : $0009              9   *
              CRSR_UP : $000b             11   *
-        call_irq_brk : $c73b          51003
-     call_irq_master : $c738          51000
-   call_irq_usercia0 : $c741          51009
-   call_irq_usercia1 : $c744          51012
-    call_irq_uservdp : $c73e          51006
-     call_nmi_master : $c6fb          50939
-       con_bin_digit : $c915          51477
-        con_bin_done : $c92b          51499
-         con_bin_err : $c935          51509
-         con_bin_jmp : $c8b3          51379
-        con_bin_to_a : $c90d          51469
-    con_bin_to_a_int : $c911          51473
-         con_dec_jmp : $c8a7          51367
-        con_dec_to_a : $c937          51511
-    con_dec_to_a_int : $c93b          51515
-       con_hex_digit : $c8d6          51414
-        con_hex_done : $c903          51459
-         con_hex_err : $c901          51457
-         con_hex_jmp : $c8ad          51373
-  con_hex_skip_x_f_1 : $c8e3          51427
-        con_hex_to_a : $c8ce          51406
-    con_hex_to_a_int : $c8d2          51410
-           con_n_err : $c8b6          51382
-       con_n_not_dec : $c8aa          51370
+        call_irq_brk : $c7c6          51142
+     call_irq_master : $c7c3          51139
+   call_irq_usercia0 : $c7cc          51148
+   call_irq_usercia1 : $c7cf          51151
+    call_irq_uservdp : $c7c9          51145
+     call_nmi_master : $c763          51043
+       con_bin_digit : $c998          51608
+        con_bin_done : $c9ae          51630
+         con_bin_err : $c9b8          51640
+         con_bin_jmp : $c936          51510
+        con_bin_to_a : $c990          51600
+    con_bin_to_a_int : $c994          51604
+         con_dec_jmp : $c92a          51498
+        con_dec_to_a : $c9ba          51642
+    con_dec_to_a_int : $c9be          51646
+       con_hex_digit : $c959          51545
+        con_hex_done : $c986          51590
+         con_hex_err : $c984          51588
+         con_hex_jmp : $c930          51504
+  con_hex_skip_x_f_1 : $c966          51558
+        con_hex_to_a : $c951          51537
+    con_hex_to_a_int : $c955          51541
+           con_n_err : $c939          51513
+       con_n_not_dec : $c92d          51501
 AS65 Assembler for R6502 [1.42].                                     Page    2
 ---------------------------------- bank1.s -----------------------------------
 
-       con_n_not_hex : $c8b0          51376
-          con_n_to_a : $c898          51352
-   con_n_to_a_detect : $c8b8          51384
+       con_n_not_hex : $c933          51507
+          con_n_to_a : $c91b          51483
+   con_n_to_a_detect : $c93b          51515
                 DDRA : $0003              3   *
                 DDRB : $0002              2   *
          DFERR_ABORT : $0012             18   *
@@ -163,8 +163,8 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           DFVVT_TYPE : $0000              0   *
            DF_MEMTOP : $c000          49152   *
         DF_PROGSTART : $0000              0   *
-   def_show_err_line : $f351          62289
-def_show_err_line_skip : $f35c          62300
+   def_show_err_line : $f3d7          62423
+def_show_err_line_skip : $f3e2          62434
           dflat_zp_s : $009d            157
      dflat_zp_save_e : $00e3            227
      dflat_zp_save_s : $009d            157
@@ -174,14 +174,14 @@ def_show_err_line_skip : $f35c          62300
          df_asmoprnd : $00e0            224
            df_asmopt : $00dd            221
             df_asmpc : $00db            219
-  df_asm_altaddrmode : $f7cb          63435
-       df_asm_length : $f7ba          63418
-    df_asm_tokensyms : $f7dc          63452
+  df_asm_altaddrmode : $f851          63569
+       df_asm_length : $f840          63552
+    df_asm_tokensyms : $f862          63586
             df_brkpc : $00a4            164
            df_brkval : $00a6            166
          df_checkkey : $009d            157
          df_checkmsk : $009e            158
-            df_clear : $f1ee          61934
+            df_clear : $f274          62068
           df_currdat : $00d6            214
           df_currlin : $00c8            200
          df_curstidx : $00c2            194
@@ -190,983 +190,983 @@ def_show_err_line_skip : $f35c          62300
            df_exeoff : $00ca            202
            df_ifnest : $00d5            213
             df_immed : $00a0            160
-             df_init : $f1e1          61921
-          df_initrun : $d835          55349
-       df_lexer_line : $d099          53401
+             df_init : $f267          62055
+          df_initrun : $d8bb          55483
+       df_lexer_line : $d11f          53535
 AS65 Assembler for R6502 [1.42].                                     Page    4
 ---------------------------------- bank1.s -----------------------------------
 
-  df_lexer_skip_lnum : $d0ba          53434
+  df_lexer_skip_lnum : $d140          53568
           df_linbuff : $0a00           2560
           df_lineidx : $00d4            212
           df_lineptr : $00d2            210
            df_linoff : $00be            190
            df_memtop : $0c67           3175
-          df_msg_acc : $f3b4          62388
-           df_msg_pc : $f3b0          62384
-         df_msg_xreg : $f3b7          62391
-         df_msg_yreg : $f3ba          62394
+          df_msg_acc : $f43a          62522
+           df_msg_pc : $f436          62518
+         df_msg_xreg : $f43d          62525
+         df_msg_yreg : $f440          62528
           df_nextlin : $00cb            203
-        df_next_done : $e1ba          57786
+        df_next_done : $e240          57920
          df_nxtstidx : $00c1            193
-     df_ost_peekType : $f1c3          61891
-       df_ost_popInt : $f1ac          61868
-     df_ost_popParmX : $f1ae          61870
-       df_ost_popPtr : $f1a8          61864
-       df_ost_popStr : $f1a4          61860
-      df_ost_pushInt : $f18c          61836
-     df_ost_pushIntA : $f189          61833
-    df_ost_pushParmX : $f18e          61838
-      df_ost_pushPtr : $f185          61829
-      df_ost_pushStr : $f181          61825
+     df_ost_peekType : $f249          62025
+       df_ost_popInt : $f232          62002
+     df_ost_popParmX : $f234          62004
+       df_ost_popPtr : $f22e          61998
+       df_ost_popStr : $f22a          61994
+      df_ost_pushInt : $f212          61970
+     df_ost_pushIntA : $f20f          61967
+    df_ost_pushParmX : $f214          61972
+      df_ost_pushPtr : $f20b          61963
+      df_ost_pushStr : $f207          61959
           df_parmtop : $00b9            185
                df_pc : $00a2            162
-    df_pg_check_line : $d6dd          55005
-df_pg_check_next_line : $d6c6          54982
-  df_pg_delete_block : $d745          55109
-   df_pg_delete_byte : $d74b          55115
-df_pg_delete_next_byte : $d76c          55148
-         df_pg_dflat : $d785          55173
-     df_pg_find_line : $d6ba          54970
-    df_pg_getcommand : $d79b          55195
-     df_pg_inputline : $d775          55157
-  df_pg_inputline_ok : $d783          55171
- df_pg_insertlinbyte : $d825          55333
-    df_pg_insertline : $d80c          55308
-  df_pg_insert_block : $d70b          55051
-   df_pg_insert_byte : $d717          55063
-df_pg_insert_next_byte : $d735          55093
-   df_pg_line_number : $d7ec          55276
-       df_pg_nothing : $d7eb          55275
-        df_pg_prompt : $d790          55184
-    df_pg_prompt_msg : $d82e          55342
- df_pg_skip_del_line : $d802          55298
-      df_pg_skip_mon : $d7b5          55221
-      df_pg_tokenise : $d7ce          55246
+    df_pg_check_line : $d763          55139
+df_pg_check_next_line : $d74c          55116
+  df_pg_delete_block : $d7cb          55243
+   df_pg_delete_byte : $d7d1          55249
+df_pg_delete_next_byte : $d7f2          55282
+         df_pg_dflat : $d80b          55307
+     df_pg_find_line : $d740          55104
+    df_pg_getcommand : $d821          55329
+     df_pg_inputline : $d7fb          55291
+  df_pg_inputline_ok : $d809          55305
+ df_pg_insertlinbyte : $d8ab          55467
+    df_pg_insertline : $d892          55442
+  df_pg_insert_block : $d791          55185
+   df_pg_insert_byte : $d79d          55197
+df_pg_insert_next_byte : $d7bb          55227
+   df_pg_line_number : $d872          55410
+       df_pg_nothing : $d871          55409
+        df_pg_prompt : $d816          55318
+    df_pg_prompt_msg : $d8b4          55476
+ df_pg_skip_del_line : $d888          55432
+      df_pg_skip_mon : $d83b          55355
+      df_pg_tokenise : $d854          55380
            df_prgend : $00a9            169
           df_prgstrt : $00a7            167
          df_procargs : $00ce            206
           df_procloc : $00cf            207
          df_procmode : $00cd            205
           df_procptr : $00d0            208
-df_pr_line_gt_target : $d6d2          54994
-    df_pr_line_match : $d700          55040
+df_pr_line_gt_target : $d758          55128
+    df_pr_line_match : $d786          55174
               df_raw : $0a00           2560
               df_rnd : $00d9            217
-     df_rst_peekByte : $f160          61792
-      df_rst_popByte : $f157          61783
-      df_rst_popWord : $f174          61812
-     df_rst_pushByte : $f14e          61774
-     df_rst_pushWord : $f166          61798
+     df_rst_peekByte : $f1e6          61926
+      df_rst_popByte : $f1dd          61917
+      df_rst_popWord : $f1fa          61946
+     df_rst_pushByte : $f1d4          61908
+     df_rst_pushWord : $f1ec          61932
 AS65 Assembler for R6502 [1.42].                                     Page    5
 ---------------------------------- bank1.s -----------------------------------
 
           df_rtspace : $0b00           2816
            df_rtstck : $0b00           2816
            df_rtstop : $00b8            184
-         df_rt_abort : $efb3          61363
-           df_rt_add : $de33          56883
-          df_rt_addr : $ee9b          61083
-         df_rt_aequb : $df0f          57103
-      df_rt_aequbFin : $df19          57113
-           df_rt_and : $dee2          57058
-  df_rt_array_exists : $db0a          56074
-     df_rt_arry_parm : $da17          55831
-    df_rt_arry_parm2 : $da1e          55838
-df_rt_arry_parm2_arry2 : $da36          55862
-df_rt_arry_parm2_skiparry2 : $da3d          55869
-df_rt_arry_parm2_term : $da26          55846
-           df_rt_asc : $ef8c          61324
-           df_rt_asl : $debc          57020
-        df_rt_aslbit : $dec2          57026
-       df_rt_asldone : $decc          57036
-    df_rt_asm_ABSREL : $f70f          63247
-    df_rt_asm_AM_ABS : $f726          63270
-   df_rt_asm_AM_ABSX : $f733          63283
-   df_rt_asm_AM_ABSY : $f721          63265
-    df_rt_asm_AM_IMM : $f738          63288
-    df_rt_asm_AM_IMP : $f70a          63242
-df_rt_asm_AM_INDIRECT : $f742          63298
-    df_rt_asm_AM_REL : $f730          63280
-  df_rt_asm_AM_ZPIND : $f768          63336
-df_rt_asm_AM_ZPINDORY : $f758          63320
-  df_rt_asm_addrmode : $f6ee          63214
-  df_rt_asm_assemble : $f4b5          62645
-df_rt_asm_assemble_done : $f4c7          62663
- df_rt_asm_check_alt : $f5c3          62915
-   df_rt_asm_command : $f4c8          62664
-      df_rt_asm_data : $f526          62758
- df_rt_asm_data_done : $f566          62822
- df_rt_asm_data_next : $f55c          62812
-df_rt_asm_data_write : $f567          62823
-df_rt_asm_data_write_err : $f595          62869
-df_rt_asm_data_write_hi : $f583          62851
-df_rt_asm_data_write_skip1 : $f56a          62826
-df_rt_asm_data_write_skip2 : $f587          62855
-        df_rt_asm_db : $f519          62745
-  df_rt_asm_db_start : $f51e          62750
-df_rt_asm_decode_token : $e88c          59532
-df_rt_asm_decode_token_done : $e8d9          59609
-df_rt_asm_decode_token_keyword : $e89e          59550
-       df_rt_asm_dir : $f4da          62682
-  df_rt_asm_do_label : $f4c4          62660
-        df_rt_asm_ds : $f597          62871
-        df_rt_asm_dw : $f51c          62748
-    df_rt_asm_encode : $f5fb          62971
-df_rt_asm_encode_print : $f662          63074
-df_rt_asm_encode_relfar : $f632          63026
-df_rt_asm_encode_relpos : $f62e          63022
-df_rt_asm_encode_skiprel : $f634          63028
-df_rt_asm_encode_writebyte : $f650          63056
-df_rt_asm_encode_writeword : $f658          63064
-df_rt_asm_find_addr_mode : $f776          63350
-df_rt_asm_find_addr_mode_err : $f78b          63371
-df_rt_asm_find_addr_mode_loop : $f77c          63356
-df_rt_asm_get_operand : $f76b          63339
+         df_rt_abort : $f039          61497
+           df_rt_add : $deb9          57017
+          df_rt_addr : $ef21          61217
+         df_rt_aequb : $df95          57237
+      df_rt_aequbFin : $df9f          57247
+           df_rt_and : $df68          57192
+  df_rt_array_exists : $db90          56208
+     df_rt_arry_parm : $da9d          55965
+    df_rt_arry_parm2 : $daa4          55972
+df_rt_arry_parm2_arry2 : $dabc          55996
+df_rt_arry_parm2_skiparry2 : $dac3          56003
+df_rt_arry_parm2_term : $daac          55980
+           df_rt_asc : $f012          61458
+           df_rt_asl : $df42          57154
+        df_rt_aslbit : $df48          57160
+       df_rt_asldone : $df52          57170
+    df_rt_asm_ABSREL : $f795          63381
+    df_rt_asm_AM_ABS : $f7ac          63404
+   df_rt_asm_AM_ABSX : $f7b9          63417
+   df_rt_asm_AM_ABSY : $f7a7          63399
+    df_rt_asm_AM_IMM : $f7be          63422
+    df_rt_asm_AM_IMP : $f790          63376
+df_rt_asm_AM_INDIRECT : $f7c8          63432
+    df_rt_asm_AM_REL : $f7b6          63414
+  df_rt_asm_AM_ZPIND : $f7ee          63470
+df_rt_asm_AM_ZPINDORY : $f7de          63454
+  df_rt_asm_addrmode : $f774          63348
+  df_rt_asm_assemble : $f53b          62779
+df_rt_asm_assemble_done : $f54d          62797
+ df_rt_asm_check_alt : $f649          63049
+   df_rt_asm_command : $f54e          62798
+      df_rt_asm_data : $f5ac          62892
+ df_rt_asm_data_done : $f5ec          62956
+ df_rt_asm_data_next : $f5e2          62946
+df_rt_asm_data_write : $f5ed          62957
+df_rt_asm_data_write_err : $f61b          63003
+df_rt_asm_data_write_hi : $f609          62985
+df_rt_asm_data_write_skip1 : $f5f0          62960
+df_rt_asm_data_write_skip2 : $f60d          62989
+        df_rt_asm_db : $f59f          62879
+  df_rt_asm_db_start : $f5a4          62884
+df_rt_asm_decode_token : $e912          59666
+df_rt_asm_decode_token_done : $e95f          59743
+df_rt_asm_decode_token_keyword : $e924          59684
+       df_rt_asm_dir : $f560          62816
+  df_rt_asm_do_label : $f54a          62794
+        df_rt_asm_ds : $f61d          63005
+        df_rt_asm_dw : $f5a2          62882
+    df_rt_asm_encode : $f681          63105
+df_rt_asm_encode_print : $f6e8          63208
+df_rt_asm_encode_relfar : $f6b8          63160
+df_rt_asm_encode_relpos : $f6b4          63156
+df_rt_asm_encode_skiprel : $f6ba          63162
+df_rt_asm_encode_writebyte : $f6d6          63190
+df_rt_asm_encode_writeword : $f6de          63198
+df_rt_asm_find_addr_mode : $f7fc          63484
+df_rt_asm_find_addr_mode_err : $f811          63505
+df_rt_asm_find_addr_mode_loop : $f802          63490
+df_rt_asm_get_operand : $f7f1          63473
 AS65 Assembler for R6502 [1.42].                                     Page    6
 ---------------------------------- bank1.s -----------------------------------
 
-     df_rt_asm_label : $f4ec          62700
-      df_rt_asm_mnem : $f5b4          62900
-  df_rt_asm_mnem_chk : $f5d7          62935
- df_rt_asm_mnem_done : $f5e5          62949
-  df_rt_asm_mnem_err : $f5f9          62969
-  df_rt_asm_mnem_try : $f5ba          62906
-       df_rt_asm_opt : $f511          62737
-       df_rt_asm_org : $f4ff          62719
-   df_rt_asm_printCH : $f6c9          63177
-   df_rt_asm_printCR : $f6c0          63168
- df_rt_asm_printline : $f6d6          63190
-  df_rt_asm_printOPC : $f692          63122
-  df_rt_asm_printOPR : $f6a6          63142
-df_rt_asm_printOPR_1 : $f6bb          63163
-   df_rt_asm_printPC : $f682          63106
-  df_rt_asm_printSPC : $f69d          63133
-df_rt_asm_print_mmen : $f672          63090
- df_rt_asm_print_rts : $f681          63105
-df_rt_asm_skip_to_sym : $f78e          63374
-df_rt_asm_skip_to_sym_done : $f78d          63373
-df_rt_asm_skip_to_sym_end : $f7ab          63403
-df_rt_asm_skip_to_sym_next : $f79c          63388
-    df_rt_asm_string : $f53f          62783
- df_rt_asm_string_ch : $f546          62790
-  df_rt_asm_tokenjmp : $fb57          64343
-        df_rt_assign : $e590          58768
-    df_rt_assign_num : $e58c          58764
-         df_rt_asubb : $df1a          57114
-      df_rt_asubbFin : $df27          57127
-         df_rt_bload : $eb90          60304
-    df_rt_bload_file : $ebcc          60364
-   df_rt_bload_savep : $eba4          60324
-    df_rt_bload_setR : $eba3          60323
-    df_rt_bload_tryr : $eb9d          60317
-           df_rt_box : $e47f          58495
-         df_rt_bsave : $ea62          60002
-    df_rt_bsave_byte : $eaac          60076
- df_rt_bsave_byte_do : $eab7          60087
-    df_rt_bsave_dech : $eae7          60135
-    df_rt_bsave_done : $eaef          60143
-  df_rt_bsave_header : $eaa6          60070
-     df_rt_bsave_ram : $eacb          60107
-   df_rt_bsave_savep : $ea76          60022
-    df_rt_bsave_setR : $ea75          60021
-   df_rt_bsave_skiph : $eadd          60125
-    df_rt_bsave_tryr : $ea6f          60015
-   df_rt_bsave_write : $ead1          60113
-         df_rt_bsuba : $df28          57128
-      df_rt_bsubaFin : $df35          57141
-        df_rt_bvload : $ebc4          60356
-          df_rt_call : $ee6c          61036
-       df_rt_calljsr : $ee7b          61051
-         df_rt_chdir : $eb7e          60286
-     df_rt_check_pos : $e1ad          57773
-   df_rt_check_while : $e067          57447
-           df_rt_chr : $eee3          61155
-        df_rt_circle : $e457          58455
-           df_rt_cls : $e39a          58266
-        df_rt_colour : $e911          59665
- df_rt_colour_border : $e931          59697
-         df_rt_comeq : $df94          57236
-         df_rt_comgt : $df89          57225
+     df_rt_asm_label : $f572          62834
+      df_rt_asm_mnem : $f63a          63034
+  df_rt_asm_mnem_chk : $f65d          63069
+ df_rt_asm_mnem_done : $f66b          63083
+  df_rt_asm_mnem_err : $f67f          63103
+  df_rt_asm_mnem_try : $f640          63040
+       df_rt_asm_opt : $f597          62871
+       df_rt_asm_org : $f585          62853
+   df_rt_asm_printCH : $f74f          63311
+   df_rt_asm_printCR : $f746          63302
+ df_rt_asm_printline : $f75c          63324
+  df_rt_asm_printOPC : $f718          63256
+  df_rt_asm_printOPR : $f72c          63276
+df_rt_asm_printOPR_1 : $f741          63297
+   df_rt_asm_printPC : $f708          63240
+  df_rt_asm_printSPC : $f723          63267
+df_rt_asm_print_mmen : $f6f8          63224
+ df_rt_asm_print_rts : $f707          63239
+df_rt_asm_skip_to_sym : $f814          63508
+df_rt_asm_skip_to_sym_done : $f813          63507
+df_rt_asm_skip_to_sym_end : $f831          63537
+df_rt_asm_skip_to_sym_next : $f822          63522
+    df_rt_asm_string : $f5c5          62917
+ df_rt_asm_string_ch : $f5cc          62924
+  df_rt_asm_tokenjmp : $fbdd          64477
+        df_rt_assign : $e616          58902
+    df_rt_assign_num : $e612          58898
+         df_rt_asubb : $dfa0          57248
+      df_rt_asubbFin : $dfad          57261
+         df_rt_bload : $ec16          60438
+    df_rt_bload_file : $ec52          60498
+   df_rt_bload_savep : $ec2a          60458
+    df_rt_bload_setR : $ec29          60457
+    df_rt_bload_tryr : $ec23          60451
+           df_rt_box : $e505          58629
+         df_rt_bsave : $eae8          60136
+    df_rt_bsave_byte : $eb32          60210
+ df_rt_bsave_byte_do : $eb3d          60221
+    df_rt_bsave_dech : $eb6d          60269
+    df_rt_bsave_done : $eb75          60277
+  df_rt_bsave_header : $eb2c          60204
+     df_rt_bsave_ram : $eb51          60241
+   df_rt_bsave_savep : $eafc          60156
+    df_rt_bsave_setR : $eafb          60155
+   df_rt_bsave_skiph : $eb63          60259
+    df_rt_bsave_tryr : $eaf5          60149
+   df_rt_bsave_write : $eb57          60247
+         df_rt_bsuba : $dfae          57262
+      df_rt_bsubaFin : $dfbb          57275
+        df_rt_bvload : $ec4a          60490
+          df_rt_call : $eef2          61170
+       df_rt_calljsr : $ef01          61185
+         df_rt_chdir : $ec04          60420
+     df_rt_check_pos : $e233          57907
+   df_rt_check_while : $e0ed          57581
+           df_rt_chr : $ef69          61289
+        df_rt_circle : $e4dd          58589
+           df_rt_cls : $e420          58400
+        df_rt_colour : $e997          59799
+ df_rt_colour_border : $e9b7          59831
+         df_rt_comeq : $e01a          57370
+         df_rt_comgt : $e00f          57359
 AS65 Assembler for R6502 [1.42].                                     Page    7
 ---------------------------------- bank1.s -----------------------------------
 
-        df_rt_comgte : $dfaa          57258
-         df_rt_comlt : $df7e          57214
-        df_rt_comlte : $df9f          57247
-       df_rt_comment : $e596          58774
-         df_rt_comne : $dfb5          57269
-       df_rt_copyStr : $d9d9          55769
-    df_rt_copyStr_ch : $d9db          55771
-  df_rt_copyStr_done : $d9e4          55780
-        df_rt_cursor : $e40d          58381
-          df_rt_data : $e596          58774
- df_rt_datastatement : $e218          57880
-      df_rt_datetime : $ecfa          60666
- df_rt_datetime_conv : $ed3f          60735
-   df_rt_datlinstart : $e210          57872
-    df_rt_datnextlin : $e21e          57886
-      df_rt_datumerr : $e246          57926
-           df_rt_dec : $ef28          61224
-          df_rt_deek : $ed56          60758
-           df_rt_def : $f096          61590
-        df_rt_deferr : $eff4          61428
-  df_rt_def_find_var : $f0a3          61603
-   df_rt_def_got_var : $f0b5          61621
-df_rt_def_got_varparm : $f0b2          61618
-df_rt_def_initialise_parm : $f0f3          61683
-  df_rt_def_load_var : $f0d3          61651
-df_rt_def_load_var_done : $f106          61702
- df_rt_def_parm_done : $f0cb          61643
-           df_rt_del : $eb77          60279
-        df_rt_device : $efdb          61403
-df_rt_device_default : $efeb          61419
-           df_rt_dim : $e316          58134
-     df_rt_dim2_mul2 : $e37b          58235
-       df_rt_dim2_nz : $e36a          58218
-     df_rt_dim_alloc : $e35b          58203
-      df_rt_dim_done : $e396          58262
-       df_rt_dim_err : $e398          58264
-   df_rt_dim_findesc : $e31b          58139
-      df_rt_dim_loop : $e318          58136
-      df_rt_dim_main : $e317          58135
- df_rt_dim_next_byte : $e392          58258
-  df_rt_dim_set_type : $e38a          58250
-           df_rt_dir : $ec2c          60460
-          df_rt_dirl : $ecac          60588
-     df_rt_dirl_done : $ecdd          60637
-     df_rt_dirl_line : $ecc6          60614
-df_rt_dirl_show_entry : $ecb2          60594
-df_rt_dirl_skip_pause : $ecd7          60631
-      df_rt_dir_done : $ec8a          60554
-      df_rt_dir_line : $ec6a          60522
-df_rt_dir_show_entry : $ec32          60466
-      df_rt_dir_size : $ec5d          60509
- df_rt_dir_skip_crlf : $ec73          60531
-df_rt_dir_skip_pause : $ec84          60548
-    df_rt_dir_string : $ec24          60452
-           df_rt_div : $de7a          56954
-      df_rt_doassign : $e582          58754
-          df_rt_doke : $e8da          59610
-       df_rt_dosound : $ea02          59906
-       df_rt_do_else : $e126          57638
-       df_rt_elapsed : $ee4e          61006
-    df_rt_elapsed_rd : $ee59          61017
-          df_rt_else : $e0d9          57561
+        df_rt_comgte : $e030          57392
+         df_rt_comlt : $e004          57348
+        df_rt_comlte : $e025          57381
+       df_rt_comment : $e61c          58908
+         df_rt_comne : $e03b          57403
+       df_rt_copyStr : $da5f          55903
+    df_rt_copyStr_ch : $da61          55905
+  df_rt_copyStr_done : $da6a          55914
+        df_rt_cursor : $e493          58515
+          df_rt_data : $e61c          58908
+ df_rt_datastatement : $e29e          58014
+      df_rt_datetime : $ed80          60800
+ df_rt_datetime_conv : $edc5          60869
+   df_rt_datlinstart : $e296          58006
+    df_rt_datnextlin : $e2a4          58020
+      df_rt_datumerr : $e2cc          58060
+           df_rt_dec : $efae          61358
+          df_rt_deek : $eddc          60892
+           df_rt_def : $f11c          61724
+        df_rt_deferr : $f07a          61562
+  df_rt_def_find_var : $f129          61737
+   df_rt_def_got_var : $f13b          61755
+df_rt_def_got_varparm : $f138          61752
+df_rt_def_initialise_parm : $f179          61817
+  df_rt_def_load_var : $f159          61785
+df_rt_def_load_var_done : $f18c          61836
+ df_rt_def_parm_done : $f151          61777
+           df_rt_del : $ebfd          60413
+        df_rt_device : $f061          61537
+df_rt_device_default : $f071          61553
+           df_rt_dim : $e39c          58268
+     df_rt_dim2_mul2 : $e401          58369
+       df_rt_dim2_nz : $e3f0          58352
+     df_rt_dim_alloc : $e3e1          58337
+      df_rt_dim_done : $e41c          58396
+       df_rt_dim_err : $e41e          58398
+   df_rt_dim_findesc : $e3a1          58273
+      df_rt_dim_loop : $e39e          58270
+      df_rt_dim_main : $e39d          58269
+ df_rt_dim_next_byte : $e418          58392
+  df_rt_dim_set_type : $e410          58384
+           df_rt_dir : $ecb2          60594
+          df_rt_dirl : $ed32          60722
+     df_rt_dirl_done : $ed63          60771
+     df_rt_dirl_line : $ed4c          60748
+df_rt_dirl_show_entry : $ed38          60728
+df_rt_dirl_skip_pause : $ed5d          60765
+      df_rt_dir_done : $ed10          60688
+      df_rt_dir_line : $ecf0          60656
+df_rt_dir_show_entry : $ecb8          60600
+      df_rt_dir_size : $ece3          60643
+ df_rt_dir_skip_crlf : $ecf9          60665
+df_rt_dir_skip_pause : $ed0a          60682
+    df_rt_dir_string : $ecaa          60586
+           df_rt_div : $df00          57088
+      df_rt_doassign : $e608          58888
+          df_rt_doke : $e960          59744
+       df_rt_dosound : $ea88          60040
+       df_rt_do_else : $e1ac          57772
+       df_rt_elapsed : $eed4          61140
+    df_rt_elapsed_rd : $eedf          61151
+          df_rt_else : $e15f          57695
 AS65 Assembler for R6502 [1.42].                                     Page    8
 ---------------------------------- bank1.s -----------------------------------
 
-        df_rt_elseif : $e0d9          57561
-        df_rt_enddef : $f110          61712
-         df_rt_endif : $e0d4          57556
-           df_rt_eor : $df00          57088
-           df_rt_eos : $e598          58776
-      df_rt_eos_true : $e5a6          58790
-            df_rt_eq : $df6a          57194
-        df_rt_escjmp : $de06          56838
-      df_rt_eval_byt : $db25          56101
-   df_rt_eval_bytbin : $d9ef          55791
-   df_rt_eval_bytdec : $d9ef          55791
-   df_rt_eval_bythex : $d9ef          55791
-      df_rt_eval_chr : $d9ef          55791
-      df_rt_eval_esc : $d92d          55597
-  df_rt_eval_esc_tab : $d932          55602
-   df_rt_eval_intbin : $d9ef          55791
-   df_rt_eval_intdec : $d9ef          55791
-   df_rt_eval_inthex : $d9ef          55791
-     df_rt_eval_lvar : $da76          55926
-   df_rt_eval_lvskip : $da53          55891
-     df_rt_eval_proc : $db36          56118
- df_rt_eval_proc_err : $db43          56131
-      df_rt_eval_ptr : $db2f          56111
- df_rt_eval_reserved : $d9fb          55803
-   df_rt_eval_strlit : $d9fd          55805
-df_rt_eval_strlit_ch : $da0d          55821
-df_rt_eval_strlit_done : $da14          55828
-      df_rt_eval_var : $da42          55874
-df_rt_eval_var_dim2adj : $dabe          55998
-df_rt_eval_var_dim2adjx : $daca          56010
-df_rt_eval_var_dim2adjy : $dac5          56005
-df_rt_eval_var_do_arry : $da93          55955
-df_rt_eval_var_nomult : $dae1          56033
-df_rt_eval_var_notarry : $da66          55910
- df_rt_eval_var_push : $daf9          56057
-df_rt_eval_var_simple : $da83          55939
-  df_rt_eval_var_str : $db2e          56110
-df_rt_exec_check_key : $dc22          56354
-   df_rt_exec_ctrl_c : $dc2a          56362
-   df_rt_exec_ctrl_z : $dc2c          56364
-      df_rt_exec_end : $dc20          56352
- df_rt_exec_find_tok : $dbde          56286
-df_rt_exec_found_tok : $dbe3          56291
- df_rt_exec_init_ptr : $dbd9          56281
-     df_rt_exec_jump : $dc30          56368
-   df_rt_exec_no_key : $dbfb          56315
-     df_rt_exec_proc : $f04c          61516
-     df_rt_exec_stat : $dbd3          56275
-         df_rt_false : $df3c          57148
-        df_rt_fclose : $efd0          61392
-       df_rt_fcreate : $efb5          61365
- df_rt_fcreate_check : $efbb          61371
-    df_rt_fcreate_ok : $efc1          61377
-  df_rt_file_cleanup : $eb1e          60190
-     df_rt_file_errc : $eb75          60277
-    df_rt_file_errc3 : $eaf8          60152
- df_rt_findelseendif : $e0a3          57507
-    df_rt_findescval : $dcd7          56535
-df_rt_findescval_loop : $dcda          56538
-      df_rt_findproc : $dc91          56465
-  df_rt_findproc_cmd : $dca1          56481
-  df_rt_findproc_err : $dcd5          56533
+        df_rt_elseif : $e15f          57695
+        df_rt_enddef : $f196          61846
+         df_rt_endif : $e15a          57690
+           df_rt_eor : $df86          57222
+           df_rt_eos : $e61e          58910
+      df_rt_eos_true : $e62c          58924
+            df_rt_eq : $dff0          57328
+        df_rt_escjmp : $de8c          56972
+      df_rt_eval_byt : $dbab          56235
+   df_rt_eval_bytbin : $da75          55925
+   df_rt_eval_bytdec : $da75          55925
+   df_rt_eval_bythex : $da75          55925
+      df_rt_eval_chr : $da75          55925
+      df_rt_eval_esc : $d9b3          55731
+  df_rt_eval_esc_tab : $d9b8          55736
+   df_rt_eval_intbin : $da75          55925
+   df_rt_eval_intdec : $da75          55925
+   df_rt_eval_inthex : $da75          55925
+     df_rt_eval_lvar : $dafc          56060
+   df_rt_eval_lvskip : $dad9          56025
+     df_rt_eval_proc : $dbbc          56252
+ df_rt_eval_proc_err : $dbc9          56265
+      df_rt_eval_ptr : $dbb5          56245
+ df_rt_eval_reserved : $da81          55937
+   df_rt_eval_strlit : $da83          55939
+df_rt_eval_strlit_ch : $da93          55955
+df_rt_eval_strlit_done : $da9a          55962
+      df_rt_eval_var : $dac8          56008
+df_rt_eval_var_dim2adj : $db44          56132
+df_rt_eval_var_dim2adjx : $db50          56144
+df_rt_eval_var_dim2adjy : $db4b          56139
+df_rt_eval_var_do_arry : $db19          56089
+df_rt_eval_var_nomult : $db67          56167
+df_rt_eval_var_notarry : $daec          56044
+ df_rt_eval_var_push : $db7f          56191
+df_rt_eval_var_simple : $db09          56073
+  df_rt_eval_var_str : $dbb4          56244
+df_rt_exec_check_key : $dca8          56488
+   df_rt_exec_ctrl_c : $dcb0          56496
+   df_rt_exec_ctrl_z : $dcb2          56498
+      df_rt_exec_end : $dca6          56486
+ df_rt_exec_find_tok : $dc64          56420
+df_rt_exec_found_tok : $dc69          56425
+ df_rt_exec_init_ptr : $dc5f          56415
+     df_rt_exec_jump : $dcb6          56502
+   df_rt_exec_no_key : $dc81          56449
+     df_rt_exec_proc : $f0d2          61650
+     df_rt_exec_stat : $dc59          56409
+         df_rt_false : $dfc2          57282
+        df_rt_fclose : $f056          61526
+       df_rt_fcreate : $f03b          61499
+ df_rt_fcreate_check : $f041          61505
+    df_rt_fcreate_ok : $f047          61511
+  df_rt_file_cleanup : $eba4          60324
+     df_rt_file_errc : $ebfb          60411
+    df_rt_file_errc3 : $eb7e          60286
+ df_rt_findelseendif : $e129          57641
+    df_rt_findescval : $dd5d          56669
+df_rt_findescval_loop : $dd60          56672
+      df_rt_findproc : $dd17          56599
+  df_rt_findproc_cmd : $dd27          56615
+  df_rt_findproc_err : $dd5b          56667
 AS65 Assembler for R6502 [1.42].                                     Page    9
 ---------------------------------- bank1.s -----------------------------------
 
-df_rt_findproc_nextstat : $dcc1          56513
-      df_rt_findwend : $e034          57396
-          df_rt_font : $ebb2          60338
-         df_rt_fopen : $efc8          61384
-           df_rt_for : $e12a          57642
- df_rt_generate_lvar : $e566          58726
-           df_rt_get : $ee1f          60959
-     df_rt_getdatatk : $e22c          57900
-       df_rt_getlvar : $dcf1          56561
-       df_rt_getnval : $d8a2          55458
-      df_rt_get2Ints : $db45          56133
-      df_rt_get2Strs : $db54          56148
-            df_rt_gt : $df56          57174
-           df_rt_gte : $df60          57184
-      df_rt_gte_calc : $df63          57187
-         df_rt_hchar : $e3cb          58315
-           df_rt_hex : $eef7          61175
-         df_rt_himem : $e413          58387
-         df_rt_hires : $e420          58400
-         df_rt_hplot : $e44b          58443
-      df_rt_hplotstr : $e3f4          58356
-    df_rt_hplotstrch : $e3f6          58358
-            df_rt_if : $e0eb          57579
-         df_rt_ifcmd : $e0a6          57510
-        df_rt_ifelse : $e0c3          57539
-        df_rt_ifeval : $e0ed          57581
-  df_rt_ifskipelseif : $e0bb          57531
-       df_rt_if_done : $e129          57641
-      df_rt_if_found : $e0cf          57551
-      df_rt_if_match : $e09d          57501
-       df_rt_if_stat : $e087          57479
-   df_rt_if_stat_err : $e09b          57499
-     df_rt_init_done : $d8a1          55457
- df_rt_init_filename : $eafa          60154
- df_rt_init_stat_ptr : $dbc2          56258
-      df_rt_init_vvt : $d860          55392
- df_rt_init_vvt_skip : $d894          55444
- df_rt_init_vvt_slot : $d86a          55402
-df_rt_init_vvt_slot_undim : $d876          55414
-         df_rt_input : $e2b5          58037
-     df_rt_input_err : $e2e8          58088
-     df_rt_input_num : $e2d1          58065
-     df_rt_input_str : $e2d0          58064
-           df_rt_key : $ee1f          60959
-     df_rt_key_valid : $ee2c          60972
-    df_rt_ldtokenise : $eb4e          60238
-          df_rt_left : $ef36          61238
-           df_rt_len : $ef80          61312
-          df_rt_line : $e469          58473
-          df_rt_list : $e68c          59020
-  df_rt_listcheckvnt : $e5f7          58871
-   df_rt_listgotnext : $e625          58917
-   df_rt_listnextvnt : $e61e          58910
-   df_rt_listpn_done : $e635          58933
-       df_rt_listprg : $e6b3          59059
-    df_rt_listprgend : $e6bb          59067
-      df_rt_listproc : $e636          58934
-    df_rt_listprocch : $e603          58883
-    df_rt_listproccr : $e60e          58894
- df_rt_listprocnames : $e5eb          58859
- df_rt_listprocpause : $e614          58900
-    df_rt_listp_copy : $e63d          58941
+df_rt_findproc_nextstat : $dd47          56647
+      df_rt_findwend : $e0ba          57530
+          df_rt_font : $ec38          60472
+         df_rt_fopen : $f04e          61518
+           df_rt_for : $e1b0          57776
+ df_rt_generate_lvar : $e5ec          58860
+           df_rt_get : $eea5          61093
+     df_rt_getdatatk : $e2b2          58034
+       df_rt_getlvar : $dd77          56695
+       df_rt_getnval : $d928          55592
+      df_rt_get2Ints : $dbcb          56267
+      df_rt_get2Strs : $dbda          56282
+            df_rt_gt : $dfdc          57308
+           df_rt_gte : $dfe6          57318
+      df_rt_gte_calc : $dfe9          57321
+         df_rt_hchar : $e451          58449
+           df_rt_hex : $ef7d          61309
+         df_rt_himem : $e499          58521
+         df_rt_hires : $e4a6          58534
+         df_rt_hplot : $e4d1          58577
+      df_rt_hplotstr : $e47a          58490
+    df_rt_hplotstrch : $e47c          58492
+            df_rt_if : $e171          57713
+         df_rt_ifcmd : $e12c          57644
+        df_rt_ifelse : $e149          57673
+        df_rt_ifeval : $e173          57715
+  df_rt_ifskipelseif : $e141          57665
+       df_rt_if_done : $e1af          57775
+      df_rt_if_found : $e155          57685
+      df_rt_if_match : $e123          57635
+       df_rt_if_stat : $e10d          57613
+   df_rt_if_stat_err : $e121          57633
+     df_rt_init_done : $d927          55591
+ df_rt_init_filename : $eb80          60288
+ df_rt_init_stat_ptr : $dc48          56392
+      df_rt_init_vvt : $d8e6          55526
+ df_rt_init_vvt_skip : $d91a          55578
+ df_rt_init_vvt_slot : $d8f0          55536
+df_rt_init_vvt_slot_undim : $d8fc          55548
+         df_rt_input : $e33b          58171
+     df_rt_input_err : $e36e          58222
+     df_rt_input_num : $e357          58199
+     df_rt_input_str : $e356          58198
+           df_rt_key : $eea5          61093
+     df_rt_key_valid : $eeb2          61106
+    df_rt_ldtokenise : $ebd4          60372
+          df_rt_left : $efbc          61372
+           df_rt_len : $f006          61446
+          df_rt_line : $e4ef          58607
+          df_rt_list : $e712          59154
+  df_rt_listcheckvnt : $e67d          59005
+   df_rt_listgotnext : $e6ab          59051
+   df_rt_listnextvnt : $e6a4          59044
+   df_rt_listpn_done : $e6bb          59067
+       df_rt_listprg : $e739          59193
+    df_rt_listprgend : $e741          59201
+      df_rt_listproc : $e6bc          59068
+    df_rt_listprocch : $e689          59017
+    df_rt_listproccr : $e694          59028
+ df_rt_listprocnames : $e671          58993
+ df_rt_listprocpause : $e69a          59034
+    df_rt_listp_copy : $e6c3          59075
 AS65 Assembler for R6502 [1.42].                                     Page   10
 ---------------------------------- bank1.s -----------------------------------
 
-    df_rt_listp_done : $e680          59008
- df_rt_listp_findcmd : $e666          58982
- df_rt_listp_findend : $e65f          58975
-df_rt_listp_notfound : $e68a          59018
-      df_rt_listwait : $e61b          58907
-      df_rt_list_all : $e69f          59039
- df_rt_list_all_line : $e703          59139
-   df_rt_list_decode : $e70f          59151
-df_rt_list_decode_esc : $e741          59201
-df_rt_list_decode_token : $e84e          59470
-df_rt_list_decode_token_normal : $e855          59477
-   df_rt_list_donvvt : $e83c          59452
-df_rt_list_do_decode_tkn : $e85c          59484
-   df_rt_list_escval : $e71f          59167
-  df_rt_list_findvvt : $e7e6          59366
-df_rt_list_find_asm_sym : $e8a9          59561
- df_rt_list_find_sym : $e865          59493
-   df_rt_list_gotvvt : $e813          59411
-df_rt_list_gotvvtend : $e7ff          59391
-df_rt_list_got_asm_sym : $e8c7          59591
-df_rt_list_got_last_sym : $e876          59510
-  df_rt_list_got_sym : $e87a          59514
-     df_rt_list_line : $e6c1          59073
-df_rt_list_line_cont : $e6db          59099
- df_rt_list_line_fin : $e700          59136
-df_rt_list_line_only : $e706          59142
-df_rt_list_line_only_fin : $e702          59138
-    df_rt_list_linno : $e6a6          59046
-   df_rt_list_linnum : $e83d          59453
-  df_rt_list_nexttok : $e728          59176
-df_rt_list_next_asm_ch : $e8ae          59566
-  df_rt_list_next_ch : $e86a          59498
-df_rt_list_next_line : $e6e2          59106
-    df_rt_list_pause : $e6d0          59088
-  df_rt_list_synckey : $e6cc          59084
-    df_rt_list_token : $e725          59173
-   df_rt_list_vvtend : $e7f2          59378
-          df_rt_load : $eb25          60197
-      df_rt_loadline : $eb35          60213
-         df_rt_local : $e2ea          58090
-    df_rt_local_done : $e30f          58127
- df_rt_local_findesc : $e2f1          58097
-        df_rt_lsbyte : $edcb          60875
-           df_rt_lsr : $decf          57039
-        df_rt_lsrbit : $ded5          57045
-       df_rt_lsrdone : $dedf          57055
-       df_rt_lst_bin : $e7ac          59308
-       df_rt_lst_bit : $e7b6          59318
- df_rt_lst_bit_skip0 : $e7be          59326
-    df_rt_lst_bytbin : $e7a2          59298
-    df_rt_lst_bythex : $e77d          59261
-       df_rt_lst_chr : $e760          59232
-df_rt_lst_const_done : $e78c          59276
-   df_rt_lst_hex_pre : $e773          59251
-    df_rt_lst_intbin : $e7aa          59306
-    df_rt_lst_intdec : $e7c6          59334
-    df_rt_lst_inthex : $e790          59280
-    df_rt_lst_lo_hex : $e780          59264
-      df_rt_lst_proc : $e7d1          59345
-  df_rt_lst_reserved : $e75f          59231
-    df_rt_lst_strlit : $e823          59427
-  df_rt_lst_strlitch : $e82a          59434
+    df_rt_listp_done : $e706          59142
+ df_rt_listp_findcmd : $e6ec          59116
+ df_rt_listp_findend : $e6e5          59109
+df_rt_listp_notfound : $e710          59152
+      df_rt_listwait : $e6a1          59041
+      df_rt_list_all : $e725          59173
+ df_rt_list_all_line : $e789          59273
+   df_rt_list_decode : $e795          59285
+df_rt_list_decode_esc : $e7c7          59335
+df_rt_list_decode_token : $e8d4          59604
+df_rt_list_decode_token_normal : $e8db          59611
+   df_rt_list_donvvt : $e8c2          59586
+df_rt_list_do_decode_tkn : $e8e2          59618
+   df_rt_list_escval : $e7a5          59301
+  df_rt_list_findvvt : $e86c          59500
+df_rt_list_find_asm_sym : $e92f          59695
+ df_rt_list_find_sym : $e8eb          59627
+   df_rt_list_gotvvt : $e899          59545
+df_rt_list_gotvvtend : $e885          59525
+df_rt_list_got_asm_sym : $e94d          59725
+df_rt_list_got_last_sym : $e8fc          59644
+  df_rt_list_got_sym : $e900          59648
+     df_rt_list_line : $e747          59207
+df_rt_list_line_cont : $e761          59233
+ df_rt_list_line_fin : $e786          59270
+df_rt_list_line_only : $e78c          59276
+df_rt_list_line_only_fin : $e788          59272
+    df_rt_list_linno : $e72c          59180
+   df_rt_list_linnum : $e8c3          59587
+  df_rt_list_nexttok : $e7ae          59310
+df_rt_list_next_asm_ch : $e934          59700
+  df_rt_list_next_ch : $e8f0          59632
+df_rt_list_next_line : $e768          59240
+    df_rt_list_pause : $e756          59222
+  df_rt_list_synckey : $e752          59218
+    df_rt_list_token : $e7ab          59307
+   df_rt_list_vvtend : $e878          59512
+          df_rt_load : $ebab          60331
+      df_rt_loadline : $ebbb          60347
+         df_rt_local : $e370          58224
+    df_rt_local_done : $e395          58261
+ df_rt_local_findesc : $e377          58231
+        df_rt_lsbyte : $ee51          61009
+           df_rt_lsr : $df55          57173
+        df_rt_lsrbit : $df5b          57179
+       df_rt_lsrdone : $df65          57189
+       df_rt_lst_bin : $e832          59442
+       df_rt_lst_bit : $e83c          59452
+ df_rt_lst_bit_skip0 : $e844          59460
+    df_rt_lst_bytbin : $e828          59432
+    df_rt_lst_bythex : $e803          59395
+       df_rt_lst_chr : $e7e6          59366
+df_rt_lst_const_done : $e812          59410
+   df_rt_lst_hex_pre : $e7f9          59385
+    df_rt_lst_intbin : $e830          59440
+    df_rt_lst_intdec : $e84c          59468
+    df_rt_lst_inthex : $e816          59414
+    df_rt_lst_lo_hex : $e806          59398
+      df_rt_lst_proc : $e857          59479
+  df_rt_lst_reserved : $e7e5          59365
+    df_rt_lst_strlit : $e8a9          59561
+  df_rt_lst_strlitch : $e8b0          59568
 AS65 Assembler for R6502 [1.42].                                     Page   11
 ---------------------------------- bank1.s -----------------------------------
 
- df_rt_lst_strlitdon : $e835          59445
-       df_rt_lst_var : $e7d1          59345
-            df_rt_lt : $df42          57154
-           df_rt_lte : $df4c          57164
-      df_rt_lte_calc : $df4f          57167
-           df_rt_mem : $edd3          60883
-      df_rt_mem_calc : $ee12          60946
-      df_rt_mem_free : $edde          60894
-       df_rt_mem_prg : $edf0          60912
-       df_rt_mem_var : $ee02          60930
-           df_rt_mid : $ef62          61282
-         df_rt_mkdir : $eb87          60295
-           df_rt_mod : $de9b          56987
-          df_rt_mode : $e420          58400
-       df_rt_monitor : $e005          57349
-        df_rt_msbyte : $edc2          60866
-          df_rt_mult : $de59          56921
-         df_rt_music : $ea13          59923
-       df_rt_nassign : $e54c          58700
-            df_rt_ne : $df74          57204
-         df_rt_neval : $d8a8          55464
-     df_rt_neval_chr : $d8c0          55488
-    df_rt_neval_done : $d8f4          55540
-   df_rt_neval_donow : $d917          55575
-     df_rt_neval_esc : $d8b9          55481
-df_rt_neval_nextbyte : $d8fc          55548
-    df_rt_neval_optk : $d8ab          55467
- df_rt_neval_process : $d8eb          55531
-  df_rt_neval_pushOp : $d928          55592
-      df_rt_neval_tk : $d8d9          55513
-   df_rt_neval_tk_fn : $d8f5          55541
-   df_rt_neval_tk_op : $d901          55553
-  df_rt_neval_tk_opp : $d900          55552
-           df_rt_new : $e009          57353
-          df_rt_next : $e164          57700
-     df_rt_nextdatum : $e200          57856
-      df_rt_nextstat : $dc3e          56382
-  df_rt_nextstat_err : $dc68          56424
-   df_rt_nextstat_ln : $dc53          56403
-    df_rt_next_check : $e1b0          57776
-      df_rt_next_err : $e1bd          57789
-      df_rt_noif_err : $e0e9          57577
-     df_rt_not_dimed : $db08          56072
-        df_rt_nvpeek : $ed7e          60798
-        df_rt_nvpoke : $e8fc          59644
-            df_rt_or : $def1          57073
-     df_rt_parm_pop3 : $db7b          56187
-     df_rt_parm_pop4 : $db97          56215
-    df_rt_parm_2ints : $db63          56163
-    df_rt_parm_3ints : $db6e          56174
-    df_rt_parm_4ints : $db85          56197
-    df_rt_parm_5ints : $dba1          56225
-    df_rt_parse_file : $eb01          60161
-      df_rt_pausemsg : $ec91          60561
-          df_rt_peek : $ed59          60761
-        df_rt_pixcol : $e433          58419
-         df_rt_pixel : $ee42          60994
-       df_rt_pixmask : $e42d          58413
-       df_rt_pixmode : $e427          58407
-          df_rt_play : $ea31          59953
-          df_rt_plot : $e3a4          58276
-       df_rt_plotstr : $e3d0          58320
+ df_rt_lst_strlitdon : $e8bb          59579
+       df_rt_lst_var : $e857          59479
+            df_rt_lt : $dfc8          57288
+           df_rt_lte : $dfd2          57298
+      df_rt_lte_calc : $dfd5          57301
+           df_rt_mem : $ee59          61017
+      df_rt_mem_calc : $ee98          61080
+      df_rt_mem_free : $ee64          61028
+       df_rt_mem_prg : $ee76          61046
+       df_rt_mem_var : $ee88          61064
+           df_rt_mid : $efe8          61416
+         df_rt_mkdir : $ec0d          60429
+           df_rt_mod : $df21          57121
+          df_rt_mode : $e4a6          58534
+       df_rt_monitor : $e08b          57483
+        df_rt_msbyte : $ee48          61000
+          df_rt_mult : $dedf          57055
+         df_rt_music : $ea99          60057
+       df_rt_nassign : $e5d2          58834
+            df_rt_ne : $dffa          57338
+         df_rt_neval : $d92e          55598
+     df_rt_neval_chr : $d946          55622
+    df_rt_neval_done : $d97a          55674
+   df_rt_neval_donow : $d99d          55709
+     df_rt_neval_esc : $d93f          55615
+df_rt_neval_nextbyte : $d982          55682
+    df_rt_neval_optk : $d931          55601
+ df_rt_neval_process : $d971          55665
+  df_rt_neval_pushOp : $d9ae          55726
+      df_rt_neval_tk : $d95f          55647
+   df_rt_neval_tk_fn : $d97b          55675
+   df_rt_neval_tk_op : $d987          55687
+  df_rt_neval_tk_opp : $d986          55686
+           df_rt_new : $e08f          57487
+          df_rt_next : $e1ea          57834
+     df_rt_nextdatum : $e286          57990
+      df_rt_nextstat : $dcc4          56516
+  df_rt_nextstat_err : $dcee          56558
+   df_rt_nextstat_ln : $dcd9          56537
+    df_rt_next_check : $e236          57910
+      df_rt_next_err : $e243          57923
+      df_rt_noif_err : $e16f          57711
+     df_rt_not_dimed : $db8e          56206
+        df_rt_nvpeek : $ee04          60932
+        df_rt_nvpoke : $e982          59778
+            df_rt_or : $df77          57207
+     df_rt_parm_pop3 : $dc01          56321
+     df_rt_parm_pop4 : $dc1d          56349
+    df_rt_parm_2ints : $dbe9          56297
+    df_rt_parm_3ints : $dbf4          56308
+    df_rt_parm_4ints : $dc0b          56331
+    df_rt_parm_5ints : $dc27          56359
+    df_rt_parse_file : $eb87          60295
+      df_rt_pausemsg : $ed17          60695
+          df_rt_peek : $eddf          60895
+        df_rt_pixcol : $e4b9          58553
+         df_rt_pixel : $eec8          61128
+       df_rt_pixmask : $e4b3          58547
+       df_rt_pixmode : $e4ad          58541
+          df_rt_play : $eab7          60087
+          df_rt_plot : $e42a          58410
+       df_rt_plotstr : $e456          58454
 AS65 Assembler for R6502 [1.42].                                     Page   12
 ---------------------------------- bank1.s -----------------------------------
 
-     df_rt_plotstrch : $e3df          58335
-   df_rt_plotstrdone : $e3f3          58355
-         df_rt_point : $e441          58433
-          df_rt_poke : $e8e8          59624
-      df_rt_pop_stat : $dc78          56440
-   df_rt_pop_stat_go : $dd0d          56589
-         df_rt_print : $e513          58643
-       df_rt_printat : $e509          58633
-       df_rt_println : $e544          58692
-    df_rt_print_done : $e541          58689
-  df_rt_print_gotstr : $e53c          58684
-     df_rt_print_num : $e1e5          57829
-     df_rt_print_str : $e1ec          57836
-  df_rt_print_str_ch : $e1f5          57845
-df_rt_print_str_done : $e1ff          57855
-      df_rt_print_ws : $e516          58646
-          df_rt_proc : $eff6          61430
-     df_rt_proc_addr : $f020          61472
-    df_rt_proc_local : $f13a          61754
-df_rt_proc_local_load : $f141          61761
-  df_rt_proc_parmerr : $eff4          61428
-df_rt_proc_parm_done : $f03f          61503
-df_rt_proc_parm_none : $f040          61504
-df_rt_proc_push_parm : $f02b          61483
-df_rt_proc_unloadvar : $f116          61718
-df_rt_proc_unload_done : $f136          61750
-     df_rt_push_int1 : $ee78          61048
-     df_rt_push_stat : $dc6c          56428
-           df_rt_put : $e439          58425
-     df_rt_putintres : $de2c          56876
-          df_rt_read : $e29d          58013
-      df_rt_readbyte : $ed5a          60762
- df_rt_readbyte_skip : $ed6f          60783
-     df_rt_readdatum : $e248          57928
-     df_rt_read_done : $e2b2          58034
- df_rt_read_find_var : $e29f          58015
-         df_rt_redim : $e313          58131
-         df_rt_renum : $e5a8          58792
-      df_rt_renum_do : $e5bc          58812
-    df_rt_renum_next : $e5db          58843
-      df_rt_renum_ok : $e5b8          58808
-  df_rt_renum_update : $e5c3          58819
-        df_rt_repeat : $e1bf          57791
-         df_rt_reset : $ece2          60642
-        df_rt_return : $f10d          61709
-         df_rt_right : $ef47          61255
-           df_rt_rnd : $ed8a          60810
-     df_rt_rnd_noeor : $ed9e          60830
-       df_rt_rnd_set : $eda8          60840
-           df_rt_run : $e597          58775
-     df_rt_run_token : $dc39          56377
-          df_rt_sadd : $e1e4          57828
-     df_rt_safe_read : $eced          60653
-       df_rt_sassign : $e560          58720
-          df_rt_save : $eb0a          60170
-          df_rt_scrn : $ee32          60978
-           df_rt_seq : $dfeb          57323
-        df_rt_setvdp : $e907          59655
-         df_rt_seval : $d958          55640
-    df_rt_seval_copy : $d9b2          55730
-    df_rt_seval_done : $d9d5          55765
-     df_rt_seval_esc : $d97e          55678
+     df_rt_plotstrch : $e465          58469
+   df_rt_plotstrdone : $e479          58489
+         df_rt_point : $e4c7          58567
+          df_rt_poke : $e96e          59758
+      df_rt_pop_stat : $dcfe          56574
+   df_rt_pop_stat_go : $dd93          56723
+         df_rt_print : $e599          58777
+       df_rt_printat : $e58f          58767
+       df_rt_println : $e5ca          58826
+    df_rt_print_done : $e5c7          58823
+  df_rt_print_gotstr : $e5c2          58818
+     df_rt_print_num : $e26b          57963
+     df_rt_print_str : $e272          57970
+  df_rt_print_str_ch : $e27b          57979
+df_rt_print_str_done : $e285          57989
+      df_rt_print_ws : $e59c          58780
+          df_rt_proc : $f07c          61564
+     df_rt_proc_addr : $f0a6          61606
+    df_rt_proc_local : $f1c0          61888
+df_rt_proc_local_load : $f1c7          61895
+  df_rt_proc_parmerr : $f07a          61562
+df_rt_proc_parm_done : $f0c5          61637
+df_rt_proc_parm_none : $f0c6          61638
+df_rt_proc_push_parm : $f0b1          61617
+df_rt_proc_unloadvar : $f19c          61852
+df_rt_proc_unload_done : $f1bc          61884
+     df_rt_push_int1 : $eefe          61182
+     df_rt_push_stat : $dcf2          56562
+           df_rt_put : $e4bf          58559
+     df_rt_putintres : $deb2          57010
+          df_rt_read : $e323          58147
+      df_rt_readbyte : $ede0          60896
+ df_rt_readbyte_skip : $edf5          60917
+     df_rt_readdatum : $e2ce          58062
+     df_rt_read_done : $e338          58168
+ df_rt_read_find_var : $e325          58149
+         df_rt_redim : $e399          58265
+         df_rt_renum : $e62e          58926
+      df_rt_renum_do : $e642          58946
+    df_rt_renum_next : $e661          58977
+      df_rt_renum_ok : $e63e          58942
+  df_rt_renum_update : $e649          58953
+        df_rt_repeat : $e245          57925
+         df_rt_reset : $ed68          60776
+        df_rt_return : $f193          61843
+         df_rt_right : $efcd          61389
+           df_rt_rnd : $ee10          60944
+     df_rt_rnd_noeor : $ee24          60964
+       df_rt_rnd_set : $ee2e          60974
+           df_rt_run : $e61d          58909
+     df_rt_run_token : $dcbf          56511
+          df_rt_sadd : $e26a          57962
+     df_rt_safe_read : $ed73          60787
+       df_rt_sassign : $e5e6          58854
+          df_rt_save : $eb90          60304
+          df_rt_scrn : $eeb8          61112
+           df_rt_seq : $e071          57457
+        df_rt_setvdp : $e98d          59789
+         df_rt_seval : $d9de          55774
+    df_rt_seval_copy : $da38          55864
+    df_rt_seval_done : $da5b          55899
+     df_rt_seval_esc : $da04          55812
 AS65 Assembler for R6502 [1.42].                                     Page   13
 ---------------------------------- bank1.s -----------------------------------
 
-df_rt_seval_esc_proc : $d9d3          55763
-df_rt_seval_esc_strlit : $d9cd          55757
- df_rt_seval_esc_var : $d9ae          55726
-df_rt_seval_nextbyte : $d9c8          55752
-    df_rt_seval_optk : $d966          55654
-      df_rt_seval_tk : $d98c          55692
-   df_rt_seval_tk_fn : $d9a5          55717
-   df_rt_seval_tk_op : $d9a1          55713
-           df_rt_sgn : $ee7e          61054
-         df_rt_sgn_n : $ee91          61073
-         df_rt_sgn_z : $ee96          61078
-           df_rt_sgt : $dfe2          57314
-          df_rt_sgte : $dfcd          57293
-         df_rt_shape : $e495          58517
-     df_rt_shapeCalc : $e4cb          58571
-     df_rt_shapeLoop : $e4a5          58533
-df_rt_skipinitdataptr : $e236          57910
- df_rt_skipnestendif : $e0cd          57549
-    df_rt_skipnestif : $e0c1          57537
-  df_rt_skip_dim_chk : $e33d          58173
-       df_rt_skip_ws : $dce4          56548
-  df_rt_skip_ws_loop : $dce7          56551
-           df_rt_slt : $dfdb          57307
-          df_rt_slte : $dfc0          57280
-    df_rt_snd_common : $e9d6          59862
-           df_rt_sne : $dfd4          57300
-         df_rt_sound : $e9ff          59903
-df_rt_sound_env_skip : $e9fb          59899
-   df_rt_sound_noise : $ea09          59913
-        df_rt_sprite : $e937          59703
-    df_rt_spriteattr : $e9ac          59820
-     df_rt_spritecol : $e9cc          59852
-     df_rt_spritenme : $e9d1          59857
-     df_rt_spritepat : $e960          59744
-df_rt_spritepat_line : $e982          59778
-     df_rt_spritepos : $e98e          59790
-         df_rt_stick : $edaf          60847
-     df_rt_storeline : $eb70          60272
- df_rt_strlen_common : $eea3          61091
-  df_rt_strlen_count : $eea9          61097
-      df_rt_str_comp : $dff2          57330
- df_rt_str_comp_byte : $dff7          57335
- df_rt_str_comp_done : $e004          57348
-df_rt_str_comp_false : $dfc7          57287
- df_rt_str_comp_true : $dfca          57290
-    df_rt_str_cpy_ch : $eec3          61123
-   df_rt_str_extract : $eeb0          61104
-           df_rt_sub : $de46          56902
-          df_rt_sval : $d95c          55644
-      df_rt_tokenjmp : $dd16          56598
-          df_rt_true : $df36          57142
-df_rt_unexpected_end : $dc2e          56366
-         df_rt_until : $e1c7          57799
-df_rt_untilnext_done : $e1db          57819
-     df_rt_until_err : $e1e2          57826
-           df_rt_val : $ef9d          61341
-       df_rt_val_err : $efb1          61361
-         df_rt_vload : $ebbf          60351
-    df_rt_vload_byte : $ebe4          60388
-df_rt_vload_byte_skip : $ec1b          60443
-    df_rt_vload_done : $ec1d          60445
-df_rt_vload_do_vpoke : $ec02          60418
+df_rt_seval_esc_proc : $da59          55897
+df_rt_seval_esc_strlit : $da53          55891
+ df_rt_seval_esc_var : $da34          55860
+df_rt_seval_nextbyte : $da4e          55886
+    df_rt_seval_optk : $d9ec          55788
+      df_rt_seval_tk : $da12          55826
+   df_rt_seval_tk_fn : $da2b          55851
+   df_rt_seval_tk_op : $da27          55847
+           df_rt_sgn : $ef04          61188
+         df_rt_sgn_n : $ef17          61207
+         df_rt_sgn_z : $ef1c          61212
+           df_rt_sgt : $e068          57448
+          df_rt_sgte : $e053          57427
+         df_rt_shape : $e51b          58651
+     df_rt_shapeCalc : $e551          58705
+     df_rt_shapeLoop : $e52b          58667
+df_rt_skipinitdataptr : $e2bc          58044
+ df_rt_skipnestendif : $e153          57683
+    df_rt_skipnestif : $e147          57671
+  df_rt_skip_dim_chk : $e3c3          58307
+       df_rt_skip_ws : $dd6a          56682
+  df_rt_skip_ws_loop : $dd6d          56685
+           df_rt_slt : $e061          57441
+          df_rt_slte : $e046          57414
+    df_rt_snd_common : $ea5c          59996
+           df_rt_sne : $e05a          57434
+         df_rt_sound : $ea85          60037
+df_rt_sound_env_skip : $ea81          60033
+   df_rt_sound_noise : $ea8f          60047
+        df_rt_sprite : $e9bd          59837
+    df_rt_spriteattr : $ea32          59954
+     df_rt_spritecol : $ea52          59986
+     df_rt_spritenme : $ea57          59991
+     df_rt_spritepat : $e9e6          59878
+df_rt_spritepat_line : $ea08          59912
+     df_rt_spritepos : $ea14          59924
+         df_rt_stick : $ee35          60981
+     df_rt_storeline : $ebf6          60406
+ df_rt_strlen_common : $ef29          61225
+  df_rt_strlen_count : $ef2f          61231
+      df_rt_str_comp : $e078          57464
+ df_rt_str_comp_byte : $e07d          57469
+ df_rt_str_comp_done : $e08a          57482
+df_rt_str_comp_false : $e04d          57421
+ df_rt_str_comp_true : $e050          57424
+    df_rt_str_cpy_ch : $ef49          61257
+   df_rt_str_extract : $ef36          61238
+           df_rt_sub : $decc          57036
+          df_rt_sval : $d9e2          55778
+      df_rt_tokenjmp : $dd9c          56732
+          df_rt_true : $dfbc          57276
+df_rt_unexpected_end : $dcb4          56500
+         df_rt_until : $e24d          57933
+df_rt_untilnext_done : $e261          57953
+     df_rt_until_err : $e268          57960
+           df_rt_val : $f023          61475
+       df_rt_val_err : $f037          61495
+         df_rt_vload : $ec45          60485
+    df_rt_vload_byte : $ec6a          60522
+df_rt_vload_byte_skip : $eca1          60577
+    df_rt_vload_done : $eca3          60579
+df_rt_vload_do_vpoke : $ec88          60552
 AS65 Assembler for R6502 [1.42].                                     Page   14
 ---------------------------------- bank1.s -----------------------------------
 
-  df_rt_vload_header : $ebdc          60380
-    df_rt_vload_next : $ec12          60434
-     df_rt_vload_ram : $ec07          60423
-         df_rt_vpeek : $ed72          60786
-         df_rt_vpoke : $e8f0          59632
-          df_rt_wait : $e4f0          58608
-df_rt_wait_countdown : $e4fb          58619
-     df_rt_wait_loop : $e4f4          58612
-     df_rt_wait_tick : $e503          58627
-          df_rt_wend : $e071          57457
-      df_rt_wend_end : $e06f          57455
-      df_rt_wend_err : $e085          57477
-         df_rt_while : $e00c          57356
-     df_rt_while_cmd : $e045          57413
-    df_rt_while_done : $e01c          57372
+  df_rt_vload_header : $ec62          60514
+    df_rt_vload_next : $ec98          60568
+     df_rt_vload_ram : $ec8d          60557
+         df_rt_vpeek : $edf8          60920
+         df_rt_vpoke : $e976          59766
+          df_rt_wait : $e576          58742
+df_rt_wait_countdown : $e581          58753
+     df_rt_wait_loop : $e57a          58746
+     df_rt_wait_tick : $e589          58761
+          df_rt_wend : $e0f7          57591
+      df_rt_wend_end : $e0f5          57589
+      df_rt_wend_err : $e10b          57611
+         df_rt_while : $e092          57490
+     df_rt_while_cmd : $e0cb          57547
+    df_rt_while_done : $e0a2          57506
          df_sevalptr : $00bc            188
-    df_show_err_done : $f362          62306
-     df_show_err_fin : $f333          62259
-    df_show_err_find : $f2ef          62191
-  df_show_err_linnum : $f322          62242
-    df_show_err_skip : $f2f3          62195
+    df_show_err_done : $f3e8          62440
+     df_show_err_fin : $f3b9          62393
+    df_show_err_find : $f375          62325
+  df_show_err_linnum : $f3a8          62376
+    df_show_err_skip : $f379          62329
                df_sp : $00a1            161
           df_starend : $00b6            182
          df_starstrt : $00b4            180
           df_strbuff : $00ba            186
            df_stridx : $00bb            187
-      df_str_src_end : $eed8          61144
-        df_st_malloc : $f1c9          61897
-df_st_typemismatcherr : $f1c1          61889
+      df_str_src_end : $ef5e          61278
+        df_st_malloc : $f24f          62031
+df_st_typemismatcherr : $f247          62023
            df_symini : $00c6            198
            df_symoff : $00c5            197
            df_symtab : $00c3            195
-         df_tk_abort : $d681          54913
-           df_tk_add : $d681          54913
-          df_tk_addr : $d65e          54878
-           df_tk_and : $d681          54913
-        df_tk_arrvar : $cf56          53078
-           df_tk_asc : $d655          54869
-           df_tk_asl : $d681          54913
- df_tk_asm_addr_mode : $f44e          62542
-df_tk_asm_addr_mode_ok : $f447          62535
-df_tk_asm_addr_mode_1 : $f463          62563
-df_tk_asm_addr_mode_2 : $f46d          62573
-df_tk_asm_checknexttok : $f400          62464
-df_tk_asm_checktokch : $f402          62466
-        df_tk_asm_db : $d5d1          54737
-        df_tk_asm_ds : $d686          54918
-        df_tk_asm_dw : $d5d1          54737
-df_tk_asm_exec_parser : $f449          62537
-df_tk_asm_foundsymend : $f428          62504
-df_tk_asm_found_command : $f3c2          62402
-     df_tk_asm_label : $f3df          62431
-  df_tk_asm_matchtok : $f3f2          62450
-  df_tk_asm_mnemonic : $f3dc          62428
-       df_tk_asm_opt : $d686          54918
-       df_tk_asm_org : $d686          54918
-df_tk_asm_parse_command : $f3bd          62397
-df_tk_asm_parse_command_err : $f3db          62427
-  df_tk_asm_symfound : $f43b          62523
-df_tk_asm_symnextentry : $f419          62489
-df_tk_asm_symnomatch : $f417          62487
-  df_tk_asm_tokenjmp : $fb4d          64333
+         df_tk_abort : $d707          55047
+           df_tk_add : $d707          55047
+          df_tk_addr : $d6e4          55012
+           df_tk_and : $d707          55047
+        df_tk_arrvar : $cfdc          53212
+           df_tk_asc : $d6db          55003
+           df_tk_asl : $d707          55047
+ df_tk_asm_addr_mode : $f4d4          62676
+df_tk_asm_addr_mode_ok : $f4cd          62669
+df_tk_asm_addr_mode_1 : $f4e9          62697
+df_tk_asm_addr_mode_2 : $f4f3          62707
+df_tk_asm_checknexttok : $f486          62598
+df_tk_asm_checktokch : $f488          62600
+        df_tk_asm_db : $d657          54871
+        df_tk_asm_ds : $d70c          55052
+        df_tk_asm_dw : $d657          54871
+df_tk_asm_exec_parser : $f4cf          62671
+df_tk_asm_foundsymend : $f4ae          62638
+df_tk_asm_found_command : $f448          62536
+     df_tk_asm_label : $f465          62565
+  df_tk_asm_matchtok : $f478          62584
+  df_tk_asm_mnemonic : $f462          62562
+       df_tk_asm_opt : $d70c          55052
+       df_tk_asm_org : $d70c          55052
+df_tk_asm_parse_command : $f443          62531
+df_tk_asm_parse_command_err : $f461          62561
+  df_tk_asm_symfound : $f4c1          62657
+df_tk_asm_symnextentry : $f49f          62623
+df_tk_asm_symnomatch : $f49d          62621
+  df_tk_asm_tokenjmp : $fbd3          64467
 AS65 Assembler for R6502 [1.42].                                     Page   15
 ---------------------------------- bank1.s -----------------------------------
 
-        df_tk_assign : $d56c          54636
-         df_tk_bload : $d6a2          54946
-          df_tk_body : $d0c2          53442
-           df_tk_box : $d6a2          54946
-         df_tk_bsave : $d6ae          54958
-          df_tk_call : $d673          54899
-      df_tk_callproc : $d641          54849
-          df_tk_char : $ceae          52910
-      df_tk_char_err : $ce56          52822
-         df_tk_chdir : $d686          54918
-  df_tk_checknexttok : $d155          53589
-    df_tk_checktokch : $d172          53618
-           df_tk_chr : $d655          54869
-        df_tk_circle : $d696          54934
-     df_tk_closebrkt : $d658          54872
-           df_tk_cls : $d681          54913
-        df_tk_colour : $d696          54934
-       df_tk_comment : $d574          54644
-  df_tk_comment_done : $d57e          54654
-         df_tk_const : $ceec          52972
-     df_tk_const_err : $cf0c          53004
-df_tk_const_try_char : $cf05          52997
- df_tk_const_try_num : $cefb          52987
- df_tk_const_try_str : $cefe          52990
-        df_tk_cursor : $d686          54918
-          df_tk_data : $d5d1          54737
-      df_tk_datetime : $d64c          54860
-           df_tk_dec : $d655          54869
-          df_tk_deek : $d655          54869
-           df_tk_def : $d619          54809
-           df_tk_del : $d686          54918
-        df_tk_device : $d686          54918
-           df_tk_dim : $d5f8          54776
-           df_tk_dir : $d681          54913
-          df_tk_dirl : $d681          54913
-           df_tk_div : $d681          54913
-          df_tk_doke : $d68a          54922
-          df_tk_done : $d0f8          53496
-       df_tk_elapsed : $d65e          54878
-          df_tk_else : $d681          54913
-        df_tk_elseif : $d686          54918
-        df_tk_enddef : $d681          54913
-         df_tk_endif : $d681          54913
-           df_tk_eor : $d681          54913
-            df_tk_eq : $d681          54913
-         df_tk_error : $d56a          54634
-      df_tk_errortab : $f224          61988
-   df_tk_error_atpos : $f2cb          62155
-   df_tk_error_error : $f2d1          62161
-  df_tk_error_inline : $f2c1          62145
-   df_tk_exec_parser : $d11a          53530
-        df_tk_expect : $ce4a          52810
-      df_tk_expectok : $ce48          52808
-    df_tk_expect_tok : $ce58          52824
-df_tk_expect_tok_err : $ce63          52835
-df_tk_expect_tok_fatal : $ce68          52840
-    df_tk_expression : $d055          53333
-     df_tk_expre_err : $d060          53344
-        df_tk_fclose : $d681          54913
-       df_tk_fcreate : $d655          54869
-          df_tk_font : $d686          54918
-         df_tk_fopen : $d655          54869
+        df_tk_assign : $d5f2          54770
+         df_tk_bload : $d728          55080
+          df_tk_body : $d148          53576
+           df_tk_box : $d728          55080
+         df_tk_bsave : $d734          55092
+          df_tk_call : $d6f9          55033
+      df_tk_callproc : $d6c7          54983
+          df_tk_char : $cf34          53044
+      df_tk_char_err : $cedc          52956
+         df_tk_chdir : $d70c          55052
+  df_tk_checknexttok : $d1db          53723
+    df_tk_checktokch : $d1f8          53752
+           df_tk_chr : $d6db          55003
+        df_tk_circle : $d71c          55068
+     df_tk_closebrkt : $d6de          55006
+           df_tk_cls : $d707          55047
+        df_tk_colour : $d71c          55068
+       df_tk_comment : $d5fa          54778
+  df_tk_comment_done : $d604          54788
+         df_tk_const : $cf72          53106
+     df_tk_const_err : $cf92          53138
+df_tk_const_try_char : $cf8b          53131
+ df_tk_const_try_num : $cf81          53121
+ df_tk_const_try_str : $cf84          53124
+        df_tk_cursor : $d70c          55052
+          df_tk_data : $d657          54871
+      df_tk_datetime : $d6d2          54994
+           df_tk_dec : $d6db          55003
+          df_tk_deek : $d6db          55003
+           df_tk_def : $d69f          54943
+           df_tk_del : $d70c          55052
+        df_tk_device : $d70c          55052
+           df_tk_dim : $d67e          54910
+           df_tk_dir : $d707          55047
+          df_tk_dirl : $d707          55047
+           df_tk_div : $d707          55047
+          df_tk_doke : $d710          55056
+          df_tk_done : $d17e          53630
+       df_tk_elapsed : $d6e4          55012
+          df_tk_else : $d707          55047
+        df_tk_elseif : $d70c          55052
+        df_tk_enddef : $d707          55047
+         df_tk_endif : $d707          55047
+           df_tk_eor : $d707          55047
+            df_tk_eq : $d707          55047
+         df_tk_error : $d5f0          54768
+      df_tk_errortab : $f2aa          62122
+   df_tk_error_atpos : $f351          62289
+   df_tk_error_error : $f357          62295
+  df_tk_error_inline : $f347          62279
+   df_tk_exec_parser : $d1a0          53664
+        df_tk_expect : $ced0          52944
+      df_tk_expectok : $cece          52942
+    df_tk_expect_tok : $cede          52958
+df_tk_expect_tok_err : $cee9          52969
+df_tk_expect_tok_fatal : $ceee          52974
+    df_tk_expression : $d0db          53467
+     df_tk_expre_err : $d0e6          53478
+        df_tk_fclose : $d707          55047
+       df_tk_fcreate : $d6db          55003
+          df_tk_font : $d70c          55052
+         df_tk_fopen : $d6db          55003
 AS65 Assembler for R6502 [1.42].                                     Page   16
 ---------------------------------- bank1.s -----------------------------------
 
-           df_tk_for : $d61f          54815
-      df_tk_for_done : $d63f          54847
-   df_tk_foundsymend : $d1a1          53665
-           df_tk_get : $d655          54869
-       df_tk_get_buf : $cdcc          52684
-  df_tk_get_buf_null : $cdd6          52694
-            df_tk_gt : $d681          54913
-           df_tk_gte : $d681          54913
-           df_tk_hex : $d655          54869
-         df_tk_himem : $d686          54918
-         df_tk_hires : $d686          54918
-         df_tk_hplot : $d696          54934
-            df_tk_if : $d686          54918
-           df_tk_imm : $f485          62597
-      df_tk_indirect : $f48a          62602
- df_tk_indirect_done : $f4b3          62643
-    df_tk_indirect_y : $f4a0          62624
-         df_tk_input : $d5df          54751
-       df_tk_isalpha : $ce0f          52751
-    df_tk_isalphanum : $ce1c          52764
- df_tk_isalpha_false : $ce0c          52748
-         df_tk_isbin : $cdf0          52720
-    df_tk_isbin_true : $cdf9          52729
-       df_tk_isdigit : $cde5          52709
- df_tk_isdigit_false : $cdee          52718
-         df_tk_isEOS : $d067          53351
-         df_tk_ishex : $cdfa          52730
-   df_tk_ishex_false : $ce0c          52748
-   df_tk_ishex_truep : $ce0a          52746
-        df_tk_isproc : $ce22          52770
-   df_tk_isproc_true : $ce27          52775
-          df_tk_isws : $ce43          52803
-    df_tk_isws_false : $ce48          52808
-           df_tk_key : $d655          54869
-          df_tk_left : $d667          54887
-           df_tk_len : $d655          54869
-          df_tk_line : $d6a2          54946
-       df_tk_linenum : $d129          53545
-    df_tk_line_empty : $d116          53526
-          df_tk_list : $d5a3          54691
-df_tk_listp_procname : $d580          54656
-df_tk_listp_procname_ch : $d58f          54671
-df_tk_listp_procname_err : $d5a1          54689
-df_tk_listp_procname_ok : $d59f          54687
-     df_tk_list_done : $d5c3          54723
-     df_tk_list_line : $d5b6          54710
-    df_tk_list_procs : $d5af          54703
-          df_tk_load : $d686          54918
-         df_tk_local : $d607          54791
-      df_tk_localvar : $cf40          53056
- df_tk_localvar_cont : $cf46          53062
-           df_tk_lsr : $d681          54913
-            df_tk_lt : $d681          54913
-           df_tk_lte : $d681          54913
-      df_tk_matchtok : $d148          53576
-df_tk_matchtok_skip_op : $d16e          53614
-           df_tk_mem : $d655          54869
-           df_tk_mid : $d66d          54893
-         df_tk_mkdir : $d686          54918
-           df_tk_mod : $d681          54913
-          df_tk_mode : $d686          54918
-       df_tk_monitor : $d681          54913
+           df_tk_for : $d6a5          54949
+      df_tk_for_done : $d6c5          54981
+   df_tk_foundsymend : $d227          53799
+           df_tk_get : $d6db          55003
+       df_tk_get_buf : $ce52          52818
+  df_tk_get_buf_null : $ce5c          52828
+            df_tk_gt : $d707          55047
+           df_tk_gte : $d707          55047
+           df_tk_hex : $d6db          55003
+         df_tk_himem : $d70c          55052
+         df_tk_hires : $d70c          55052
+         df_tk_hplot : $d71c          55068
+            df_tk_if : $d70c          55052
+           df_tk_imm : $f50b          62731
+      df_tk_indirect : $f510          62736
+ df_tk_indirect_done : $f539          62777
+    df_tk_indirect_y : $f526          62758
+         df_tk_input : $d665          54885
+       df_tk_isalpha : $ce95          52885
+    df_tk_isalphanum : $cea2          52898
+ df_tk_isalpha_false : $ce92          52882
+         df_tk_isbin : $ce76          52854
+    df_tk_isbin_true : $ce7f          52863
+       df_tk_isdigit : $ce6b          52843
+ df_tk_isdigit_false : $ce74          52852
+         df_tk_isEOS : $d0ed          53485
+         df_tk_ishex : $ce80          52864
+   df_tk_ishex_false : $ce92          52882
+   df_tk_ishex_truep : $ce90          52880
+        df_tk_isproc : $cea8          52904
+   df_tk_isproc_true : $cead          52909
+          df_tk_isws : $cec9          52937
+    df_tk_isws_false : $cece          52942
+           df_tk_key : $d6db          55003
+          df_tk_left : $d6ed          55021
+           df_tk_len : $d6db          55003
+          df_tk_line : $d728          55080
+       df_tk_linenum : $d1af          53679
+    df_tk_line_empty : $d19c          53660
+          df_tk_list : $d629          54825
+df_tk_listp_procname : $d606          54790
+df_tk_listp_procname_ch : $d615          54805
+df_tk_listp_procname_err : $d627          54823
+df_tk_listp_procname_ok : $d625          54821
+     df_tk_list_done : $d649          54857
+     df_tk_list_line : $d63c          54844
+    df_tk_list_procs : $d635          54837
+          df_tk_load : $d70c          55052
+         df_tk_local : $d68d          54925
+      df_tk_localvar : $cfc6          53190
+ df_tk_localvar_cont : $cfcc          53196
+           df_tk_lsr : $d707          55047
+            df_tk_lt : $d707          55047
+           df_tk_lte : $d707          55047
+      df_tk_matchtok : $d1ce          53710
+df_tk_matchtok_skip_op : $d1f4          53748
+           df_tk_mem : $d6db          55003
+           df_tk_mid : $d6f3          55027
+         df_tk_mkdir : $d70c          55052
+           df_tk_mod : $d707          55047
+          df_tk_mode : $d70c          55052
+       df_tk_monitor : $d707          55047
 AS65 Assembler for R6502 [1.42].                                     Page   17
 ---------------------------------- bank1.s -----------------------------------
 
-          df_tk_mult : $d681          54913
-         df_tk_music : $d6a2          54946
-         df_tk_narry : $cfd5          53205
-     df_tk_narry_end : $cfe2          53218
-         df_tk_nbrkt : $cfe7          53223
-            df_tk_ne : $d681          54913
-           df_tk_new : $d681          54913
-          df_tk_next : $d681          54913
-           df_tk_nop : $d040          53312
-     df_tk_nop_false : $cfff          53247
-       df_tk_not_eos : $d05f          53343
-         df_tk_nterm : $cff4          53236
-    df_tk_nterm_cont : $d001          53249
-    df_tk_nterm_done : $cfff          53247
-     df_tk_nterm_err : $d03e          53310
-    df_tk_nterm_proc : $cfef          53231
-   df_tk_nterm_tryfn : $d00e          53262
-df_tk_nterm_try_const : $d038          53304
-df_tk_nterm_try_proc : $d024          53284
- df_tk_nterm_try_var : $d030          53296
-           df_tk_num : $ce6a          52842
-       df_tk_num_bin : $ce99          52889
-       df_tk_num_err : $ce56          52822
-    df_tk_num_hexbin : $ce8b          52875
-       df_tk_num_put : $cea1          52897
-        df_tk_nvpeek : $d655          54869
-        df_tk_nvpoke : $d68a          54922
-            df_tk_or : $d681          54913
-          df_tk_parm : $cf2e          53038
- df_tk_parm_skip_var : $cf3b          53051
-    df_tk_parseerror : $d118          53528
- df_tk_parse_ass_err : $d56a          54634
- df_tk_parse_command : $d081          53377
-df_tk_parse_command_done : $d097          53399
-df_tk_parse_command_err : $d098          53400
-df_tk_parse_user_proc : $d077          53367
-          df_tk_peek : $d655          54869
-      df_tk_peek_buf : $cdc6          52678
-        df_tk_pixcol : $d686          54918
-         df_tk_pixel : $d667          54887
-       df_tk_pixmask : $d686          54918
-       df_tk_pixmode : $d686          54918
-          df_tk_play : $d6a2          54946
-          df_tk_plot : $d696          54934
-         df_tk_point : $d68a          54922
-          df_tk_poke : $d68a          54922
-     df_tk_preassign : $d550          54608
-         df_tk_print : $d5d1          54737
-       df_tk_printat : $d5c5          54725
-       df_tk_println : $d5d1          54737
-    df_tk_print_done : $d5dd          54749
-          df_tk_proc : $cf61          53089
-     df_tk_proc_call : $cf9d          53149
-    df_tk_proc_comma : $cfb7          53175
-      df_tk_proc_err : $cfd3          53203
-     df_tk_proc_errp : $cfd2          53202
-   df_tk_proc_noparm : $cfc0          53184
-    df_tk_proc_parms : $cf90          53136
-df_tk_proc_skip_args : $cfd0          53200
-df_tk_proc_skip_call : $cfa6          53158
-           df_tk_put : $d686          54918
-  df_tk_put_overflow : $cde3          52707
+          df_tk_mult : $d707          55047
+         df_tk_music : $d728          55080
+         df_tk_narry : $d05b          53339
+     df_tk_narry_end : $d068          53352
+         df_tk_nbrkt : $d06d          53357
+            df_tk_ne : $d707          55047
+           df_tk_new : $d707          55047
+          df_tk_next : $d707          55047
+           df_tk_nop : $d0c6          53446
+     df_tk_nop_false : $d085          53381
+       df_tk_not_eos : $d0e5          53477
+         df_tk_nterm : $d07a          53370
+    df_tk_nterm_cont : $d087          53383
+    df_tk_nterm_done : $d085          53381
+     df_tk_nterm_err : $d0c4          53444
+    df_tk_nterm_proc : $d075          53365
+   df_tk_nterm_tryfn : $d094          53396
+df_tk_nterm_try_const : $d0be          53438
+df_tk_nterm_try_proc : $d0aa          53418
+ df_tk_nterm_try_var : $d0b6          53430
+           df_tk_num : $cef0          52976
+       df_tk_num_bin : $cf1f          53023
+       df_tk_num_err : $cedc          52956
+    df_tk_num_hexbin : $cf11          53009
+       df_tk_num_put : $cf27          53031
+        df_tk_nvpeek : $d6db          55003
+        df_tk_nvpoke : $d710          55056
+            df_tk_or : $d707          55047
+          df_tk_parm : $cfb4          53172
+ df_tk_parm_skip_var : $cfc1          53185
+    df_tk_parseerror : $d19e          53662
+ df_tk_parse_ass_err : $d5f0          54768
+ df_tk_parse_command : $d107          53511
+df_tk_parse_command_done : $d11d          53533
+df_tk_parse_command_err : $d11e          53534
+df_tk_parse_user_proc : $d0fd          53501
+          df_tk_peek : $d6db          55003
+      df_tk_peek_buf : $ce4c          52812
+        df_tk_pixcol : $d70c          55052
+         df_tk_pixel : $d6ed          55021
+       df_tk_pixmask : $d70c          55052
+       df_tk_pixmode : $d70c          55052
+          df_tk_play : $d728          55080
+          df_tk_plot : $d71c          55068
+         df_tk_point : $d710          55056
+          df_tk_poke : $d710          55056
+     df_tk_preassign : $d5d6          54742
+         df_tk_print : $d657          54871
+       df_tk_printat : $d64b          54859
+       df_tk_println : $d657          54871
+    df_tk_print_done : $d663          54883
+          df_tk_proc : $cfe7          53223
+     df_tk_proc_call : $d023          53283
+    df_tk_proc_comma : $d03d          53309
+      df_tk_proc_err : $d059          53337
+     df_tk_proc_errp : $d058          53336
+   df_tk_proc_noparm : $d046          53318
+    df_tk_proc_parms : $d016          53270
+df_tk_proc_skip_args : $d056          53334
+df_tk_proc_skip_call : $d02c          53292
+           df_tk_put : $d70c          55052
+  df_tk_put_overflow : $ce69          52841
 AS65 Assembler for R6502 [1.42].                                     Page   18
 ---------------------------------- bank1.s -----------------------------------
 
-       df_tk_put_tok : $cdd7          52695
-          df_tk_read : $d5e9          54761
-         df_tk_redim : $d5f8          54776
-         df_tk_renum : $d696          54934
-        df_tk_repeat : $d681          54913
-         df_tk_reset : $d643          54851
-        df_tk_return : $d683          54915
-         df_tk_right : $d667          54887
-           df_tk_rnd : $d655          54869
-          df_tk_rts1 : $ce21          52769
-           df_tk_run : $d681          54913
-          df_tk_sadd : $d681          54913
-          df_tk_save : $d686          54918
-          df_tk_scrn : $d667          54887
-        df_tk_setvdp : $d68a          54922
-           df_tk_sgn : $d655          54869
-         df_tk_shape : $d696          54934
-       df_tk_skip_ws : $ce28          52776
-    df_tk_skip_1_spc : $d0d5          53461
-         df_tk_sound : $d696          54934
-        df_tk_sprite : $d6ae          54958
-     df_tk_spritecol : $d68a          54922
-     df_tk_spritenme : $d68a          54922
-     df_tk_spritepat : $d68a          54922
-     df_tk_spritepos : $d696          54934
-         df_tk_stick : $d655          54869
-           df_tk_str : $ceca          52938
-      df_tk_strip_ws : $ce37          52791
-        df_tk_str_ch : $ced2          52946
-       df_tk_str_don : $cee3          52963
-       df_tk_str_err : $ceea          52970
-           df_tk_sub : $d681          54913
-      df_tk_symfound : $d1b2          53682
-df_tk_symfound_final : $d1c2          53698
-  df_tk_symnextentry : $d192          53650
-    df_tk_symnomatch : $d190          53648
-   df_tk_symnomatchp : $d18f          53647
-      df_tk_tokenjmp : $d3da          54234
-     df_tk_tokentype : $d4ca          54474
-df_tk_tok_expression : $d061          53345
-       df_tk_try_asm : $d0ee          53486
-    df_tk_try_assign : $d0f3          53491
-   df_tk_try_command : $d0e7          53479
-         df_tk_until : $d686          54918
-           df_tk_val : $d655          54869
-           df_tk_var : $cf0e          53006
-      df_tk_variable : $d542          54594
-        df_tk_var_ck : $cf24          53028
-      df_tk_var_cont : $cf14          53012
-    df_tk_var_noarry : $cee8          52968
-         df_tk_vload : $d68a          54922
-         df_tk_vpeek : $d655          54869
-         df_tk_vpoke : $d68a          54922
-          df_tk_wait : $d686          54918
-          df_tk_wend : $d681          54913
-         df_tk_while : $d686          54918
-      df_tk_ws_loop1 : $ce28          52776
-        df_tk_2parms : $d68a          54922
-        df_tk_3parms : $d696          54934
-        df_tk_4parms : $d6a2          54946
-        df_tk_5parms : $d6ae          54958
+       df_tk_put_tok : $ce5d          52829
+          df_tk_read : $d66f          54895
+         df_tk_redim : $d67e          54910
+         df_tk_renum : $d71c          55068
+        df_tk_repeat : $d707          55047
+         df_tk_reset : $d6c9          54985
+        df_tk_return : $d709          55049
+         df_tk_right : $d6ed          55021
+           df_tk_rnd : $d6db          55003
+          df_tk_rts1 : $cea7          52903
+           df_tk_run : $d707          55047
+          df_tk_sadd : $d707          55047
+          df_tk_save : $d70c          55052
+          df_tk_scrn : $d6ed          55021
+        df_tk_setvdp : $d710          55056
+           df_tk_sgn : $d6db          55003
+         df_tk_shape : $d71c          55068
+       df_tk_skip_ws : $ceae          52910
+    df_tk_skip_1_spc : $d15b          53595
+         df_tk_sound : $d71c          55068
+        df_tk_sprite : $d734          55092
+     df_tk_spritecol : $d710          55056
+     df_tk_spritenme : $d710          55056
+     df_tk_spritepat : $d710          55056
+     df_tk_spritepos : $d71c          55068
+         df_tk_stick : $d6db          55003
+           df_tk_str : $cf50          53072
+      df_tk_strip_ws : $cebd          52925
+        df_tk_str_ch : $cf58          53080
+       df_tk_str_don : $cf69          53097
+       df_tk_str_err : $cf70          53104
+           df_tk_sub : $d707          55047
+      df_tk_symfound : $d238          53816
+df_tk_symfound_final : $d248          53832
+  df_tk_symnextentry : $d218          53784
+    df_tk_symnomatch : $d216          53782
+   df_tk_symnomatchp : $d215          53781
+      df_tk_tokenjmp : $d460          54368
+     df_tk_tokentype : $d550          54608
+df_tk_tok_expression : $d0e7          53479
+       df_tk_try_asm : $d174          53620
+    df_tk_try_assign : $d179          53625
+   df_tk_try_command : $d16d          53613
+         df_tk_until : $d70c          55052
+           df_tk_val : $d6db          55003
+           df_tk_var : $cf94          53140
+      df_tk_variable : $d5c8          54728
+        df_tk_var_ck : $cfaa          53162
+      df_tk_var_cont : $cf9a          53146
+    df_tk_var_noarry : $cf6e          53102
+         df_tk_vload : $d710          55056
+         df_tk_vpeek : $d6db          55003
+         df_tk_vpoke : $d710          55056
+          df_tk_wait : $d70c          55052
+          df_tk_wend : $d707          55047
+         df_tk_while : $d70c          55052
+      df_tk_ws_loop1 : $ceae          52910
+        df_tk_2parms : $d710          55056
+        df_tk_3parms : $d71c          55068
+        df_tk_4parms : $d728          55080
+        df_tk_5parms : $d734          55092
           df_tmpptra : $00e3            227
 AS65 Assembler for R6502 [1.42].                                     Page   19
 ---------------------------------- bank1.s -----------------------------------
@@ -1177,45 +1177,45 @@ df_tk_tok_expression : $d061          53345
           df_tmpptre : $00eb            235
               df_tok : $0a80           2688
           df_tokbuff : $0a80           2688
-        df_tokensyms : $d1ca          53706
+        df_tokensyms : $d250          53840
            df_tokoff : $00bf            191
-       df_trap_error : $f2d8          62168
-  df_trap_go_monitor : $f2ea          62186
-     df_trap_monitor : $f369          62313
-      df_trap_normal : $f2ed          62189
+       df_trap_error : $f35e          62302
+  df_trap_go_monitor : $f370          62320
+     df_trap_monitor : $f3ef          62447
+      df_trap_normal : $f373          62323
            df_varcnt : $00b3            179
-      df_var_analyse : $cd18          52504
-df_var_analyse_chk_arry : $cd4b          52555
-df_var_analyse_chk_dollar : $cd42          52546
-df_var_analyse_chk_post : $cd42          52546
-df_var_analyse_fatal_err : $cd36          52534
-   df_var_analyse_ok : $cd8d          52621
-   df_var_check_type : $cc78          52344
-     df_var_countlen : $cd03          52483
-df_var_countlen_alphanum : $cd12          52498
-df_var_countlen_loop : $cd15          52501
- df_var_finalise_len : $cd58          52568
-         df_var_find : $cc3e          52286
-   df_var_findcreate : $cd61          52577
-df_var_findcreate_copy : $cdaf          52655
-df_var_findcreate_create : $cd7a          52602
-df_var_findcreate_err : $cd8b          52619
-df_var_findcreate_errp : $cd8a          52618
-df_var_findcreate_found : $cd73          52595
-  df_var_find_no_vnt : $cc9c          52380
-    df_var_find_true : $cca1          52385
-df_var_initialise_var : $cd9a          52634
- df_var_insert_space : $cca9          52393
-    df_var_match_vnt : $cc4e          52302
- df_var_match_vnt_do : $cc5a          52314
-df_var_match_vnt_sym : $cc5e          52318
-    df_var_move_byte : $cccb          52427
- df_var_move_byte_do : $ccd7          52439
-df_var_move_byte_fin : $cce8          52456
-     df_var_not_proc : $cd38          52536
-df_var_vnt_entry_end : $cc89          52361
-df_var_vnt_sym_nomatch : $cc7c          52348
-     df_var_zero_vnt : $cda6          52646
+      df_var_analyse : $cd9e          52638
+df_var_analyse_chk_arry : $cdd1          52689
+df_var_analyse_chk_dollar : $cdc8          52680
+df_var_analyse_chk_post : $cdc8          52680
+df_var_analyse_fatal_err : $cdbc          52668
+   df_var_analyse_ok : $ce13          52755
+   df_var_check_type : $ccfe          52478
+     df_var_countlen : $cd89          52617
+df_var_countlen_alphanum : $cd98          52632
+df_var_countlen_loop : $cd9b          52635
+ df_var_finalise_len : $cdde          52702
+         df_var_find : $ccc4          52420
+   df_var_findcreate : $cde7          52711
+df_var_findcreate_copy : $ce35          52789
+df_var_findcreate_create : $ce00          52736
+df_var_findcreate_err : $ce11          52753
+df_var_findcreate_errp : $ce10          52752
+df_var_findcreate_found : $cdf9          52729
+  df_var_find_no_vnt : $cd22          52514
+    df_var_find_true : $cd27          52519
+df_var_initialise_var : $ce20          52768
+ df_var_insert_space : $cd2f          52527
+    df_var_match_vnt : $ccd4          52436
+ df_var_match_vnt_do : $cce0          52448
+df_var_match_vnt_sym : $cce4          52452
+    df_var_move_byte : $cd51          52561
+ df_var_move_byte_do : $cd5d          52573
+df_var_move_byte_fin : $cd6e          52590
+     df_var_not_proc : $cdbe          52670
+df_var_vnt_entry_end : $cd0f          52495
+df_var_vnt_sym_nomatch : $cd02          52482
+     df_var_zero_vnt : $ce2c          52780
            df_vntend : $00ad            173
           df_vntstrt : $00ab            171
            df_vvtend : $00b1            177
@@ -1292,100 +1292,100 @@ df_var_vnt_sym_nomatch : $cc7c          52348
                 IO_5 : $0680           1664   *
                 IO_6 : $0700           1792   *
                 IO_7 : $0780           1920   *
-       inc_kb_timers : $c7f6          51190
-            infinity : $c69f          50847
-                init : $cae8          51944
-            init_irq : $c70f          50959
-            init_nmi : $c6f2          50930
-            init_ram : $cb43          52035
+       inc_kb_timers : $c879          51321
+            infinity : $c6ff          50943
+                init : $cb6b          52075
+            init_irq : $c7a2          51106
+            init_nmi : $c752          51026
+            init_ram : $cbc9          52169
 AS65 Assembler for R6502 [1.42].                                     Page   21
 ---------------------------------- bank1.s -----------------------------------
 
-       init_ram_fill : $cb55          52053
-       init_ram_skip : $cb5a          52058
-          init_ram_1 : $cb4d          52045
-              init_2 : $caee          51950
-             int_add : $cb62          52066
+       init_ram_fill : $cbdb          52187
+       init_ram_skip : $cbe0          52192
+          init_ram_1 : $cbd3          52179
+              init_2 : $cb71          52081
+             int_add : $cbe8          52200
              int_brk : $0006              6
-             int_div : $cbdf          52191
-       int_div_cycle : $cc0d          52237
-      int_div_noflip : $cc3d          52285
-        int_div_skip : $cc27          52263
-   int_div_skip_negA : $cbf4          52212
-   int_div_skip_negB : $cc07          52231
-         int_do_read : $c7ad          51117
-       int_fast_mult : $cb8f          52111
- int_fast_mult_cycle : $cb9d          52125
-  int_fast_mult_next : $cbae          52142
+             int_div : $cc65          52325
+       int_div_cycle : $cc93          52371
+      int_div_noflip : $ccc3          52419
+        int_div_skip : $ccad          52397
+   int_div_skip_negA : $cc7a          52346
+   int_div_skip_negB : $cc8d          52365
+         int_do_read : $c830          51248
+       int_fast_mult : $cc15          52245
+ int_fast_mult_cycle : $cc23          52259
+  int_fast_mult_next : $cc34          52276
              int_irq : $0004              4
-      int_kb_handler : $c7a2          51106
-         int_keys_up : $c7b9          51129
-            int_mult : $cbb6          52150
-      int_mult_cycle : $cbc4          52164
-       int_mult_next : $cbd7          52183
+      int_kb_handler : $c825          51237
+         int_keys_up : $c83c          51260
+            int_mult : $cc3c          52284
+      int_mult_cycle : $cc4a          52298
+       int_mult_next : $cc5d          52317
              int_nmi : $0002              2
-       int_skip_scan : $c7b3          51123
-             int_str : $caad          51885
-             int_sub : $cb70          52080
-             int_swp : $cb7e          52094
-          int_to_bcd : $ca1a          51738
-      int_to_bcd_bit : $ca33          51763
- int_to_bcd_skip_neg : $ca28          51752
-          int_to_str : $ca94          51860
-       int_to_str_ch : $ca7f          51839
-   int_to_str_ch_fin : $ca93          51859
-      int_to_str_fin : $cacc          51916
-       int_to_str_nz : $ca8c          51852
- int_to_str_skip_neg : $caa8          51880
+       int_skip_scan : $c836          51254
+             int_str : $cb30          52016
+             int_sub : $cbf6          52214
+             int_swp : $cc04          52228
+          int_to_bcd : $ca9d          51869
+      int_to_bcd_bit : $cab6          51894
+ int_to_bcd_skip_neg : $caab          51883
+          int_to_str : $cb17          51991
+       int_to_str_ch : $cb02          51970
+   int_to_str_ch_fin : $cb16          51990
+      int_to_str_fin : $cb4f          52047
+       int_to_str_nz : $cb0f          51983
+ int_to_str_skip_neg : $cb2b          52011
         int_usercia0 : $000a             10
         int_usercia1 : $000c             12
          int_uservdp : $0008              8
-         int_vdp_fin : $c7ef          51183
-     int_vdp_handler : $c7c4          51140
-    io_active_device : $c545          50501
+         int_vdp_fin : $c872          51314
+     int_vdp_handler : $c847          51271
+    io_active_device : $c5a5          50597
             io_block : $0c01           3073
-            io_close : $c569          50537
+            io_close : $c5c9          50633
           io_close_f : $0008              8
-        io_copy_data : $c54c          50508
+        io_copy_data : $c5ac          50604
           io_default : $0c00           3072
-           io_delete : $c56c          50540
+           io_delete : $c5cc          50636
             io_del_f : $000a             10
-          io_devices : $c5c0          50624
-          io_device0 : $c5c0          50624
-          io_device1 : $c5d0          50640
-          io_device2 : $c5e0          50656
-          io_do_echo : $c58b          50571
+          io_devices : $c620          50720
+          io_device0 : $c620          50720
+          io_device1 : $c630          50736
+          io_device2 : $c640          50752
+          io_do_echo : $c5eb          50667
              io_ext1 : $000c             12
              io_ext2 : $000e             14
          io_get_byte : $0000              0
-           io_get_ch : $c55d          50525
-    io_get_line_byte : $c578          50552
-    io_get_line_done : $c5a4          50596
-             io_init : $c526          50470
- io_init_set_default : $c53b          50491
+           io_get_ch : $c5bd          50621
+    io_get_line_byte : $c5d8          50648
+    io_get_line_done : $c604          50692
+             io_init : $c586          50566
+ io_init_set_default : $c59b          50587
 AS65 Assembler for R6502 [1.42].                                     Page   22
 ---------------------------------- bank1.s -----------------------------------
 
-          io_null_op : $c5be          50622
+          io_null_op : $c61e          50718
            io_open_r : $0004              4
-        io_open_read : $c563          50531
+        io_open_read : $c5c3          50627
            io_open_w : $0006              6
-       io_open_write : $c566          50534
-       io_print_done : $c5bc          50620
-       io_print_line : $c5ab          50603
-  io_print_line_byte : $c5b2          50610
+       io_open_write : $c5c6          50630
+       io_print_done : $c61c          50716
+       io_print_line : $c60b          50699
+  io_print_line_byte : $c612          50706
          io_put_byte : $0002              2
-           io_put_ch : $c560          50528
-        io_read_line : $c56f          50543
-      io_set_default : $c542          50498
-        io_skip_echo : $c58e          50574
-     io_skip_special : $c599          50585
+           io_put_ch : $c5c0          50624
+        io_read_line : $c5cf          50639
+      io_set_default : $c5a2          50594
+        io_skip_echo : $c5ee          50670
+     io_skip_special : $c5f9          50681
            io_struct : $0010             16
-                 irq : $c749          51017
-             irq_brk : $c777          51063
-      irq_check_cia0 : $c76b          51051
-       irq_check_vdp : $c75d          51037
-             irq_fin : $c773          51059
+                 irq : $c7d4          51156
+             irq_brk : $c7fa          51194
+      irq_check_cia0 : $c7ee          51182
+       irq_check_vdp : $c7e0          51168
+             irq_fin : $c7f6          51190
            KB_CAPSLK : $0001              1   *
              KB_COLA : $0008              8   *
              KB_COLB : $0010             16   *
@@ -1413,11 +1413,11 @@ df_var_vnt_sym_nomatch : $cc7c          52348
           kb_rep_del : $003a             58
           kb_rep_tim : $0039             57
              kb_stat : $0036             54
-         kernel_init : $caf4          51956
-      kernel_skip_nv : $cb21          52001
-         kernel_test : $cb03          51971
-          long_delay : $c803          51203
-        long_delay_1 : $c809          51209
+         kernel_init : $cb77          52087
+      kernel_skip_nv : $cba7          52135
+         kernel_test : $cb89          52105
+          long_delay : $c886          51334
+        long_delay_1 : $c88c          51340
        MBR_BootPart1 : $01c6            454   *
     MBR_BytesPerSect : $000b             11   *
             MBR_Code : $0000              0   *
@@ -1448,34 +1448,34 @@ df_var_vnt_sym_nomatch : $cc7c          52348
                MM_X1 : $0020             32   *
                MM_Y0 : $0040             64   *
                MM_Y1 : $0080            128   *
-                main : $c69f          50847
-        mem_clr_byte : $c845          51269
+                main : $c6ff          50943
+        mem_clr_byte : $c8c8          51400
            mem_start : $0c69           3177
-        mod_sz_asm_e : $fb68          64360
-        mod_sz_asm_s : $f3bd          62397
-      mod_sz_dflat_e : $f224          61988
-      mod_sz_dflat_s : $cc3e          52286
-         mod_sz_io_e : $c5f0          50672
-         mod_sz_io_s : $c526          50470
-     mod_sz_kernel_e : $cb62          52066
-     mod_sz_kernel_s : $c526          50470
-       mod_sz_proc_e : $f14e          61774
-       mod_sz_proc_s : $eff4          61428
-   mod_sz_progedit_e : $d835          55349
-   mod_sz_progedit_s : $d6ba          54970
-      mod_sz_rtasm_e : $f7ba          63418
-      mod_sz_rtasm_s : $f4b5          62645
-     mod_sz_rtsubs_e : $eff4          61428
-     mod_sz_rtsubs_s : $de2c          56876
-    mod_sz_runtime_e : $f14e          61774
-    mod_sz_runtime_s : $d835          55349
-      mod_sz_tkasm_e : $f4b5          62645
-      mod_sz_tkasm_s : $f3bd          62397
-   mod_sz_tokenise_e : $d6ba          54970
-   mod_sz_tokenise_s : $cdc6          52678
-        mod_sz_var_e : $cdc6          52678
-        mod_sz_var_s : $cc3e          52286
-     msg_hello_world : $c6a5          50853
+        mod_sz_asm_e : $fbee          64494
+        mod_sz_asm_s : $f443          62531
+      mod_sz_dflat_e : $f2aa          62122
+      mod_sz_dflat_s : $ccc4          52420
+         mod_sz_io_e : $c650          50768
+         mod_sz_io_s : $c586          50566
+     mod_sz_kernel_e : $cbe8          52200
+     mod_sz_kernel_s : $c586          50566
+       mod_sz_proc_e : $f1d4          61908
+       mod_sz_proc_s : $f07a          61562
+   mod_sz_progedit_e : $d8bb          55483
+   mod_sz_progedit_s : $d740          55104
+      mod_sz_rtasm_e : $f840          63552
+      mod_sz_rtasm_s : $f53b          62779
+     mod_sz_rtsubs_e : $f07a          61562
+     mod_sz_rtsubs_s : $deb2          57010
+    mod_sz_runtime_e : $f1d4          61908
+    mod_sz_runtime_s : $d8bb          55483
+      mod_sz_tkasm_e : $f53b          62779
+      mod_sz_tkasm_s : $f443          62531
+   mod_sz_tokenise_e : $d740          55104
+   mod_sz_tokenise_s : $ce4c          52812
+        mod_sz_var_e : $ce4c          52812
+        mod_sz_var_s : $ccc4          52420
+     msg_hello_world : $c705          50949
              NUM_ANY : $0000              0   *
              NUM_BIN : $0003              3   *
              NUM_DEC : $0001              1   *
@@ -1483,25 +1483,26 @@ df_var_vnt_sym_nomatch : $cc7c          52348
            NV_COLOUR : $000f             15   *
              NV_MODE : $000e             14   *
             NV_RAMSZ : $003f             63   *
-                 nmi : $c6fb          50939
-             nmi_fin : $c70d          50957
-        null_handler : $c748          51016
-            null_irq : $c747          51015
+                 nmi : $c763          51043
+             nmi_fin : $c7a0          51104
+       nmi_skip_acia : $c775          51061
+        null_handler : $c7d3          51155
+            null_irq : $c7d2          51154
                num_a : $0085            133
                num_b : $0089            137
              num_buf : $0095            149
              num_tmp : $0091            145
                num_x : $008d            141
-                 PCR : $000c             12   *
 AS65 Assembler for R6502 [1.42].                                     Page   24
 ---------------------------------- bank1.s -----------------------------------
 
+                 PCR : $000c             12   *
                  PRA : $0001              1   *
                 PRAH : $000f             15   *
                  PRB : $0000              0   *
-        print_a_to_d : $cad7          51927
-     print_a_to_d_ch : $cadc          51932
-    print_a_to_d_fin : $cae7          51943
+        print_a_to_d : $cb5a          52058
+     print_a_to_d_ch : $cb5f          52063
+    print_a_to_d_fin : $cb6a          52074
            RAM_ZMASK : $00cf            207   *
            ROM_ZMASK : $003f             63   *
             RTC_ADDR : $0600           1536   *
@@ -1557,10 +1558,10 @@ df_var_vnt_sym_nomatch : $cc7c          52348
              SER_DTR : $0001              1   *
               SER_FE : $0002              2   *
              SER_IRD : $0002              2   *
-             SER_IRQ : $0080            128   *
 AS65 Assembler for R6502 [1.42].                                     Page   25
 ---------------------------------- bank1.s -----------------------------------
 
+             SER_IRQ : $0080            128   *
             SER_OVRN : $0004              4   *
               SER_PE : $0001              1   *
              SER_PMC : $00c0            192   *
@@ -1620,30 +1621,30 @@ df_var_vnt_sym_nomatch : $cc7c          52348
              ser_buf : $0800           2048
            ser_first : $000e             14
             ser_last : $000f             15
-          skip_a_f_1 : $c859          51289
-          skip_a_f_2 : $c868          51304
-         skip_kb_deb : $c7fc          51196
+          skip_a_f_1 : $c8dc          51420
+          skip_a_f_2 : $c8eb          51435
 AS65 Assembler for R6502 [1.42].                                     Page   26
 ---------------------------------- bank1.s -----------------------------------
 
-         skip_kb_rep : $c802          51202
-          skip_x_f_1 : $c875          51317
-          skip_x_f_2 : $c88a          51338
-             snd_get : $c668          50792
-        snd_get_joy0 : $c699          50841
-             snd_set : $c641          50753
-          str_a_to_d : $cad6          51926
-          str_a_to_x : $c84d          51277
-   str_d_digits_done : $c986          51590
-         str_d_error : $c9a7          51623
-      str_d_find_end : $c944          51524
-     str_d_found_end : $c951          51537
-        str_d_powers : $c9a9          51625
- str_d_process_digit : $c95d          51549
-      str_d_skip_neg : $c99d          51613
-          str_x_to_a : $c86a          51306
-      str_x_to_a_err : $c896          51350
-     str_x_to_a_errl : $c895          51349
+         skip_kb_deb : $c87f          51327
+         skip_kb_rep : $c885          51333
+          skip_x_f_1 : $c8f8          51448
+          skip_x_f_2 : $c90d          51469
+             snd_get : $c6c8          50888
+        snd_get_joy0 : $c6f9          50937
+             snd_set : $c6a1          50849
+          str_a_to_d : $cb59          52057
+          str_a_to_x : $c8d0          51408
+   str_d_digits_done : $ca09          51721
+         str_d_error : $ca2a          51754
+      str_d_find_end : $c9c7          51655
+     str_d_found_end : $c9d4          51668
+        str_d_powers : $ca2c          51756
+ str_d_process_digit : $c9e0          51680
+      str_d_skip_neg : $ca20          51744
+          str_x_to_a : $c8ed          51437
+      str_x_to_a_err : $c919          51481
+     str_x_to_a_errl : $c918          51480
                 T1CH : $0005              5   *
                 T1CL : $0004              4   *
                 T1LH : $0007              7   *
@@ -1657,8 +1658,8 @@ df_var_vnt_sym_nomatch : $cc7c          52348
                tmp_c : $003d             61
                tmp_d : $0045             69
               tmp_v1 : $003f             63
-     twos_complement : $ca0d          51725
-twos_complement_skip_X : $ca19          51737
+     twos_complement : $ca90          51856
+twos_complement_skip_X : $ca9c          51868
              UTF_ACK : $0006              6   *
              UTF_BEL : $0007              7   *
              UTF_BRK : $001a             26   *
@@ -1670,11 +1671,11 @@ twos_complement_skip_X : $ca19          51737
             UTF_NACK : $0015             21   *
              UTF_SOH : $0001              1   *
          UTF_SPECIAL : $0020             32   *
-       update_timers : $c7f0          51184
-          utilPrintA : $c828          51240
-       utilPrintCRLF : $c820          51232
-        utilPrintSPC : $c818          51224
-        util_clr_mem : $c83d          51261
+       update_timers : $c873          51315
+          utilPrintA : $c8ab          51371
+       utilPrintCRLF : $c8a3          51363
+        utilPrintSPC : $c89b          51355
+        util_clr_mem : $c8c0          51392
             VDP_ADDR : $0501           1281   *
            VDP_FLASH : $0010             16   *
        VDP_LONGDELAY : $0003              3   *
@@ -1687,10 +1688,10 @@ twos_complement_skip_X : $ca19          51737
         vdp_addr_nme : $0000              0
         vdp_addr_pat : $0004              4
         vdp_addr_spa : $0006              6
-        vdp_addr_spp : $0008              8
 AS65 Assembler for R6502 [1.42].                                     Page   27
 ---------------------------------- bank1.s -----------------------------------
 
+        vdp_addr_spp : $0008              8
      vdp_addr_struct : $000c             12
             vdp_base : $0017             23
            vdp_blank : $0015             21
@@ -1701,18 +1702,18 @@ twos_complement_skip_X : $ca19          51737
            vdp_delay : $0016             22
            vdp_gmode : $000b             11
          vdp_int_cnt : $0010             16
-        vdp_mem_wait : $c60b          50699
-    vdp_mem_wait_end : $c613          50707
-   vdp_mem_wait_loop : $c610          50704
-            vdp_peek : $c637          50743
-            vdp_poke : $c62a          50730
-         vdp_rd_addr : $c615          50709
-         vdp_rd_vram : $c620          50720
-         vdp_wr_addr : $c5fd          50685
-          vdp_wr_reg : $c5f0          50672
-         vdp_wr_vram : $c625          50725
-         word_to_bcd : $ca50          51792
-     word_to_bcd_bit : $ca62          51810
+        vdp_mem_wait : $c66b          50795
+    vdp_mem_wait_end : $c673          50803
+   vdp_mem_wait_loop : $c670          50800
+            vdp_peek : $c697          50839
+            vdp_poke : $c68a          50826
+         vdp_rd_addr : $c675          50805
+         vdp_rd_vram : $c680          50816
+         vdp_wr_addr : $c65d          50781
+          vdp_wr_reg : $c650          50768
+         vdp_wr_vram : $c685          50821
+         word_to_bcd : $cad3          51923
+     word_to_bcd_bit : $cae5          51941
              ztmp_16 : $0085            133
           _adcZPByte : <macro>
           _adcZPWord : <macro>
@@ -1720,12 +1721,12 @@ twos_complement_skip_X : $ca19          51737
             _bankjsr : <macro>
             _bankram : <macro>
        _bankram_fast : <macro>
-          _bank1_end : $fb68          64360
+          _bank1_end : $fbee          64494
         _bank1_start : $c000          49152   *
                 _bcc : <macro>
                 _bcs : <macro>
       _cmd_immediate : $c50e          50446
-           _code_end : $fb68          64360
+           _code_end : $fbee          64494
          _code_start : $c001          49153
        _command_line : $c2b6          49846
           _cpu_stack : $0100            256
@@ -1752,10 +1753,10 @@ _fs_dir_root_start_w : $c14e          49486
              _gr_box : $c316          49942
           _gr_circle : $c32e          49966
              _gr_cls : $c2ce          49870
-             _gr_get : $c38e          50062
 AS65 Assembler for R6502 [1.42].                                     Page   28
 ---------------------------------- bank1.s -----------------------------------
 
+             _gr_get : $c38e          50062
          _gr_get_key : $c196          49558
            _gr_hchar : $c35e          50014
       _gr_init_hires : $c2e6          49894
@@ -1776,6 +1777,10 @@ _fs_dir_root_start_w : $c14e          49486
         _kb_read_dip : $c29e          49822
         _kb_read_raw : $c286          49798
           _OSVectors : $c001          49153
+            _PT3INIT : $c526          50470
+           _PT3PAUSE : $c556          50518
+          _PT3RESUME : $c56e          50542
+           _PT3START : $c53e          50494
        _PushFalseJmp : <macro>
         _PushTrueJmp : <macro>
              _printA : <macro>
@@ -1807,9 +1812,9 @@ _fs_dir_root_start_w : $c14e          49486
            _vdp_poke : $c41e          50206
           __65SC02__ : $0001              1
 
-1692 labels used
+1697 labels used
 
-13458 lines read, no errors in pass 1.
+13493 lines read, no errors in pass 1.
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
 Total size 16384 bytes.

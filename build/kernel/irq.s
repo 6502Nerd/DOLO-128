@@ -24,6 +24,12 @@ init_nmi
 	sta int_nmi
 	lda #hi(nmi)
 	sta int_nmi+1
+
+	lda #lo(null_handler)
+	sta int_usercia1
+	lda #hi(null_handler)
+	sta int_usercia1+1
+
 	rts
 
 ;* Calls the master IRQ handler
@@ -31,12 +37,13 @@ call_nmi_master
 ;	jmp (int_nmi)
 
 ;* Master NMI handler
-;* Only the 6551 uses this - fills the receive buffer
+;* 6551 uses this - fills the receive buffer
+;* VIA 2 uses this- user interrupt
 nmi
 	pha
 
 	lda SER_STATUS				; Read status register (clears int bit)
-	bpl	nmi_fin					; If no interrupt don't do anything
+	bpl	nmi_skip_acia			; If no interrupt don't do anything
 
 	phy
 	lda SER_DATA				; Read the data register of 6551
@@ -45,8 +52,35 @@ nmi
 	inc ser_last				; Advance position of last
 
 	ply
+nmi_skip_acia
+	;* Try PIA1 first for rapid Timer handling
+	lda IO_1 + IFR
+	bpl nmi_fin
+	phy
+	phx
+	; Reset interrupt by reading T1C-L
+	lda IO_1+T1CL
+	; Swtich to RAM bank 2 don't touch anything else
+	lda IO_0+PRB
+	pha                     ; Remember the bank #
+	and #0b11001111
+	ora #0b00100000
+	sta IO_0+PRB
+	; Switch out ROM for RAM
+	lda IO_1+PRB                    ; Get current ROM / PRB state
+	pha
+	and #(0xff ^ MM_DIS)            ; Switch off ROM bit
+	sta IO_1+PRB                    ; Update port to activate setting
+	jsr call_irq_usercia1			; Call user cia1 handler
+	; Restore ROM
+	pla                             ; Get original port setting
+	sta IO_1+PRB                    ; Update port to activate setting
+	; Restore RAM bank
+	pla                             ; Get original port setting
+	sta IO_0+PRB                    ; Update port to activate setting
+	plx
+	ply
 nmi_fin
-
 	pla
 	rti
 
@@ -66,7 +100,7 @@ init_irq
 	lda #hi(irq_brk)
 	sta int_brk+1
 
-	; User handlers for VDP, PIA0, PIA1 interrupts
+	; User handlers for VDP, PIA0 interrupts
 	lda #lo(null_handler)
 	sta int_uservdp
 	lda #hi(null_handler)
@@ -76,11 +110,6 @@ init_irq
 	sta int_usercia0
 	lda #hi(null_handler)
 	sta int_usercia0+1
-
-	lda #lo(null_handler)
-	sta int_usercia1
-	lda #hi(null_handler)
-	sta int_usercia1+1
 
 	rts
 
@@ -127,11 +156,6 @@ irq
 	
 	clc						; Standard behaviour
 	
-	;* Try PIA1 first for rapid Timer handling
-	lda IO_1 + IFR
-	bpl irq_check_vdp
-	jsr call_irq_usercia1	; Call user cia1 handler
-
 	;* Try VDP next
 irq_check_vdp	
 	lda VDP_STATUS			; Read status register
