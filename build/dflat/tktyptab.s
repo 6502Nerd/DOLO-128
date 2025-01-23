@@ -105,6 +105,9 @@ df_tk_tokentype
 	db	DFTK_KW
 	db	DFTK_KW
 	db	DFTK_KW
+	db	DFTK_KW
+	db	DFTK_KW
+	db	DFTK_KW
 
 	db 	DFTK_FN | DFTK_INT | DFTK_BYT
 	db 	DFTK_FN | DFTK_INT | DFTK_BYT

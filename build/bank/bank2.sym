@@ -170,7 +170,7 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           df_lineidx : $00d4            212
           df_lineptr : $00d2            210
            df_linoff : $00be            190
-           df_memtop : $0c67           3175
+           df_memtop : $0ca7           3239
           df_nextlin : $00cb            203
          df_nxtstidx : $00c1            193
           df_parmtop : $00b9            185
@@ -597,7 +597,7 @@ fs_put_inc_size_byte : $d363          54115
                MM_Y1 : $0080            128   *
                 main : $c6ff          50943
         mem_clr_byte : $c8c8          51400
-           mem_start : $0c69           3177
+           mem_start : $0ca9           3241
          mod_sz_io_e : $c650          50768
          mod_sz_io_s : $c586          50566
      mod_sz_kernel_e : $cbe8          52200
@@ -675,6 +675,7 @@ fs_put_inc_size_byte : $d363          54115
              RTC_VRT : $0080            128   *
               RTC_YR : $0009              9   *
             RTC_2412 : $0002              2   *
+            ram_code : $0c67           3175
                SD_CD : $0004              4   *
               SD_CLK : $0001              1   *
                SD_CS : $0008              8   *
@@ -712,10 +713,10 @@ fs_put_inc_size_byte : $d363          54115
             SER_TDRE : $0010             16   *
              SER_TIC : $000c             12   *
             SER_TIC0 : $0004              4   *
-            SER_TIC1 : $0008              8   *
 AS65 Assembler for R6502 [1.42].                                     Page   12
 ---------------------------------- bank2.s -----------------------------------
 
+            SER_TIC1 : $0008              8   *
               SER_WL : $0060             96   *
              SER_WL0 : $0020             32   *
              SER_WL1 : $0040             64   *
@@ -777,10 +778,10 @@ fs_put_inc_size_byte : $d363          54115
         sd_sendcmd55 : $cd52          52562
               sd_shi : $004d             77
       sd_shiftoutbit : $cc78          52344
-      sd_shiftskiplo : $cc80          52352
 AS65 Assembler for R6502 [1.42].                                     Page   13
 ---------------------------------- bank2.s -----------------------------------
 
+      sd_shiftskiplo : $cc80          52352
               sd_slo : $004c             76
          sd_startcmd : $cc45          52293
            sd_status : $004b             75
@@ -842,10 +843,10 @@ twos_complement_skip_X : $ca9c          51868
        update_timers : $c873          51315
           utilPrintA : $c8ab          51371
        utilPrintCRLF : $c8a3          51363
-        utilPrintSPC : $c89b          51355
 AS65 Assembler for R6502 [1.42].                                     Page   14
 ---------------------------------- bank2.s -----------------------------------
 
+        utilPrintSPC : $c89b          51355
         util_clr_mem : $c8c0          51392
             VDP_ADDR : $0501           1281   *
            VDP_FLASH : $0010             16   *
@@ -907,10 +908,10 @@ twos_complement_skip_X : $ca9c          51868
       _end_zero_page : $00ed            237
          _fs_chdir_w : $c05e          49246
          _fs_close_w : $c0a6          49318
-        _fs_delete_w : $c08e          49294
 AS65 Assembler for R6502 [1.42].                                     Page   15
 ---------------------------------- bank2.s -----------------------------------
 
+        _fs_delete_w : $c08e          49294
 _fs_dir_entry_next_w : $c136          49462
  _fs_dir_fhandle_str : $c4c6          50374
 _fs_dir_find_entry_w : $c11e          49438
@@ -972,10 +973,10 @@ _fs_dir_root_start_w : $c14e          49486
        _sd_sendcmd24 : $c4f6          50422
             _sendcmd : <macro>
        _snd_get_joy0 : $c3d6          50134
-       _snd_get_note : $c3be          50110
 AS65 Assembler for R6502 [1.42].                                     Page   16
 ---------------------------------- bank2.s -----------------------------------
 
+       _snd_get_note : $c3be          50110
             _snd_set : $c3ee          50158
           _subZPWord : <macro>
            _vdp_init : $c436          50230
@@ -983,9 +984,9 @@ _fs_dir_root_start_w : $c14e          49486
            _vdp_poke : $c41e          50206
           __65SC02__ : $0001              1
 
-904 labels used
+905 labels used
 
-5777 lines read, no errors in pass 1.
+5780 lines read, no errors in pass 1.
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
 Total size 16384 bytes.

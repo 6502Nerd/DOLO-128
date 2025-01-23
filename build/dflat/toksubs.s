@@ -386,6 +386,8 @@ df_tk_put
 df_tk_himem
 df_tk_font
 df_tk_device
+df_tk_ptinit
+df_tk_ptrun
 ;df_tk_goto
 ;df_tk_gosub
 
@@ -408,6 +410,7 @@ df_tk_doke
 df_tk_nvpoke
 df_tk_point
 df_tk_vload
+df_tk_ptload
 df_tk_2parms
 	; first parm
 	jsr df_tk_expression

@@ -1,7 +1,7 @@
 AS65 Assembler for R6502 [1.42].                                     Page    1
 ---------------------------------- bank0.s -----------------------------------
 
-8324 lines read, no errors in pass 1.
+8327 lines read, no errors in pass 1.
 c000 =                       _bank0_start=0xc000
                              	include "kernel\kernel.s"
                              ;************************************************
@@ -680,7 +680,7 @@ c000 =                       _bank0_start=0xc000
                              ;************************************************
                              
                              ;* Start dflat program memory
-0c69 =                       DF_PROGSTART=	mem_start
+0ca9 =                       DF_PROGSTART=	mem_start
                              ;* This is the top of usable dflat memory plus 1
 c000 =                       DF_MEMTOP	=	0xc000
                              
@@ -830,7 +830,7 @@ c000 =                       DF_MEMTOP	=	0xc000
                              ;************************************************
                              
                              ;* Start dflat program memory
-0c69 =                       DF_PROGSTART=	mem_start
+0ca9 =                       DF_PROGSTART=	mem_start
                              ;* This is the top of usable dflat memory plus 1
 c000 =                       DF_MEMTOP	=	0xc000
                              
@@ -1306,11 +1306,14 @@ c000 =                       bankjsr_nul_addr	=	0xc000
                              ; Working and scratch for filesystem - some data 
 0c47 =                       fs_scratch	ds	32		; 32 bytes should be more than 
                              
+                             ; Self-modifying code or code that needs to run w
+0c67 =                       ram_code	ds  64		; 64 bytes of RAM code space
+                             
                              ; Dflat top of memory+1 - normally initialised to
-0c67 =                       df_memtop	ds	2
+0ca7 =                       df_memtop	ds	2
                              
                              ;***** THIS IS THE START OF FREE SPACE for DFLAT 
-0c69 =                       mem_start
+0ca9 =                       mem_start
                              
                              
                              
@@ -1360,12 +1363,12 @@ c001 :                       _OSVectors
                              ;*  will always be maintained.  This is to allow 
                              ;*  code programs to be able to rely on fixed loc
                              ;*  some key low-level functions.
-                             ;*  Only low level functions are needed, the idea
-                             ;*  as the assembler is part of the BASIC, one ca
-                             ;*  level slow stuff using BASIC then switch to M
 AS65 Assembler for R6502 [1.42].                                     Page   22
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;*  Only low level functions are needed, the idea
+                             ;*  as the assembler is part of the BASIC, one ca
+                             ;*  level slow stuff using BASIC then switch to M
                              ;*  speed up.
                              ;*  This code goes straight after the bank number
                              ;*  Each JMP is at 0xc001+3*(vector #)
@@ -1402,10 +1405,10 @@ c02d : 60               [ 6] 	rts
                              ;
 c02e :                       mod_sz_autogen_s
 c02e :                       _df_init
-                              _bankjsr $f267, 1
+                              _bankjsr $f30f, 1
                              
 c046 :                       _df_pg_dflat
-                              _bankjsr $d80b, 1
+                              _bankjsr $d825, 1
                              
 c05e :                       _fs_chdir_w
                               _bankjsr $d59b, 2
@@ -1425,12 +1428,12 @@ c0be :                       _fs_get_byte_w
 c0d6 :                       _fs_open_read_w
                               _bankjsr $d3e2, 2
                              
-c0ee :                       _fs_open_write_w
-                              _bankjsr $d4a6, 2
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   23
 ---------------------------------- bank0.s -----------------------------------
 
+c0ee :                       _fs_open_write_w
+                              _bankjsr $d4a6, 2
+                             
 c106 :                       _fs_put_byte_w
                               _bankjsr $d36f, 2
                              
@@ -1490,12 +1493,12 @@ c2b6 :                       _command_line
                              
 c2ce :                       _gr_cls
                               _bankjsr $de6c, 0
-                             
-c2e6 :                       _gr_init_hires
-                              _bankjsr $de16, 0
 AS65 Assembler for R6502 [1.42].                                     Page   24
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+c2e6 :                       _gr_init_hires
+                              _bankjsr $de16, 0
                              
 c2fe :                       _gr_line
                               _bankjsr $e1ca, 0
@@ -1555,12 +1558,12 @@ c4ae :                       _rtc_nvwrite
                               _bankjsr $d61e, 0
                              
 c4c6 :                       _fs_dir_fhandle_str
-                              _bankjsr $d642, 2
-                             
-c4de :                       _sd_sendcmd17
 AS65 Assembler for R6502 [1.42].                                     Page   25
 ---------------------------------- bank0.s -----------------------------------
 
+                              _bankjsr $d642, 2
+                             
+c4de :                       _sd_sendcmd17
                               _bankjsr $cdc0, 2
                              
 c4f6 :                       _sd_sendcmd24
@@ -1620,12 +1623,12 @@ c586 :                       mod_sz_io_s
                              ;* io_init
                              ;* Initialise the default device and make active
                              ;* No keys pressed = serial (default)
-                             ;* F0 pressed = KB/VDP
-                             ;* F1 pressed = Serial
-                             ;* Keyboard and screen or serial port
 AS65 Assembler for R6502 [1.42].                                     Page   26
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* F0 pressed = KB/VDP
+                             ;* F1 pressed = Serial
+                             ;* Keyboard and screen or serial port
                              ;* Output : None
                              ;* Regs affected : P, A
                              ;****************************************
@@ -1685,12 +1688,12 @@ c5bc : 60               [ 6] 	rts
                              ;****************************************
 c5bd :                       io_get_ch
 c5bd : 6c010c           [ 6] 	jmp (io_block+io_get_byte)
-                             	
-                             
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page   27
 ---------------------------------- bank0.s -----------------------------------
 
+                             	
+                             
+                             ;****************************************
                              ;* io_put_ch
                              ;* Put a char
                              ;* Input : A = char
@@ -1750,12 +1753,12 @@ c5cc : 6c0b0c           [ 6] 	jmp (io_block+io_del_f)
                              ;****************************************
 c5cf :                       io_read_line
 c5cf : 8647             [ 3] 	stx buf_adr			; Save pointer to storage
-c5d1 : 8548             [ 3] 	sta buf_adr+1
-c5d3 : 8449             [ 3] 	sty buf_sz			; Max length
-c5d5 : 08               [ 3] 	php					; Save echo state
 AS65 Assembler for R6502 [1.42].                                     Page   28
 ---------------------------------- bank0.s -----------------------------------
 
+c5d1 : 8548             [ 3] 	sta buf_adr+1
+c5d3 : 8449             [ 3] 	sty buf_sz			; Max length
+c5d5 : 08               [ 3] 	php					; Save echo state
 c5d6 : a000             [ 2] 	ldy #0x00			; Starting at first byte
 c5d8 :                       io_get_line_byte
 c5d8 : 38               [ 2] 	sec					; Getting bytes synchronously
@@ -1815,12 +1818,12 @@ c61a : d0f6             [ 3] 	bne io_print_line_byte		; Carry on until zero fo
 c61c :                       io_print_done
 c61c : 68               [ 4] 	pla
 c61d : 60               [ 6] 	rts
-                             
-                             
-                             ;*** Null operation just clc and return ***
 AS65 Assembler for R6502 [1.42].                                     Page   29
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+                             
+                             ;*** Null operation just clc and return ***
 c61e :                       io_null_op
 c61e : 18               [ 2] 	clc
 c61f : 60               [ 6] 	rts
@@ -1880,12 +1883,12 @@ c650 :                       mod_sz_io_e
                              ;*	OS vectored access to VDP routines for M/C fro
                              ;*
                              ;************************************************
-                             
-                             ;****************************************
-                             ;* vdp_wr_reg
 AS65 Assembler for R6502 [1.42].                                     Page   30
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+                             ;****************************************
+                             ;* vdp_wr_reg
                              ;* Write to Register A the value X
                              ;* Input : A - Register Number, X - Data
                              ;* Output : None
@@ -1945,12 +1948,12 @@ c674 : 60               [ 6] 	rts								; 6
                              	
                              ;****************************************
                              ;* vdp_rd_addr
-                             ;* Set read address 
-                             ;* Input : A - high, X - low 
-                             ;* Output : None
 AS65 Assembler for R6502 [1.42].                                     Page   31
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Set read address 
+                             ;* Input : A - high, X - low 
+                             ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
 c675 :                       vdp_rd_addr
@@ -2010,12 +2013,12 @@ c696 : 60               [ 6] 	rts
                              ;*		   X = Low Address
                              ;*		   A = High Address
                              ;* Output : A = byte read
-                             ;* Regs affected : None
-                             ;****************************************
-c697 :                       vdp_peek
 AS65 Assembler for R6502 [1.42].                                     Page   32
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Regs affected : None
+                             ;****************************************
+c697 :                       vdp_peek
 c697 : 08               [ 3] 	php
 c698 : 78               [ 2] 	sei
 c699 : 2075c6           [ 6] 	jsr vdp_rd_addr
@@ -2075,12 +2078,12 @@ c6c7 : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* snd_get
-                             ;* Get AY register X to Y
-                             ;* Input : X = Reg no
-                             ;* Output : Y = Value
 AS65 Assembler for R6502 [1.42].                                     Page   33
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Get AY register X to Y
+                             ;* Input : X = Reg no
+                             ;* Output : Y = Value
                              ;* Regs affected : None
                              ;****************************************
 c6c8 :                       snd_get
@@ -2140,12 +2143,12 @@ c6fe : 60               [ 6] 	rts
                              ;*  MAIN.S
                              ;*  This is where the main user program is execut
                              ;*  the 'kernel' once the system is initialised a
-                             ;*  Today, main does very little - first shows th
-                             ;*  boot up message, and then passes control to d
-                             ;*
 AS65 Assembler for R6502 [1.42].                                     Page   34
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;*  Today, main does very little - first shows th
+                             ;*  boot up message, and then passes control to d
+                             ;*
                              ;************************************************
                              
                              	; ROM code
@@ -2162,7 +2165,7 @@ c705 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
-c705 : 4275696c64203a..       db "Build : 19-01-2025\r"
+c705 : 4275696c64203a..       db "Build : 23-01-2025\r"
 c718 : 3132384b204272..       db "128K Breadboard Computer\r"
 c731 : 42792040363530..       db "By @6502Nerd\r"
 c73e : 436f7079726967..       db "Copyright (c) 2025\r",0
@@ -2205,12 +2208,12 @@ c762 : 60               [ 6] 	rts
                              
                              ;* Calls the master IRQ handler
 c763 :                       call_nmi_master
-                             ;	jmp (int_nmi)
-                             
-                             ;* Master NMI handler
 AS65 Assembler for R6502 [1.42].                                     Page   35
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;	jmp (int_nmi)
+                             
+                             ;* Master NMI handler
                              ;* 6551 uses this - fills the receive buffer
                              ;* VIA 2 uses this- user interrupt
 c763 :                       nmi
@@ -2270,12 +2273,12 @@ c7a8 : 8505             [ 3] 	sta int_irq+1
                              	
                              	; Core BRK handler
 c7aa : a9fa             [ 2] 	lda #lo(irq_brk)
-c7ac : 8506             [ 3] 	sta int_brk
-c7ae : a9c7             [ 2] 	lda #hi(irq_brk)
-c7b0 : 8507             [ 3] 	sta int_brk+1
 AS65 Assembler for R6502 [1.42].                                     Page   36
 ---------------------------------- bank0.s -----------------------------------
 
+c7ac : 8506             [ 3] 	sta int_brk
+c7ae : a9c7             [ 2] 	lda #hi(irq_brk)
+c7b0 : 8507             [ 3] 	sta int_brk+1
                              
                              	; User handlers for VDP, PIA0 interrupts
 c7b2 : a9d3             [ 2] 	lda #lo(null_handler)
@@ -2335,12 +2338,12 @@ c7dd : d0e7             [ 3] 	bne call_irq_brk
 c7df : 18               [ 2] 	clc						; Standard behaviour
                              	
                              	;* Try VDP next
-c7e0 :                       irq_check_vdp	
-c7e0 : ad0105           [ 4] 	lda VDP_STATUS			; Read status register
-c7e3 : 1009             [ 3] 	bpl	irq_check_cia0		; Skip if not VBLANK
 AS65 Assembler for R6502 [1.42].                                     Page   37
 ---------------------------------- bank0.s -----------------------------------
 
+c7e0 :                       irq_check_vdp	
+c7e0 : ad0105           [ 4] 	lda VDP_STATUS			; Read status register
+c7e3 : 1009             [ 3] 	bpl	irq_check_cia0		; Skip if not VBLANK
 c7e5 : 20c9c7           [ 6] 	jsr call_irq_uservdp	; Call use VDP handler
 c7e8 : 2047c8           [ 6] 	jsr int_vdp_handler		; Call  OS VDP handler
 c7eb : 2025c8           [ 6] 	jsr int_kb_handler		; Call OS cia0 handler (keyb
@@ -2400,12 +2403,12 @@ c827 : d00d             [ 3] 	bne int_skip_scan		; If not zero, then don't che
 c829 : ad0d04           [ 4] 	lda IO_0 + IFR			; Check status register CIA0
 c82c : 2901             [ 2] 	and #IFR_CA2			; Keyboard pressed?
 c82e : f00c             [ 3] 	beq int_keys_up
-c830 :                       int_do_read
-c830 : 853c             [ 3] 	sta kb_pressed			; Put non-zero in to this flag
-c832 : a53b             [ 3] 	lda kb_debounce			; Set debounce
 AS65 Assembler for R6502 [1.42].                                     Page   38
 ---------------------------------- bank0.s -----------------------------------
 
+c830 :                       int_do_read
+c830 : 853c             [ 3] 	sta kb_pressed			; Put non-zero in to this flag
+c832 : a53b             [ 3] 	lda kb_debounce			; Set debounce
 c834 : 8537             [ 3] 	sta kb_deb
 c836 :                       int_skip_scan
 c836 : a901             [ 2] 	lda #IFR_CA2			; Clear CA2
@@ -2465,12 +2468,12 @@ c877 : e611             [ 5] 	inc vdp_int_cnt+1
 c879 :                       inc_kb_timers
 c879 : a637             [ 3] 	ldx kb_deb			; Is debounce 0?
 c87b : f002             [ 3] 	beq skip_kb_deb
-c87d : c637             [ 5] 	dec kb_deb
-c87f :                       skip_kb_deb
-c87f : a638             [ 3] 	ldx kb_rep			; Is repeat timer 0?
 AS65 Assembler for R6502 [1.42].                                     Page   39
 ---------------------------------- bank0.s -----------------------------------
 
+c87d : c637             [ 5] 	dec kb_deb
+c87f :                       skip_kb_deb
+c87f : a638             [ 3] 	ldx kb_rep			; Is repeat timer 0?
 c881 : f002             [ 3] 	beq skip_kb_rep
 c883 : c638             [ 5] 	dec kb_rep
 c885 :                       skip_kb_rep
@@ -2530,12 +2533,12 @@ c89a : 60               [ 6] 	rts
                              ;*	BBC-128 HOMEBREW COMPUTER
                              ;*	Hardware and software design by @6502Nerd (Dol
                              ;*	Copyright 2014-20
-                             ;*  Free to use for any non-commercial purpose su
-                             ;*  appropriate credit of my authorship please!
-                             ;*
 AS65 Assembler for R6502 [1.42].                                     Page   40
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;*  Free to use for any non-commercial purpose su
+                             ;*  appropriate credit of my authorship please!
+                             ;*
                              ;*  UTILS.S
                              ;*  This module implements various utility functi
                              ;*  converting from ASCII to binary form for numb
@@ -2595,12 +2598,12 @@ c8cb : d0fb             [ 3] 	bne mem_clr_byte
 c8cd : 7a               [ 4] 	ply
 c8ce : 68               [ 4] 	pla
 c8cf : 60               [ 6] 	rts
-                             
-                             ;****************************************
-                             ;* str_a_to_x
 AS65 Assembler for R6502 [1.42].                                     Page   41
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+                             ;****************************************
+                             ;* str_a_to_x
                              ;* Convert accumulator to hex string
                              ;* Input : A = Byte to convert
                              ;* Output : A = High Char, X = Low Char
@@ -2660,12 +2663,12 @@ c904 : 38               [ 2] 	sec
 c905 : e930             [ 2] 	sbc #'0'			; Convert to hex nibble
 c907 : c90a             [ 2] 	cmp #10				; If A < 10 then
 c909 : 9002             [ 3] 	bcc skip_x_f_2		; skip a-f adjustment
-c90b : e927             [ 2] 	sbc #0x27			; Sub 7 to get in to A-F range
-c90d :                       skip_x_f_2
-c90d : c910             [ 2] 	cmp #0x10			; Nibble should be <= 0x0f
 AS65 Assembler for R6502 [1.42].                                     Page   42
 ---------------------------------- bank0.s -----------------------------------
 
+c90b : e927             [ 2] 	sbc #0x27			; Sub 7 to get in to A-F range
+c90d :                       skip_x_f_2
+c90d : c910             [ 2] 	cmp #0x10			; Nibble should be <= 0x0f
 c90f : b007             [ 3] 	bcs	str_x_to_a_errl	; Error if not
                              
 c911 : 8585             [ 3] 	sta num_a			; Store low nibble in temp
@@ -2725,12 +2728,12 @@ c949 : f0e5             [ 3] 	beq con_hex_jmp
 c94b : c962             [ 2] 	cmp #'b'
 c94d : f0e7             [ 3] 	beq con_bin_jmp
 c94f : 80d9             [ 3] 	bra con_dec_jmp
-                             
-                             ;****************************************
-                             ;* con_hex_to_a
 AS65 Assembler for R6502 [1.42].                                     Page   43
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+                             ;****************************************
+                             ;* con_hex_to_a
                              ;* Convert hex string to accumulator (unsigned)
                              ;* Input : Pointer to string (X=L, A=H)
                              ;* Output : num_a, num_a+1 contains word, X=numbe
@@ -2790,12 +2793,12 @@ c98f : 60               [ 6] 	rts
                              ;* con_bin_to_a
                              ;* Convert binary string to accumulator (unsigned
                              ;* Input : Pointer to string (X=L, A=H)
-                             ;* Output : num_a, num_a+1 contains word, X=numbe
-                             ;* Regs affected : CS = Error
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page   44
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Output : num_a, num_a+1 contains word, X=numbe
+                             ;* Regs affected : CS = Error
+                             ;****************************************
 c990 :                       con_bin_to_a
 c990 : 8691             [ 3] 	stx num_tmp
 c992 : 8592             [ 3] 	sta num_tmp+1
@@ -2855,12 +2858,12 @@ c9c7 : b191             [ 5] 	lda (num_tmp),y
 c9c9 : c930             [ 2] 	cmp #'0'
 c9cb : 9007             [ 3] 	bcc str_d_found_end
 c9cd : c93a             [ 2] 	cmp #'9'+1
-c9cf : b003             [ 3] 	bcs str_d_found_end
-c9d1 : c8               [ 2] 	iny
-c9d2 : 80f3             [ 3] 	bra str_d_find_end
 AS65 Assembler for R6502 [1.42].                                     Page   45
 ---------------------------------- bank0.s -----------------------------------
 
+c9cf : b003             [ 3] 	bcs str_d_found_end
+c9d1 : c8               [ 2] 	iny
+c9d2 : 80f3             [ 3] 	bra str_d_find_end
 c9d4 :                       str_d_found_end
 c9d4 : c007             [ 2] 	cpy #6+1			; Biggest int is 6 chars
 c9d6 : b052             [ 4] 	bcs str_d_error		; e.g. -32767 including minus
@@ -2920,12 +2923,12 @@ ca26 : a901             [ 2] 	lda #NUM_DEC
 ca28 : 18               [ 2] 	clc
 ca29 : 60               [ 6] 	rts
 ca2a :                       str_d_error
-ca2a : 38               [ 2] 	sec
-ca2b : 60               [ 6] 	rts
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   46
 ---------------------------------- bank0.s -----------------------------------
 
+ca2a : 38               [ 2] 	sec
+ca2b : 60               [ 6] 	rts
+                             
 ca2c :                       str_d_powers
 ca2c : 00000100020003..      	dw	0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 ca40 : 00000a0014001e..      	dw	0, 10, 20, 30, 40, 50, 60, 70, 80, 90
@@ -2985,12 +2988,12 @@ cab8 : 2692             [ 5] 	rol num_tmp+1
 caba : a585             [ 3] 	lda num_a
 cabc : 6585             [ 3] 	adc num_a
 cabe : 8585             [ 3] 	sta num_a
-cac0 : a586             [ 3] 	lda num_a+1
-cac2 : 6586             [ 3] 	adc num_a+1
-cac4 : 8586             [ 3] 	sta num_a+1
 AS65 Assembler for R6502 [1.42].                                     Page   47
 ---------------------------------- bank0.s -----------------------------------
 
+cac0 : a586             [ 3] 	lda num_a+1
+cac2 : 6586             [ 3] 	adc num_a+1
+cac4 : 8586             [ 3] 	sta num_a+1
 cac6 : a587             [ 3] 	lda num_a+2
 cac8 : 6587             [ 3] 	adc num_a+2
 caca : 8587             [ 3] 	sta num_a+2
@@ -3050,12 +3053,12 @@ cb01 : 60               [ 6] 	rts
                              ;* Regs affected : C cleared if non-zero
                              ;****************************************
 cb02 :                       int_to_str_ch
-cb02 : 290f             [ 2] 	and #0xf
-cb04 : 0930             [ 2] 	ora #0x30					; Convert to ascii
-cb06 : 4930             [ 2] 	eor #0x30					; Check if zero digit
 AS65 Assembler for R6502 [1.42].                                     Page   48
 ---------------------------------- bank0.s -----------------------------------
 
+cb02 : 290f             [ 2] 	and #0xf
+cb04 : 0930             [ 2] 	ora #0x30					; Convert to ascii
+cb06 : 4930             [ 2] 	eor #0x30					; Check if zero digit
 cb08 : d005             [ 3] 	bne int_to_str_nz			; If not zero definitely sto
 cb0a : b003             [ 3] 	bcs int_to_str_nz			; Also if C=1
 cb0c : 4930             [ 2] 	eor #0x30					; Restore A
@@ -3115,12 +3118,12 @@ cb4e : c8               [ 2] 	iny
 cb4f :                       int_to_str_fin
 cb4f : a900             [ 2] 	lda #0						; Terminator
 cb51 : 999500           [ 5] 	sta num_buf,y
-cb54 : c8               [ 2] 	iny
-                             	_pullAXY
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   49
 ---------------------------------- bank0.s -----------------------------------
 
+cb54 : c8               [ 2] 	iny
+                             	_pullAXY
+                             
 cb58 : 60               [ 6] 	rts
                              
                              
@@ -3180,12 +3183,12 @@ cb58 : 60               [ 6] 	rts
                              ;	pha
                              ;	phx
                              ;	php
-                             ;	ldy #0						; How many digits printed
-                             ;	ldx #0						; Index in to string
-                             ;out_bcd_digit
 AS65 Assembler for R6502 [1.42].                                     Page   50
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;	ldy #0						; How many digits printed
+                             ;	ldx #0						; Index in to string
+                             ;out_bcd_digit
                              ;	lda num_buf,x
                              ;	cpy #0						; If not in leading zero mode
                              ;	bne out_bcd_print			; No then go print
@@ -3245,12 +3248,12 @@ cb5f :                       print_a_to_d_ch
 cb5f : b99500           [ 4] 	lda num_buf,y
 cb62 : f006             [ 3] 	beq print_a_to_d_fin
 cb64 : 20c0c5           [ 6] 	jsr io_put_ch
-cb67 : c8               [ 2] 	iny
-cb68 : d0f5             [ 3] 	bne print_a_to_d_ch
-cb6a :                       print_a_to_d_fin
 AS65 Assembler for R6502 [1.42].                                     Page   51
 ---------------------------------- bank0.s -----------------------------------
 
+cb67 : c8               [ 2] 	iny
+cb68 : d0f5             [ 3] 	bne print_a_to_d_ch
+cb6a :                       print_a_to_d_fin
 cb6a : 60               [ 6] 	rts
                              	
                              
@@ -3310,12 +3313,12 @@ cbc2 : 2026c2           [ 6] 	jsr _init_fs		; initialise the filesystem
 cbc5 : 202ec0           [ 6] 	jsr _df_init		; Initialise interpreter
                              
 cbc8 : 60               [ 6] 	rts
-                             
-                             	
-                             ;* Initialises RAM, skipping pages 4-8 which are 
 AS65 Assembler for R6502 [1.42].                                     Page   52
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+                             	
+                             ;* Initialises RAM, skipping pages 4-8 which are 
                              ;* Zeroes all addressable RAM in the default bank
 cbc9 :                       init_ram
 cbc9 : 6400             [ 3] 	stz 0x00			; Start at page 0
@@ -3375,12 +3378,12 @@ cbe8 :                       cmd_immediate
 cbe8 : 2052cc           [ 6] 	jsr cmd_parse				; Find command and execute
 cbeb : b001             [ 3] 	bcs cmd_imerror				; Carry set = error condition
 cbed : 60               [ 6] 	rts
-cbee :                       cmd_imerror
-cbee : 4c2acc           [ 3] 	jmp cmd_print_error
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   53
 ---------------------------------- bank0.s -----------------------------------
 
+cbee :                       cmd_imerror
+cbee : 4c2acc           [ 3] 	jmp cmd_print_error
+                             
 cbf1 :                       command_line
 cbf1 : a900             [ 2] 	lda #0						; Initialise monitor
 cbf3 : 85d6             [ 3] 	sta cmd_lo					; Monitor address lo
@@ -3440,12 +3443,12 @@ cc4a : a90d             [ 2] 	lda #UTF_CR
 cc4c : 20c0c5           [ 6] 	jsr io_put_ch
                              	
 cc4f : 7a               [ 4] 	ply
-cc50 : 68               [ 4] 	pla
-cc51 : 60               [ 6] 	rts
-                             	
 AS65 Assembler for R6502 [1.42].                                     Page   54
 ---------------------------------- bank0.s -----------------------------------
 
+cc50 : 68               [ 4] 	pla
+cc51 : 60               [ 6] 	rts
+                             	
                              
                              ;****************************************
                              ;* cmd_parse
@@ -3505,12 +3508,12 @@ cc97 : 38               [ 2] 	sec
 cc98 : 60               [ 6] 	rts
                              	
 cc99 :                       cmd_found					; Found the command
-cc99 : bdcbce           [ 4] 	lda cmd_list+1,x		; Low byte of jump pointer
-cc9c : 853f             [ 3] 	sta tmp_v1				; Store in temp location
-cc9e : bdccce           [ 4] 	lda cmd_list+2,x		; High byte of jump pointer
 AS65 Assembler for R6502 [1.42].                                     Page   55
 ---------------------------------- bank0.s -----------------------------------
 
+cc99 : bdcbce           [ 4] 	lda cmd_list+1,x		; Low byte of jump pointer
+cc9c : 853f             [ 3] 	sta tmp_v1				; Store in temp location
+cc9e : bdccce           [ 4] 	lda cmd_list+2,x		; High byte of jump pointer
 cca1 : 8540             [ 3] 	sta tmp_v1+1			; Store in temp location
 cca3 : 68               [ 4] 	pla
 cca4 : fa               [ 4] 	plx
@@ -3570,12 +3573,12 @@ ccd4 : 18               [ 2] 	clc
 ccd5 : 2069ce           [ 6] 	jsr cmd_parse_next_parm
 ccd8 : b022             [ 3] 	bcs cmd_setmem_err
 ccda : 204ece           [ 6] 	jsr cmd_parse_word
-ccdd : b01d             [ 3] 	bcs cmd_setmem_err
-ccdf : 86d6             [ 3] 	stx cmd_lo
-cce1 : 85d7             [ 3] 	sta cmd_hi
 AS65 Assembler for R6502 [1.42].                                     Page   56
 ---------------------------------- bank0.s -----------------------------------
 
+ccdd : b01d             [ 3] 	bcs cmd_setmem_err
+ccdf : 86d6             [ 3] 	stx cmd_lo
+cce1 : 85d7             [ 3] 	sta cmd_hi
 cce3 : 2069ce           [ 6] 	jsr cmd_parse_next_parm		; Should be at least 1 
 cce6 : b014             [ 3] 	bcs cmd_setmem_err
 cce8 :                       cmd_setmem_byte
@@ -3635,12 +3638,12 @@ cd27 : 20c0c5           [ 6] 	jsr io_put_ch
 cd2a : 8a               [ 2] 	txa
 cd2b : 20c0c5           [ 6] 	jsr io_put_ch
 cd2e : a5d6             [ 3] 	lda cmd_lo
-cd30 : 20d0c8           [ 6] 	jsr str_a_to_x
-cd33 : 20c0c5           [ 6] 	jsr io_put_ch
-cd36 : 8a               [ 2] 	txa
 AS65 Assembler for R6502 [1.42].                                     Page   57
 ---------------------------------- bank0.s -----------------------------------
 
+cd30 : 20d0c8           [ 6] 	jsr str_a_to_x
+cd33 : 20c0c5           [ 6] 	jsr io_put_ch
+cd36 : 8a               [ 2] 	txa
 cd37 : 20c0c5           [ 6] 	jsr io_put_ch
 cd3a : a920             [ 2] 	lda #' '
 cd3c : 20c0c5           [ 6] 	jsr io_put_ch
@@ -3700,12 +3703,12 @@ cd9d : 18               [ 2] 	clc
 cd9e : 60               [ 6] 	rts
                              	
                              
-                             ;****************************************
-                             ;* cmd_sector
-                             ;* Load sector
 AS65 Assembler for R6502 [1.42].                                     Page   58
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;****************************************
+                             ;* cmd_sector
+                             ;* Load sector
                              ;* Input : buflo, bufhi
                              ;* Output : y = start of first parm byte
                              ;* Regs affected : A
@@ -3765,12 +3768,12 @@ cdea : 60               [ 6] 	rts
 cdeb :                       cmd_sector_errl
 cdeb : 68               [ 4] 	pla
 cdec :                       cmd_sector_err
-cdec : 859f             [ 3] 	sta errno
-cdee : 7a               [ 4] 	ply
-cdef : fa               [ 4] 	plx
 AS65 Assembler for R6502 [1.42].                                     Page   59
 ---------------------------------- bank0.s -----------------------------------
 
+cdec : 859f             [ 3] 	sta errno
+cdee : 7a               [ 4] 	ply
+cdef : fa               [ 4] 	plx
 cdf0 : 68               [ 4] 	pla
 cdf1 : 38               [ 2] 	sec
 cdf2 : 60               [ 6] 	rts
@@ -3830,12 +3833,12 @@ ce10 : 60               [ 6] 	rts
 ce11 :                       cmd_poke
 ce11 : 48               [ 3] 	pha
 ce12 : a5d8             [ 3] 	lda cmd_mem
-ce14 : d004             [ 3] 	bne cmd_poke_vram
-ce16 : 68               [ 4] 	pla
-ce17 : 92d6             [ 5] 	sta (cmd_lo)
 AS65 Assembler for R6502 [1.42].                                     Page   60
 ---------------------------------- bank0.s -----------------------------------
 
+ce14 : d004             [ 3] 	bne cmd_poke_vram
+ce16 : 68               [ 4] 	pla
+ce17 : 92d6             [ 5] 	sta (cmd_lo)
 ce19 : 60               [ 6] 	rts
 ce1a :                       cmd_poke_vram
 ce1a : 68               [ 4] 	pla
@@ -3895,12 +3898,12 @@ ce4d : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* cmd_parse_word
-                             ;* Find 4 char hex word
-                             ;* Input : buflo, bufhi, y offset
-                             ;* Output : y = char after hex byte, A = hi, X = 
 AS65 Assembler for R6502 [1.42].                                     Page   61
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Find 4 char hex word
+                             ;* Input : buflo, bufhi, y offset
+                             ;* Output : y = char after hex byte, A = hi, X = 
                              ;* Regs affected : A,X,Y
                              ;****************************************
 ce4e :                       cmd_parse_word
@@ -3960,12 +3963,12 @@ ce82 : da               [ 3] 	phx
 ce83 : 48               [ 3] 	pha
 ce84 : 202bce           [ 6] 	jsr cmd_parse_byte
 ce87 : b006             [ 3] 	bcs cmd_dcolour_fin
-ce89 : a20f             [ 2] 	ldx #NV_COLOUR
-ce8b : 20aec4           [ 6] 	jsr _rtc_nvwrite
-ce8e : 18               [ 2] 	clc
 AS65 Assembler for R6502 [1.42].                                     Page   62
 ---------------------------------- bank0.s -----------------------------------
 
+ce89 : a20f             [ 2] 	ldx #NV_COLOUR
+ce8b : 20aec4           [ 6] 	jsr _rtc_nvwrite
+ce8e : 18               [ 2] 	clc
 ce8f :                       cmd_dcolour_fin
 ce8f : 68               [ 4] 	pla
 ce90 : fa               [ 4] 	plx
@@ -4025,12 +4028,12 @@ ced4 : 64756d708000cd        	db "dump", 		0x80, 	lo(cmd_dumpmem), 	hi(cmd_dum
 cedb : 73657480d2cc          	db "set", 		0x80,	lo(cmd_setmem), 	hi(cmd_setmem
 cee1 : 736563746f7280..      	db "sector",	0x80,	lo(cmd_sector),		hi(cmd_secto
 ceea : 7175697480f3cd        	db "quit",		0x80,	lo(cmd_dflat),		hi(cmd_dflat)
-cef1 : 74696d658027ce        	db "time",		0x80,	lo(cmd_time),		hi(cmd_time)
-cef8 : 7265637680b2d0        	db "recv",		0x80,	lo(cmd_recv),		hi(cmd_recv)
-ceff : 646d6f64658092ce      	db "dmode",		0x80,	lo(cmd_dmode),		hi(cmd_dmode)
 AS65 Assembler for R6502 [1.42].                                     Page   63
 ---------------------------------- bank0.s -----------------------------------
 
+cef1 : 74696d658027ce        	db "time",		0x80,	lo(cmd_time),		hi(cmd_time)
+cef8 : 7265637680b2d0        	db "recv",		0x80,	lo(cmd_recv),		hi(cmd_recv)
+ceff : 646d6f64658092ce      	db "dmode",		0x80,	lo(cmd_dmode),		hi(cmd_dmode)
 cf07 : 64636f6c6f7572..      	db "dcolour",	0x80,	lo(cmd_dcolour),	hi(cmd_dcol
 cf11 : 68656c7080a2ce        	db "help",		0x80,	lo(cmd_help),		hi(cmd_help)
 cf18 : 0000ff                	db 0x00,		0x00,	0xff
@@ -4090,12 +4093,12 @@ d061 : 71756974202020..      						db "quit            Have a guess",UTF_CR,0,
 00fc =                       	ds recv_block_csum,1
                              	end struct
                              
-                             
-d080 :                       recv_wait_msg
-d080 : 3f0800                	db "?",CRSR_LEFT,0
 AS65 Assembler for R6502 [1.42].                                     Page   64
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+d080 :                       recv_wait_msg
+d080 : 3f0800                	db "?",CRSR_LEFT,0
 d083 :                       recv_done_msg
 d083 : 0d00                  	db UTF_CR,0
 d085 :                       recv_error_msg
@@ -4155,12 +4158,12 @@ d0b5 : 9c020a           [ 4] 	stz recv_szlo
 d0b8 : 9c030a           [ 4] 	stz recv_szhi
                              	; Flush the buffer - means that homebrew receive
 d0bb : 20f8d0           [ 6] 	jsr recv_flush
-                             	_recv_print recv_wait_msg
-                             
-d0c5 :                       cmd_recv_get_block
 AS65 Assembler for R6502 [1.42].                                     Page   65
 ---------------------------------- bank0.s -----------------------------------
 
+                             	_recv_print recv_wait_msg
+                             
+d0c5 :                       cmd_recv_get_block
                              	; Get header byte
 d0c5 : 2007d1           [ 6] 	jsr recv_get_block_start
                              	; Check if ETB (done)
@@ -4220,12 +4223,12 @@ d116 : d0f4             [ 3] 	bne recv_get_block_start_byte
 d118 :                       recv_get_block_fin
 d118 : 48               [ 3] 	pha
 d119 : a906             [ 2] 	lda #UTF_ACK
-d11b : 20c0c5           [ 6] 	jsr io_put_ch
-                             	_default
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   66
 ---------------------------------- bank0.s -----------------------------------
 
+d11b : 20c0c5           [ 6] 	jsr io_put_ch
+                             	_default
+                             
                              	; SOH or ETB byte returned to caller
 d121 : 68               [ 4] 	pla
 d122 : 60               [ 6] 	rts
@@ -4285,12 +4288,12 @@ d15e : 4cb5d1           [ 3] 	jmp recv_process_blockn
                              ;  zero terminated file name starting at position
                              ;  zero terminated directory from root
                              ;  final additional zero to indicate no more dire
-d161 :                       recv_process_block0
-                             	_recv_print recv_8blanks_msg
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   67
 ---------------------------------- bank0.s -----------------------------------
 
+d161 :                       recv_process_block0
+                             	_recv_print recv_8blanks_msg
+                             
 d168 : a002             [ 2] 	ldy #recv_block_payload
                              	; Jump over the filename
 d16a :                       recv_find_fname_end
@@ -4350,12 +4353,12 @@ d1ac : 20eec0           [ 6] 	jsr _fs_open_write_w
 d1af : b003             [ 3] 	bcs block0_error
                              	; Set flag indicating file is opened
 d1b1 : ee010a           [ 6] 	inc recv_fopen
-d1b4 :                       block0_error
-d1b4 : 60               [ 6] 	rts
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   68
 ---------------------------------- bank0.s -----------------------------------
 
+d1b4 :                       block0_error
+d1b4 : 60               [ 6] 	rts
+                             
                              ; Process data block payload
 d1b5 :                       recv_process_blockn
                              ;	_recv_print recv_got_block_msg
@@ -4415,12 +4418,12 @@ d1da : 60               [ 6] 	rts
                              ;*		Port B
                              ;*			PB0			- Output to SD card clock
                              ;*			PB1			- Output - Sound write select
-                             ;*			PB2			- Input - SD Card detect
-                             ;*			PB3			- Output - SD Card chip select
-                             ;*			PB4			- Output - Data out from VIA to SD Car
 AS65 Assembler for R6502 [1.42].                                     Page   69
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;*			PB2			- Input - SD Card detect
+                             ;*			PB3			- Output - SD Card chip select
+                             ;*			PB4			- Output - Data out from VIA to SD Car
                              ;*			PB5			- Output - ROM Disable (active low)
                              ;*			PB6			- Output - Sound read select
                              ;*			PB7			- Input - Data in to VIA from SD Card
@@ -4480,12 +4483,12 @@ d1f7 : 68               [ 4] 	pla							; Restore A
 d1f8 : 60               [ 6] 	rts
                              
                              ;********************************
-                             ;* set_led2
-                             ;* Set the LED2 (shift lock)
-                             ;* Input : C = status (1 = on, 0 = off)
 AS65 Assembler for R6502 [1.42].                                     Page   70
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* set_led2
+                             ;* Set the LED2 (shift lock)
+                             ;* Input : C = status (1 = on, 0 = off)
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
@@ -4545,12 +4548,12 @@ d238 : 60               [ 6] 	rts							; return from sub
                              ;* Output : None
                              ;* Regs affected : A
                              ;****************************************
-d239 :                       init_cia1
-d239 : a97f             [ 2] 	lda #0x7f					; Disable all interrupts
-d23b : 8d8e04           [ 4] 	sta IO_1 + IER
 AS65 Assembler for R6502 [1.42].                                     Page   71
 ---------------------------------- bank0.s -----------------------------------
 
+d239 :                       init_cia1
+d239 : a97f             [ 2] 	lda #0x7f					; Disable all interrupts
+d23b : 8d8e04           [ 4] 	sta IO_1 + IER
                              	
 d23e : a9ff             [ 2] 	lda #0xff					; Port A all output (AY-3 data bus
 d240 : 8d8304           [ 4] 	sta IO_1 + DDRA
@@ -4610,12 +4613,12 @@ d265 :                       got_byte
 d265 : 5a               [ 3] 	phy
 d266 : a40e             [ 3] 	ldy ser_first			; Get first byte in FIFO
 d268 : b90008           [ 4] 	lda ser_buf,y
-d26b : e60e             [ 5] 	inc ser_first			; Advance first byte of FIFO
-d26d : 7a               [ 4] 	ply
-d26e : 18               [ 2] 	clc						; Indicate byte was got
 AS65 Assembler for R6502 [1.42].                                     Page   72
 ---------------------------------- bank0.s -----------------------------------
 
+d26b : e60e             [ 5] 	inc ser_first			; Advance first byte of FIFO
+d26d : 7a               [ 4] 	ply
+d26e : 18               [ 2] 	clc						; Indicate byte was got
 d26f : 60               [ 6] 	rts
                              
                              
@@ -4675,12 +4678,12 @@ d28e : 60               [ 6] 	rts
                              ;*
                              ;*	BBC-128 HOMEBREW COMPUTER
                              ;*	Hardware and software design by @6502Nerd (Dol
-                             ;*	Copyright 2014-20
-                             ;*  Free to use for any non-commercial purpose su
-                             ;*  appropriate credit of my authorship please!
 AS65 Assembler for R6502 [1.42].                                     Page   73
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;*	Copyright 2014-20
+                             ;*  Free to use for any non-commercial purpose su
+                             ;*  appropriate credit of my authorship please!
                              ;*
                              ;*  KEYBOARD.S
                              ;*  This is the keyboard module to enable interfa
@@ -4740,12 +4743,12 @@ d2b5 : c050             [ 2] 	cpy #0b01010000			; If not got to column 10 then
 d2b7 : d0eb             [ 3] 	bne kb_check_w_col
                              
 d2b9 :                       kb_no_key
-                             	; no key found
-d2b9 : 18               [ 2] 	clc						; Clear carry flag = no keys found
-d2ba : 8045             [ 4] 	bra kb_raw_done			; Exit nicely
 AS65 Assembler for R6502 [1.42].                                     Page   74
 ---------------------------------- bank0.s -----------------------------------
 
+                             	; no key found
+d2b9 : 18               [ 2] 	clc						; Clear carry flag = no keys found
+d2ba : 8045             [ 4] 	bra kb_raw_done			; Exit nicely
                              
 d2bc :                       got_key
 d2bc : 8433             [ 3] 	sty kb_raw				; Save the raw key code
@@ -4805,12 +4808,12 @@ d308 : 60               [ 6] 	rts
 d309 :                       kb_read_dip
 d309 : 5a               [ 3] 	phy
                              
-d30a : a000             [ 2] 	ldy #0
-d30c : 6441             [ 3] 	stz tmp_a
-d30e :                       kb_check_dip
 AS65 Assembler for R6502 [1.42].                                     Page   75
 ---------------------------------- bank0.s -----------------------------------
 
+d30a : a000             [ 2] 	ldy #0
+d30c : 6441             [ 3] 	stz tmp_a
+d30e :                       kb_check_dip
 d30e : b941d4           [ 4] 	lda kb_dip_code, y		; Binary dip code, row = 0, 
 d311 : 8d0104           [ 4] 	sta IO_0 + PRA
 d314 : ea               [ 2] 	nop						; Short delay for fast CPU
@@ -4870,12 +4873,12 @@ d356 : 8438             [ 3] 	sty kb_rep				; Delay before the same key is emi
 d358 : 8534             [ 3] 	sta kb_last				; Now make last = raw
                              	
 d35a : fa               [ 4] 	plx
-d35b : 7a               [ 4] 	ply
-                             	
-d35c : a535             [ 3] 	lda kb_code				; Get the actual code
 AS65 Assembler for R6502 [1.42].                                     Page   76
 ---------------------------------- bank0.s -----------------------------------
 
+d35b : 7a               [ 4] 	ply
+                             	
+d35c : a535             [ 3] 	lda kb_code				; Get the actual code
                              	
 d35e : 60               [ 6] 	rts
                              
@@ -4935,12 +4938,12 @@ d39e : 60               [ 6] 	rts
                              ;* Keyboard table - zero indicates nothing
                              ;****************************************
 d39f :                       kb_table_std
-d39f : 00                    	db 0x00								; Zero entry means nothing
-d3a0 : 7180318a8b091b        	db 'q',0x80, '1',0x8a,0x8b,   9, 27	; Q, F0, 1, 
-d3a7 : 00                    	db 0x00								; Skip row 0
 AS65 Assembler for R6502 [1.42].                                     Page   77
 ---------------------------------- bank0.s -----------------------------------
 
+d39f : 00                    	db 0x00								; Zero entry means nothing
+d3a0 : 7180318a8b091b        	db 'q',0x80, '1',0x8a,0x8b,   9, 27	; Q, F0, 1, 
+d3a7 : 00                    	db 0x00								; Skip row 0
 d3a8 : 33773261737a81        	db '3', 'w', '2', 'a', 's', 'z',0x81; 3, W, 2, A
 d3af : 00                    	db 0x00								; Skip row 0
 d3b0 : 34656478632082        	db '4', 'e', 'd', 'x', 'c', ' ',0x82; 4, E, D, X
@@ -5000,12 +5003,12 @@ d448 : 48                    	db 0b01001000
 d449 :                       kb_dip_bit
 d449 : 0102040810204080      	db 0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80
                              	
-                             
-                             	include "rtc\rtc.s"
-                             ;************************************************
 AS65 Assembler for R6502 [1.42].                                     Page   78
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+                             	include "rtc\rtc.s"
+                             ;************************************************
                              ;*
                              ;*	BBC-128 HOMEBREW COMPUTER
                              ;*	Hardware and software design by @6502Nerd (Dol
@@ -5065,12 +5068,12 @@ d464 : 60               [ 6] 	rts
                              ;****************************************
 d465 :                       rtc_init
                              	; No interrupts
-d465 : a20c             [ 2] 	ldx #RTC_REGC
-d467 : a900             [ 2] 	lda #0
-d469 : 2051d4           [ 6] 	jsr rtc_write
 AS65 Assembler for R6502 [1.42].                                     Page   79
 ---------------------------------- bank0.s -----------------------------------
 
+d465 : a20c             [ 2] 	ldx #RTC_REGC
+d467 : a900             [ 2] 	lda #0
+d469 : 2051d4           [ 6] 	jsr rtc_write
                              	
                              ;	; Clear alarm bytes
                              ;	lda #0
@@ -5130,12 +5133,12 @@ d4b1 : 60               [ 6] 	rts
                              ;* Warn of bad NV ram
                              ;****************************************
 d4b2 :                       rtc_badnvram_msg
-d4b2 : 5761726e696e67..      	db "Warning, NV RAM checksum bad.",UTF_CR,0
-                             
-d4d1 :                       rtc_badnvram
 AS65 Assembler for R6502 [1.42].                                     Page   80
 ---------------------------------- bank0.s -----------------------------------
 
+d4b2 : 5761726e696e67..      	db "Warning, NV RAM checksum bad.",UTF_CR,0
+                             
+d4d1 :                       rtc_badnvram
                              	; Print message
 d4d1 : a2b2             [ 2] 	ldx #lo(rtc_badnvram_msg)
 d4d3 : a9d4             [ 2] 	lda #hi(rtc_badnvram_msg)
@@ -5195,12 +5198,12 @@ d53d : a207             [ 2] 	ldx #RTC_DAY
 d53f : a543             [ 3] 	lda tmp_b
 d541 : 2051d4           [ 6] 	jsr rtc_write
 d544 : a208             [ 2] 	ldx #RTC_MTH
-d546 : a544             [ 3] 	lda tmp_b+1
-d548 : 2051d4           [ 6] 	jsr rtc_write
-d54b : a209             [ 2] 	ldx #RTC_YR
 AS65 Assembler for R6502 [1.42].                                     Page   81
 ---------------------------------- bank0.s -----------------------------------
 
+d546 : a544             [ 3] 	lda tmp_b+1
+d548 : 2051d4           [ 6] 	jsr rtc_write
+d54b : a209             [ 2] 	ldx #RTC_YR
 d54d : a545             [ 3] 	lda tmp_b+2
 d54f : 2051d4           [ 6] 	jsr rtc_write
                              
@@ -5260,12 +5263,12 @@ d5a0 : 6900             [ 2] 	adc #0
 d5a2 : 8540             [ 3] 	sta tmp_v1+1
 d5a4 : 60               [ 6] 	rts
                              
-                             
-                             ;**************************************
-                             ;* rtc_dtstringconvert
 AS65 Assembler for R6502 [1.42].                                     Page   82
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+                             ;**************************************
+                             ;* rtc_dtstringconvert
                              ;* Convert a PP:QQ:RR string
                              ;* Starting at X,A
                              ;****************************************
@@ -5325,12 +5328,12 @@ d5f9 : 913f             [ 5] 	sta (tmp_v1),y
 d5fb : c8               [ 2] 	iny
 d5fc : a209             [ 2] 	ldx #RTC_YR
 d5fe : 205bd4           [ 6] 	jsr rtc_read
-d601 : 913f             [ 5] 	sta (tmp_v1),y
-d603 : 4cded4           [ 3] 	jmp rtc_resumeupdate
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   83
 ---------------------------------- bank0.s -----------------------------------
 
+d601 : 913f             [ 5] 	sta (tmp_v1),y
+d603 : 4cded4           [ 3] 	jmp rtc_resumeupdate
+                             
                              ;**************************************
                              ;* rtc_nvvalid
                              ;* Validate nvram checksum
@@ -5390,12 +5393,12 @@ d636 :                       rtc_nvread
                              	; Read nv location
 d636 : 205bd4           [ 6] 	jsr rtc_read
                              	; Remember while validating checksum
-d639 : 48               [ 3] 	pha
-                             	; Validate checksum (C=0 if OK)
-d63a : 2006d6           [ 6] 	jsr rtc_nvvalid
 AS65 Assembler for R6502 [1.42].                                     Page   84
 ---------------------------------- bank0.s -----------------------------------
 
+d639 : 48               [ 3] 	pha
+                             	; Validate checksum (C=0 if OK)
+d63a : 2006d6           [ 6] 	jsr rtc_nvvalid
                              	; Retrieve the location read
 d63d : 68               [ 4] 	pla
                              	; C=0 if OK and A is valid
@@ -5455,12 +5458,12 @@ d645 : 60               [ 6] 	rts
                              	
                              ;****************************************
                              ;* init_snd
-                             ;* Initialise sound - after cia 1 has been initia
-                             ;* Input : None
-                             ;* Output : None
 AS65 Assembler for R6502 [1.42].                                     Page   85
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Initialise sound - after cia 1 has been initia
+                             ;* Input : None
+                             ;* Output : None
                              ;* Regs affected : All
                              ;****************************************
 d646 :                       init_snd
@@ -5520,12 +5523,12 @@ d68c : 2803                  	dw 808 				; G#
 d68e : fb02                  	dw 763 				; A
 d690 : d002                  	dw 720 				; A#
 d692 : a702                  	dw 679 				; B
-                             
-d694 : 8102                  	dw 641				; C
-d696 : 5d02                  	dw 605				; C#
 AS65 Assembler for R6502 [1.42].                                     Page   86
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+d694 : 8102                  	dw 641				; C
+d696 : 5d02                  	dw 605				; C#
 d698 : 3b02                  	dw 571				; D
 d69a : 1b02                  	dw 539				; D#
 d69c : fd01                  	dw 509				; E
@@ -5585,12 +5588,12 @@ d6fe : 1e00                  	dw 30				; F
 d700 : 1c00                  	dw 28				; F#
 d702 : 1b00                  	dw 27				; G
 d704 : 1900                  	dw 25				; G#
-d706 : 1800                  	dw 24				; A
-d708 : 1600                  	dw 22				; A#
-d70a : 1500                  	dw 21				; B
 AS65 Assembler for R6502 [1.42].                                     Page   87
 ---------------------------------- bank0.s -----------------------------------
 
+d706 : 1800                  	dw 24				; A
+d708 : 1600                  	dw 22				; A#
+d70a : 1500                  	dw 21				; B
                              
 d70c :                       mod_sz_sound_e
                              
@@ -5650,12 +5653,12 @@ d70c :                       mod_sz_vdp_s
                              ;*
                              ;*  FONT.S
                              ;*  This is the font definition, used to initiali
-                             ;*  character set.  The normal char 1 is either a
-                             ;*  but I have set the default to be a little spa
-                             ;*  This character set is a combination of the MS
 AS65 Assembler for R6502 [1.42].                                     Page   88
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;*  character set.  The normal char 1 is either a
+                             ;*  but I have set the default to be a little spa
+                             ;*  This character set is a combination of the MS
                              ;*  special characters outside of the normal ASCI
                              ;*  and Oric-1 for letters, numbers, punctuation 
                              ;*  Oric was my first computer hence the nostalgi
@@ -5715,12 +5718,12 @@ d820 : 20                    	db %00100000
 d821 : 20                    	db %00100000
 d822 : 20                    	db %00100000
 d823 : 20                    	db %00100000
-d824 : a8                    	db %10101000
-d825 : 70                    	db %01110000
-d826 : 20                    	db %00100000
 AS65 Assembler for R6502 [1.42].                                     Page   89
 ---------------------------------- bank0.s -----------------------------------
 
+d824 : a8                    	db %10101000
+d825 : 70                    	db %01110000
+d826 : 20                    	db %00100000
 d827 : 00                    	db %00000000
                              ; char 5
 d828 : 00                    	db %00000000
@@ -5780,12 +5783,12 @@ d857 : 00                    	db %00000000
 d858 : 30                    	db %00110000
 d859 : 30                    	db %00110000
 d85a : 30                    	db %00110000
-d85b : f0                    	db %11110000
-d85c : f0                    	db %11110000
-d85d : 00                    	db %00000000
 AS65 Assembler for R6502 [1.42].                                     Page   90
 ---------------------------------- bank0.s -----------------------------------
 
+d85b : f0                    	db %11110000
+d85c : f0                    	db %11110000
+d85d : 00                    	db %00000000
 d85e : 00                    	db %00000000
 d85f : 00                    	db %00000000
                              ; char 12
@@ -5845,12 +5848,12 @@ d88f : 00                    	db %00000000
                              ; char 18
 d890 : 00                    	db %00000000
 d891 : 00                    	db %00000000
-d892 : 00                    	db %00000000
-d893 : fc                    	db %11111100
-d894 : fc                    	db %11111100
 AS65 Assembler for R6502 [1.42].                                     Page   91
 ---------------------------------- bank0.s -----------------------------------
 
+d892 : 00                    	db %00000000
+d893 : fc                    	db %11111100
+d894 : fc                    	db %11111100
 d895 : 00                    	db %00000000
 d896 : 00                    	db %00000000
 d897 : 00                    	db %00000000
@@ -5910,12 +5913,12 @@ d8c6 : 30                    	db %00110000
 d8c7 : 30                    	db %00110000
                              ; char 25
 d8c8 : 30                    	db %00110000
-d8c9 : 30                    	db %00110000
-d8ca : 30                    	db %00110000
-d8cb : 30                    	db %00110000
 AS65 Assembler for R6502 [1.42].                                     Page   92
 ---------------------------------- bank0.s -----------------------------------
 
+d8c9 : 30                    	db %00110000
+d8ca : 30                    	db %00110000
+d8cb : 30                    	db %00110000
 d8cc : 30                    	db %00110000
 d8cd : 30                    	db %00110000
 d8ce : 30                    	db %00110000
@@ -5975,12 +5978,12 @@ d8fd : 00                    	db %00000000
 d8fe : 00                    	db %00000000
 d8ff : 00                    	db %00000000
                              ; char 32
-d900 : 00                    	db %00000000
-d901 : 00                    	db %00000000
-d902 : 00                    	db %00000000
 AS65 Assembler for R6502 [1.42].                                     Page   93
 ---------------------------------- bank0.s -----------------------------------
 
+d900 : 00                    	db %00000000
+d901 : 00                    	db %00000000
+d902 : 00                    	db %00000000
 d903 : 00                    	db %00000000
 d904 : 00                    	db %00000000
 d905 : 00                    	db %00000000
@@ -6040,12 +6043,12 @@ d934 : a8                    	db %10101000
 d935 : 90                    	db %10010000
 d936 : 68                    	db %01101000
 d937 : 00                    	db %00000000
-                             ; char 39
-d938 : 20                    	db %00100000
-d939 : 20                    	db %00100000
 AS65 Assembler for R6502 [1.42].                                     Page   94
 ---------------------------------- bank0.s -----------------------------------
 
+                             ; char 39
+d938 : 20                    	db %00100000
+d939 : 20                    	db %00100000
 d93a : 20                    	db %00100000
 d93b : 00                    	db %00000000
 d93c : 00                    	db %00000000
@@ -6105,12 +6108,12 @@ d96b : f8                    	db %11111000
 d96c : 00                    	db %00000000
 d96d : 00                    	db %00000000
 d96e : 00                    	db %00000000
-d96f : 00                    	db %00000000
-                             ; char 46
-d970 : 00                    	db %00000000
 AS65 Assembler for R6502 [1.42].                                     Page   95
 ---------------------------------- bank0.s -----------------------------------
 
+d96f : 00                    	db %00000000
+                             ; char 46
+d970 : 00                    	db %00000000
 d971 : 00                    	db %00000000
 d972 : 00                    	db %00000000
 d973 : 00                    	db %00000000
@@ -6170,12 +6173,12 @@ d9a2 : 50                    	db %01010000
 d9a3 : 90                    	db %10010000
 d9a4 : f8                    	db %11111000
 d9a5 : 10                    	db %00010000
-d9a6 : 10                    	db %00010000
-d9a7 : 00                    	db %00000000
-                             ; char 53
 AS65 Assembler for R6502 [1.42].                                     Page   96
 ---------------------------------- bank0.s -----------------------------------
 
+d9a6 : 10                    	db %00010000
+d9a7 : 00                    	db %00000000
+                             ; char 53
 d9a8 : f8                    	db %11111000
 d9a9 : 80                    	db %10000000
 d9aa : f0                    	db %11110000
@@ -6235,12 +6238,12 @@ d9d9 : 00                    	db %00000000
 d9da : 20                    	db %00100000
 d9db : 00                    	db %00000000
 d9dc : 00                    	db %00000000
-d9dd : 20                    	db %00100000
-d9de : 20                    	db %00100000
-d9df : 40                    	db %01000000
 AS65 Assembler for R6502 [1.42].                                     Page   97
 ---------------------------------- bank0.s -----------------------------------
 
+d9dd : 20                    	db %00100000
+d9de : 20                    	db %00100000
+d9df : 40                    	db %01000000
                              ; char 60
 d9e0 : 10                    	db %00010000
 d9e1 : 20                    	db %00100000
@@ -6300,12 +6303,12 @@ da0f : 00                    	db %00000000
 da10 : f0                    	db %11110000
 da11 : 88                    	db %10001000
 da12 : 88                    	db %10001000
-da13 : f0                    	db %11110000
-da14 : 88                    	db %10001000
-da15 : 88                    	db %10001000
 AS65 Assembler for R6502 [1.42].                                     Page   98
 ---------------------------------- bank0.s -----------------------------------
 
+da13 : f0                    	db %11110000
+da14 : 88                    	db %10001000
+da15 : 88                    	db %10001000
 da16 : f0                    	db %11110000
 da17 : 00                    	db %00000000
                              ; char 67
@@ -6365,12 +6368,12 @@ da47 : 00                    	db %00000000
                              ; char 73
 da48 : 70                    	db %01110000
 da49 : 20                    	db %00100000
-da4a : 20                    	db %00100000
-da4b : 20                    	db %00100000
-da4c : 20                    	db %00100000
 AS65 Assembler for R6502 [1.42].                                     Page   99
 ---------------------------------- bank0.s -----------------------------------
 
+da4a : 20                    	db %00100000
+da4b : 20                    	db %00100000
+da4c : 20                    	db %00100000
 da4d : 20                    	db %00100000
 da4e : 70                    	db %01110000
 da4f : 00                    	db %00000000
@@ -6430,12 +6433,12 @@ da7e : 70                    	db %01110000
 da7f : 00                    	db %00000000
                              ; char 80
 da80 : f0                    	db %11110000
-da81 : 88                    	db %10001000
-da82 : 88                    	db %10001000
-da83 : f0                    	db %11110000
 AS65 Assembler for R6502 [1.42].                                     Page  100
 ---------------------------------- bank0.s -----------------------------------
 
+da81 : 88                    	db %10001000
+da82 : 88                    	db %10001000
+da83 : f0                    	db %11110000
 da84 : 80                    	db %10000000
 da85 : 80                    	db %10000000
 da86 : 80                    	db %10000000
@@ -6495,12 +6498,12 @@ dab5 : 50                    	db %01010000
 dab6 : 20                    	db %00100000
 dab7 : 00                    	db %00000000
                              ; char 87
-dab8 : 88                    	db %10001000
-dab9 : 88                    	db %10001000
-daba : 88                    	db %10001000
 AS65 Assembler for R6502 [1.42].                                     Page  101
 ---------------------------------- bank0.s -----------------------------------
 
+dab8 : 88                    	db %10001000
+dab9 : 88                    	db %10001000
+daba : 88                    	db %10001000
 dabb : a8                    	db %10101000
 dabc : a8                    	db %10101000
 dabd : d8                    	db %11011000
@@ -6560,12 +6563,12 @@ daec : 10                    	db %00010000
 daed : 10                    	db %00010000
 daee : f0                    	db %11110000
 daef : 00                    	db %00000000
-                             ; char 94
-daf0 : 20                    	db %00100000
-daf1 : 50                    	db %01010000
 AS65 Assembler for R6502 [1.42].                                     Page  102
 ---------------------------------- bank0.s -----------------------------------
 
+                             ; char 94
+daf0 : 20                    	db %00100000
+daf1 : 50                    	db %01010000
 daf2 : a8                    	db %10101000
 daf3 : 20                    	db %00100000
 daf4 : 20                    	db %00100000
@@ -6625,12 +6628,12 @@ db23 : 88                    	db %10001000
 db24 : 88                    	db %10001000
 db25 : 88                    	db %10001000
 db26 : 78                    	db %01111000
-db27 : 00                    	db %00000000
-                             ; char 101
-db28 : 00                    	db %00000000
 AS65 Assembler for R6502 [1.42].                                     Page  103
 ---------------------------------- bank0.s -----------------------------------
 
+db27 : 00                    	db %00000000
+                             ; char 101
+db28 : 00                    	db %00000000
 db29 : 00                    	db %00000000
 db2a : 70                    	db %01110000
 db2b : 88                    	db %10001000
@@ -6690,12 +6693,12 @@ db5a : 88                    	db %10001000
 db5b : 90                    	db %10010000
 db5c : e0                    	db %11100000
 db5d : 90                    	db %10010000
-db5e : 88                    	db %10001000
-db5f : 00                    	db %00000000
-                             ; char 108
 AS65 Assembler for R6502 [1.42].                                     Page  104
 ---------------------------------- bank0.s -----------------------------------
 
+db5e : 88                    	db %10001000
+db5f : 00                    	db %00000000
+                             ; char 108
 db60 : 60                    	db %01100000
 db61 : 20                    	db %00100000
 db62 : 20                    	db %00100000
@@ -6755,12 +6758,12 @@ db91 : 00                    	db %00000000
 db92 : b8                    	db %10111000
 db93 : c0                    	db %11000000
 db94 : 80                    	db %10000000
-db95 : 80                    	db %10000000
-db96 : 80                    	db %10000000
-db97 : 00                    	db %00000000
 AS65 Assembler for R6502 [1.42].                                     Page  105
 ---------------------------------- bank0.s -----------------------------------
 
+db95 : 80                    	db %10000000
+db96 : 80                    	db %10000000
+db97 : 00                    	db %00000000
                              ; char 115
 db98 : 00                    	db %00000000
 db99 : 00                    	db %00000000
@@ -6820,12 +6823,12 @@ dbc8 : 00                    	db %00000000
 dbc9 : 00                    	db %00000000
 dbca : 88                    	db %10001000
 dbcb : 88                    	db %10001000
-dbcc : 88                    	db %10001000
-dbcd : 78                    	db %01111000
-dbce : 08                    	db %00001000
 AS65 Assembler for R6502 [1.42].                                     Page  106
 ---------------------------------- bank0.s -----------------------------------
 
+dbcc : 88                    	db %10001000
+dbcd : 78                    	db %01111000
+dbce : 08                    	db %00001000
 dbcf : 70                    	db %01110000
                              ; char 122
 dbd0 : 00                    	db %00000000
@@ -6885,12 +6888,12 @@ dbff : 00                    	db %00000000
                              	
                              
                              
-                             
-                             ;****************************************
-                             ;* vdp_init
 AS65 Assembler for R6502 [1.42].                                     Page  107
 ---------------------------------- bank0.s -----------------------------------
 
+                             
+                             ;****************************************
+                             ;* vdp_init
                              ;* Initialise VDP
                              ;* Clears all of VRAM to zero
                              ;****************************************
@@ -6950,12 +6953,12 @@ dc5a : a905             [ 2] 	lda #5						; Do R5
 dc5c : be7edd           [ 4] 	ldx vdp_base_table+14,y		; Get R5 value
 dc5f : 2050c6           [ 6] 	jsr vdp_wr_reg				; Write X to Reg A
                              
-dc62 : be7fdd           [ 4] 	ldx vdp_base_table+15,y		; Get spr pat table low
-dc65 : 861f             [ 3] 	stx vdp_base+vdp_addr_spp	; Save in vdp_base
-dc67 : be80dd           [ 4] 	ldx vdp_base_table+16,y		; Get spr pat table hig
 AS65 Assembler for R6502 [1.42].                                     Page  108
 ---------------------------------- bank0.s -----------------------------------
 
+dc62 : be7fdd           [ 4] 	ldx vdp_base_table+15,y		; Get spr pat table low
+dc65 : 861f             [ 3] 	stx vdp_base+vdp_addr_spp	; Save in vdp_base
+dc67 : be80dd           [ 4] 	ldx vdp_base_table+16,y		; Get spr pat table hig
 dc6a : 8620             [ 3] 	stx vdp_base+vdp_addr_spp+1	; Save in vdp_base
 dc6c : a906             [ 2] 	lda #6						; Do R6
 dc6e : be81dd           [ 4] 	ldx vdp_base_table+17,y		; Get R6 value
@@ -7015,12 +7018,12 @@ dc99 : 4c2fdd           [ 3] 	jmp init_fonts
                              ;* vdp_set_hires
                              ;* Set up HI mode
                              ;* Input : None
-                             ;* Output : None
-                             ;* Regs affected : All
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page  109
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Output : None
+                             ;* Regs affected : All
+                             ;****************************************
 dc9c :                       vdp_set_hires
 dc9c : a026             [ 2] 	ldy #vdp_base_table_hi-vdp_base_table
 dc9e : 2004dc           [ 6] 	jsr vdp_init_mode
@@ -7080,12 +7083,12 @@ dcd2 : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* init_vdp_hires
-                             ;* Initialise video processor graphics 1
-                             ;* Input : None
-                             ;* Output : None
 AS65 Assembler for R6502 [1.42].                                     Page  110
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Initialise video processor graphics 1
+                             ;* Input : None
+                             ;* Output : None
                              ;* Regs affected : All
                              ;***************************************
 dcd3 :                       init_vdp_hires
@@ -7145,12 +7148,12 @@ dcf5 : 60               [ 6] 	rts
                              ;****************************************
                              ;* init_colours_g1
                              ;* Initialise colour table for graphics 1
-                             ;* Input : None
-                             ;* Output : None
-                             ;* Regs affected : All
 AS65 Assembler for R6502 [1.42].                                     Page  111
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Input : None
+                             ;* Output : None
+                             ;* Regs affected : All
                              ;****************************************
 dcf6 :                       init_colours_g1
 dcf6 : 78               [ 2] 	sei
@@ -7210,12 +7213,12 @@ dd2e : 60               [ 6] 	rts
                              ;* Initialise fonts 
                              ;* Input : None
                              ;* Output : None
-                             ;* Regs affected : All
-                             ;****************************************
-dd2f :                       init_fonts
 AS65 Assembler for R6502 [1.42].                                     Page  112
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Regs affected : All
+                             ;****************************************
+dd2f :                       init_fonts
 dd2f : 78               [ 2] 	sei
 dd30 : a61b             [ 3] 	ldx vdp_base+vdp_addr_pat
 dd32 : a51c             [ 3] 	lda vdp_base+vdp_addr_pat+1
@@ -7275,12 +7278,12 @@ dd6f : 60               [ 6] 	rts
                              
                              ;**** BASE TABLES ****
 dd70 :                       vdp_base_table
-dd70 :                       vdp_base_table_g1
-dd70 : 03                    	db	VDP_LONGDELAY	; Long delay
-dd71 : 00                    	db	%00000000		; R0 - No-extvid
 AS65 Assembler for R6502 [1.42].                                     Page  113
 ---------------------------------- bank0.s -----------------------------------
 
+dd70 :                       vdp_base_table_g1
+dd70 : 03                    	db	VDP_LONGDELAY	; Long delay
+dd71 : 00                    	db	%00000000		; R0 - No-extvid
 dd72 : e0                    	db	%11100000		; R1 - 16K,Disp-enable,Int-enable,
 dd73 : 0010                  	dw	0x1000			; Name table address
 dd75 : 04                    	db	0x1000>>10		; R2 Name table value
@@ -7340,12 +7343,12 @@ ddb5 : 0000                  	dw	0				; Sprite attribute table NA
 ddb7 : 00                    	db	0				; R5 Sprite attribute table value
 ddb8 : 0000                  	dw	0				; Sprite pattern table NA
 ddba : 00                    	db	0				; R6 Sprite pattern table value
-ddbb : fd                    	db	0xfd			; R7 White f/gnd, magenta background
-                             
-ddbc :                       mod_sz_vdp_e
 AS65 Assembler for R6502 [1.42].                                     Page  114
 ---------------------------------- bank0.s -----------------------------------
 
+ddbb : fd                    	db	0xfd			; R7 White f/gnd, magenta background
+                             
+ddbc :                       mod_sz_vdp_e
                              
                              	include "vdp\graph.s"
                              ;************************************************
@@ -7405,12 +7408,12 @@ ddd0 : 206cde           [ 6] 	jsr gr_cls
                              	; Cursor pointer in to screen
 ddd3 : 20fade           [ 6] 	jsr gr_set_cur	
                              	
-ddd6 : 60               [ 6] 	rts
-                             
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page  115
 ---------------------------------- bank0.s -----------------------------------
 
+ddd6 : 60               [ 6] 	rts
+                             
+                             ;****************************************
                              ;* gr_init_screen_32 g1 if A=1 else g2 if A=2
                              ;* initialise the screen in graphic mode 1/2
                              ;****************************************
@@ -7470,12 +7473,12 @@ de15 : 60               [ 6] 	rts
                              ;* gr_init_hires
                              ;* Input : A = Colour table fill value
                              ;* initialise the screen in hires mode
-                             ;****************************************
-de16 :                       gr_init_hires
-de16 : 8530             [ 3] 	sta gr_scrngeom+gr_pixcol		; Save pixel colour
 AS65 Assembler for R6502 [1.42].                                     Page  116
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;****************************************
+de16 :                       gr_init_hires
+de16 : 8530             [ 3] 	sta gr_scrngeom+gr_pixcol		; Save pixel colour
                              
 de18 : e612             [ 5] 	inc vdp_curoff					; Switch cursor off
                              	
@@ -7535,12 +7538,12 @@ de59 :                       gr_init_screen
 de59 : 8522             [ 3] 	sta vdp_base+vdp_gmode
 de5b : c910             [ 2] 	cmp #0x10				; Hires mode?
 de5d : b00a             [ 3] 	bcs gr_init_screen_hires
-de5f : c900             [ 2] 	cmp #0
-de61 : d003             [ 3] 	bne gr_init_skip_txt
-de63 : 4cfbdd           [ 3] 	jmp gr_init_screen_txt
 AS65 Assembler for R6502 [1.42].                                     Page  117
 ---------------------------------- bank0.s -----------------------------------
 
+de5f : c900             [ 2] 	cmp #0
+de61 : d003             [ 3] 	bne gr_init_skip_txt
+de63 : 4cfbdd           [ 3] 	jmp gr_init_screen_txt
 de66 :                       gr_init_skip_txt
 de66 : 4cd7dd           [ 3] 	jmp gr_init_screen_32
 de69 :                       gr_init_screen_hires
@@ -7600,12 +7603,12 @@ de95 : d011             [ 3] 	bne gr_set_skip_40
 de97 : 18               [ 2] 	clc
 de98 : b9e4e3           [ 4] 	lda gr_offset_40lo, y
 de9b : 6523             [ 3] 	adc gr_scrngeom+gr_screen_start
-de9d : 8531             [ 3] 	sta gr_scrngeom+gr_geom_tmp
-de9f : b9fce3           [ 4] 	lda gr_offset_40hi, y
-dea2 : 6524             [ 3] 	adc gr_scrngeom+gr_screen_start+1
 AS65 Assembler for R6502 [1.42].                                     Page  118
 ---------------------------------- bank0.s -----------------------------------
 
+de9d : 8531             [ 3] 	sta gr_scrngeom+gr_geom_tmp
+de9f : b9fce3           [ 4] 	lda gr_offset_40hi, y
+dea2 : 6524             [ 3] 	adc gr_scrngeom+gr_screen_start+1
 dea4 : 8532             [ 3] 	sta gr_scrngeom+gr_geom_tmp+1
 dea6 : 8013             [ 3] 	bra gr_add_x_offset
                              
@@ -7665,12 +7668,12 @@ dedf : 60               [ 6] 	rts
                              ;****************************************
                              ;* gr_put
                              ;* Write a byte in the current cursor position
-                             ;* Input : A = Byte to put
-                             ;* Output : None
-                             ;* Regs affected : All
 AS65 Assembler for R6502 [1.42].                                     Page  119
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Input : A = Byte to put
+                             ;* Output : None
+                             ;* Regs affected : All
                              ;****************************************
 dee0 :                       gr_put
 dee0 : e612             [ 5] 	inc vdp_curoff		; Disable cusror
@@ -7730,12 +7733,12 @@ df12 : c612             [ 5] 	dec vdp_curoff
 df14 : 60               [ 6] 	rts
                              	
                              
-                             ;****************************************
-                             ;* gr_hchar
-                             ;* Plot a char to hires X,Y coordinates with char
 AS65 Assembler for R6502 [1.42].                                     Page  120
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;****************************************
+                             ;* gr_hchar
+                             ;* Plot a char to hires X,Y coordinates with char
                              ;* Input : X,Y = coord, A = Char code
                              ;* Output : None
                              ;* Regs affected : None
@@ -7795,12 +7798,12 @@ df53 : e612             [ 5] 	inc vdp_curoff				; Disable cursor
                              	
                              	; do 8 lines of left image
 df55 : a200             [ 2] 	ldx #0
-df57 :                       gr_hchar_getimage
-df57 : da               [ 3] 	phx					; Save index
-                             	; Get x,y coord and calc address in to tmp_v1
 AS65 Assembler for R6502 [1.42].                                     Page  121
 ---------------------------------- bank0.s -----------------------------------
 
+df57 :                       gr_hchar_getimage
+df57 : da               [ 3] 	phx					; Save index
+                             	; Get x,y coord and calc address in to tmp_v1
 df58 : a643             [ 3] 	ldx tmp_b
 df5a : a444             [ 3] 	ldy tmp_b+1
 df5c : 2091de           [ 6] 	jsr gr_getXY_ptr
@@ -7860,12 +7863,12 @@ dfa9 : a544             [ 3] 	lda tmp_b+1
 dfab : e908             [ 2] 	sbc #8
 dfad : 8544             [ 3] 	sta tmp_b+1
 dfaf : 18               [ 2] 	clc					; Move x coord across to RHS by adding 8
-dfb0 : a543             [ 3] 	lda tmp_b
-dfb2 : 6908             [ 2] 	adc #8
-dfb4 : 8543             [ 3] 	sta tmp_b
 AS65 Assembler for R6502 [1.42].                                     Page  122
 ---------------------------------- bank0.s -----------------------------------
 
+dfb0 : a543             [ 3] 	lda tmp_b
+dfb2 : 6908             [ 2] 	adc #8
+dfb4 : 8543             [ 3] 	sta tmp_b
 dfb6 : 909f             [ 3] 	bcc gr_hchar_getimage	; Only do right if in boun
 dfb8 :                       gr_hchar_imagedone
 dfb8 : c612             [ 5] 	dec vdp_curoff				; Enable cursor
@@ -7925,12 +7928,12 @@ dfe6 : a63f             [ 3] 	ldx tmp_v1
 dfe8 : a440             [ 3] 	ldy tmp_v1+1
 dfea : 208ac6           [ 6] 	jsr vdp_poke
                              
-                             	; now put in the right colour
-                             	; add the x,y offset in to the colour table
-dfed : a530             [ 3] 	lda gr_scrngeom+gr_pixcol		; If pixcol zero don'
 AS65 Assembler for R6502 [1.42].                                     Page  123
 ---------------------------------- bank0.s -----------------------------------
 
+                             	; now put in the right colour
+                             	; add the x,y offset in to the colour table
+dfed : a530             [ 3] 	lda gr_scrngeom+gr_pixcol		; If pixcol zero don'
 dfef : f010             [ 4] 	beq gr_point_exit
 dff1 : 18               [ 2] 	clc
 dff2 : a519             [ 3] 	lda vdp_base+vdp_addr_col
@@ -7990,12 +7993,12 @@ e043 : a543             [ 3] 	lda tmp_b
 e045 : a687             [ 3] 	ldx num_a+2					; Do bottom right
 e047 : a488             [ 3] 	ldy num_a+3
 e049 : 20d3e0           [ 6] 	jsr gr_box_plot
-                             	; Do fast horz lines if x0,x1
-                             	; are in different byte columns
-e04c : a585             [ 3] 	lda num_a					; Byte align x0
 AS65 Assembler for R6502 [1.42].                                     Page  124
 ---------------------------------- bank0.s -----------------------------------
 
+                             	; Do fast horz lines if x0,x1
+                             	; are in different byte columns
+e04c : a585             [ 3] 	lda num_a					; Byte align x0
 e04e : 29f8             [ 2] 	and #0xf8
 e050 : 8543             [ 3] 	sta tmp_b
 e052 : a587             [ 3] 	lda num_a+2					; Byte align x1
@@ -8055,12 +8058,12 @@ e0b2 : 8491             [ 3] 	sty num_tmp
 e0b4 :                       gr_box_vert
 e0b4 : e691             [ 5] 	inc num_tmp					; Increment y first
 e0b6 : a491             [ 3] 	ldy num_tmp
-e0b8 : c488             [ 3] 	cpy num_a+3					; if thisY>=y1 then done
-e0ba : b016             [ 3] 	bcs gr_box_vert_done
-e0bc : a685             [ 3] 	ldx num_a					; Do left side
 AS65 Assembler for R6502 [1.42].                                     Page  125
 ---------------------------------- bank0.s -----------------------------------
 
+e0b8 : c488             [ 3] 	cpy num_a+3					; if thisY>=y1 then done
+e0ba : b016             [ 3] 	bcs gr_box_vert_done
+e0bc : a685             [ 3] 	ldx num_a					; Do left side
 e0be : a543             [ 3] 	lda tmp_b
 e0c0 : 20d3e0           [ 6] 	jsr gr_box_plot
 e0c3 : a687             [ 3] 	ldx num_a+2					; Do right line
@@ -8120,12 +8123,12 @@ e10d : 80c0e0f0f8fcfeff      	db 0x80,0xc0,0xe0,0xf0,0xf8,0xfc,0xfe,0xff
                              ;* Draw a circle centre x0,y0, radius r
                              ;* Input :	num_a   = x0
                              ;*			num_a+1 = y0
-                             ;*			num_a+2 = r
-                             ;* Output : None
-                             ;* Regs affected : None
 AS65 Assembler for R6502 [1.42].                                     Page  126
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;*			num_a+2 = r
+                             ;* Output : None
+                             ;* Regs affected : None
                              ;****************************************
 e115 :                       gr_circle
                              ; Local definitions of temp space to make
@@ -8185,12 +8188,12 @@ e14e : 80d2             [ 3] 	bra gr_circle_plot
 e150 :                       gr_circle_done
 e150 : 60               [ 6] 	rts
 e151 :                       gr_circle_points
-                             ; Local names of temp storage
-                             ; to make code easier to read
-                             	;DrawPixel( x + x0,  yh + y0);
 AS65 Assembler for R6502 [1.42].                                     Page  127
 ---------------------------------- bank0.s -----------------------------------
 
+                             ; Local names of temp storage
+                             ; to make code easier to read
+                             	;DrawPixel( x + x0,  yh + y0);
 e151 : a588             [ 3] 	lda grc_x
 e153 : 18               [ 2] 	clc
 e154 : 6585             [ 3] 	adc grc_x0
@@ -8250,12 +8253,12 @@ e1a4 : 38               [ 2] 	sec
 e1a5 : e588             [ 3] 	sbc grc_x
 e1a7 : a8               [ 2] 	tay
 e1a8 : 20bbdf           [ 6] 	jsr gr_point
-                             	;DrawPixel( x + x0, -yh + y0);
-e1ab : a588             [ 3] 	lda grc_x
-e1ad : 18               [ 2] 	clc
 AS65 Assembler for R6502 [1.42].                                     Page  128
 ---------------------------------- bank0.s -----------------------------------
 
+                             	;DrawPixel( x + x0, -yh + y0);
+e1ab : a588             [ 3] 	lda grc_x
+e1ad : 18               [ 2] 	clc
 e1ae : 6585             [ 3] 	adc grc_x0
 e1b0 : aa               [ 2] 	tax
 e1b1 : a586             [ 3] 	lda grc_y0
@@ -8315,12 +8318,12 @@ e1cd : a587             [ 3] 	lda grl_x1
 e1cf : e585             [ 3] 	sbc grl_x0
 e1d1 : b003             [ 3] 	bcs gr_line_skip_dx_neg
 e1d3 : 49ff             [ 2] 	eor #0xff
-e1d5 : 1a               [ 2] 	inc a
-e1d6 :                       gr_line_skip_dx_neg
-e1d6 : 858a             [ 3] 	sta grl_dx
 AS65 Assembler for R6502 [1.42].                                     Page  129
 ---------------------------------- bank0.s -----------------------------------
 
+e1d5 : 1a               [ 2] 	inc a
+e1d6 :                       gr_line_skip_dx_neg
+e1d6 : 858a             [ 3] 	sta grl_dx
 e1d8 : 38               [ 2] 	sec
 e1d9 : a588             [ 3] 	lda grl_y1
 e1db : e586             [ 3] 	sbc grl_y0
@@ -8380,12 +8383,12 @@ e22c : 6490             [ 3] 	stz grl_2dy+1
 e22e : 2690             [ 5] 	rol grl_2dy+1
                              	
                              ;    p=2*dy-dx;					; p (word)
-e230 : 38               [ 2] 	sec
-e231 : a58f             [ 3] 	lda grl_2dy
-e233 : e58a             [ 3] 	sbc grl_dx
 AS65 Assembler for R6502 [1.42].                                     Page  130
 ---------------------------------- bank0.s -----------------------------------
 
+e230 : 38               [ 2] 	sec
+e231 : a58f             [ 3] 	lda grl_2dy
+e233 : e58a             [ 3] 	sbc grl_dx
 e235 : 8595             [ 3] 	sta grl_p
 e237 : a590             [ 3] 	lda grl_2dy+1
 e239 : e900             [ 2] 	sbc #0
@@ -8445,12 +8448,12 @@ e289 : 6593             [ 3] 	adc grl_inx
 e28b : 8585             [ 3] 	sta grl_x0
 e28d : 80bb             [ 3] 	bra gr_line_pixel
 e28f :                       gr_line_done
-e28f : 60               [ 6] 	rts
-                             	
-                             
 AS65 Assembler for R6502 [1.42].                                     Page  131
 ---------------------------------- bank0.s -----------------------------------
 
+e28f : 60               [ 6] 	rts
+                             	
+                             
                              ;    while(x<x1)
                              ;    {
                              ;        if(p>=0)
@@ -8510,12 +8513,12 @@ e2b9 : a540             [ 3] 	lda tmp_v1+1
 e2bb : 2075c6           [ 6] 	jsr vdp_rd_addr
                              
                              	; Read in a line worth of screen
-e2be : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
-e2c0 :                       gr_scroll_read_ln
-e2c0 : 2080c6           [ 6] 	jsr vdp_rd_vram
 AS65 Assembler for R6502 [1.42].                                     Page  132
 ---------------------------------- bank0.s -----------------------------------
 
+e2be : a627             [ 3] 	ldx gr_scrngeom+gr_screen_w
+e2c0 :                       gr_scroll_read_ln
+e2c0 : 2080c6           [ 6] 	jsr vdp_rd_vram
 e2c3 : 9d8009           [ 5] 	sta scratch+128,x			; +128 to avoid string corru
 e2c6 : ca               [ 2] 	dex
 e2c7 : d0f7             [ 3] 	bne gr_scroll_read_ln
@@ -8575,12 +8578,12 @@ e307 : 60               [ 6] 	rts
                              ;* Advance cursor position
                              ;* Input : None
                              ;* Output : None
-                             ;* Regs affected : None
-                             ;****************************************
-e308 :                       gr_cur_right
 AS65 Assembler for R6502 [1.42].                                     Page  133
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;* Regs affected : None
+                             ;****************************************
+e308 :                       gr_cur_right
                              	_pushAXY
                              
                              	; Load cursor x,y position
@@ -8640,12 +8643,12 @@ e33e :                       gr_cur_skip_at_tl
                              
 e341 : 60               [ 6] 	rts
                              
-                             ;****************************************
-                             ;* gr_cur_up
-                             ;* Advance cursor up
 AS65 Assembler for R6502 [1.42].                                     Page  134
 ---------------------------------- bank0.s -----------------------------------
 
+                             ;****************************************
+                             ;* gr_cur_up
+                             ;* Advance cursor up
                              ;* Input : None
                              ;* Output : None
                              ;* Regs affected : None
@@ -8705,12 +8708,12 @@ e366 :                       gr_new_ln
 e369 : a200             [ 2] 	ldx #0
 e36b : a42b             [ 3] 	ldy gr_scrngeom+gr_cur_y
 e36d : c8               [ 2] 	iny
-e36e : c428             [ 3] 	cpy gr_scrngeom+gr_screen_h
-e370 : d008             [ 3] 	bne gr_nl_skip_nl
-                             	; If got here then screen needs to scroll
 AS65 Assembler for R6502 [1.42].                                     Page  135
 ---------------------------------- bank0.s -----------------------------------
 
+e36e : c428             [ 3] 	cpy gr_scrngeom+gr_screen_h
+e370 : d008             [ 3] 	bne gr_nl_skip_nl
+                             	; If got here then screen needs to scroll
 e372 : 88               [ 2] 	dey
 e373 : da               [ 3] 	phx
 e374 : 5a               [ 3] 	phy
@@ -8770,12 +8773,12 @@ e39f : f004             [ 3] 	beq gr_process_special
 e3a1 : c920             [ 2] 	cmp #32					; Special char?
 e3a3 : b032             [ 3] 	bcs gr_pb_notspecial	; >=32 == carry clear
                              
-e3a5 :                       gr_process_special
-e3a5 : c90d             [ 2] 	cmp #UTF_CR				; New line?
-e3a7 : d003             [ 3] 	bne gr_skip_new_ln
 AS65 Assembler for R6502 [1.42].                                     Page  136
 ---------------------------------- bank0.s -----------------------------------
 
+e3a5 :                       gr_process_special
+e3a5 : c90d             [ 2] 	cmp #UTF_CR				; New line?
+e3a7 : d003             [ 3] 	bne gr_skip_new_ln
 e3a9 : 4c66e3           [ 3] 	jmp gr_new_ln
 e3ac :                       gr_skip_new_ln
 e3ac : c97f             [ 2] 	cmp #UTF_DEL			; Delete?
@@ -8835,12 +8838,12 @@ e400 : 00000001              	db hi(4*40), hi(5*40), hi(6*40), hi(7*40)
 e404 : 01010101              	db hi(8*40), hi(9*40), hi(10*40), hi(11*40)
 e408 : 01020202              	db hi(12*40), hi(13*40), hi(14*40), hi(15*40)
 e40c : 02020202              	db hi(16*40), hi(17*40), hi(18*40), hi(19*40)
-e410 : 03030303              	db hi(20*40), hi(21*40), hi(22*40), hi(23*40)
-e414 :                       gr_offset_32lo
-e414 : 00204060              	db lo(0*32), lo(1*32), lo(2*32), lo(3*32)
 AS65 Assembler for R6502 [1.42].                                     Page  137
 ---------------------------------- bank0.s -----------------------------------
 
+e410 : 03030303              	db hi(20*40), hi(21*40), hi(22*40), hi(23*40)
+e414 :                       gr_offset_32lo
+e414 : 00204060              	db lo(0*32), lo(1*32), lo(2*32), lo(3*32)
 e418 : 80a0c0e0              	db lo(4*32), lo(5*32), lo(6*32), lo(7*32)
 e41c : 00204060              	db lo(8*32), lo(9*32), lo(10*32), lo(11*32)
 e420 : 80a0c0e0              	db lo(12*32), lo(13*32), lo(14*32), lo(15*32)

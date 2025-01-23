@@ -105,6 +105,9 @@ df_rt_tokenjmp
 	dw	df_rt_fclose
 	dw	df_rt_redim
 	dw  df_rt_put
+	dw	df_rt_ptload
+	dw	df_rt_ptinit
+	dw	df_rt_ptrun
 
 	dw	df_rt_vpeek
 	dw	df_rt_peek

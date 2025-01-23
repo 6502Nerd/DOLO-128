@@ -105,6 +105,9 @@ df_tk_tokenjmp
 	dw	df_tk_fclose
 	dw	df_tk_redim
 	dw  df_tk_put
+	dw	df_tk_ptload
+	dw	df_tk_ptinit
+	dw	df_tk_ptrun
 
 	dw	df_tk_vpeek
 	dw	df_tk_peek

@@ -2570,12 +2570,108 @@ df_rt_vload_next
 df_rt_vload_byte_skip
 	bra df_rt_vload_byte		; Back for next video byte
 df_rt_vload_done
+df_rt_ptload_done
 	; Tidy the stack
 	pla
 	pla
 	pla
 	pla
 	jmp df_rt_file_cleanup
+
+; Loads a song into any part of RAM including shadow RAM
+; Always assumes the top half of memory is in bank 2 (vs bank 3 default)
+	SWBRK DFERR_FNAME
+df_rt_ptload
+	jsr df_rt_neval				; Get address
+	jsr df_ost_popInt			; X,A = Address
+	pha
+	phx
+	; jump over comma
+	inc df_exeoff
+	jsr df_rt_parse_file
+	jsr io_open_read
+	bcs (df_rt_ptload-2)		; Error condition resets the stack
+
+	; Copy code from ROM that does write to RAM
+	ldy #0
+df_rt_ptload_copycode
+	lda df_rt_ptload_code_s,y
+	sta ram_code,y
+	iny
+	cpy #(df_rt_ptload_code_e-df_rt_ptload_code_s)
+	bne df_rt_ptload_copycode
+
+	ply							; Pull the index of address as Y
+	pla							; Pull the high address
+	sta df_tmpptra+1			; Just the page address, so low is 0
+	stz df_tmpptra
+
+	; Save current port B status of both VIAs
+	lda IO_0+PRB				; VIA0 port B is the ROM and RAM bank select
+	pha
+	and #0b11001111				; Mask off RAM bank bits
+	ora #0b00100000				; Select bank 2
+	pha							; Save new bank select
+	lda IO_1+PRB				; VIA1 port B controls ROM enable
+	pha
+	and #0b11011111				; Disable ROM bit
+	pha							; Save ROM disable state
+	; Stack contains:
+	;	101,x = disable ROM value
+	;	102,x = original ROM value
+	;	103,x = new RAM bank select value
+	;	104,x = original RAM bank select value
+df_rt_ptload_byte
+	jsr io_get_ch				; Get a byte
+	bcs df_rt_ptload_done		; If EOF then done
+	jsr ram_code				; Poke byte to RAM bank 2 and maybe under ROM
+	iny							; Update page index
+	bne df_rt_ptload_byte		; Back for next byte
+	inc df_tmpptra+1			; Increment high address
+	bra df_rt_ptload_byte		; Back for next byte
+
+; This code gets copied to RAM to do the actual poking
+df_rt_ptload_code_s
+	php							; Save processor status
+	sei							; Disable VDP interrupts
+	pha
+	tsx
+	inx
+	inx
+	inx
+	inx
+	lda 0x101,x					; Get disable ROM value
+	sta IO_1+PRB				; Disable ROM
+	lda 0x103,x					; Get new RAM bank select value
+	sta IO_0+PRB				; Select bank 2
+	pla
+	sta (df_tmpptra),y			; Actually poke the byte to memory!!
+	lda 0x102,x					; Get original ROM value
+	sta IO_1+PRB				; Enable ROM
+	lda 0x104,x					; Get original RAM bank select value
+	sta IO_0+PRB				; Restore RAM bank select	
+	plp							; Restore processor status
+	rts
+df_rt_ptload_code_e
+
+df_rt_ptinit
+	jsr df_rt_neval				; Get address
+	jsr df_ost_popInt			; X,A = Address
+	phx							; But swap them
+	pha
+	plx
+	pla
+	jmp _PT3START				; Off to the PT3 player module
+
+df_rt_ptrun
+	jsr df_rt_neval				; Get run status in X
+	jsr df_ost_popInt			; X,A = Address
+	cpx #0						; If 0 then stop
+	beq df_rt_ptrun_stop
+	; else start
+	jmp _PT3RESUME
+df_rt_ptrun_stop
+	jmp _PT3PAUSE
 
 df_rt_dir_string				; Name of a directory
 	db "<DIR>  ",0				; 7 chars + terminator

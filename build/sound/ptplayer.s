@@ -161,6 +161,9 @@ _doResume
 ; Initialise the player to start using A,X as song address
 
 _doStart
+        ; Disable T1 interrupt on VIA 1 just in case
+        ldy #0b01000000
+        sty IO_1+IER
 ; For dflat, assume that A,X provides address of song module
         sta z80_L
         stx z80_H

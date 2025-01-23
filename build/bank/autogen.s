@@ -1,9 +1,9 @@
 ;
 mod_sz_autogen_s
 _df_init
- _bankjsr $f267, 1
+ _bankjsr $f30f, 1
 _df_pg_dflat
- _bankjsr $d80b, 1
+ _bankjsr $d825, 1
 _fs_chdir_w
  _bankjsr $d59b, 2
 _fs_mkdir_w

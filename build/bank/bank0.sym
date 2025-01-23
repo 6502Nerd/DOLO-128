@@ -249,7 +249,7 @@ cmd_dumpmem_parm_err : $cd19          52505
           df_lineidx : $00d4            212
           df_lineptr : $00d2            210
            df_linoff : $00be            190
-           df_memtop : $0c67           3175
+           df_memtop : $0ca7           3239
           df_nextlin : $00cb            203
          df_nxtstidx : $00c1            193
           df_parmtop : $00b9            185
@@ -671,7 +671,7 @@ gr_line_skip_xy_swap : $e202          57858
                MM_Y1 : $0080            128   *
                 main : $c6ff          50943
         mem_clr_byte : $c8c8          51400
-           mem_start : $0c69           3177
+           mem_start : $0ca9           3241
         mod_sz_cia_e : $d25b          53851
         mod_sz_cia_s : $d1db          53723
       mod_sz_graph_e : $e444          58436
@@ -761,6 +761,7 @@ gr_line_skip_xy_swap : $e202          57858
              RTC_VRT : $0080            128   *
               RTC_YR : $0009              9   *
             RTC_2412 : $0002              2   *
+            ram_code : $0c67           3175
       recv_bad_block : $d14f          53583
           recv_block : $00fd            253
      recv_block_csum : $00fc            252
@@ -777,10 +778,10 @@ recv_closed_file_msg : $d09f          53407
  recv_find_fname_end : $d16a          53610
           recv_flush : $d0f8          53496
      recv_flush_byte : $d0fd          53501
-          recv_fopen : $0a01           2561   *
 AS65 Assembler for R6502 [1.42].                                     Page   13
 ---------------------------------- bank0.s -----------------------------------
 
+          recv_fopen : $0a01           2561   *
       recv_get_block : $d123          53539
  recv_get_block_byte : $d12d          53549
   recv_get_block_fin : $d118          53528
@@ -842,10 +843,10 @@ recv_process_blockn_byte : $d1cd          53709
              SER_PMC : $00c0            192   *
             SER_PMC0 : $0040             64   *
             SER_PMC1 : $0080            128   *
-             SER_PME : $0020             32   *
 AS65 Assembler for R6502 [1.42].                                     Page   14
 ---------------------------------- bank0.s -----------------------------------
 
+             SER_PME : $0020             32   *
              SER_RCS : $0010             16   *
             SER_RDRF : $0008              8   *
              SER_REM : $0010             16   *
@@ -907,10 +908,10 @@ recv_process_blockn_byte : $d1cd          53709
       skip_caps_lock : $d2fe          54014
        skip_ctrl_key : $d2ec          53996
          skip_kb_deb : $c87f          51327
-         skip_kb_rep : $c885          51333
 AS65 Assembler for R6502 [1.42].                                     Page   15
 ---------------------------------- bank0.s -----------------------------------
 
+         skip_kb_rep : $c885          51333
         skip_led0_on : $d1e5          53733
         skip_led1_on : $d1f4          53748
         skip_led2_on : $d203          53763
@@ -972,10 +973,10 @@ twos_complement_skip_X : $ca9c          51868
            VDP_MODE0 : $0500           1280   *
            VDP_MODE1 : $0501           1281   *
       VDP_SHORTDELAY : $0001              1   *
-          VDP_STATUS : $0501           1281   *
 AS65 Assembler for R6502 [1.42].                                     Page   16
 ---------------------------------- bank0.s -----------------------------------
 
+          VDP_STATUS : $0501           1281   *
             VDP_VRAM : $0500           1280   *
         vdp_addr_col : $0002              2
         vdp_addr_nme : $0000              0
@@ -1037,10 +1038,10 @@ vdp_set_hires_fill_nme : $dcad          56493
        _command_line : $c2b6          49846
           _cpu_stack : $0100            256
           _cpyZPWord : <macro>
-          _decZPWord : <macro>
 AS65 Assembler for R6502 [1.42].                                     Page   17
 ---------------------------------- bank0.s -----------------------------------
 
+          _decZPWord : <macro>
          _decZPWordA : <macro>
             _default : <macro>
             _df_init : $c02e          49198
@@ -1102,10 +1103,10 @@ _fs_dir_root_start_w : $c14e          49486
            _put_byte : $c17e          49534
          _recv_print : <macro>
        _restore_bank : $c01c          49180
-    _rtc_gettimedate : $c466          50278
 AS65 Assembler for R6502 [1.42].                                     Page   18
 ---------------------------------- bank0.s -----------------------------------
 
+    _rtc_gettimedate : $c466          50278
            _rtc_init : $c44e          50254
          _rtc_nvread : $c496          50326
         _rtc_nvwrite : $c4ae          50350
@@ -1124,9 +1125,9 @@ _fs_dir_root_start_w : $c14e          49486
            _vdp_poke : $c41e          50206
           __65SC02__ : $0001              1
 
-1036 labels used
+1037 labels used
 
-8322 lines read, no errors in pass 1.
+8325 lines read, no errors in pass 1.
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
 Total size 16384 bytes.

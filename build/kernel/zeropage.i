@@ -228,6 +228,9 @@ fs_dirclust	ds	2		; Current directory cluster number
 ; Working and scratch for filesystem - some data gets posted here
 fs_scratch	ds	32		; 32 bytes should be more than enough
 
+; Self-modifying code or code that needs to run with ROM disabled
+ram_code	ds  64		; 64 bytes of RAM code space
+
 ; Dflat top of memory+1 - normally initialised to 0xC000 but can be changed by user
 df_memtop	ds	2
 

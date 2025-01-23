@@ -104,10 +104,10 @@ df_tokensyms
 	db	"devic",'e'+0x80			; device <devnum>
 	db	"fclos",'e'+0x80			; fclose
 	db	"redi",'m'+0x80				; redim varlist
-	db  "pu",'t'+0x80				; put(byte)
-;	db	"ptloa,",'d'+0x80			; ptload addr,filename
-;	db	"ptstar",'t'+0x80			; ptstart
-;	db	"pr"
+	db  "pu",'t'+0x80				; put byte 
+	db	"ptloa",'d'+0x80			; ptload addr,filename
+	db	"ptini",'t'+0x80			; ptinit addr 
+	db	"ptru",'n'+0x80				; ptrun flag 
 ; Functions
 	db	"vpeek",'('+0x80			; vpeek(x)
 	db	"peek",'('+0x80				; peek(x)
