@@ -37,14 +37,6 @@
 tmp_bank1	ds	1		; Temp storage ONLY FOR USE BY BANK SWITCHING
 tmp_bank2	ds	1		; Temp storage ONLY FOR USE BY BANK SWITCHING
 
-; Interrupt routine addresses
-int_nmi		 ds 2		; Master NMI handler
-int_irq		 ds	2		; Master IRQ handler
-int_brk		 ds	2		; Master BRK handler
-int_uservdp	 ds	2		; Where to jump for VDP interrupt
-int_usercia0 ds	2		; Where to jump for CIA0 interrupt
-int_usercia1 ds	2		; Where to jump for CIA1 interrupt
-
 ; Serial FIFO buffer pointers
 ser_first	ds	1		; Pointer to first byte in buffer
 ser_last	ds	1		; Pointer to last byte in buffer
@@ -209,6 +201,20 @@ df_rtspace	ds	256
 
 ;***** NON-ZERO PAGE VARIABLES *****
 
+	org 0x0c00			; Page 11 = non-zero page variables
+; Interrupt routine addresses
+int_nmi		 ds 2		; Master NMI handler
+int_irq		 ds	2		; Master IRQ handler
+int_brk		 ds	2		; Master BRK handler
+int_uservdp	 ds	2		; Where to jump for VDP interrupt
+int_usercia0 ds	2		; Where to jump for CIA0 interrupt
+int_usercia1 ds	2		; Where to jump for CIA1 interrupt
+
+; Self-modifying code or code that needs to run with ROM disabled
+ram_code	ds  64		; 64 bytes of RAM code space
+pt3_int		ds	1		; =1 when PT3 interrupt routine is running
+
+
 ; Active IO device settings
 io_default	ds	1		; The default device number - established on boot
 ; Copy of jump tables to active device io routines
@@ -227,9 +233,6 @@ fs_dirclust	ds	2		; Current directory cluster number
 
 ; Working and scratch for filesystem - some data gets posted here
 fs_scratch	ds	32		; 32 bytes should be more than enough
-
-; Self-modifying code or code that needs to run with ROM disabled
-ram_code	ds  64		; 64 bytes of RAM code space
 
 ; Dflat top of memory+1 - normally initialised to 0xC000 but can be changed by user
 df_memtop	ds	2

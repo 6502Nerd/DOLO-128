@@ -10,9 +10,9 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
     bankjsr_nul_addr : $c000          49152   *
     bankjsr_nul_bank : $0000              0   *
             bank_num : $c000          49152
-             buf_adr : $0047             71
-              buf_ef : $004a             74
-              buf_sz : $0049             73
+             buf_adr : $003b             59
+              buf_ef : $003e             62
+              buf_sz : $003d             61
      CMD_ERR_NOERROR : $0000              0   *
     CMD_ERR_NOTFOUND : $0001              1   *
         CMD_ERR_PARM : $0002              2   *
@@ -21,33 +21,33 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
            CRSR_LEFT : $0008              8   *
           CRSR_RIGHT : $0009              9   *
              CRSR_UP : $000b             11   *
-        call_irq_brk : $c7c6          51142
-     call_irq_master : $c7c3          51139
-   call_irq_usercia0 : $c7cc          51148
-   call_irq_usercia1 : $c7cf          51151
-    call_irq_uservdp : $c7c9          51145
-     call_nmi_master : $c763          51043
-       con_bin_digit : $c998          51608
-        con_bin_done : $c9ae          51630
-         con_bin_err : $c9b8          51640
-         con_bin_jmp : $c936          51510
-        con_bin_to_a : $c990          51600
-    con_bin_to_a_int : $c994          51604
-         con_dec_jmp : $c92a          51498
-        con_dec_to_a : $c9ba          51642
-    con_dec_to_a_int : $c9be          51646
-       con_hex_digit : $c959          51545
-        con_hex_done : $c986          51590
-         con_hex_err : $c984          51588
-         con_hex_jmp : $c930          51504
-  con_hex_skip_x_f_1 : $c966          51558
-        con_hex_to_a : $c951          51537
-    con_hex_to_a_int : $c955          51541
-           con_n_err : $c939          51513
-       con_n_not_dec : $c92d          51501
-       con_n_not_hex : $c933          51507
-          con_n_to_a : $c91b          51483
-   con_n_to_a_detect : $c93b          51515
+        call_irq_brk : $c7e8          51176
+     call_irq_master : $c7e5          51173
+   call_irq_usercia0 : $c7ee          51182
+   call_irq_usercia1 : $c7f1          51185
+    call_irq_uservdp : $c7eb          51179
+     call_nmi_master : $c777          51063
+       con_bin_digit : $c9ba          51642
+        con_bin_done : $c9d0          51664
+         con_bin_err : $c9da          51674
+         con_bin_jmp : $c958          51544
+        con_bin_to_a : $c9b2          51634
+    con_bin_to_a_int : $c9b6          51638
+         con_dec_jmp : $c94c          51532
+        con_dec_to_a : $c9dc          51676
+    con_dec_to_a_int : $c9e0          51680
+       con_hex_digit : $c97b          51579
+        con_hex_done : $c9a8          51624
+         con_hex_err : $c9a6          51622
+         con_hex_jmp : $c952          51538
+  con_hex_skip_x_f_1 : $c988          51592
+        con_hex_to_a : $c973          51571
+    con_hex_to_a_int : $c977          51575
+           con_n_err : $c95b          51547
+       con_n_not_dec : $c94f          51535
+       con_n_not_hex : $c955          51541
+          con_n_to_a : $c93d          51517
+   con_n_to_a_detect : $c95d          51549
                 DDRA : $0003              3   *
                 DDRB : $0002              2   *
          DFERR_ABORT : $0012             18   *
@@ -145,73 +145,73 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           DFVVT_TYPE : $0000              0   *
            DF_MEMTOP : $c000          49152   *
         DF_PROGSTART : $0000              0   *
-          dflat_zp_s : $009d            157
-     dflat_zp_save_e : $00e3            227
-     dflat_zp_save_s : $009d            157
-          df_asmadmd : $00de            222
-           df_asmlen : $00e2            226
-         df_asmopcde : $00df            223
-         df_asmoprnd : $00e0            224
-           df_asmopt : $00dd            221
-            df_asmpc : $00db            219
-            df_brkpc : $00a4            164
-           df_brkval : $00a6            166
-         df_checkkey : $009d            157
-         df_checkmsk : $009e            158
-          df_currdat : $00d6            214
-          df_currlin : $00c8            200
-         df_curstidx : $00c2            194
-           df_datoff : $00d8            216
-           df_eolidx : $00c0            192
-           df_exeoff : $00ca            202
-           df_ifnest : $00d5            213
-            df_immed : $00a0            160
+          dflat_zp_s : $0091            145
+     dflat_zp_save_e : $00d7            215
+     dflat_zp_save_s : $0091            145
+          df_asmadmd : $00d2            210
+           df_asmlen : $00d6            214
+         df_asmopcde : $00d3            211
+         df_asmoprnd : $00d4            212
+           df_asmopt : $00d1            209
+            df_asmpc : $00cf            207
+            df_brkpc : $0098            152
+           df_brkval : $009a            154
+         df_checkkey : $0091            145
+         df_checkmsk : $0092            146
+          df_currdat : $00ca            202
+          df_currlin : $00bc            188
+         df_curstidx : $00b6            182
+           df_datoff : $00cc            204
+           df_eolidx : $00b4            180
+           df_exeoff : $00be            190
+           df_ifnest : $00c9            201
+            df_immed : $0094            148
           df_linbuff : $0a00           2560
-          df_lineidx : $00d4            212
-          df_lineptr : $00d2            210
-           df_linoff : $00be            190
-           df_memtop : $0ca7           3239
-          df_nextlin : $00cb            203
-         df_nxtstidx : $00c1            193
-          df_parmtop : $00b9            185
-               df_pc : $00a2            162
-           df_prgend : $00a9            169
-          df_prgstrt : $00a7            167
-         df_procargs : $00ce            206
-          df_procloc : $00cf            207
-         df_procmode : $00cd            205
-          df_procptr : $00d0            208
+          df_lineidx : $00c8            200
+          df_lineptr : $00c6            198
+           df_linoff : $00b2            178
+           df_memtop : $0cb4           3252
+          df_nextlin : $00bf            191
+         df_nxtstidx : $00b5            181
+          df_parmtop : $00ad            173
+               df_pc : $0096            150
+           df_prgend : $009d            157
+          df_prgstrt : $009b            155
+         df_procargs : $00c2            194
+          df_procloc : $00c3            195
+         df_procmode : $00c1            193
+          df_procptr : $00c4            196
               df_raw : $0a00           2560
-              df_rnd : $00d9            217
+              df_rnd : $00cd            205
           df_rtspace : $0b00           2816
            df_rtstck : $0b00           2816
-           df_rtstop : $00b8            184
-         df_sevalptr : $00bc            188
-               df_sp : $00a1            161
-          df_starend : $00b6            182
-         df_starstrt : $00b4            180
-          df_strbuff : $00ba            186
-           df_stridx : $00bb            187
-           df_symini : $00c6            198
+           df_rtstop : $00ac            172
+         df_sevalptr : $00b0            176
+               df_sp : $0095            149
+          df_starend : $00aa            170
+         df_starstrt : $00a8            168
+          df_strbuff : $00ae            174
+           df_stridx : $00af            175
+           df_symini : $00ba            186
 AS65 Assembler for R6502 [1.42].                                     Page    4
 ---------------------------------- bank2.s -----------------------------------
 
-           df_symoff : $00c5            197
-           df_symtab : $00c3            195
-          df_tmpptra : $00e3            227
-          df_tmpptrb : $00e5            229
-          df_tmpptrc : $00e7            231
-          df_tmpptrd : $00e9            233
-          df_tmpptre : $00eb            235
+           df_symoff : $00b9            185
+           df_symtab : $00b7            183
+          df_tmpptra : $00d7            215
+          df_tmpptrb : $00d9            217
+          df_tmpptrc : $00db            219
+          df_tmpptrd : $00dd            221
+          df_tmpptre : $00df            223
               df_tok : $0a80           2688
           df_tokbuff : $0a80           2688
-           df_tokoff : $00bf            191
-           df_varcnt : $00b3            179
-           df_vntend : $00ad            173
-          df_vntstrt : $00ab            171
-           df_vvtend : $00b1            177
-          df_vvtstrt : $00af            175
-               errno : $009f            159
+           df_tokoff : $00b3            179
+           df_varcnt : $00a7            167
+           df_vntend : $00a1            161
+          df_vntstrt : $009f            159
+           df_vvtend : $00a5            165
+          df_vvtstrt : $00a3            163
+               errno : $0093            147
          FATFileDesc : $0020             32
       FAT_AccessDate : $0012             18
             FAT_Attr : $000b             11
@@ -248,174 +248,174 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
         FS_FILEMODER : $0001              1   *
         FS_FILEMODEW : $0080            128   *
          FS_FOLDERCH : $002f             47   *
-  fh_create_skip_dir : $d45d          54365
-           fh_handle : $0056             86
-         fs_bootsect : $0c31           3121
-            fs_chdir : $d55d          54621
-     fs_chdir_direct : $d545          54597
-fs_chdir_direct_sect : $d554          54612
-        fs_chdir_fin : $d599          54681
-       fs_chdir_find : $d57b          54651
-  fs_chdir_not_found : $d59a          54682
-       fs_chdir_root : $d565          54629
+  fh_create_skip_dir : $d47f          54399
+           fh_handle : $004a             74
+         fs_bootsect : $0c7e           3198
+            fs_chdir : $d57f          54655
+     fs_chdir_direct : $d567          54631
+fs_chdir_direct_sect : $d576          54646
+        fs_chdir_fin : $d5bb          54715
+       fs_chdir_find : $d59d          54685
+  fs_chdir_not_found : $d5bc          54716
+       fs_chdir_root : $d587          54663
 AS65 Assembler for R6502 [1.42].                                     Page    5
 ---------------------------------- bank2.s -----------------------------------
 
-          fs_chdir_w : $d59b          54683
- fs_check_curr_clust : $d2a0          53920
-fs_check_empty_sector : $d29d          53917
-       fs_close_done : $d4f5          54517
-    fs_close_filedir : $d4b4          54452
-          fs_close_w : $d4f6          54518
-fs_create_copy_fspec : $d463          54371
-fs_create_copy_fspec_done : $d46d          54381
-    fs_create_dirptr : $d490          54416
-    fs_create_fd_err : $d48c          54412
-   fs_create_filedir : $d449          54345
-         fs_datasect : $0c3d           3133
-           fs_delete : $d500          54528
-     fs_delete_clust : $d517          54551
-       fs_delete_fin : $d536          54582
-         fs_delete_w : $d537          54583
-         fs_dirclust : $0c45           3141
-         fs_direntry : $0c11           3089
-          fs_dirsect : $0c41           3137
-  fs_dir_check_entry : $d01c          53276
-  fs_dir_clear_entry : $d113          53523
-fs_dir_copy_entry_sd_byte : $d38f          54159
-fs_dir_copy_sd_entry_byte : $d048          53320
-    fs_dir_curr_sect : $d37b          54139
-fs_dir_dirsect_fh_byte : $d0ec          53484
-      fs_dir_do_attr : $d142          53570
-  fs_dir_entry_clust : $d159          53593
- fs_dir_entry_next_w : $d08c          53388
-fs_dir_entry_to_fhandle : $d096          53398
-fs_dir_entry_to_fh_byte : $d0fd          53501
-  fs_dir_entry_to_sd : $d105          53509
-fs_dir_entry_to_sd_byte : $d107          53511
- fs_dir_fhandle_done : $d70b          55051
-fs_dir_fhandle_dotype : $d67b          54907
- fs_dir_fhandle_name : $d66c          54892
-fs_dir_fhandle_pad_spc : $d64f          54863
-  fs_dir_fhandle_str : $d642          54850
-fs_dir_fhandle_to_entry : $d10f          53519
- fs_dir_fhandle_type : $d687          54919
-fs_dir_fhandle_zeros : $d6fc          55036
-fs_dir_fhandle_zskip : $d706          55046
-fs_dir_fh_dirsect_byte : $d178          53624
-      fs_dir_fh_size : $d149          53577
-fs_dir_fh_to_entry_byte : $d188          53640
-          fs_dir_fil : $d63f          54847
-          fs_dir_fin : $d055          53333
- fs_dir_find_another : $d03e          53310
-   fs_dir_find_entry : $d01b          53275
- fs_dir_find_entry_w : $d056          53334
- fs_dir_found_active : $d046          53318
-  fs_dir_found_empty : $d050          53328
-   fs_dir_get_fh_dot : $d134          53556
-fs_dir_get_fh_name_ch : $d11d          53533
-fs_dir_get_fs_name_ch : $d09a          53402
-     fs_dir_inc_sect : $d076          53366
-    fs_dir_next_done : $d08b          53387
-   fs_dir_next_entry : $d060          53344
-     fs_dir_notfound : $d043          53315
-   fs_dir_root_start : $cffb          53243
- fs_dir_root_start_w : $d011          53265
-   fs_dir_save_entry : $d379          54137
-       fs_dir_set_sd : $cffd          53245
+          fs_chdir_w : $d5bd          54717
+ fs_check_curr_clust : $d2c2          53954
+fs_check_empty_sector : $d2bf          53951
+       fs_close_done : $d517          54551
+    fs_close_filedir : $d4d6          54486
+          fs_close_w : $d518          54552
+fs_create_copy_fspec : $d485          54405
+fs_create_copy_fspec_done : $d48f          54415
+    fs_create_dirptr : $d4b2          54450
+    fs_create_fd_err : $d4ae          54446
+   fs_create_filedir : $d46b          54379
+         fs_datasect : $0c8a           3210
+           fs_delete : $d522          54562
+     fs_delete_clust : $d539          54585
+       fs_delete_fin : $d558          54616
+         fs_delete_w : $d559          54617
+         fs_dirclust : $0c92           3218
+         fs_direntry : $0c5e           3166
+          fs_dirsect : $0c8e           3214
+  fs_dir_check_entry : $d03e          53310
+  fs_dir_clear_entry : $d135          53557
+fs_dir_copy_entry_sd_byte : $d3b1          54193
+fs_dir_copy_sd_entry_byte : $d06a          53354
+    fs_dir_curr_sect : $d39d          54173
+fs_dir_dirsect_fh_byte : $d10e          53518
+      fs_dir_do_attr : $d164          53604
+  fs_dir_entry_clust : $d17b          53627
+ fs_dir_entry_next_w : $d0ae          53422
+fs_dir_entry_to_fhandle : $d0b8          53432
+fs_dir_entry_to_fh_byte : $d11f          53535
+  fs_dir_entry_to_sd : $d127          53543
+fs_dir_entry_to_sd_byte : $d129          53545
+ fs_dir_fhandle_done : $d72d          55085
+fs_dir_fhandle_dotype : $d69d          54941
+ fs_dir_fhandle_name : $d68e          54926
+fs_dir_fhandle_pad_spc : $d671          54897
+  fs_dir_fhandle_str : $d664          54884
+fs_dir_fhandle_to_entry : $d131          53553
+ fs_dir_fhandle_type : $d6a9          54953
+fs_dir_fhandle_zeros : $d71e          55070
+fs_dir_fhandle_zskip : $d728          55080
+fs_dir_fh_dirsect_byte : $d19a          53658
+      fs_dir_fh_size : $d16b          53611
+fs_dir_fh_to_entry_byte : $d1aa          53674
+          fs_dir_fil : $d661          54881
+          fs_dir_fin : $d077          53367
+ fs_dir_find_another : $d060          53344
+   fs_dir_find_entry : $d03d          53309
+ fs_dir_find_entry_w : $d078          53368
+ fs_dir_found_active : $d068          53352
+  fs_dir_found_empty : $d072          53362
+   fs_dir_get_fh_dot : $d156          53590
+fs_dir_get_fh_name_ch : $d13f          53567
+fs_dir_get_fs_name_ch : $d0bc          53436
+     fs_dir_inc_sect : $d098          53400
+    fs_dir_next_done : $d0ad          53421
+   fs_dir_next_entry : $d082          53378
+     fs_dir_notfound : $d065          53349
+   fs_dir_root_start : $d01d          53277
+ fs_dir_root_start_w : $d033          53299
+   fs_dir_save_entry : $d39b          54171
+       fs_dir_set_sd : $d01f          53279
 AS65 Assembler for R6502 [1.42].                                     Page    6
 ---------------------------------- bank2.s -----------------------------------
 
-     fs_dir_skip_ext : $d139          53561
-fs_dir_skip_fs_dot_ch : $d0ac          53420
-fs_dir_skip_fs_name_ch : $d0af          53423
-          fs_dir_str : $d63c          54844
-          fs_fatsect : $0c35           3125
- fs_find_active_slot : $d036          53302
-  fs_find_check_name : $d3a5          54181
- fs_find_empty_clust : $d28d          53901
-    fs_find_init_fat : $d295          53909
-       fs_find_named : $d39b          54171
-        fs_find_next : $d3b6          54198
-   fs_flush_cpy_sect : $d27e          53886
-  fs_flush_curr_sect : $d27a          53882
-   fs_getbyte_sd_buf : $cfb3          53171
-fs_getbyte_sd_buf_hi : $cfbc          53180
-   fs_getword_sd_buf : $cfd0          53200
-fs_getword_sd_buf_hi : $cfdc          53212
-      fs_get_add_fat : $d2ef          53999
-         fs_get_byte : $d1f2          53746
-       fs_get_byte_w : $d213          53779
- fs_get_data_sect_m5 : $d23f          53823
-fs_get_FAT_clust_sect : $d2e0          53984
- fs_get_next_cluster : $d190          53648
-    fs_get_root_sect : $d25e          53854
-      fs_get_set_EOF : $d1fd          53757
-     fs_get_skip_EOF : $d203          53763
-   fs_get_start_data : $d250          53840
-fs_get_start_sect_data : $d22d          53805
-fs_get_start_sect_root : $d25c          53852
-     fs_inc_curr_sec : $d2d0          53968
-      fs_inc_fh_sect : $d1d8          53720
-          fs_inc_fin : $d1cc          53708
-  fs_inc_load_sector : $d1e9          53737
-      fs_inc_pointer : $d1b9          53689
- fs_inc_pointer_byte : $d1be          53694
-    fs_inc_sector_ov : $d1cd          53709
-     fs_inc_sec_byte : $d2d5          53973
-fs_inc_skip_sec_wrap : $d1e2          53730
-     fs_init_add_fat : $cf5d          53085
-        fs_init_data : $cf7d          53117
-            fs_isEOF : $d1a0          53664
-          fs_isEOF_w : $d1af          53679
-       fs_is_eof_cmp : $d1a2          53666
-    fs_load_cpy_sect : $d26b          53867
-   fs_load_curr_sect : $d267          53863
-            fs_mkdir : $d5a9          54697
-        fs_mkdir_fin : $d62d          54829
-         fs_mkdir_ok : $d5b3          54707
-          fs_mkdir_w : $d62e          54830
-fs_mkdir_zero_cluster : $d5e1          54753
-fs_mkdir_zero_sector : $d5cd          54733
-       fs_name_found : $d3bb          54203
-   fs_name_not_found : $d3bd          54205
-   fs_next_fat_entry : $d2c1          53953
-    fs_next_fat_sect : $d2cb          53963
-           fs_notEOF : $d1ad          53677
-       fs_open_found : $d3c7          54215
-fs_open_init_pointer : $d3d7          54231
-   fs_open_not_found : $d3e1          54241
-        fs_open_read : $d3bf          54207
-      fs_open_read_w : $d3e2          54242
-       fs_open_write : $d49e          54430
+     fs_dir_skip_ext : $d15b          53595
+fs_dir_skip_fs_dot_ch : $d0ce          53454
+fs_dir_skip_fs_name_ch : $d0d1          53457
+          fs_dir_str : $d65e          54878
+          fs_fatsect : $0c82           3202
+ fs_find_active_slot : $d058          53336
+  fs_find_check_name : $d3c7          54215
+ fs_find_empty_clust : $d2af          53935
+    fs_find_init_fat : $d2b7          53943
+       fs_find_named : $d3bd          54205
+        fs_find_next : $d3d8          54232
+   fs_flush_cpy_sect : $d2a0          53920
+  fs_flush_curr_sect : $d29c          53916
+   fs_getbyte_sd_buf : $cfd5          53205
+fs_getbyte_sd_buf_hi : $cfde          53214
+   fs_getword_sd_buf : $cff2          53234
+fs_getword_sd_buf_hi : $cffe          53246
+      fs_get_add_fat : $d311          54033
+         fs_get_byte : $d214          53780
+       fs_get_byte_w : $d235          53813
+ fs_get_data_sect_m5 : $d261          53857
+fs_get_FAT_clust_sect : $d302          54018
+ fs_get_next_cluster : $d1b2          53682
+    fs_get_root_sect : $d280          53888
+      fs_get_set_EOF : $d21f          53791
+     fs_get_skip_EOF : $d225          53797
+   fs_get_start_data : $d272          53874
+fs_get_start_sect_data : $d24f          53839
+fs_get_start_sect_root : $d27e          53886
+     fs_inc_curr_sec : $d2f2          54002
+      fs_inc_fh_sect : $d1fa          53754
+          fs_inc_fin : $d1ee          53742
+  fs_inc_load_sector : $d20b          53771
+      fs_inc_pointer : $d1db          53723
+ fs_inc_pointer_byte : $d1e0          53728
+    fs_inc_sector_ov : $d1ef          53743
+     fs_inc_sec_byte : $d2f7          54007
+fs_inc_skip_sec_wrap : $d204          53764
+     fs_init_add_fat : $cf7f          53119
+        fs_init_data : $cf9f          53151
+            fs_isEOF : $d1c2          53698
+          fs_isEOF_w : $d1d1          53713
+       fs_is_eof_cmp : $d1c4          53700
+    fs_load_cpy_sect : $d28d          53901
+   fs_load_curr_sect : $d289          53897
+            fs_mkdir : $d5cb          54731
+        fs_mkdir_fin : $d64f          54863
+         fs_mkdir_ok : $d5d5          54741
+          fs_mkdir_w : $d650          54864
+fs_mkdir_zero_cluster : $d603          54787
+fs_mkdir_zero_sector : $d5ef          54767
+       fs_name_found : $d3dd          54237
+   fs_name_not_found : $d3df          54239
+   fs_next_fat_entry : $d2e3          53987
+    fs_next_fat_sect : $d2ed          53997
+           fs_notEOF : $d1cf          53711
+       fs_open_found : $d3e9          54249
+fs_open_init_pointer : $d3f9          54265
+   fs_open_not_found : $d403          54275
+        fs_open_read : $d3e1          54241
+      fs_open_read_w : $d404          54276
+       fs_open_write : $d4c0          54464
 AS65 Assembler for R6502 [1.42].                                     Page    7
 ---------------------------------- bank2.s -----------------------------------
 
-     fs_open_write_w : $d4a6          54438
-   fs_putbyte_sd_buf : $cfc0          53184
-fs_putbyte_sd_buf_hi : $cfcb          53195
-   fs_putword_sd_buf : $cfe3          53219
-fs_putword_sd_buf_hi : $cff2          53234
-         fs_put_byte : $d324          54052
-       fs_put_byte_w : $d36f          54127
-       fs_put_do_put : $d356          54102
-          fs_put_fin : $d36d          54125
-     fs_put_inc_size : $d35e          54110
-fs_put_inc_size_byte : $d363          54115
-     fs_put_skip_err : $d32e          54062
-         fs_rootsect : $0c39           3129
-          fs_scratch : $0c47           3143
-           fs_setEOF : $d1ab          53675
-   fs_skip_load_sect : $d1f1          53745
-    fs_stamptimedate : $d3f0          54256
- fs_stamptimedate_ms : $d402          54274
-         fs_to_upper : $d21b          53787
-    fs_to_upper_done : $d22c          53804
-      fs_to_upper_nz : $d222          53794
- fs_update_FAT_entry : $d2fe          54014
-     fs_util_num_bcd : $d70c          55052
-   fs_util_num_bcd_a : $d722          55074
-  fs_util_num_bcd_xa : $d714          55060
+     fs_open_write_w : $d4c8          54472
+   fs_putbyte_sd_buf : $cfe2          53218
+fs_putbyte_sd_buf_hi : $cfed          53229
+   fs_putword_sd_buf : $d005          53253
+fs_putword_sd_buf_hi : $d014          53268
+         fs_put_byte : $d346          54086
+       fs_put_byte_w : $d391          54161
+       fs_put_do_put : $d378          54136
+          fs_put_fin : $d38f          54159
+     fs_put_inc_size : $d380          54144
+fs_put_inc_size_byte : $d385          54149
+     fs_put_skip_err : $d350          54096
+         fs_rootsect : $0c86           3206
+          fs_scratch : $0c94           3220
+           fs_setEOF : $d1cd          53709
+   fs_skip_load_sect : $d213          53779
+    fs_stamptimedate : $d412          54290
+ fs_stamptimedate_ms : $d424          54308
+         fs_to_upper : $d23d          53821
+    fs_to_upper_done : $d24e          53838
+      fs_to_upper_nz : $d244          53828
+ fs_update_FAT_entry : $d320          54048
+     fs_util_num_bcd : $d72e          55086
+   fs_util_num_bcd_a : $d744          55108
+  fs_util_num_bcd_xa : $d736          55094
           gr_cur_off : $0006              6
           gr_cur_ptr : $0009              9
             gr_cur_x : $0007              7
@@ -429,7 +429,7 @@ fs_put_inc_size_byte : $d363          54115
       gr_screen_size : $0002              2
      gr_screen_start : $0000              0
          gr_screen_w : $0004              4
-         gr_scrngeom : $0023             35
+         gr_scrngeom : $0017             23
                  IER : $000e             14   *
                  IFR : $000d             13   *
              IFR_CA1 : $0002              2   *
@@ -442,59 +442,59 @@ fs_put_inc_size_byte : $d363          54115
                 IO_5 : $0680           1664   *
                 IO_6 : $0700           1792   *
                 IO_7 : $0780           1920   *
-       inc_kb_timers : $c879          51321
-            infinity : $c6ff          50943
-                init : $cb6b          52075
-         init_acmd41 : $cc2a          52266
-           init_cmd0 : $cc21          52257
-          init_cmd16 : $cc34          52276
-             init_fs : $ceee          52974
-    init_fs_clr_sect : $cf0f          53007
-          init_fs_do : $cf00          52992
-   init_fs_get_part1 : $cf1b          53019
-            init_irq : $c7a2          51106
+       inc_kb_timers : $c89b          51355
+            infinity : $c70f          50959
+                init : $cb8d          52109
+         init_acmd41 : $cc4c          52300
+           init_cmd0 : $cc43          52291
+          init_cmd16 : $cc56          52310
+             init_fs : $cf10          53008
+    init_fs_clr_sect : $cf31          53041
+          init_fs_do : $cf22          53026
+   init_fs_get_part1 : $cf3d          53053
+            init_irq : $c7bc          51132
 AS65 Assembler for R6502 [1.42].                                     Page    8
 ---------------------------------- bank2.s -----------------------------------
 
-            init_nmi : $c752          51026
-            init_ram : $cbc9          52169
-       init_ram_fill : $cbdb          52187
-       init_ram_skip : $cbe0          52192
-          init_ram_1 : $cbd3          52179
-         init_sdcard : $cbe8          52200
-     init_sdcard_try : $cbfe          52222
-      init_sd_failed : $cc37          52279
-        init_sd_next : $cc2a          52266
-       init_sd_pulse : $cc16          52246
-              init_2 : $cb71          52081
-             int_brk : $0006              6
-         int_do_read : $c830          51248
-             int_irq : $0004              4
-      int_kb_handler : $c825          51237
-         int_keys_up : $c83c          51260
-             int_nmi : $0002              2
-       int_skip_scan : $c836          51254
-             int_str : $cb30          52016
-          int_to_bcd : $ca9d          51869
-      int_to_bcd_bit : $cab6          51894
- int_to_bcd_skip_neg : $caab          51883
-          int_to_str : $cb17          51991
-       int_to_str_ch : $cb02          51970
-   int_to_str_ch_fin : $cb16          51990
-      int_to_str_fin : $cb4f          52047
-       int_to_str_nz : $cb0f          51983
- int_to_str_skip_neg : $cb2b          52011
-        int_usercia0 : $000a             10
-        int_usercia1 : $000c             12
-         int_uservdp : $0008              8
-         int_vdp_fin : $c872          51314
-     int_vdp_handler : $c847          51271
+            init_nmi : $c762          51042
+            init_ram : $cbeb          52203
+       init_ram_fill : $cbfd          52221
+       init_ram_skip : $cc02          52226
+          init_ram_1 : $cbf5          52213
+         init_sdcard : $cc0a          52234
+     init_sdcard_try : $cc20          52256
+      init_sd_failed : $cc59          52313
+        init_sd_next : $cc4c          52300
+       init_sd_pulse : $cc38          52280
+              init_2 : $cb93          52115
+             int_brk : $0c04           3076
+         int_do_read : $c852          51282
+             int_irq : $0c02           3074
+      int_kb_handler : $c847          51271
+         int_keys_up : $c85e          51294
+             int_nmi : $0c00           3072
+       int_skip_scan : $c858          51288
+             int_str : $cb52          52050
+          int_to_bcd : $cabf          51903
+      int_to_bcd_bit : $cad8          51928
+ int_to_bcd_skip_neg : $cacd          51917
+          int_to_str : $cb39          52025
+       int_to_str_ch : $cb24          52004
+   int_to_str_ch_fin : $cb38          52024
+      int_to_str_fin : $cb71          52081
+       int_to_str_nz : $cb31          52017
+ int_to_str_skip_neg : $cb4d          52045
+        int_usercia0 : $0c08           3080
+        int_usercia1 : $0c0a           3082
+         int_uservdp : $0c06           3078
+         int_vdp_fin : $c894          51348
+     int_vdp_handler : $c869          51305
     io_active_device : $c5a5          50597
-            io_block : $0c01           3073
+            io_block : $0c4e           3150
             io_close : $c5c9          50633
           io_close_f : $0008              8
         io_copy_data : $c5ac          50604
-          io_default : $0c00           3072
+          io_default : $0c4d           3149
            io_delete : $c5cc          50636
             io_del_f : $000a             10
           io_devices : $c620          50720
@@ -528,11 +528,11 @@ fs_put_inc_size_byte : $d363          54115
         io_skip_echo : $c5ee          50670
      io_skip_special : $c5f9          50681
            io_struct : $0010             16
-                 irq : $c7d4          51156
-             irq_brk : $c7fa          51194
-      irq_check_cia0 : $c7ee          51182
-       irq_check_vdp : $c7e0          51168
-             irq_fin : $c7f6          51190
+                 irq : $c7f6          51190
+             irq_brk : $c81c          51228
+      irq_check_cia0 : $c810          51216
+       irq_check_vdp : $c802          51202
+             irq_fin : $c818          51224
            KB_CAPSLK : $0001              1   *
              KB_COLA : $0008              8   *
              KB_COLB : $0010             16   *
@@ -550,21 +550,21 @@ fs_put_inc_size_byte : $d363          54115
              KB_ROWC : $0004              4   *
           KB_SHIFTLK : $0002              2   *
                 KB_W : $0001              1   *
-             kb_code : $0035             53
-              kb_deb : $0037             55
-         kb_debounce : $003b             59
-             kb_last : $0034             52
-          kb_pressed : $003c             60
-              kb_raw : $0033             51
-              kb_rep : $0038             56
-          kb_rep_del : $003a             58
-          kb_rep_tim : $0039             57
-             kb_stat : $0036             54
-         kernel_init : $cb77          52087
-      kernel_skip_nv : $cba7          52135
-         kernel_test : $cb89          52105
-          long_delay : $c886          51334
-        long_delay_1 : $c88c          51340
+             kb_code : $0029             41
+              kb_deb : $002b             43
+         kb_debounce : $002f             47
+             kb_last : $0028             40
+          kb_pressed : $0030             48
+              kb_raw : $0027             39
+              kb_rep : $002c             44
+          kb_rep_del : $002e             46
+          kb_rep_tim : $002d             45
+             kb_stat : $002a             42
+         kernel_init : $cb99          52121
+      kernel_skip_nv : $cbc9          52169
+         kernel_test : $cbab          52139
+          long_delay : $c8a8          51368
+        long_delay_1 : $c8ae          51374
        MBR_BootPart1 : $01c6            454   *
     MBR_BytesPerSect : $000b             11   *
             MBR_Code : $0000              0   *
@@ -595,20 +595,20 @@ fs_put_inc_size_byte : $d363          54115
                MM_X1 : $0020             32   *
                MM_Y0 : $0040             64   *
                MM_Y1 : $0080            128   *
-                main : $c6ff          50943
-        mem_clr_byte : $c8c8          51400
-           mem_start : $0ca9           3241
+                main : $c70f          50959
+        mem_clr_byte : $c8ea          51434
+           mem_start : $0cb6           3254
          mod_sz_io_e : $c650          50768
          mod_sz_io_s : $c586          50566
-     mod_sz_kernel_e : $cbe8          52200
+     mod_sz_kernel_e : $cc0a          52234
      mod_sz_kernel_s : $c586          50566
-     mod_sz_sdcard_e : $ceee          52974
-     mod_sz_sdcard_s : $cbe8          52200
-      mod_sz_sd_fs_e : $d75b          55131
-      mod_sz_sd_fs_s : $ceee          52974
-     msg_hello_world : $c705          50949
- msg_initialising_fs : $d72b          55083
-       msg_noinit_fs : $d741          55105
+     mod_sz_sdcard_e : $cf10          53008
+     mod_sz_sdcard_s : $cc0a          52234
+      mod_sz_sd_fs_e : $d77d          55165
+      mod_sz_sd_fs_s : $cf10          53008
+     msg_hello_world : $c715          50965
+ msg_initialising_fs : $d74d          55117
+       msg_noinit_fs : $d763          55139
              NUM_ANY : $0000              0   *
              NUM_BIN : $0003              3   *
              NUM_DEC : $0001              1   *
@@ -616,23 +616,24 @@ fs_put_inc_size_byte : $d363          54115
            NV_COLOUR : $000f             15   *
              NV_MODE : $000e             14   *
             NV_RAMSZ : $003f             63   *
-                 nmi : $c763          51043
-             nmi_fin : $c7a0          51104
-       nmi_skip_acia : $c775          51061
-        null_handler : $c7d3          51155
-            null_irq : $c7d2          51154
-               num_a : $0085            133
-               num_b : $0089            137
-             num_buf : $0095            149
-             num_tmp : $0091            145
-               num_x : $008d            141
+                 nmi : $c777          51063
+             nmi_fin : $c7ba          51130
+       nmi_skip_acia : $c789          51081
+        null_handler : $c7f5          51189
+            null_irq : $c7f4          51188
+               num_a : $0079            121
+               num_b : $007d            125
+             num_buf : $0089            137
+             num_tmp : $0085            133
+               num_x : $0081            129
                  PCR : $000c             12   *
                  PRA : $0001              1   *
                 PRAH : $000f             15   *
                  PRB : $0000              0   *
-        print_a_to_d : $cb5a          52058
-     print_a_to_d_ch : $cb5f          52063
-    print_a_to_d_fin : $cb6a          52074
+        print_a_to_d : $cb7c          52092
+     print_a_to_d_ch : $cb81          52097
+    print_a_to_d_fin : $cb8c          52108
+             pt3_int : $0c4c           3148
            RAM_ZMASK : $00cf            207   *
            ROM_ZMASK : $003f             63   *
             RTC_ADDR : $0600           1536   *
@@ -647,10 +648,10 @@ fs_put_inc_size_byte : $d363          54115
              RTC_DV1 : $0020             32   *
              RTC_DV2 : $0040             64   *
               RTC_HR : $0004              4   *
-             RTC_HRA : $0005              5   *
 AS65 Assembler for R6502 [1.42].                                     Page   11
 ---------------------------------- bank2.s -----------------------------------
 
+             RTC_HRA : $0005              5   *
             RTC_IRQF : $0080            128   *
              RTC_MIN : $0002              2   *
             RTC_MINA : $0003              3   *
@@ -675,7 +676,7 @@ fs_put_inc_size_byte : $d363          54115
              RTC_VRT : $0080            128   *
               RTC_YR : $0009              9   *
             RTC_2412 : $0002              2   *
-            ram_code : $0c67           3175
+            ram_code : $0c0c           3084
                SD_CD : $0004              4   *
               SD_CLK : $0001              1   *
                SD_CS : $0008              8   *
@@ -712,10 +713,10 @@ fs_put_inc_size_byte : $d363          54115
           SER_STATUS : $0581           1409   *
             SER_TDRE : $0010             16   *
              SER_TIC : $000c             12   *
-            SER_TIC0 : $0004              4   *
 AS65 Assembler for R6502 [1.42].                                     Page   12
 ---------------------------------- bank2.s -----------------------------------
 
+            SER_TIC0 : $0004              4   *
             SER_TIC1 : $0008              8   *
               SER_WL : $0060             96   *
              SER_WL0 : $0020             32   *
@@ -746,89 +747,90 @@ fs_put_inc_size_byte : $d363          54115
                   SR : $000a             10   *
                SWBRK : <macro>
              scratch : $0900           2304
-           sd_acmd41 : $cee8          52968
-             sd_addr : $0052             82
+           sd_acmd41 : $cf0a          53002
+             sd_addr : $0046             70
               sd_buf : $0200            512
-             sd_busy : $cd18          52504
-        sd_cmd17addr : $cddc          52700
-            sd_cmd55 : $cedc          52956
-            sd_cmd58 : $cee2          52962
-           sd_endcmd : $cc5f          52319
-          sd_getbyte : $cc8f          52367
-      sd_getrespbyte : $cd09          52489
-        sd_getrespR1 : $cdbc          52668
-       sd_getrespR17 : $ce0b          52747
- sd_getrespR17block1 : $ce1e          52766
- sd_getrespR17block2 : $ce28          52776
-  sd_getrespR17token : $ce15          52757
-   sd_getrespR17_fin : $ce36          52790
-           sd_isbusy : $cd1d          52509
-       sd_isbusy_fin : $cd24          52516
-       sd_msg_failed : $cec3          52931
- sd_msg_initialising : $ceac          52908
-           sd_respff : $cd0c          52492
-      sd_resptimeout : $cd16          52502
-             sd_sect : $004e             78
-         sd_sendbyte : $cc6f          52335
-         sd_sendcmd0 : $cd30          52528
-        sd_sendcmd16 : $cd96          52630
-        sd_sendcmd17 : $cdc0          52672
-        sd_sendcmd24 : $ce39          52793
-        sd_sendcmd41 : $cd74          52596
-        sd_sendcmd55 : $cd52          52562
-              sd_shi : $004d             77
-      sd_shiftoutbit : $cc78          52344
+             sd_busy : $cd3a          52538
+        sd_cmd17addr : $cdfe          52734
+            sd_cmd55 : $cefe          52990
+            sd_cmd58 : $cf04          52996
+           sd_endcmd : $cc81          52353
+          sd_getbyte : $ccb1          52401
+      sd_getrespbyte : $cd2b          52523
+        sd_getrespR1 : $cdde          52702
+       sd_getrespR17 : $ce2d          52781
+ sd_getrespR17block1 : $ce40          52800
+ sd_getrespR17block2 : $ce4a          52810
+  sd_getrespR17token : $ce37          52791
+   sd_getrespR17_fin : $ce58          52824
+           sd_isbusy : $cd3f          52543
+       sd_isbusy_fin : $cd46          52550
+       sd_msg_failed : $cee5          52965
+ sd_msg_initialising : $cece          52942
+           sd_respff : $cd2e          52526
+      sd_resptimeout : $cd38          52536
+             sd_sect : $0042             66
+         sd_sendbyte : $cc91          52369
+         sd_sendcmd0 : $cd52          52562
+        sd_sendcmd16 : $cdb8          52664
+        sd_sendcmd17 : $cde2          52706
+        sd_sendcmd24 : $ce5b          52827
+        sd_sendcmd41 : $cd96          52630
+        sd_sendcmd55 : $cd74          52596
+              sd_shi : $0041             65
 AS65 Assembler for R6502 [1.42].                                     Page   13
 ---------------------------------- bank2.s -----------------------------------
 
-      sd_shiftskiplo : $cc80          52352
-              sd_slo : $004c             76
-         sd_startcmd : $cc45          52293
-           sd_status : $004b             75
-    sd_waitforn0byte : $cd26          52518
-sd_waitforn0byte_fin : $cd2f          52527
-sd_waitforwritecomplete : $cea3          52899
-     sd_writeblock_1 : $ce85          52869
-     sd_writeblock_2 : $ce8f          52879
+      sd_shiftoutbit : $cc9a          52378
+      sd_shiftskiplo : $cca2          52386
+              sd_slo : $0040             64
+         sd_startcmd : $cc67          52327
+           sd_status : $003f             63
+    sd_waitforn0byte : $cd48          52552
+sd_waitforn0byte_fin : $cd51          52561
+sd_waitforwritecomplete : $cec5          52933
+     sd_writeblock_1 : $cea7          52903
+     sd_writeblock_2 : $ceb1          52913
              ser_buf : $0800           2048
-           ser_first : $000e             14
-            ser_last : $000f             15
-          skip_a_f_1 : $c8dc          51420
-          skip_a_f_2 : $c8eb          51435
-         skip_kb_deb : $c87f          51327
-         skip_kb_rep : $c885          51333
-          skip_x_f_1 : $c8f8          51448
-          skip_x_f_2 : $c90d          51469
+           ser_first : $0002              2
+            ser_last : $0003              3
+          skip_a_f_1 : $c8fe          51454
+          skip_a_f_2 : $c90d          51469
+         skip_kb_deb : $c8a1          51361
+         skip_kb_rep : $c8a7          51367
+          skip_x_f_1 : $c91a          51482
+          skip_x_f_2 : $c92f          51503
              snd_get : $c6c8          50888
         snd_get_joy0 : $c6f9          50937
+  snd_get_joy0_retry : $c6fb          50939
              snd_set : $c6a1          50849
-          str_a_to_d : $cb59          52057
-          str_a_to_x : $c8d0          51408
-   str_d_digits_done : $ca09          51721
-         str_d_error : $ca2a          51754
-      str_d_find_end : $c9c7          51655
-     str_d_found_end : $c9d4          51668
-        str_d_powers : $ca2c          51756
- str_d_process_digit : $c9e0          51680
-      str_d_skip_neg : $ca20          51744
-          str_x_to_a : $c8ed          51437
-      str_x_to_a_err : $c919          51481
-     str_x_to_a_errl : $c918          51480
+          str_a_to_d : $cb7b          52091
+          str_a_to_x : $c8f2          51442
+   str_d_digits_done : $ca2b          51755
+         str_d_error : $ca4c          51788
+      str_d_find_end : $c9e9          51689
+     str_d_found_end : $c9f6          51702
+        str_d_powers : $ca4e          51790
+ str_d_process_digit : $ca02          51714
+      str_d_skip_neg : $ca42          51778
+          str_x_to_a : $c90f          51471
+      str_x_to_a_err : $c93b          51515
+     str_x_to_a_errl : $c93a          51514
                 T1CH : $0005              5   *
                 T1CL : $0004              4   *
                 T1LH : $0007              7   *
                 T1LL : $0006              6   *
                 T2CH : $0009              9   *
                 T2CL : $0008              8   *
-               tmp_a : $0041             65
-               tmp_b : $0043             67
+               tmp_a : $0035             53
+               tmp_b : $0037             55
            tmp_bank1 : $0000              0
            tmp_bank2 : $0001              1
-               tmp_c : $003d             61
-               tmp_d : $0045             69
-              tmp_v1 : $003f             63
-     twos_complement : $ca90          51856
-twos_complement_skip_X : $ca9c          51868
+               tmp_c : $0031             49
+               tmp_d : $0039             57
+              tmp_v1 : $0033             51
+     twos_complement : $cab2          51890
+twos_complement_skip_X : $cabe          51902
              UTF_ACK : $0006              6   *
              UTF_BEL : $0007              7   *
              UTF_BRK : $001a             26   *
@@ -840,14 +842,14 @@ twos_complement_skip_X : $ca9c          51868
             UTF_NACK : $0015             21   *
              UTF_SOH : $0001              1   *
          UTF_SPECIAL : $0020             32   *
-       update_timers : $c873          51315
-          utilPrintA : $c8ab          51371
-       utilPrintCRLF : $c8a3          51363
+       update_timers : $c895          51349
 AS65 Assembler for R6502 [1.42].                                     Page   14
 ---------------------------------- bank2.s -----------------------------------
 
-        utilPrintSPC : $c89b          51355
-        util_clr_mem : $c8c0          51392
+          utilPrintA : $c8cd          51405
+       utilPrintCRLF : $c8c5          51397
+        utilPrintSPC : $c8bd          51389
+        util_clr_mem : $c8e2          51426
             VDP_ADDR : $0501           1281   *
            VDP_FLASH : $0010             16   *
        VDP_LONGDELAY : $0003              3   *
@@ -862,15 +864,15 @@ twos_complement_skip_X : $ca9c          51868
         vdp_addr_spa : $0006              6
         vdp_addr_spp : $0008              8
      vdp_addr_struct : $000c             12
-            vdp_base : $0017             23
-           vdp_blank : $0015             21
+            vdp_base : $000b             11
+           vdp_blank : $0009              9
         vdp_bord_col : $000a             10
-          vdp_curoff : $0012             18
-         vdp_curstat : $0013             19
-          vdp_curval : $0014             20
-           vdp_delay : $0016             22
+          vdp_curoff : $0006              6
+         vdp_curstat : $0007              7
+          vdp_curval : $0008              8
+           vdp_delay : $000a             10
            vdp_gmode : $000b             11
-         vdp_int_cnt : $0010             16
+         vdp_int_cnt : $0004              4
         vdp_mem_wait : $c66b          50795
     vdp_mem_wait_end : $c673          50803
    vdp_mem_wait_loop : $c670          50800
@@ -881,21 +883,21 @@ twos_complement_skip_X : $ca9c          51868
          vdp_wr_addr : $c65d          50781
           vdp_wr_reg : $c650          50768
          vdp_wr_vram : $c685          50821
-         word_to_bcd : $cad3          51923
-     word_to_bcd_bit : $cae5          51941
-             ztmp_16 : $0085            133
+         word_to_bcd : $caf5          51957
+     word_to_bcd_bit : $cb07          51975
+             ztmp_16 : $0079            121
           _adcZPByte : <macro>
           _adcZPWord : <macro>
           _addZPWord : <macro>
             _bankjsr : <macro>
             _bankram : <macro>
        _bankram_fast : <macro>
-          _bank2_end : $d75b          55131
+          _bank2_end : $d77d          55165
         _bank2_start : $c000          49152   *
                 _bcc : <macro>
                 _bcs : <macro>
       _cmd_immediate : $c50e          50446
-           _code_end : $d75b          55131
+           _code_end : $d77d          55165
          _code_start : $c001          49153
        _command_line : $c2b6          49846
           _cpu_stack : $0100            256
@@ -905,12 +907,12 @@ twos_complement_skip_X : $ca9c          51868
             _df_init : $c02e          49198
     _df_ost_peekType : <macro>
         _df_pg_dflat : $c046          49222
-      _end_zero_page : $00ed            237
-         _fs_chdir_w : $c05e          49246
-         _fs_close_w : $c0a6          49318
+      _end_zero_page : $00e1            225
 AS65 Assembler for R6502 [1.42].                                     Page   15
 ---------------------------------- bank2.s -----------------------------------
 
+         _fs_chdir_w : $c05e          49246
+         _fs_close_w : $c0a6          49318
         _fs_delete_w : $c08e          49294
 _fs_dir_entry_next_w : $c136          49462
  _fs_dir_fhandle_str : $c4c6          50374
@@ -971,11 +973,11 @@ _fs_dir_root_start_w : $c14e          49486
           _sbcZPByte : <macro>
        _sd_sendcmd17 : $c4de          50398
        _sd_sendcmd24 : $c4f6          50422
-            _sendcmd : <macro>
-       _snd_get_joy0 : $c3d6          50134
 AS65 Assembler for R6502 [1.42].                                     Page   16
 ---------------------------------- bank2.s -----------------------------------
 
+            _sendcmd : <macro>
+       _snd_get_joy0 : $c3d6          50134
        _snd_get_note : $c3be          50110
             _snd_set : $c3ee          50158
           _subZPWord : <macro>
@@ -984,9 +986,9 @@ _fs_dir_root_start_w : $c14e          49486
            _vdp_poke : $c41e          50206
           __65SC02__ : $0001              1
 
-905 labels used
+907 labels used
 
-5780 lines read, no errors in pass 1.
+5797 lines read, no errors in pass 1.
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
 Total size 16384 bytes.

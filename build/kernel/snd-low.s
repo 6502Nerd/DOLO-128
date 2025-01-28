@@ -95,6 +95,18 @@ snd_get
 ;* Regs affected : X
 ;****************************************
 snd_get_joy0
+	pha
+	pha
+snd_get_joy0_retry
+	ply
 	ldx #SND_REG_IOB		; Joystick is plugged in to IOB
 	jsr snd_get				; Get IOB, result in Y
+	phy						; Put on stack
+	jsr snd_get				; Get IOB, result in Y
+	tya
+	tsx						; Get stack pointer
+	cmp 0x101,x				; Compare with stack value
+	bne snd_get_joy0_retry	; If not equal, try again (e.g. sound interrupt messed one value)
+	pla
+	pla
 	rts

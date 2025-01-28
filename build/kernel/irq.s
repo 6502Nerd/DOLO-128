@@ -71,7 +71,9 @@ nmi_skip_acia
 	pha
 	and #(0xff ^ MM_DIS)            ; Switch off ROM bit
 	sta IO_1+PRB                    ; Update port to activate setting
+	inc pt3_int 				  	; Set PT3 interrupt flag
 	jsr call_irq_usercia1			; Call user cia1 handler
+	stz pt3_int 				  	; Clear PT3 interrupt flag
 	; Restore ROM
 	pla                             ; Get original port setting
 	sta IO_1+PRB                    ; Update port to activate setting

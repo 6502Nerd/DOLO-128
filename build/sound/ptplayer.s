@@ -40,8 +40,6 @@ Revision = "0"
 ; - check zero pages addresses
 ; =======================================================================================
 ;
-;	ORG $8000
-;
 ; -------------------------------------
         bss
 
@@ -77,17 +75,10 @@ TB3 = val4
 TC3 = val4+1
 
 ; =====================================
-; module PT3 address
+; module PT3 address starts
 ; =====================================
         code
-; For dflat, allow build of code for other locations
-; default is 0xe000
-
- if !PT3RELOCADDR
-PT3RELOCADDR = 0xe000
- endif
-        org $e000
-
+PT3_code_start
 ; START = $e000 or PT3RELOCADDR
 ; START+00 : Initialise a tune and start
 ; START+03 : Disable tune and stop
@@ -114,15 +105,29 @@ PT3INIT
         ora #0b00100000         ; mask in bank binary 10 = 2dec
         sta IO_0+PRB
 
-        ; Copy from PT3START to PT3END
-        ; To shadow RAM directly underneath
-        ldy #lo(PT3START)
-        ldy #0x00
-        sty tmp_a               ; Page + Y index, page lo always 0
-        ldx #hi(PT3START)
-        ldx #0xc0
+        ; Copy from end of PT3 code and var section to start of ROM
+        ; to shadow RAM directly underneath
+        ; no need to copy beyond this as only has vectors at the top
+        ; and we don't want to overwrite song data that may have
+        ; been loaded behind ROM by the user
+;        ldy #lo(PT3_code_end)   ; Index into PT3 code end
+;        stz tmp_a               ; Page + Y index, page lo always 0
+;        ldx #hi(PT3_code_end)   ; Page number of code end
+;        stx tmp_a+1
+;PT3INIT_COPY
+;        lda (tmp_a),y           ; Get ROM byte
+;        sta (tmp_a),y           ; Write to memory address always goes to active RAM bank
+;        dey
+;        cpy #0xff
+;        bne PT3INIT_COPY
+;        dex
+;        stx tmp_a+1             ; Derement page number
+;        cpx #0xbf               ; Check if gone below ROM page 0xc0
+;        bne PT3INIT_COPY
+        ldy #0
+        sty tmp_a
+        ldx 0xc0
         stx tmp_a+1
-
 PT3INIT_COPY
         lda (tmp_a),y           ; Get ROM byte
         sta (tmp_a),y           ; Write to memory address always goes to active RAM bank
@@ -145,9 +150,14 @@ _doPause
         sta IO_1+IER
 
         ; Kill the channels with the sound through control register
-        ldy #0b00111111
+        ldy #0x3f
         ldx #SND_REG_CTL
         jsr snd_set
+        ; Zero the envolope register as it still makes noise!
+        ldy #0
+        ldx #SND_REG_ENVCYC
+        jsr snd_set
+
         rts
 
 ; Reinstate the PT3 IRQ
@@ -159,8 +169,9 @@ _doResume
 
 
 ; Initialise the player to start using A,X as song address
-
+; Y is the loop preference
 _doStart
+        sty SETUP               ; Set loop pref Y=1 means do not loop
         ; Disable T1 interrupt on VIA 1 just in case
         ldy #0b01000000
         sty IO_1+IER
@@ -194,7 +205,7 @@ _doStart
         ; invoke the sound player every other
         ; interrupt!
         ; 53,600 = 0xd160
-        ; Timre 1 of VIA 1
+        ; Timer 1 of VIA 1
         lda #0x60
         sta IO_1+T1CL
         lda #0xd1
@@ -245,8 +256,7 @@ CHECKLP
         lda SETUP                                                   
         ora #%10000000                                              
         sta SETUP
-	lda #%00000001                                                                                               
-        bit SETUP
+        and #1
         bne s1                                                      
 	rts
 s1	pla                                                         
@@ -254,13 +264,14 @@ s1	pla
 	inc DelyCnt                                                                                                                                    
         inc ANtSkCn                                                 
 _MUTE	                                                            
+        lda #0x3f
+        sta AYREGS+Mixer  ; This is the daddy - switch off all channels and noise
         lda #00                                                     
         sta z80_H                                                   
 	sta z80_L                                                   
-	sta AYREGS+AmplA                                            
-	sta AYREGS+AmplB                                            
-        sta AYREGS+AmplC
-        sta AYREGS+Mixer  ; This is the daddy - switch off all channels and noise
+;	sta AYREGS+AmplA                                            
+;	sta AYREGS+AmplB                                            
+;       sta AYREGS+AmplC
 	jmp ROUT                                              
 
 INIT
@@ -1952,8 +1963,8 @@ ROUT
         lda #00
         jsr ay_set
 
-        ldx AYREGS+3    ; hi ToneA
-        lda AYREGS+2    ; lo ToneA
+        ldx AYREGS+3    ; hi ToneB
+        lda AYREGS+2    ; lo ToneB
         jsr FIX16BITS 
 
         lda #03             
@@ -1963,8 +1974,8 @@ ROUT
         lda #02             
         jsr ay_set
 
-        ldx AYREGS+5    ; hi ToneA
-        lda AYREGS+4    ; lo ToneA
+        ldx AYREGS+5    ; hi ToneC
+        lda AYREGS+4    ; lo ToneC
         jsr FIX16BITS 
 
         lda #05             
@@ -2017,52 +2028,46 @@ FIN_RTS
         rts
 ; -------------------------------------
 FIX16BITS       ; INT(256*2*1000/1773) = 289 = 256 + 32 + 1
+                ; Homebrew is 1.34Mhz
+                ; So calculation = 386 = 256 + 128 + 2
                 ; IN:  register A is low byte
                 ;      register X is high byte
                 ; OUT: register Y is low byte
                 ;      register X is high byte
 
-        ; x256
-        stx TA1
+        stx TA1         ; Reg 1 = 256*AX
         sta TB1
-        stx TB2
-        sta TC2
-        stx TB3
+        stx TA2         ; Reg 2 = 256*AX
+        sta TB2
+        stz TC2
+        stx TB3         ; Reg 3 = AX
         sta TC3
-        lda #00
+        
+        ; x128 for homebrew
+        ; which is same as right shift 1 time of reg 2
+        lsr TA2
+        ror TB2
+        ror TC2
+                
+        ; x02 + x128 for homebrew
+        ; shift reg 3 left, the carry added to reg TA2
+        asl TC3
+        rol TB3
+        lda TA2
+        adc #0
         sta TA2
-        
-        ; x32
-        asl TC2
-        rol TB2
-        rol TA2
-        asl TC2
-        rol TB2
-        rol TA2
-        asl TC2
-        rol TB2
-        rol TA2
-        asl TC2
-        rol TB2
-        rol TA2
-        asl TC2
-        rol TB2
-        rol TA2
-        
-        ; x32 + x01
-        clc
+        ; Now add the rest of reg 3 to reg 2
         lda TC3
         adc TC2
-        ; sta TC2
+        sta TC2
         lda TB3
         adc TB2
         sta TB2
-        lda TA2
-        adc #00
+        lda #0
+        adc TA2
         sta TA2
 
-        ; + x256 
-        clc         
+        ; Add reg 2(x128+x2) to reg 1(x256) and transfer to A,Y
         lda TB2
         adc TB1
         tay         ; sta TB1
@@ -2400,3 +2405,4 @@ NT_	ds 192 ;CreatedNoteTableAddress
 
 VARS_END = *
 PT3END
+PT3_code_end

@@ -846,15 +846,6 @@ df_rt_parm_2ints
 	jsr df_rt_neval
 	
 	jmp df_rt_get2Ints
-	; pop 2nd parm
-;	jsr df_ost_popInt
-;	stx df_tmpptrb
-;	sta df_tmpptrb+1
-	; pop 1st parm
-;	jsr df_ost_popInt
-;	stx df_tmpptra
-;	sta df_tmpptra+1
-;	rts
 
 ;****************************************
 ; common code for 3 ints runtime parsing
@@ -876,14 +867,6 @@ df_rt_parm_pop3
 	sta df_tmpptrc+1
 	; pop 2nd and 1st
 	jmp df_rt_get2Ints
-;	jsr df_ost_popInt
-;	stx df_tmpptrb
-;	sta df_tmpptrb+1
-	; pop 1st parm
-;	jsr df_ost_popInt
-;	stx df_tmpptra
-;	sta df_tmpptra+1
-;	rts
 
 ;****************************************
 ; common code for 4 ints runtime parsing
@@ -909,20 +892,6 @@ df_rt_parm_pop4
 
 	; pop 3,2,1 parms
 	jmp df_rt_parm_pop3
-
-	; pop 3rd parm
-;	jsr df_ost_popInt
-;	stx df_tmpptrc
-;	sta df_tmpptrc+1
-	; pop 2nd parm
-;	jsr df_ost_popInt
-;	stx df_tmpptrb
-;	sta df_tmpptrb+1
-	; pop 1st parm
-;	jsr df_ost_popInt
-;	stx df_tmpptra
-;	sta df_tmpptra+1
-;	rts
 
 ;****************************************
 ; common code for 5 ints runtime parsing
@@ -950,25 +919,6 @@ df_rt_parm_5ints
 
 	; pop 4,3,2,1 parms
 	jmp df_rt_parm_pop4
-
-;	; pop 4th parm
-;	jsr df_ost_popInt
-;	stx df_tmpptrd
-;	sta df_tmpptrd+1
-;	; pop 3rd parm
-;	jsr df_ost_popInt
-;	stx df_tmpptrc
-;	sta df_tmpptrc+1
-;	; pop 2nd parm
-;	jsr df_ost_popInt
-;	stx df_tmpptrb
-;	sta df_tmpptrb+1
-;	; pop 1st parm
-;	jsr df_ost_popInt
-;	stx df_tmpptra
-;	sta df_tmpptra+1
-;
-;	rts
 
 ;****************************************
 ;* initialise statement to be executed

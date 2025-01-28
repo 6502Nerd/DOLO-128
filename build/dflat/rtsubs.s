@@ -2655,12 +2655,11 @@ df_rt_ptload_code_s
 df_rt_ptload_code_e
 
 df_rt_ptinit
-	jsr df_rt_neval				; Get address
-	jsr df_ost_popInt			; X,A = Address
-	phx							; But swap them
-	pha
-	plx
-	pla
+	; Get x,y
+	jsr df_rt_parm_2ints		; Put address in A,X and loop pref in Y
+	lda df_tmpptra
+	ldx df_tmpptra+1
+	ldy df_tmpptrb
 	jmp _PT3START				; Off to the PT3 player module
 
 df_rt_ptrun
