@@ -164,15 +164,6 @@
    endif
  enddef
  ;
- ;** PLAY MUSIC **
-; def_playTune()
-;   if elapsed(musicTimer)>noteDelay
-;     music 1,3,note[noteIndex],0:play 1,0,1,2000
-;     reset musicTimer:noteDelay=delay[noteIndex]*3
-;     noteIndex=noteIndex+1:if note[noteIndex]==999:noteIndex=1:endif
-;   endif
-; enddef
- ;
  ;**ONE GO OF THE GAME**
  def_startGame()
    dead=0:noteDelay=0:noteIndex=1:reset musicTimer
@@ -226,6 +217,7 @@
      _drawScreen()
      plot gameXOff+0,gameYOff,"PRESS FIRE"
      plot gameXOff+0,gameYOff+1," TO START "
+     if musicFlag:ptinit attractpt3,0:endif
      messageIdx=1:reset messageTimer
      repeat
        _scrollMessage()
