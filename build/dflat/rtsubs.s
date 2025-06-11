@@ -2593,18 +2593,12 @@ df_rt_ptload
 	bcs (df_rt_ptload-2)		; Error condition resets the stack
 
 	; Copy code from ROM that does write to RAM
-	ldy #0
-df_rt_ptload_copycode
-	lda df_rt_ptload_code_s,y
-	sta ram_code,y
-	iny
-	cpy #(df_rt_ptload_code_e-df_rt_ptload_code_s)
-	bne df_rt_ptload_copycode
+	jsr init_ram_code		; Initialise RAM code
 
 	ply							; Pull the index of address as Y
 	pla							; Pull the high address
 	sta df_tmpptra+1			; Just the page address, so low is 0
-	stz df_tmpptra
+	stz df_tmpptra				; Low address is 0
 
 	; Save current port B status of both VIAs
 	lda IO_0+PRB				; VIA0 port B is the ROM and RAM bank select
@@ -2624,35 +2618,14 @@ df_rt_ptload_copycode
 df_rt_ptload_byte
 	jsr io_get_ch				; Get a byte
 	bcs df_rt_ptload_done		; If EOF then done
+	ldx df_tmpptra+1			; Get page index from high address temp var
+	stx tmp_a+1					; Save high address in tmp_a
+	stz tmp_a					; Clear low address
 	jsr ram_code				; Poke byte to RAM bank 2 and maybe under ROM
 	iny							; Update page index
 	bne df_rt_ptload_byte		; Back for next byte
 	inc df_tmpptra+1			; Increment high address
 	bra df_rt_ptload_byte		; Back for next byte
-
-; This code gets copied to RAM to do the actual poking
-df_rt_ptload_code_s
-	php							; Save processor status
-	sei							; Disable VDP interrupts
-	pha
-	tsx
-	inx
-	inx
-	inx
-	inx
-	lda 0x101,x					; Get disable ROM value
-	sta IO_1+PRB				; Disable ROM
-	lda 0x103,x					; Get new RAM bank select value
-	sta IO_0+PRB				; Select bank 2
-	pla
-	sta (df_tmpptra),y			; Actually poke the byte to memory!!
-	lda 0x102,x					; Get original ROM value
-	sta IO_1+PRB				; Enable ROM
-	lda 0x104,x					; Get original RAM bank select value
-	sta IO_0+PRB				; Restore RAM bank select	
-	plp							; Restore processor status
-	rts
-df_rt_ptload_code_e
 
 df_rt_ptinit
 	; Get x,y

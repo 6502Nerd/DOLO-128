@@ -5,120 +5,120 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
 
               Symbol   Value        Decimal
 
-                .bss : $d9e6          55782
-             ACOnOff : $d9f0          55792
+                .bss : $da21          55841
+             ACOnOff : $da2b          55851
                  ACR : $000b             11   *
-             ACrAmSl : $d9e8          55784
-             ACrEnSl : $d9ea          55786
-             ACrNsSl : $d9e9          55785
-             ACrTnSl : $d9ec          55788
-             AddToEn : $d7e6          55270
-             AddToNs : $da42          55874
-             AdInPtA : $d66d          54893
-             AdInPtB : $d731          55089
-             AdInPtC : $d753          55123
-             AEnv_En : $d9fa          55802
-              AFlags : $d9fb          55803
-                Ampl : $da4d          55885   *
+             ACrAmSl : $da23          55843
+             ACrEnSl : $da25          55845
+             ACrNsSl : $da24          55844
+             ACrTnSl : $da27          55847
+             AddToEn : $d821          55329
+             AddToNs : $da7d          55933
+             AdInPtA : $d6a8          54952
+             AdInPtB : $d76c          55148
+             AdInPtC : $d78e          55182
+             AEnv_En : $da35          55861
+              AFlags : $da36          55862
+                Ampl : $da88          55944   *
                AmplA : $0008              8   *
                AmplB : $0009              9   *
                AmplC : $000a             10   *
-             ANNtSkp : $d9f7          55799
-               ANote : $d9f8          55800
-             ANtSkCn : $da01          55809
-             AOffOnD : $d9f2          55794
-             AOnOffD : $d9f1          55793
-             AOrnPtr : $d9f3          55795
-             APsInOr : $d9e6          55782
-             APsInSm : $d9e7          55783
-             ASamPtr : $d9f5          55797
-             ASlToNt : $d9f9          55801
-              ATnAcc : $d9ee          55790
-             ATnDelt : $d9ff          55807
-             ATnSlDl : $d9fc          55804
-             ATSlCnt : $d9eb          55787
-             ATSlStp : $d9fd          55805
-             AVolume : $da02          55810
-              AYREGS : $da43          55875
-              ay_set : $d909          55561
+             ANNtSkp : $da32          55858
+               ANote : $da33          55859
+             ANtSkCn : $da3c          55868
+             AOffOnD : $da2d          55853
+             AOnOffD : $da2c          55852
+             AOrnPtr : $da2e          55854
+             APsInOr : $da21          55841
+             APsInSm : $da22          55842
+             ASamPtr : $da30          55856
+             ASlToNt : $da34          55860
+              ATnAcc : $da29          55849
+             ATnDelt : $da3a          55866
+             ATnSlDl : $da37          55863
+             ATSlCnt : $da26          55846
+             ATSlStp : $da38          55864
+             AVolume : $da3d          55869
+              AYREGS : $da7e          55934
+              ay_set : $d944          55620
                BANK3 : $0001              1
-             BCOnOff : $da0d          55821
-             BCrAmSl : $da05          55813
-             BCrEnSl : $da07          55815
-             BCrNsSl : $da06          55814
-             BCrTnSl : $da09          55817
-             BEnv_En : $da17          55831
-              BFlags : $da18          55832
-             BNNtSkp : $da14          55828
-               BNote : $da15          55829
-             BNtSkCn : $da1e          55838
-             BOffOnD : $da0f          55823
-             BOnOffD : $da0e          55822
-             BOrnPtr : $da10          55824
-             BPsInOr : $da03          55811
-             BPsInSm : $da04          55812
-             BSamPtr : $da12          55826
-             BSlToNt : $da16          55830
-              BTnAcc : $da0b          55819
-             BTnDelt : $da1c          55836
-             BTnSlDl : $da19          55833
-             BTSlCnt : $da08          55816
+             BCOnOff : $da48          55880
+             BCrAmSl : $da40          55872
+             BCrEnSl : $da42          55874
+             BCrNsSl : $da41          55873
+             BCrTnSl : $da44          55876
+             BEnv_En : $da52          55890
+              BFlags : $da53          55891
+             BNNtSkp : $da4f          55887
+               BNote : $da50          55888
+             BNtSkCn : $da59          55897
+             BOffOnD : $da4a          55882
+             BOnOffD : $da49          55881
+             BOrnPtr : $da4b          55883
+             BPsInOr : $da3e          55870
+             BPsInSm : $da3f          55871
+             BSamPtr : $da4d          55885
+             BSlToNt : $da51          55889
+              BTnAcc : $da46          55878
+             BTnDelt : $da57          55895
+             BTnSlDl : $da54          55892
+             BTSlCnt : $da43          55875
 AS65 Assembler for R6502 [1.42].                                     Page    2
 ---------------------------------- bank3.s -----------------------------------
 
-             BTSlStp : $da1a          55834
-             BVolume : $da1f          55839
+             BTSlStp : $da55          55893
+             BVolume : $da5a          55898
     bankjsr_nul_addr : $c000          49152   *
     bankjsr_nul_bank : $0000              0   *
             bank_num : $c000          49152
-                bres : $d110          53520
+                bres : $d14b          53579
              buf_adr : $003b             59
               buf_ef : $003e             62
               buf_sz : $003d             61
-             CCOnOff : $da2a          55850
-             CCrAmSl : $da22          55842
-             CCrEnSl : $da24          55844
-             CCrNsSl : $da23          55843
-             CCrTnSl : $da26          55846
-             CEnv_En : $da34          55860
-              CFlags : $da35          55861
-             CHECKLP : $ccce          52430
-              CHREGS : $d36d          54125
-             CH_AMIN : $d552          54610
-              CH_AMP : $d534          54580
-             CH_APOS : $d570          54640
-              CH_ENV : $d593          54675
-             CH_EXIT : $d604          54788
-              CH_MIX : $d5fd          54781
-             CH_NOAC : $d470          54384
-             CH_NOAM : $d561          54625
-             CH_NOEN : $d5a1          54689
-              CH_NOK : $d3e7          54247
-              CH_NTP : $d3e1          54241
-             CH_ONDL : $d64b          54859
-             CH_ORPS : $d3d1          54225
-             CH_SMPS : $d42f          54319
-             CH_STPP : $d510          54544
-             CH_SVAM : $d55b          54619
-              CH_VOL : $d576          54646
-               ChanA : $d9e6          55782
-               ChanB : $da03          55811
-               ChanC : $da20          55840
+             CCOnOff : $da65          55909
+             CCrAmSl : $da5d          55901
+             CCrEnSl : $da5f          55903
+             CCrNsSl : $da5e          55902
+             CCrTnSl : $da61          55905
+             CEnv_En : $da6f          55919
+              CFlags : $da70          55920
+             CHECKLP : $cd09          52489
+              CHREGS : $d3a8          54184
+             CH_AMIN : $d58d          54669
+              CH_AMP : $d56f          54639
+             CH_APOS : $d5ab          54699
+              CH_ENV : $d5ce          54734
+             CH_EXIT : $d63f          54847
+              CH_MIX : $d638          54840
+             CH_NOAC : $d4ab          54443
+             CH_NOAM : $d59c          54684
+             CH_NOEN : $d5dc          54748
+              CH_NOK : $d422          54306
+              CH_NTP : $d41c          54300
+             CH_ONDL : $d686          54918
+             CH_ORPS : $d40c          54284
+             CH_SMPS : $d46a          54378
+             CH_STPP : $d54b          54603
+             CH_SVAM : $d596          54678
+              CH_VOL : $d5b1          54705
+               ChanA : $da21          55841
+               ChanB : $da3e          55870
+               ChanC : $da5b          55899
      CMD_ERR_NOERROR : $0000              0   *
     CMD_ERR_NOTFOUND : $0001              1   *
         CMD_ERR_PARM : $0002              2   *
          CMD_ERR_VAL : $0003              3   *
-             CNNtSkp : $da31          55857
-               CNote : $da32          55858
-             CNtSkCn : $da3b          55867
-             COffOnD : $da2c          55852
+             CNNtSkp : $da6c          55916
+               CNote : $da6d          55917
+             CNtSkCn : $da76          55926
+             COffOnD : $da67          55911
               COnOff : $000a             10   *
-             COnOffD : $da2b          55851
-              CORR_1 : $cf16          53014
-              CORR_2 : $cf35          53045
-             COrnPtr : $da2d          55853
-             CPsInOr : $da20          55840
-             CPsInSm : $da21          55841
+             COnOffD : $da66          55910
+              CORR_1 : $cf51          53073
+              CORR_2 : $cf70          53104
+             COrnPtr : $da68          55912
+             CPsInOr : $da5b          55899
+             CPsInSm : $da5c          55900
            CRSR_DOWN : $000a             10   *
            CRSR_LEFT : $0008              8   *
           CRSR_RIGHT : $0009              9   *
@@ -126,60 +126,60 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
               CrAmSl : $0002              2   *
               CrEnSl : $0004              4   *
               CrNsSl : $0003              3   *
-             CrPsPtr : $cca6          52390
+             CrPsPtr : $cce1          52449
               CrTnSl : $0006              6   *
 AS65 Assembler for R6502 [1.42].                                     Page    3
 ---------------------------------- bank3.s -----------------------------------
 
-             CSamPtr : $da2f          55855
-             CSlToNt : $da33          55859
-              CTnAcc : $da28          55848
-             CTnDelt : $da39          55865
-             CTnSlDl : $da36          55862
-             CTSlCnt : $da25          55845
-             CTSlStp : $da37          55863
-             CurEDel : $da40          55872
-             CurESld : $da3e          55870
-             CVolume : $da3c          55868
-             C_DELAY : $d2d3          53971
-             C_ENGLS : $d2ad          53933
-             C_GLISS : $d21a          53786
-               C_NOP : $d31d          54045
-             C_ORPOS : $d270          53872
-             C_PORTM : $d11e          53534
-             C_SMPOS : $d261          53857
-             C_VIBRT : $d27f          53887
-        call_irq_brk : $c7e8          51176
-     call_irq_master : $c7e5          51173
-   call_irq_usercia0 : $c7ee          51182
-   call_irq_usercia1 : $c7f1          51185
-    call_irq_uservdp : $c7eb          51179
+             CSamPtr : $da6a          55914
+             CSlToNt : $da6e          55918
+              CTnAcc : $da63          55907
+             CTnDelt : $da74          55924
+             CTnSlDl : $da71          55921
+             CTSlCnt : $da60          55904
+             CTSlStp : $da72          55922
+             CurEDel : $da7b          55931
+             CurESld : $da79          55929
+             CVolume : $da77          55927
+             C_DELAY : $d30e          54030
+             C_ENGLS : $d2e8          53992
+             C_GLISS : $d255          53845
+               C_NOP : $d358          54104
+             C_ORPOS : $d2ab          53931
+             C_PORTM : $d159          53593
+             C_SMPOS : $d29c          53916
+             C_VIBRT : $d2ba          53946
+        call_irq_brk : $c7b7          51127
+     call_irq_master : $c7b4          51124
+   call_irq_usercia0 : $c7bd          51133
+   call_irq_usercia1 : $c7c0          51136
+    call_irq_uservdp : $c7ba          51130
      call_nmi_master : $c777          51063
-       con_bin_digit : $c9ba          51642
-        con_bin_done : $c9d0          51664
-         con_bin_err : $c9da          51674
-         con_bin_jmp : $c958          51544
-        con_bin_to_a : $c9b2          51634
-    con_bin_to_a_int : $c9b6          51638
-         con_dec_jmp : $c94c          51532
-        con_dec_to_a : $c9dc          51676
-    con_dec_to_a_int : $c9e0          51680
-       con_hex_digit : $c97b          51579
-        con_hex_done : $c9a8          51624
-         con_hex_err : $c9a6          51622
-         con_hex_jmp : $c952          51538
-  con_hex_skip_x_f_1 : $c988          51592
-        con_hex_to_a : $c973          51571
-    con_hex_to_a_int : $c977          51575
-           con_n_err : $c95b          51547
-       con_n_not_dec : $c94f          51535
-       con_n_not_hex : $c955          51541
-          con_n_to_a : $c93d          51517
-   con_n_to_a_detect : $c95d          51549
+       con_bin_digit : $c9b7          51639
+        con_bin_done : $c9cd          51661
+         con_bin_err : $c9d7          51671
+         con_bin_jmp : $c955          51541
+        con_bin_to_a : $c9af          51631
+    con_bin_to_a_int : $c9b3          51635
+         con_dec_jmp : $c949          51529
+        con_dec_to_a : $c9d9          51673
+    con_dec_to_a_int : $c9dd          51677
+       con_hex_digit : $c978          51576
+        con_hex_done : $c9a5          51621
+         con_hex_err : $c9a3          51619
+         con_hex_jmp : $c94f          51535
+  con_hex_skip_x_f_1 : $c985          51589
+        con_hex_to_a : $c970          51568
+    con_hex_to_a_int : $c974          51572
+           con_n_err : $c958          51544
+       con_n_not_dec : $c94c          51532
+       con_n_not_hex : $c952          51538
+          con_n_to_a : $c93a          51514
+   con_n_to_a_detect : $c95a          51546
                 DDRA : $0003              3   *
                 DDRB : $0002              2   *
-               Delay : $d768          55144
-             DelyCnt : $da3d          55869
+               Delay : $d7a3          55203
+             DelyCnt : $da78          55928
          DFERR_ABORT : $0012             18   *
          DFERR_BREAK : $000d             13   *
            DFERR_DIM : $0003              3   *
@@ -341,13 +341,13 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           df_vntstrt : $009f            159
            df_vvtend : $00a5            165
           df_vvtstrt : $00a3            163
-         EMPTYSAMORN : $d980          55680   *
+         EMPTYSAMORN : $d9bb          55739   *
                  Env : $000b             11   *
-             EnvBase : $da51          55889   *
+             EnvBase : $da8c          55948   *
                EnvTp : $000d             13   *
-             Env_Del : $d82d          55341
+             Env_Del : $d868          55400
               Env_En : $0014             20   *
-             ESldAdd : $d832          55346
+             ESldAdd : $d86d          55405
                errno : $0093            147
          FATFileDesc : $0020             32
       FAT_AccessDate : $0012             18
@@ -378,9 +378,9 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
       FH_SectCounter : $0014             20
              FH_Size : $000e             14
          FH_TimeDate : $0027             39
-            FILE_END : $d9e6          55782   *
-             FIN_RTS : $d8c9          55497
-           FIX16BITS : $d8ca          55498
+            FILE_END : $da21          55841   *
+             FIN_RTS : $d904          55556
+           FIX16BITS : $d905          55557
           FileHandle : $002f             47
                Flags : $0015             21   *
     FS_BLK_FLG_FLUSH : $0002              2   *
@@ -398,7 +398,7 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           fs_fatsect : $0c82           3202
          fs_rootsect : $0c86           3206
           fs_scratch : $0c94           3220
-                GL36 : $d244          53828
+                GL36 : $d27f          53887
           gr_cur_off : $0006              6
           gr_cur_ptr : $0009              9
             gr_cur_x : $0007              7
@@ -417,9 +417,9 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
                  IFR : $000d             13   *
              IFR_CA1 : $0002              2   *
              IFR_CA2 : $0001              1   *
-                INIT : $ccef          52463
-              INITV1 : $cf92          53138
-              INITV2 : $cf7c          53116
+                INIT : $cd2a          52522
+              INITV1 : $cfcd          53197
+              INITV2 : $cfb7          53175
                 IO_0 : $0400           1024   *
                 IO_1 : $0480           1152   *
                 IO_2 : $0500           1280   *
@@ -428,42 +428,43 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
                 IO_5 : $0680           1664   *
                 IO_6 : $0700           1792   *
                 IO_7 : $0780           1920   *
-       inc_kb_timers : $c89b          51355
+       inc_kb_timers : $c898          51352
             infinity : $c70f          50959
-                init : $cb8d          52109
-            init_irq : $c7bc          51132
+                init : $cb8a          52106
+            init_irq : $c78b          51083
             init_nmi : $c762          51042
-            init_ram : $cbeb          52203
-       init_ram_fill : $cbfd          52221
-       init_ram_skip : $cc02          52226
-          init_ram_1 : $cbf5          52213
-              init_2 : $cb93          52115
-            intCount : $cca8          52392
+            init_ram : $cbe8          52200
+       init_ram_code : $cc07          52231
+       init_ram_fill : $cbfa          52218
+       init_ram_skip : $cbff          52223
+          init_ram_1 : $cbf2          52210
+              init_2 : $cb90          52112
+            intCount : $cce3          52451
              int_brk : $0c04           3076
-         int_do_read : $c852          51282
+         int_do_read : $c84f          51279
              int_irq : $0c02           3074
-      int_kb_handler : $c847          51271
-         int_keys_up : $c85e          51294
+      int_kb_handler : $c844          51268
+         int_keys_up : $c85b          51291
              int_nmi : $0c00           3072
-       int_skip_scan : $c858          51288
-             int_str : $cb52          52050
-          int_to_bcd : $cabf          51903
-      int_to_bcd_bit : $cad8          51928
- int_to_bcd_skip_neg : $cacd          51917
-          int_to_str : $cb39          52025
-       int_to_str_ch : $cb24          52004
-   int_to_str_ch_fin : $cb38          52024
+       int_skip_scan : $c855          51285
+             int_str : $cb4f          52047
+          int_to_bcd : $cabc          51900
+      int_to_bcd_bit : $cad5          51925
+ int_to_bcd_skip_neg : $caca          51914
+          int_to_str : $cb36          52022
+       int_to_str_ch : $cb21          52001
 AS65 Assembler for R6502 [1.42].                                     Page    8
 ---------------------------------- bank3.s -----------------------------------
 
-      int_to_str_fin : $cb71          52081
-       int_to_str_nz : $cb31          52017
- int_to_str_skip_neg : $cb4d          52045
+   int_to_str_ch_fin : $cb35          52021
+      int_to_str_fin : $cb6e          52078
+       int_to_str_nz : $cb2e          52014
+ int_to_str_skip_neg : $cb4a          52042
         int_usercia0 : $0c08           3080
         int_usercia1 : $0c0a           3082
          int_uservdp : $0c06           3078
-         int_vdp_fin : $c894          51348
-     int_vdp_handler : $c869          51305
+         int_vdp_fin : $c891          51345
+     int_vdp_handler : $c866          51302
     io_active_device : $c5a5          50597
             io_block : $0c4e           3150
             io_close : $c5c9          50633
@@ -500,11 +501,11 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
         io_skip_echo : $c5ee          50670
      io_skip_special : $c5f9          50681
            io_struct : $0010             16
-                 irq : $c7f6          51190
-             irq_brk : $c81c          51228
-      irq_check_cia0 : $c810          51216
-       irq_check_vdp : $c802          51202
-             irq_fin : $c818          51224
+                 irq : $c7c5          51141
+             irq_brk : $c819          51225
+      irq_check_cia0 : $c80d          51213
+       irq_check_vdp : $c7ff          51199
+             irq_fin : $c815          51221
            KB_CAPSLK : $0001              1   *
              KB_COLA : $0008              8   *
              KB_COLB : $0010             16   *
@@ -517,10 +518,10 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
              KB_LED2 : $0008              8   *
           KB_REP_DEL : $0014             20   *
           KB_REP_TIM : $0003              3   *
-             KB_ROWA : $0001              1   *
 AS65 Assembler for R6502 [1.42].                                     Page    9
 ---------------------------------- bank3.s -----------------------------------
 
+             KB_ROWA : $0001              1   *
              KB_ROWB : $0002              2   *
              KB_ROWC : $0004              4   *
           KB_SHIFTLK : $0002              2   *
@@ -535,18 +536,18 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           kb_rep_del : $002e             46
           kb_rep_tim : $002d             45
              kb_stat : $002a             42
-         kernel_init : $cb99          52121
-      kernel_skip_nv : $cbc9          52169
-         kernel_test : $cbab          52139
-           LOOP_LDIR : $cd87          52615
-             LPosPtr : $d69f          54943
-                  L1 : $ce84          52868
-                  L2 : $ceb4          52916
-                 L20 : $cdf8          52728
-                 L21 : $cdfa          52730
-                  L3 : $ceb8          52920
-          long_delay : $c8a8          51368
-        long_delay_1 : $c8ae          51374
+         kernel_init : $cb96          52118
+      kernel_skip_nv : $cbc6          52166
+         kernel_test : $cba8          52136
+           LOOP_LDIR : $cdc2          52674
+             LPosPtr : $d6da          55002
+                  L1 : $cebf          52927
+                  L2 : $ceef          52975
+                 L20 : $ce33          52787
+                 L21 : $ce35          52789
+                  L3 : $cef3          52979
+          long_delay : $c8a5          51365
+        long_delay_1 : $c8ab          51371
        MBR_BootPart1 : $01c6            454   *
     MBR_BytesPerSect : $000b             11   *
             MBR_Code : $0000              0   *
@@ -569,38 +570,38 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
            MBR_SerNo : $0027             39   *
          MBR_SmlSect : $0013             19   *
          MBR_VolName : $002b             43   *
-             MDADDR2 : $d33c          54076
+             MDADDR2 : $d377          54135
                Mixer : $0007              7   *
               MM_DIS : $0020             32   *
                MM_X0 : $0010             16   *
                MM_X1 : $0020             32   *
                MM_Y0 : $0040             64   *
                MM_Y1 : $0080            128   *
-             MODADDR : $cff9          53241
-                  M1 : $cf6d          53101
-                  M2 : $cf94          53140
-                  M3 : $cfc5          53189
+             MODADDR : $d034          53300
+                  M1 : $cfa8          53160
+                  M2 : $cfcf          53199
+                  M3 : $d000          53248
                 main : $c70f          50959
-        mem_clr_byte : $c8ea          51434
-           mem_start : $0cb6           3254
+        mem_clr_byte : $c8e7          51431
 AS65 Assembler for R6502 [1.42].                                     Page   10
 ---------------------------------- bank3.s -----------------------------------
 
+           mem_start : $0cb6           3254
          mod_sz_io_e : $c650          50768
          mod_sz_io_s : $c586          50566
-     mod_sz_kernel_e : $cc0a          52234
+     mod_sz_kernel_e : $cc3a          52282
      mod_sz_kernel_s : $c586          50566
      msg_hello_world : $c715          50965
               NNtSkp : $0011             17   *
-               NOSIG : $d1df          53727
-             NO_ENAC : $d5d0          54736
-             NO_ENSL : $d5e4          54756
+               NOSIG : $d21a          53786
+             NO_ENAC : $d60b          54795
+             NO_ENSL : $d61f          54815
                Noise : $0006              6   *
                 Note : $0012             18   *
-             Ns_Base : $da41          55873
-     Ns_Base_AddToNs : $da41          55873
-                 NT_ : $db43          56131
-             NT_DATA : $d930          55600
+             Ns_Base : $da7c          55932
+     Ns_Base_AddToNs : $da7c          55932
+                 NT_ : $db7e          56190
+             NT_DATA : $d96b          55659
               NtSkCn : $001b             27   *
              NUM_ANY : $0000              0   *
              NUM_BIN : $0003              3   *
@@ -610,75 +611,75 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
              NV_MODE : $000e             14   *
             NV_RAMSZ : $003f             63   *
                  nmi : $c777          51063
-             nmi_fin : $c7ba          51130
+             nmi_fin : $c789          51081
        nmi_skip_acia : $c789          51081
-        null_handler : $c7f5          51189
-            null_irq : $c7f4          51188
+        null_handler : $c7c4          51140
+            null_irq : $c7c3          51139
                num_a : $0079            121
                num_b : $007d            125
              num_buf : $0089            137
              num_tmp : $0085            133
                num_x : $0081            129
               OffOnD : $000c             12   *
-             OLDPRTM : $d1b5          53685
+             OLDPRTM : $d1f0          53744
               OnOffD : $000b             11   *
               OrnPtr : $000d             13   *
-             OrnPtrs : $d32b          54059
-              oldIrq : $cca9          52393
-             PatsPtr : $d6c6          54982
+             OrnPtrs : $d366          54118
+              oldIrq : $cce4          52452
+             PatsPtr : $d701          55041
                  PCR : $000c             12   *
-              PD_ENV : $d042          53314
-             PD_EOff : $d01f          53279
-             PD_ESAM : $d04e          53326
-              PD_FIN : $d115          53525
-             PD_LOOP : $d07e          53374
-              PD_LP2 : $d082          53378
-             PD_NOIS : $d0eb          53483
-             PD_NOTE : $d0fc          53500
-              PD_ORN : $d048          53320
-             PD_OrSm : $cfcd          53197
-              PD_REL : $d0f1          53489
-              PD_RES : $d108          53512
-              PD_SAM : $cfe5          53221
-             PD_SAM_ : $cfe6          53222
-             PD_SorE : $d02a          53290
-              PD_VOL : $d00c          53260
-                PLAY : $d650          54864
-               PLNLP : $d6b0          54960
-                PL1A : $d70f          55055
-                PL1B : $d724          55076
-                PL1C : $d746          55110
+              PD_ENV : $d07d          53373
+             PD_EOff : $d05a          53338
+             PD_ESAM : $d089          53385
+              PD_FIN : $d150          53584
+             PD_LOOP : $d0b9          53433
+              PD_LP2 : $d0bd          53437
+             PD_NOIS : $d126          53542
+             PD_NOTE : $d137          53559
+              PD_ORN : $d083          53379
+             PD_OrSm : $d008          53256
+              PD_REL : $d12c          53548
+              PD_RES : $d143          53571
+              PD_SAM : $d020          53280
+             PD_SAM_ : $d021          53281
+             PD_SorE : $d065          53349
+              PD_VOL : $d047          53319
+                PLAY : $d68b          54923
+               PLNLP : $d6eb          55019
+                PL1A : $d74a          55114
+                PL1B : $d75f          55135
 AS65 Assembler for R6502 [1.42].                                     Page   11
 ---------------------------------- bank3.s -----------------------------------
 
-                PL1D : $d768          55144
-                 PL2 : $d76d          55149
+                PL1C : $d781          55169
+                PL1D : $d7a3          55203
+                 PL2 : $d7a8          55208
                  PRA : $0001              1   *
                 PRAH : $000f             15   *
                  PRB : $0000              0   *
-              PrNote : $d162          53602
-             PrSlide : $d1a8          53672
-                PSP_ : $d70f          55055
+              PrNote : $d19d          53661
+             PrSlide : $d1e3          53731
+                PSP_ : $d74a          55114
               PsInOr : $0000              0   *
               PsInSm : $0001              1   *
-             PTDECOD : $d06a          53354
-              PT3END : $dc03          56323
-             PT3INIT : $cc13          52243
-        PT3INIT_COPY : $cc26          52262
-            PT3PAUSE : $cc0d          52237
-           PT3RESUME : $cc10          52240
-            PT3START : $cc0a          52234
-        PT3_code_end : $dc03          56323
-      PT3_code_start : $cc0a          52234
-        print_a_to_d : $cb7c          52092
-     print_a_to_d_ch : $cb81          52097
-    print_a_to_d_fin : $cb8c          52108
-              pt3Irq : $ccc0          52416
+             PTDECOD : $d0a5          53413
+              PT3END : $dc3e          56382
+             PT3INIT : $cc43          52291
+        PT3INIT_COPY : $cc5e          52318
+            PT3PAUSE : $cc3d          52285
+           PT3RESUME : $cc40          52288
+            PT3START : $cc3a          52282
+        PT3_code_end : $dc3e          56382
+      PT3_code_start : $cc3a          52282
+        print_a_to_d : $cb79          52089
+     print_a_to_d_ch : $cb7e          52094
+    print_a_to_d_fin : $cb89          52105
+              pt3Irq : $ccfb          52475
              pt3_int : $0c4c           3148
            RAM_ZMASK : $00cf            207   *
             Revision : $0030             48   *
            ROM_ZMASK : $003f             63   *
-                ROUT : $d841          55361
+                ROUT : $d87c          55420
             RTC_ADDR : $0600           1536   *
               RTC_AF : $0020             32   *
              RTC_AIE : $0020             32   *
@@ -712,16 +713,19 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
             RTC_SQWE : $0080            128   *
               RTC_UF : $0010             16   *
              RTC_UIE : $0010             16   *
-             RTC_UIP : $0080            128   *
 AS65 Assembler for R6502 [1.42].                                     Page   12
 ---------------------------------- bank3.s -----------------------------------
 
+             RTC_UIP : $0080            128   *
              RTC_VRT : $0080            128   *
               RTC_YR : $0009              9   *
             RTC_2412 : $0002              2   *
             ram_code : $0c0c           3084
+   ram_code_copycode : $cc09          52233
+          ram_code_e : $cc3a          52282
+          ram_code_s : $cc15          52245
               SamPtr : $000f             15   *
-             SamPtrs : $cfe8          53224
+             SamPtrs : $d023          53283
                SD_CD : $0004              4   *
               SD_CLK : $0001              1   *
                SD_CS : $0008              8   *
@@ -765,22 +769,22 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
              SER_WL1 : $0040             64   *
           SER_19200B : $000f             15   *
            SER_9600B : $000e             14   *
-              SETENV : $d2e1          53985
-              SETORN : $d31e          54046
+              SETENV : $d31c          54044
+              SETORN : $d359          54105
                SETUP : $00ed            237
-             SET_STP : $d203          53763
+             SET_STP : $d23e          53822
               SlToNt : $0013             19   *
            SND_ADBUS : $0481           1153   *
    SND_DESELECT_MASK : $00bd            189   *
             SND_MODE : $0480           1152   *
        SND_REG_CHAPH : $0001              1   *
+AS65 Assembler for R6502 [1.42].                                     Page   13
+---------------------------------- bank3.s -----------------------------------
+
        SND_REG_CHAPL : $0000              0   *
       SND_REG_CHAVOL : $0008              8   *
        SND_REG_CHBPH : $0003              3   *
        SND_REG_CHBPL : $0002              2   *
-AS65 Assembler for R6502 [1.42].                                     Page   13
----------------------------------- bank3.s -----------------------------------
-
       SND_REG_CHBVOL : $000a             10   *
        SND_REG_CHCPH : $0005              5   *
        SND_REG_CHCPL : $0004              4   *
@@ -794,35 +798,35 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
          SND_SELREAD : $0040             64   *
       SND_SELSETADDR : $0042             66   *
         SND_SELWRITE : $0002              2   *
-             SPCCOMS : $d34d          54093
+             SPCCOMS : $d388          54152
                   SR : $000a             10   *
                SWBRK : <macro>
-                  sa : $ce40          52800
-                 saa : $d244          53828
-                 sac : $d25e          53854
-                 sad : $d26b          53867
-                 sae : $d27a          53882
-                 saf : $d289          53897
-                 sag : $d29b          53915
-                 sah : $d2d2          53970
-                 sak : $d2dd          53981
-                 sam : $d308          54024
-                 saq : $d38b          54155
-                saq1 : $d4b9          54457
-                saq2 : $d617          54807
-                 sar : $d693          54931
-                 sas : $d62c          54828
-                 sat : $d638          54840
-                sat1 : $d665          54885
-                sat2 : $d66d          54893
-                sat3 : $d67e          54910
-                 sau : $d7f1          55281
-                sau1 : $d7f3          55283
-                  sb : $ce44          52804
-                 sb1 : $ce46          52806
-                  sc : $ce94          52884
+                  sa : $ce7b          52859
+                 saa : $d27f          53887
+                 sac : $d299          53913
+                 sad : $d2a6          53926
+                 sae : $d2b5          53941
+                 saf : $d2c4          53956
+                 sag : $d2d6          53974
+                 sah : $d30d          54029
+                 sak : $d318          54040
+                 sam : $d343          54083
+                 saq : $d3c6          54214
+                saq1 : $d4f4          54516
+                saq2 : $d652          54866
+                 sar : $d6ce          54990
+                 sas : $d667          54887
+                 sat : $d673          54899
+                sat1 : $d6a0          54944
+                sat2 : $d6a8          54952
+                sat3 : $d6b9          54969
+                 sau : $d82c          55340
+                sau1 : $d82e          55342
+                  sb : $ce7f          52863
+                 sb1 : $ce81          52865
+                  sc : $cecf          52943
              scratch : $0900           2304
-                  sd : $cec5          52933
+                  sd : $cf00          52992
              sd_addr : $0046             70
               sd_buf : $0200            512
              sd_sect : $0042             66
@@ -832,85 +836,85 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
              ser_buf : $0800           2048
            ser_first : $0002              2
             ser_last : $0003              3
-                  sf : $cee8          52968
-                  sg : $cef4          52980
-                 sg1 : $cf01          52993
-                  sh : $cf4f          53071
-                  si : $cfa1          53153
-                  sj : $cfe0          53216
-                 sj1 : $cfe5          53221
-             skipInt : $cccd          52429
-           skipInt_1 : $cccd          52429
-          skip_a_f_1 : $c8fe          51454
-          skip_a_f_2 : $c90d          51469
+                  sf : $cf23          53027
+                  sg : $cf2f          53039
+                 sg1 : $cf3c          53052
+                  sh : $cf8a          53130
+                  si : $cfdc          53212
+                  sj : $d01b          53275
+                 sj1 : $d020          53280
 AS65 Assembler for R6502 [1.42].                                     Page   14
 ---------------------------------- bank3.s -----------------------------------
 
-         skip_kb_deb : $c8a1          51361
-         skip_kb_rep : $c8a7          51367
-          skip_x_f_1 : $c91a          51482
-          skip_x_f_2 : $c92f          51503
-                  sl : $d03b          53307
-                  sm : $d05d          53341
-                  sn : $d067          53351
+             skipInt : $cd08          52488
+           skipInt_1 : $cd08          52488
+          skip_a_f_1 : $c8fb          51451
+          skip_a_f_2 : $c90a          51466
+         skip_kb_deb : $c89e          51358
+         skip_kb_rep : $c8a4          51364
+          skip_x_f_1 : $c917          51479
+          skip_x_f_2 : $c92c          51500
+                  sl : $d076          53366
+                  sm : $d098          53400
+                  sn : $d0a2          53410
              snd_get : $c6c8          50888
         snd_get_joy0 : $c6f9          50937
   snd_get_joy0_retry : $c6fb          50939
              snd_set : $c6a1          50849
-                  so : $d08c          53388
-                 so1 : $d096          53398
-                so11 : $d09d          53405
-                 so2 : $d0a2          53410
-                 so3 : $d0ab          53419
-                 so4 : $d0b2          53426
-                 so5 : $d0b7          53431
-                 so6 : $d0c4          53444
-                 so7 : $d0d1          53457
-                  st : $d13d          53565
-          str_a_to_d : $cb7b          52091
-          str_a_to_x : $c8f2          51442
-   str_d_digits_done : $ca2b          51755
-         str_d_error : $ca4c          51788
-      str_d_find_end : $c9e9          51689
-     str_d_found_end : $c9f6          51702
-        str_d_powers : $ca4e          51790
- str_d_process_digit : $ca02          51714
-      str_d_skip_neg : $ca42          51778
-          str_x_to_a : $c90f          51471
-      str_x_to_a_err : $c93b          51515
-     str_x_to_a_errl : $c93a          51514
-                  sw : $d1cb          53707
-                  sy : $d22e          53806
-                  sz : $d242          53826
-                  s1 : $ccd9          52441
-                  s2 : $cd49          52553
-                 s7b : $ce05          52741
-                 s8b : $ce06          52742
-                 s9b : $ce3c          52796
+                  so : $d0c7          53447
+                 so1 : $d0d1          53457
+                so11 : $d0d8          53464
+                 so2 : $d0dd          53469
+                 so3 : $d0e6          53478
+                 so4 : $d0ed          53485
+                 so5 : $d0f2          53490
+                 so6 : $d0ff          53503
+                 so7 : $d10c          53516
+                  st : $d178          53624
+          str_a_to_d : $cb78          52088
+          str_a_to_x : $c8ef          51439
+   str_d_digits_done : $ca28          51752
+         str_d_error : $ca49          51785
+      str_d_find_end : $c9e6          51686
+     str_d_found_end : $c9f3          51699
+        str_d_powers : $ca4b          51787
+ str_d_process_digit : $c9ff          51711
+      str_d_skip_neg : $ca3f          51775
+          str_x_to_a : $c90c          51468
+      str_x_to_a_err : $c938          51512
+     str_x_to_a_errl : $c937          51511
+                  sw : $d206          53766
+                  sy : $d269          53865
+                  sz : $d27d          53885
+                  s1 : $cd14          52500
+                  s2 : $cd84          52612
+                 s7b : $ce40          52800
+                 s8b : $ce41          52801
+                 s9b : $ce77          52855
                  TA1 : $00f8            248   *
                  TA2 : $00f9            249   *
                  TB1 : $00fa            250   *
                  TB2 : $00fb            251   *
                  TB3 : $00fe            254   *
-             TCNEW_0 : $d96a          55658
-             TCNEW_1 : $d94c          55628   *
-             TCNEW_2 : $d975          55669
-             TCNEW_3 : $d960          55648
-             TCOLD_0 : $d940          55616
-             TCOLD_1 : $d94c          55628
-             TCOLD_2 : $d94e          55630
-             TCOLD_3 : $d961          55649
+             TCNEW_0 : $d9a5          55717
+             TCNEW_1 : $d987          55687   *
+             TCNEW_2 : $d9b0          55728
+             TCNEW_3 : $d99b          55707
+             TCOLD_0 : $d97b          55675
+             TCOLD_1 : $d987          55687
+             TCOLD_2 : $d989          55689
+             TCOLD_3 : $d99c          55708
                  TC1 : $00fc            252   *
                  TC2 : $00fd            253   *
                  TC3 : $00ff            255   *
-             TC_EXIT : $cf52          53074
+             TC_EXIT : $cf8d          53133
+AS65 Assembler for R6502 [1.42].                                     Page   15
+---------------------------------- bank3.s -----------------------------------
+
                TnAcc : $0008              8   *
               TnDelt : $0019             25   *
               TnSlDl : $0016             22   *
                 TonA : $0000              0   *
-AS65 Assembler for R6502 [1.42].                                     Page   15
----------------------------------- bank3.s -----------------------------------
-
                 TonB : $0002              2   *
                 TonC : $0004              4   *
               TSlCnt : $0005              5   *
@@ -919,18 +923,18 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
                 T1CL : $0004              4   *
                 T1LH : $0007              7   *
                 T1LL : $0006              6   *
-                 T1_ : $d984          55684
+                 T1_ : $d9bf          55743
                 T2CH : $0009              9   *
                 T2CL : $0008              8   *
-                  T_ : $d940          55616
-             T_NEW_0 : $d9b6          55734   *
-             T_NEW_1 : $d984          55684   *
-             T_NEW_2 : $d9ce          55758   *
-             T_NEW_3 : $d9b4          55732   *
-             T_OLD_0 : $d9b6          55734   *
-             T_OLD_1 : $d984          55684   *
-             T_OLD_2 : $d99c          55708   *
-             T_OLD_3 : $d9b4          55732   *
+                  T_ : $d97b          55675
+             T_NEW_0 : $d9f1          55793   *
+             T_NEW_1 : $d9bf          55743   *
+             T_NEW_2 : $da09          55817   *
+             T_NEW_3 : $d9ef          55791   *
+             T_OLD_0 : $d9f1          55793   *
+             T_OLD_1 : $d9bf          55743   *
+             T_OLD_2 : $d9d7          55767   *
+             T_OLD_3 : $d9ef          55791   *
                tmp_a : $0035             53
                tmp_b : $0037             55
            tmp_bank1 : $0000              0
@@ -938,8 +942,8 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
                tmp_c : $0031             49
                tmp_d : $0039             57
               tmp_v1 : $0033             51
-     twos_complement : $cab2          51890
-twos_complement_skip_X : $cabe          51902
+     twos_complement : $caaf          51887
+twos_complement_skip_X : $cabb          51899
              UTF_ACK : $0006              6   *
              UTF_BEL : $0007              7   *
              UTF_BRK : $001a             26   *
@@ -951,14 +955,14 @@ twos_complement_skip_X : $cabe          51902
             UTF_NACK : $0015             21   *
              UTF_SOH : $0001              1   *
          UTF_SPECIAL : $0020             32   *
-       update_timers : $c895          51349
-          utilPrintA : $c8cd          51405
-       utilPrintCRLF : $c8c5          51397
-        utilPrintSPC : $c8bd          51389
-        util_clr_mem : $c8e2          51426
-                VARS : $d9e6          55782
-            VARS_END : $dc03          56323   *
-             VAR0END : $da53          55891   *
+       update_timers : $c892          51346
+          utilPrintA : $c8ca          51402
+       utilPrintCRLF : $c8c2          51394
+        utilPrintSPC : $c8ba          51386
+        util_clr_mem : $c8df          51423
+                VARS : $da21          55841
+            VARS_END : $dc3e          56382   *
+             VAR0END : $da8e          55950   *
             VDP_ADDR : $0501           1281   *
            VDP_FLASH : $0010             16   *
        VDP_LONGDELAY : $0003              3   *
@@ -967,15 +971,15 @@ twos_complement_skip_X : $cabe          51902
       VDP_SHORTDELAY : $0001              1   *
           VDP_STATUS : $0501           1281   *
             VDP_VRAM : $0500           1280   *
-             Version : $d1a0          53664
+             Version : $d1db          53723
               Volume : $001c             28   *
-                 VT_ : $da43          55875
-                val1 : $00f8            248
-                val2 : $00fa            250
-                val3 : $00fc            252
 AS65 Assembler for R6502 [1.42].                                     Page   16
 ---------------------------------- bank3.s -----------------------------------
 
+                 VT_ : $da7e          55934
+                val1 : $00f8            248
+                val2 : $00fa            250
+                val3 : $00fc            252
                 val4 : $00fe            254
         vdp_addr_col : $0002              2
         vdp_addr_nme : $0000              0
@@ -1002,8 +1006,8 @@ twos_complement_skip_X : $cabe          51902
          vdp_wr_addr : $c65d          50781
           vdp_wr_reg : $c650          50768
          vdp_wr_vram : $c685          50821
-         word_to_bcd : $caf5          51957
-     word_to_bcd_bit : $cb07          51975
+         word_to_bcd : $caf2          51954
+     word_to_bcd_bit : $cb04          51972
              ztmp_16 : $0079            121
                z80_A : $00ee            238
               z80_AP : $00f7            247
@@ -1021,11 +1025,11 @@ twos_complement_skip_X : $cabe          51902
             _bankram : <macro>
        _bankram_fast : <macro>
         _bank0_start : $c000          49152   *
-          _bank3_end : $dc03          56323
+          _bank3_end : $dc3e          56382
                 _bcc : <macro>
                 _bcs : <macro>
       _cmd_immediate : $c50e          50446
-           _code_end : $dc03          56323
+           _code_end : $dc3e          56382
          _code_start : $c001          49153
        _command_line : $c2b6          49846
           _cpu_stack : $0100            256
@@ -1034,13 +1038,13 @@ twos_complement_skip_X : $cabe          51902
          _decZPWordA : <macro>
             _df_init : $c02e          49198
     _df_ost_peekType : <macro>
-        _df_pg_dflat : $c046          49222
-            _doPause : $cc37          52279
-           _doResume : $cc4b          52299
-            _doStart : $cc51          52305
 AS65 Assembler for R6502 [1.42].                                     Page   17
 ---------------------------------- bank3.s -----------------------------------
 
+        _df_pg_dflat : $c046          49222
+            _doPause : $cc6f          52335
+           _doResume : $cc83          52355
+            _doStart : $cc89          52361
       _end_zero_page : $00e1            225
          _fs_chdir_w : $c05e          49246
          _fs_close_w : $c0a6          49318
@@ -1078,7 +1082,7 @@ _fs_dir_root_start_w : $c14e          49486
            _init_snd : $c256          49750
         _kb_read_dip : $c29e          49822
         _kb_read_raw : $c286          49798
-               _MUTE : $cce1          52449
+               _MUTE : $cd1c          52508
           _OSVectors : $c001          49153
             _PT3INIT : $c526          50470
            _PT3PAUSE : $c556          50518
@@ -1099,13 +1103,13 @@ _fs_dir_root_start_w : $c14e          49486
        _restore_bank : $c01c          49180
     _rtc_gettimedate : $c466          50278
            _rtc_init : $c44e          50254
+AS65 Assembler for R6502 [1.42].                                     Page   18
+---------------------------------- bank3.s -----------------------------------
+
          _rtc_nvread : $c496          50326
         _rtc_nvwrite : $c4ae          50350
     _rtc_setdatetime : $c47e          50302
           _sbcZPByte : <macro>
-AS65 Assembler for R6502 [1.42].                                     Page   18
----------------------------------- bank3.s -----------------------------------
-
        _sd_sendcmd17 : $c4de          50398
        _sd_sendcmd24 : $c4f6          50422
             _sendcmd : <macro>
@@ -1118,9 +1122,9 @@ _fs_dir_root_start_w : $c14e          49486
            _vdp_poke : $c41e          50206
           __65SC02__ : $0001              1
 
-1033 labels used
+1037 labels used
 
-5534 lines read, no errors in pass 1.
+5568 lines read, no errors in pass 1.
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
 Total size 16384 bytes.

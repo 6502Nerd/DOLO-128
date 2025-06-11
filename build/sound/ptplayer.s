@@ -98,48 +98,37 @@ PT3RESUME
 ; This is an extern routine needs to be callable from anywhere
 ; Is called at power-on / reset
 PT3INIT
-        ; Swtich to RAM bank 2 don't touch anything else
-        lda IO_0+PRB
-        pha                     ; Remember the bank #
-        and #0b11001111         ; mask out old bank #
-        ora #0b00100000         ; mask in bank binary 10 = 2dec
-        sta IO_0+PRB
+        jsr init_ram_code       ; Copy code from ROM to RAM
 
-        ; Copy from end of PT3 code and var section to start of ROM
-        ; to shadow RAM directly underneath
-        ; no need to copy beyond this as only has vectors at the top
-        ; and we don't want to overwrite song data that may have
-        ; been loaded behind ROM by the user
-;        ldy #lo(PT3_code_end)   ; Index into PT3 code end
-;        stz tmp_a               ; Page + Y index, page lo always 0
-;        ldx #hi(PT3_code_end)   ; Page number of code end
-;        stx tmp_a+1
-;PT3INIT_COPY
-;        lda (tmp_a),y           ; Get ROM byte
-;        sta (tmp_a),y           ; Write to memory address always goes to active RAM bank
-;        dey
-;        cpy #0xff
-;        bne PT3INIT_COPY
-;        dex
-;        stx tmp_a+1             ; Derement page number
-;        cpx #0xbf               ; Check if gone below ROM page 0xc0
-;        bne PT3INIT_COPY
+	; Save current port B status of both VIAs
+	lda IO_0+PRB				; VIA0 port B is the ROM and RAM bank select
+	pha
+	and #0b11001111				; Mask off RAM bank bits
+	ora #0b00100000				; Select bank 2
+	pha					; Save new bank select
+	lda IO_1+PRB				; VIA1 port B controls ROM enable
+	pha
+	and #0b11011111				; Disable ROM bit
+	pha					; Save ROM disable state
+
         ldy #0
         sty tmp_a
         ldx 0xc0
         stx tmp_a+1
 PT3INIT_COPY
         lda (tmp_a),y           ; Get ROM byte
-        sta (tmp_a),y           ; Write to memory address always goes to active RAM bank
+        jsr ram_code            ; Copy to shadow RAM bank 2
         iny
         bne PT3INIT_COPY
-        inx
-        stx tmp_a+1             ; Increment page number
+        inc tmp_a+1             ; Increment page number
         bne PT3INIT_COPY
 
-        ; Ok all code in this file copied from ROM to RAM
+        ; Tidy the stack
         pla
-        sta IO_0+PRB            ; Restore RAM bank #
+        pla
+        pla
+        pla
+
         rts
 
 
@@ -171,6 +160,8 @@ _doResume
 ; Initialise the player to start using A,X as song address
 ; Y is the loop preference
 _doStart
+        php
+        sei
         sty SETUP               ; Set loop pref Y=1 means do not loop
         ; Disable T1 interrupt on VIA 1 just in case
         ldy #0b01000000
@@ -228,6 +219,7 @@ _doStart
         ; Restore RAM bank
         pla                             ; Get original port setting
         sta IO_0+PRB                    ; Update port to activate setting
+        plp
         rts
      
 CrPsPtr	fcw 0 ; current position in PT3 module

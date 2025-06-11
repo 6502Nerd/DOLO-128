@@ -169,5 +169,47 @@ init_ram_skip
 	
 	jmp init_2			; Carry on initialisation
 
+;* Copy code to ram_code that enables copying of a byte to shadow RAM
+init_ram_code
+	ldy #0
+ram_code_copycode
+	lda ram_code_s,y
+	sta ram_code,y
+	iny
+	cpy #(ram_code_e-ram_code_s)
+	bne ram_code_copycode
+	rts
+
+; This code gets copied to RAM to do the actual poking
+; Stack must contain:
+;	101,x = disable ROM value
+;	102,x = original ROM value
+;	103,x = new RAM bank select value
+;	104,x = original RAM bank select value
+; tmp_a = address to poke to
+ram_code_s
+	php							; Save processor status
+	sei							; Disable VDP interrupts
+	pha
+	tsx
+	inx
+	inx
+	inx
+	inx
+	lda 0x101,x					; Get disable ROM value
+	sta IO_1+PRB				; Disable ROM
+	lda 0x103,x					; Get new RAM bank select value
+	sta IO_0+PRB				; Select bank 2
+	pla
+	sta (tmp_a),y				; Actually poke the byte to memory!!
+	lda 0x102,x					; Get original ROM value
+	sta IO_1+PRB				; Enable ROM
+	lda 0x104,x					; Get original RAM bank select value
+	sta IO_0+PRB				; Restore RAM bank select	
+	plp							; Restore processor status
+	rts
+ram_code_e
+
+
 mod_sz_kernel_e
 

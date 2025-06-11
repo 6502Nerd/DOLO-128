@@ -53,35 +53,6 @@ nmi
 
 	ply
 nmi_skip_acia
-	;* Try PIA1 first for rapid Timer handling
-	lda IO_1 + IFR
-	bpl nmi_fin
-	phy
-	phx
-	; Reset interrupt by reading T1C-L
-	lda IO_1+T1CL
-	; Swtich to RAM bank 2 don't touch anything else
-	lda IO_0+PRB
-	pha                     ; Remember the bank #
-	and #0b11001111
-	ora #0b00100000
-	sta IO_0+PRB
-	; Switch out ROM for RAM
-	lda IO_1+PRB                    ; Get current ROM / PRB state
-	pha
-	and #(0xff ^ MM_DIS)            ; Switch off ROM bit
-	sta IO_1+PRB                    ; Update port to activate setting
-	inc pt3_int 				  	; Set PT3 interrupt flag
-	jsr call_irq_usercia1			; Call user cia1 handler
-	stz pt3_int 				  	; Clear PT3 interrupt flag
-	; Restore ROM
-	pla                             ; Get original port setting
-	sta IO_1+PRB                    ; Update port to activate setting
-	; Restore RAM bank
-	pla                             ; Get original port setting
-	sta IO_0+PRB                    ; Update port to activate setting
-	plx
-	ply
 nmi_fin
 	pla
 	rti
@@ -157,7 +128,36 @@ irq
 	bne call_irq_brk
 	
 	clc						; Standard behaviour
-	
+
+	;* Try PIA1 first for rapid Timer handling
+	lda IO_1 + IFR
+	bpl irq_check_vdp		; Skip if no interrupt
+	; Reset interrupt by reading T1C-L
+	lda IO_1+T1CL
+	phy
+	phx
+	; Swtich to RAM bank 2 don't touch anything else
+	lda IO_0+PRB
+	pha                     ; Remember the bank #
+	and #0b11001111
+	ora #0b00100000
+	sta IO_0+PRB
+	; Switch out ROM for RAM
+	lda IO_1+PRB                    ; Get current ROM / PRB state
+	pha
+	and #(0xff ^ MM_DIS)            ; Switch off ROM bit
+	sta IO_1+PRB                    ; Update port to activate setting
+	inc pt3_int 				  	; Set PT3 interrupt flag
+	jsr call_irq_usercia1			; Call user cia1 handler
+	; Restore ROM
+	pla                             ; Get original port setting
+	sta IO_1+PRB                    ; Update port to activate setting
+	; Restore RAM bank
+	pla                             ; Get original port setting
+	sta IO_0+PRB                    ; Update port to activate setting
+	plx
+	ply
+
 	;* Try VDP next
 irq_check_vdp	
 	lda VDP_STATUS			; Read status register
