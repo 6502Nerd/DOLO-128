@@ -5,7 +5,7 @@ Quick introduction notes on this zip file
 All folders contain .s and .i assembler files which are processed by as65.exe
 except for these special folders;
 -	readme.txt:	This file
--   build:      The main folder to build the source
+-   build:      The main folder to build the source (see below for details)
 -   docs:       Where I will eventually put design and other docs (WIP)
 - 	EMU:        Emulation folder containing a custom version of mame
 		        The make file writes the combined ROM to the emu folder space
@@ -66,8 +66,43 @@ Build quick quide (using powershell as the CLI);
     a single 64KB rom in the rom folder.  In addition the rom file is compressed
     and copied to the emu/roms folder.
 
-Running under mame quick guide (using powershell as the CLI)
-	Your need to be in the EMU folder of the homebrew directory
+Running under mame *very* quick guide (using powershell as the CLI)
+	You need to be in the EMU folder of the homebrew directory
+	Type ./hb128bbc hb128bbc
+    This will start the emulator - press tab to skip the machine info screen
+    If the warning screen shows, press tab
+    Tab key is used on startup to get to the config menu:
+        Navigate to File Manager
+        Select harddisk
+        If sdcard64m.img is not shown then navigate to it and select
+        Select Reset system
+    By now the machine should be fired up with filesystem reported as mounted.
+
+    Keyboard mapping note on my PC keyboard:
+        underscore is to the left of 1
+        pund is shift and that key noted above
+        hash symbol is shift 3
+        and symbol is shift 6
+        single quote is shift 7
+        open bracket is shift 8
+        close bracket is shift 9
+        equals is shift - (the minus key)
+        plus is shift ;
+        colon is '
+        multiply is shift '
+        at symbol is #
+
+    Now, let's try a game. Type:
+        chdir "games/tetris" (goes to the indicated folder)
+        load "tetris3.prg"   (loads the program - takes about 20 seconds)
+        _start()             (starts the game)
+        When the game starts, use the left and right arrows to turn music
+        off or on.  The arrows keys act like the joystick and the fire
+        button is ctrl.
+        It's tetris, so need I say more!
+
+Running under mame guide (using powershell as the CLI)
+	You need to be in the EMU folder of the homebrew directory
 	Invoke mame in one of the  following ways;
      1. ./hb128bbc hb128bbc *OR*
      2. ./hb128bbc hb128bbc -serial terminal *OR*
@@ -91,22 +126,7 @@ Running under mame quick guide (using powershell as the CLI)
     by activating Scroll-Lock on your keyboard (mame briefly indicates when UI
     controls are enabled or disabled).
 
-Mounting the SD-card under MAME;
-    There is a filesystem image which can be mounted to emulate the SD
-    card of the real machine.  When the emulator first boots, you need to
-    do the following;
-    1. Activate kayboard Scroll-Lock to get enable emulator UI controls
-    2. Press the TAB key to bring up the emulator menu
-    3. Select 'File Manager' and press enter on 'harddisk (hard)'
-    4. Navigate to the software\filesystem folder
-    5. Select the file 'sdcard64m.img' (press enter on this file)
-    6. Exit mame menus by pressing ESC until back to the main display
-    7. Disable emulator UI controls (Scroll-Lock)
-    8. Reset the machine using F12 (with F2 as needed for serial)
-    This will reset the machine and there should be no boot up messages
-    about bad SD card or failed to mount the filesystem.  You can easily
-    confirm by entering the command 'dir' which will display the
-    directory.
+SD-card image under MAME;
     The image is 64MB to keep the binary size down, but works fine even
     though the real machine supports a 1GB card.  This image can also
     be mounted using many ISO mount utilities (I use ImDisk) which allows
