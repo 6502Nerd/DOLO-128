@@ -1,2 +1,4 @@
-EMU/nvram/hb128bbc/rtc
+EMU/nvram
 EMU/cfg/hb128bbc.cfg
+EMU/diff
+EMU/snap
