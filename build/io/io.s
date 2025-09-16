@@ -228,8 +228,8 @@ io_devices
 ;* Device zero is the serial port
 ;* only offers get and put
 io_device0					; Serial device, input = Ser, output = Ser
-	dw	_get_byte			; io_get_ch
-	dw	_put_byte			; io_put_ch
+	dw	_ser_get_byte		; io_get_ch
+	dw	_ser_put_byte		; io_put_ch
 	dw	io_null_op			; io_open_r
 	dw	io_null_op			; io_open_w
 	dw	io_null_op			; io_close_f

@@ -106,11 +106,11 @@ init_2					; init_ram will jump back to here
 kernel_init
 	jsr init_nmi		; Initialise NMI handling
 	jsr init_irq		; Initialise IRQ handling
-	jsr _init_acia		; initialise the serial chip
 	
 	jsr _init_cia0		; initialise cia 0
 	jsr _init_cia1		; initialise cia 1
 	jsr _PT3INIT		; Load PT3 player code into shadow RAM
+	jsr _init_acia		; initialise the serial chip
 kernel_test
 	jsr _init_snd		; initialise the sound chip
 	jsr _init_keyboard	; initialise keyboard timer settings

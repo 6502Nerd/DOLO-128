@@ -598,9 +598,10 @@ df_rt_eval_lvskip
 	beq df_rt_eval_var_notarry
 	; even if an array if no dimensions then return base pointer
 	; if at end of statement or line then simple copy
-	cpy df_nxtstidx
-	beq df_rt_eval_var_simple
+;	cpy df_nxtstidx
+;	beq df_rt_eval_var_simple
 	; if next ch is not [ then simple copy
+	; using knowledge that next char either will be '[' or a zero or ':' chanacter
 	iny
 	lda (df_currlin),y
 	dey
@@ -626,13 +627,19 @@ df_rt_eval_var_notarry
 df_rt_eval_lvar
 	; it's not an array, push the address of DFVVT_LO
 	; add DFVVT_LO offset to slot address in X,A
-	clc
-	lda #DFVVT_LO
-	adc df_tmpptra
-	tax
-	lda df_tmpptra+1
-	adc #0
+;	clc
+;	lda #DFVVT_LO
+;	adc df_tmpptra
+;	tax
+;	lda df_tmpptra+1
+;	adc #0
 
+	; Using knowledge that DFVVT_LO is always 1 and also that slots are 8 byte aligned
+	; so no slot will jump over a page boundary
+	; this is 4+2+4 = 10 cycles vs 2+2+4+2+4+2 = 16 cycles
+	ldx df_tmpptra
+	inx
+	lda df_tmpptra+1
 	; push pointer to lo,hi
 	jmp df_ost_pushPtr
 

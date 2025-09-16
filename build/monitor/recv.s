@@ -41,26 +41,12 @@ recv_closed_file_msg
 	db CRSR_UP,UTF_CR,"+",0
 
 
-; Macro to load X,A with message address then print it
+; Macro to load X,A with message address then print it to io device (screen)
 _recv_print macro msg
 	ldx #lo(msg)
 	lda #hi(msg)
 	jsr io_print_line
 	endm
-
-; Macro to switch to serial
-_serial macro
-	; Switch to serial
-	lda #0
-	jsr io_active_device
-	endm
-
-; Macro to switch to default
-_default macro
-	; Switch to serial
-	jsr io_set_default
-	endm
-
 
 ; Print block number in X,A
 recv_print_block
@@ -118,46 +104,39 @@ cmd_recv_skip_close
 
 ; Keep getting bytes from the serial device until empty
 recv_flush
-	_serial
-recv_flush_byte
 	; C=0 means asynchronous
 	clc
-	jsr io_get_ch
-	bcc recv_flush_byte
+	jsr ser_get_byte
+	bcc recv_flush
 	; until C=1
-	_default
 	rts
 
 ; Wait for start or end of transmission (SOH, ETB)
 recv_get_block_start
-	_serial
-recv_get_block_start_byte
 	; C=1 means synchronous
 	sec
-	jsr io_get_ch
+	jsr ser_get_byte
 	cmp #UTF_SOH				; if SOH then reply with ACk to indicate ready for block
 	beq recv_get_block_fin
 	cmp #UTF_ETB				; if not ETB then keep checking!
-	bne recv_get_block_start_byte
+	bne recv_get_block_start
 recv_get_block_fin
 	pha
 	lda #UTF_ACK
-	jsr io_put_ch
-	_default
+	jsr ser_put_byte
 	; SOH or ETB byte returned to caller
 	pla
 	rts
 
 ; Get block
 recv_get_block
-	_serial
 	; Initialise running checksum
 	stz recv_csum
 	ldx #0
 recv_get_block_byte
 	; Get byte, C=1 means synchronous
 	sec
-	jsr io_get_ch
+	jsr ser_get_byte
 	sta recv_buffer,x
 	; Add to checksum total
 	clc
@@ -172,16 +151,14 @@ recv_get_block_byte
 	; if Z=1 then block is ok so send ACK
 	bne recv_bad_block
 	lda #UTF_ACK
-	jsr io_put_ch
-	_default
+	jsr ser_put_byte
 	; C=0 means good block received
 	clc
 	rts
 recv_bad_block
 	; If not Z then block is bad so send NACK
 	lda #UTF_NACK
-	jsr io_put_ch
-	_default
+	jsr ser_get_byte
 	; C=1 means bad block received
 	sec
 	rts

@@ -13,6 +13,7 @@ Block structure:
 [x] 250-[s] bytes padding (random)
 [c] 1 byte checksum  simple sum of all payload including padding bytes
 Blocks are always 253 bytes long.
+This block size is chosen to fit within the 256 byte buffer of the HBC.
 
 Metadata block indicated by [b]==0
 [s] is ignored
@@ -54,7 +55,7 @@ try {
 # Some variables
 $SOH=1
 $ACK=6
-$NACK=21
+# $NACK=21
 $ETB=23
 
 # Set the transmission data block size
@@ -82,10 +83,26 @@ $port.open()
 # Read the file into memory
 $binaryData = Get-Content -Path $fname -Encoding byte
 
+# If no directory path specified, use root
+if ($dirpath -eq "") {
+    $dirpath = "."
+}
+
+# Blank line
+Write-Host
+
+# Function to write out a message and put the cursor back one line
+function write-msg {
+    param([Parameter(Mandatory, Position = 0)] [string]$msg)
+    $currentPosition = [System.Console]::CursorTop
+    $horizontalPosition = [System.Console]::CursorLeft
+    [System.Console]::SetCursorPosition($horizontalPosition, $currentPosition - 1)
+    Write-Host "$msg                    "
+}
 
 # Send end of transmission and wait for ACK
 function send-etb {
-    Write-Host "Ending transmission.."
+    write-msg "Ending transmission.."
     # Send SOH until ACK received
     do {
         $port.Write([byte[]]($ETB),0,1)
@@ -94,25 +111,27 @@ function send-etb {
 
 # Send a pre-formed block until ACK received
 function send-block {
-    Write-Host "Waiting to start.."
+    write-msg "Waiting to start.."
     # Send SOH until ACK received
     do {
         $port.Write([byte[]]($SOH),0,1)
     } until ($port.ReadByte() -eq $ACK)
 
-    Write-Host "Sending block" $datablock[0]
+    $blocknum = $dataBlock[0]
+    write-msg "Sending block $blocknum"
+
     # Ok, now send block until ACK received
     do {
         for($i=0; $i -lt $dataBlock.length; $i++) {
             $port.Write([byte[]]($dataBlock[$i]),0,1)
         }
-        Write-Host "Waiting for ACK"
+        write-msg "Waiting for ACK"
     } until ($port.ReadByte() -eq $ACK)
-    Write-Host "Block acknowledged"
+    write-msg "Block acknowledged"
 }
 
 # Add checksum after payload
-function make-checksum {
+function format-checksum {
     # initialise checksum byte to 0
     $cs = 0
     # calculate sum of bytes before checksum byte
@@ -124,7 +143,7 @@ function make-checksum {
 }
 
 # Form block 0
-function make-block0 {
+function format-block0 {
     # initialise block number and payload size
     $blockNumber = 0
     $dataBlock[0] = $blockNumber
@@ -154,11 +173,11 @@ function make-block0 {
     $dataBlock[$p++]=0
     $dataBlock[$p++]=0
     # now add the checksum byte
-    make-checksum
+    format-checksum
 }
 
 # Form block n
-function make-blockn {
+function format-blockn {
     # initialise block number
     $dataBlock[0] = ($blockNumber % 256)
     if ($dataBlock[0] -eq 0) { $dataBlock[0] = 1}
@@ -178,16 +197,16 @@ function make-blockn {
     $dataBlock[1] = $payload
 
     # now add the checksum byte
-    make-checksum
+    format-checksum
 
-    Write-Host $srcPos  $binaryData.length
+#    write-msg "$srcPos  $binaryData.length"
 }
 
-make-block0
+format-block0
 send-block
 do {
     $blockNumber++
-    make-blockn
+    format-blockn
     send-block
 } until ($script:finished -eq 1)
 send-etb
@@ -195,7 +214,7 @@ send-etb
 }
 
 finally {
-    if ($port -ne $null) {
+    if ($null -ne $port) {
         $port.close()
     }
 }

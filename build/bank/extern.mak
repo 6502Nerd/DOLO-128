@@ -11,8 +11,8 @@ fs_put_byte_w
 fs_dir_find_entry_w
 fs_dir_entry_next_w
 fs_dir_root_start_w
-get_byte
-put_byte
+ser_get_byte
+ser_put_byte
 gr_get_key
 gr_put_byte
 gr_init_screen

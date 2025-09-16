@@ -1,7 +1,7 @@
 ;
 mod_sz_autogen_s
 _df_init
- _bankjsr $f337, 1
+ _bankjsr $f32e, 1
 _df_pg_dflat
  _bankjsr $d877, 1
 _fs_chdir_w
@@ -26,10 +26,10 @@ _fs_dir_entry_next_w
  _bankjsr $d0de, 2
 _fs_dir_root_start_w
  _bankjsr $d063, 2
-_get_byte
- _bankjsr $d2ad, 0
-_put_byte
- _bankjsr $d2c2, 0
+_ser_get_byte
+ _bankjsr $d292, 0
+_ser_put_byte
+ _bankjsr $d2a7, 0
 _gr_get_key
  _bankjsr $e390, 0
 _gr_put_byte
@@ -37,23 +37,23 @@ _gr_put_byte
 _gr_init_screen
  _bankjsr $de59, 0
 _init_acia
- _bankjsr $d2cf, 0
+ _bankjsr $d2b4, 0
 _init_cia0
- _bankjsr $d25a, 0
+ _bankjsr $d23f, 0
 _init_cia1
- _bankjsr $d28b, 0
+ _bankjsr $d270, 0
 _init_fs
  _bankjsr $cf40, 2
 _init_sdcard
  _bankjsr $cc3a, 2
 _init_snd
- _bankjsr $d698, 0
+ _bankjsr $d682, 0
 _init_keyboard
- _bankjsr $d2e1, 0
+ _bankjsr $d2cb, 0
 _kb_read_raw
- _bankjsr $d2f0, 0
+ _bankjsr $d2da, 0
 _kb_read_dip
- _bankjsr $d35b, 0
+ _bankjsr $d345, 0
 _command_line
  _bankjsr $cc43, 0
 _gr_cls
@@ -77,7 +77,7 @@ _gr_get
 _gr_set_cur
  _bankjsr $defa, 0
 _snd_get_note
- _bankjsr $d691, 0
+ _bankjsr $d67b, 0
 _snd_get_joy0
  _bankjsr $c6f9, 0
 _snd_set
@@ -89,15 +89,15 @@ _vdp_poke
 _vdp_init
  _bankjsr $dc00, 0
 _rtc_init
- _bankjsr $d4b7, 0
+ _bankjsr $d4a1, 0
 _rtc_gettimedate
- _bankjsr $d61d, 0
+ _bankjsr $d607, 0
 _rtc_setdatetime
- _bankjsr $d56e, 0
+ _bankjsr $d558, 0
 _rtc_nvread
- _bankjsr $d688, 0
+ _bankjsr $d672, 0
 _rtc_nvwrite
- _bankjsr $d670, 0
+ _bankjsr $d65a, 0
 _fs_dir_fhandle_str
  _bankjsr $d694, 2
 _sd_sendcmd17

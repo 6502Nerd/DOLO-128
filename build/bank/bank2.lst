@@ -1408,7 +1408,7 @@ c02d : 60               [ 6] 	rts
                              ;
 c02e :                       mod_sz_autogen_s
 c02e :                       _df_init
-                              _bankjsr $f337, 1
+                              _bankjsr $f32e, 1
                              
 c046 :                       _df_pg_dflat
                               _bankjsr $d877, 1
@@ -1449,11 +1449,11 @@ c136 :                       _fs_dir_entry_next_w
 c14e :                       _fs_dir_root_start_w
                               _bankjsr $d063, 2
                              
-c166 :                       _get_byte
-                              _bankjsr $d2ad, 0
+c166 :                       _ser_get_byte
+                              _bankjsr $d292, 0
                              
-c17e :                       _put_byte
-                              _bankjsr $d2c2, 0
+c17e :                       _ser_put_byte
+                              _bankjsr $d2a7, 0
                              
 c196 :                       _gr_get_key
                               _bankjsr $e390, 0
@@ -1465,13 +1465,13 @@ c1c6 :                       _gr_init_screen
                               _bankjsr $de59, 0
                              
 c1de :                       _init_acia
-                              _bankjsr $d2cf, 0
+                              _bankjsr $d2b4, 0
                              
 c1f6 :                       _init_cia0
-                              _bankjsr $d25a, 0
+                              _bankjsr $d23f, 0
                              
 c20e :                       _init_cia1
-                              _bankjsr $d28b, 0
+                              _bankjsr $d270, 0
                              
 c226 :                       _init_fs
                               _bankjsr $cf40, 2
@@ -1480,16 +1480,16 @@ c23e :                       _init_sdcard
                               _bankjsr $cc3a, 2
                              
 c256 :                       _init_snd
-                              _bankjsr $d698, 0
+                              _bankjsr $d682, 0
                              
 c26e :                       _init_keyboard
-                              _bankjsr $d2e1, 0
+                              _bankjsr $d2cb, 0
                              
 c286 :                       _kb_read_raw
-                              _bankjsr $d2f0, 0
+                              _bankjsr $d2da, 0
                              
 c29e :                       _kb_read_dip
-                              _bankjsr $d35b, 0
+                              _bankjsr $d345, 0
                              
 c2b6 :                       _command_line
                               _bankjsr $cc43, 0
@@ -1528,7 +1528,7 @@ c3a6 :                       _gr_set_cur
                               _bankjsr $defa, 0
                              
 c3be :                       _snd_get_note
-                              _bankjsr $d691, 0
+                              _bankjsr $d67b, 0
                              
 c3d6 :                       _snd_get_joy0
                               _bankjsr $c6f9, 0
@@ -1546,22 +1546,22 @@ c436 :                       _vdp_init
                               _bankjsr $dc00, 0
                              
 c44e :                       _rtc_init
-                              _bankjsr $d4b7, 0
+                              _bankjsr $d4a1, 0
                              
 c466 :                       _rtc_gettimedate
-                              _bankjsr $d61d, 0
+                              _bankjsr $d607, 0
                              
 c47e :                       _rtc_setdatetime
-                              _bankjsr $d56e, 0
+                              _bankjsr $d558, 0
                              
 c496 :                       _rtc_nvread
-                              _bankjsr $d688, 0
+                              _bankjsr $d672, 0
                              
 c4ae :                       _rtc_nvwrite
 AS65 Assembler for R6502 [1.42].                                     Page   25
 ---------------------------------- bank2.s -----------------------------------
 
-                              _bankjsr $d670, 0
+                              _bankjsr $d65a, 0
                              
 c4c6 :                       _fs_dir_fhandle_str
                               _bankjsr $d694, 2
@@ -1836,8 +1836,8 @@ c620 :                       io_devices
                              ;* Device zero is the serial port
                              ;* only offers get and put
 c620 :                       io_device0					; Serial device, input = Ser, outp
-c620 : 66c1                  	dw	_get_byte			; io_get_ch
-c622 : 7ec1                  	dw	_put_byte			; io_put_ch
+c620 : 66c1                  	dw	_ser_get_byte		; io_get_ch
+c622 : 7ec1                  	dw	_ser_put_byte		; io_put_ch
 c624 : 1ec6                  	dw	io_null_op			; io_open_r
 c626 : 1ec6                  	dw	io_null_op			; io_open_w
 c628 : 1ec6                  	dw	io_null_op			; io_close_f
@@ -2180,7 +2180,7 @@ c715 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
-c715 : 4275696c64203a..       db "Build : 22-06-2025\r"
+c715 : 4275696c64203a..       db "Build : 14-09-2025\r"
 c728 : 3132384b204272..       db "128K Breadboard Computer\r"
 c741 : 42792040363530..       db "By @6502Nerd\r"
 c74e : 436f7079726967..       db "Copyright (c) 2025\r",0
@@ -3292,11 +3292,11 @@ cb93 : 4c0fc7           [ 3] 	jmp main
 cb96 :                       kernel_init
 cb96 : 2062c7           [ 6] 	jsr init_nmi		; Initialise NMI handling
 cb99 : 208bc7           [ 6] 	jsr init_irq		; Initialise IRQ handling
-cb9c : 20dec1           [ 6] 	jsr _init_acia		; initialise the serial chip
                              	
-cb9f : 20f6c1           [ 6] 	jsr _init_cia0		; initialise cia 0
-cba2 : 200ec2           [ 6] 	jsr _init_cia1		; initialise cia 1
-cba5 : 2026c5           [ 6] 	jsr _PT3INIT		; Load PT3 player code into shadow
+cb9c : 20f6c1           [ 6] 	jsr _init_cia0		; initialise cia 0
+cb9f : 200ec2           [ 6] 	jsr _init_cia1		; initialise cia 1
+cba2 : 2026c5           [ 6] 	jsr _PT3INIT		; Load PT3 player code into shadow
+cba5 : 20dec1           [ 6] 	jsr _init_acia		; initialise the serial chip
 cba8 :                       kernel_test
 cba8 : 2056c2           [ 6] 	jsr _init_snd		; initialise the sound chip
 cbab : 206ec2           [ 6] 	jsr _init_keyboard	; initialise keyboard timer s
