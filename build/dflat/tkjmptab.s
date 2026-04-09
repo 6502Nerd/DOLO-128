@@ -93,6 +93,7 @@ df_tk_tokenjmp
 	dw	df_tk_shape
 	dw	df_tk_vload
 	dw	df_tk_bload
+	dw	df_tk_cload
 	dw	df_tk_bsave
 	dw	df_tk_himem
 	dw	df_tk_monitor

@@ -93,6 +93,7 @@ df_rt_tokenjmp
 	dw	df_rt_shape
 	dw	df_rt_vload
 	dw	df_rt_bload
+	dw	df_rt_cload
 	dw	df_rt_bsave
 	dw	df_rt_himem
 	dw	df_rt_monitor

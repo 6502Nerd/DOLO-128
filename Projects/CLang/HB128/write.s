@@ -10,7 +10,7 @@
 	.importzp	c_sp, sreg, regsave, regbank
 	.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 	.macpack	longbranch
-	.import		_hbputc
+	.import		_cputc
 	.export		_write
 
 ; ---------------------------------------------------------------
@@ -46,7 +46,7 @@ L0002:	ldy     #$03
 	lda     #$01
 	jsr     addeq0sp
 	pla
-	jsr     _hbputc
+	jsr     _cputc
 	ldy     #$02
 	ldx     #$00
 	lda     #$01

@@ -8,6 +8,7 @@ IF "%HBSDK%"=="" GOTO ErCfg
 
 echo %HBSDK%
 
+powershell ./gen.ps1
 ::
 :: Set the build paremeters
 ::
@@ -22,13 +23,17 @@ copy %HBSDK%\lib\atmos.lib sbc.lib
 :: Compile / Assemble the runtime objects
 CALL %HBSDK%\bin\ca65 --cpu 65sc02 crt0.s
 CALL %HBSDK%\bin\ca65 --cpu 65sc02 read.s
-CALL %HBSDK%\bin\ca65 --cpu 65sc02 hbputc.s
+CALL %HBSDK%\bin\ca65 --cpu 65sc02 cgetc.s
+CALL %HBSDK%\bin\ca65 --cpu 65sc02 cputc.s
 
 CALL %HBSDK%\bin\cc65 --cpu 65sc02 -O write.c
 CALL %HBSDK%\bin\ca65 --cpu 65sc02 write.s
 
+:: Compile HB128 library
+CALL %HBSDK%\bin\ca65 --cpu 65sc02 hb128.s
+
 :: Create the final library
-CALL %HBSDK%\bin\ar65 r sbc.lib crt0.o read.o write.o hbputc.o
+CALL %HBSDK%\bin\ar65 r sbc.lib crt0.o read.o write.o cgetc.o cputc.o hb128.o
 
 GOTO End
 

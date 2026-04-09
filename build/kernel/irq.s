@@ -198,7 +198,13 @@ irq_brk
 	sta 0x105,x
 	lda df_pc+1
 	sta 0x106,x
-	
+
+    ; Switch to dflat bank
+    lda IO_0+PRB
+    and #%00111111
+    ora #%10000000          ; 10 = bank 1
+    sta IO_0+PRB
+
 	_pullAXY
 	; Save the registers in temp area
 	sta num_a

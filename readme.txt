@@ -68,15 +68,11 @@ Build quick quide (using powershell as the CLI);
 
 Running under mame *very* quick guide (using powershell as the CLI)
 	You need to be in the EMU folder of the homebrew directory
-	Type ./hb128bbc hb128bbc
+	Type ./hb128bbc hb128bbc -hard ./software/filesystem/sdcard64m.img
     This will start the emulator - press tab to skip the machine info screen
     If the warning screen shows, press tab
-    Tab key is used on startup to get to the config menu:
-        Navigate to File Manager
-        Select harddisk
-        If sdcard64m.img is not shown then navigate to it and select
-        Select Reset system
     By now the machine should be fired up with filesystem reported as mounted.
+    The machine boots using the sdcard64m image as the SD card
 
     Keyboard mapping note on my PC keyboard:
         underscore is to the left of 1
@@ -104,9 +100,9 @@ Running under mame *very* quick guide (using powershell as the CLI)
 Running under mame guide (using powershell as the CLI)
 	You need to be in the EMU folder of the homebrew directory
 	Invoke mame in one of the  following ways;
-     1. ./hb128bbc hb128bbc *OR*
-     2. ./hb128bbc hb128bbc -serial terminal *OR*
-     3. ./hb128bbc hb128bbc -serial null_modem -bitb socket.localhost:6502
+     1. ./hb128bbc hb128bbc -hard ./software/filesystem/sdcard64m.img *OR*
+     2. ./hb128bbc hb128bbc -hard ./software/filesystem/sdcard64m.img -serial terminal *OR*
+     3. ./hb128bbc hb128bbc -hard ./software/filesystem/sdcard64m.img -serial null_modem -bitb socket.localhost:6502
     The file hb128bbc.exe is actually a minimal build of mame by Nigel Barnes
     (hugely grateful for his help!). Mame is a complex beast with many
     options beyond my knowledge, but there are a couple of important things

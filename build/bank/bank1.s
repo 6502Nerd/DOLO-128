@@ -8,6 +8,5 @@ _bank1_start=0xc000
 	include	"dflat\asm.s"
 
 	; End of Code
-_code_end
 _bank1_end
 	

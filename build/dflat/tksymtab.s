@@ -93,6 +93,7 @@ df_tokensyms
 	db	"shap",'e'+0x80				; shape x,y,coords[]
 	db	"vloa",'d'+0x80				; vload addr,filename
 	db	"bloa",'d'+0x80				; bload mem,hdr,addr,filename
+	db	"cloa",'d'+0x80				; cload addr,filename
 	db	"bsav",'e'+0x80				; bsave mem,hdr,addr,len,filename
 	db	"hime",'m'+0x80				; himem addr
 	db	"monito",'r'+0x80			; monitor

@@ -1,3 +1,5 @@
+.include "hb128.inc"
+
 .constructor    initstdin
 .export	  		_read
 
@@ -24,9 +26,11 @@
 		ldx     ptr1			; Get buffer pointer
 		lda    	ptr1+1
 		sec						; Echo on
-		jsr  	$c5cf
-		tya						; Get bytes read into A
-		ldx    #0
+		jsr  	_dfcl0_io_read_line
+		;tya						; Get bytes read into A
+		;ldx    #0
+        lda     ptr3
+        ldx     ptr3+1
 		rts
 .endproc
 

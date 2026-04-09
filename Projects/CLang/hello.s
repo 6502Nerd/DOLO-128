@@ -11,63 +11,61 @@
 	.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 	.macpack	longbranch
 	.forceimport	__STARTUP__
-	.import		_getchar
 	.import		_printf
-	.import		_scanf
-	.export		_delay
+	.import		_dfcl_mode
+	.import		_dfcl_colour
+	.import		_dfcl_ptinit
+	.import		_dfcl_ptload
+	.import		_dfcl_sprpat
+	.import		_dfcl_sprpos
+	.import		_dfcl_sprcol
+	.import		_dfcl_sprnme
+	.import		_dfcl_chdir
+	.import		_dfcl_vload
+	.import		_dfcl_font
+	.export		_pattern
 	.export		_main
+
+.segment	"DATA"
+
+_pattern:
+	.byte	$18
+	.byte	$18
+	.byte	$3c
+	.byte	$bd
+	.byte	$bd
+	.byte	$ff
+	.byte	$ff
+	.byte	$7e
 
 .segment	"RODATA"
 
-S0004:
-	.byte	$54,$68,$65,$20,$73,$74,$72,$69,$6E,$67,$20,$77,$61,$73,$20,$25
-	.byte	$73,$0D,$00
 S0002:
-	.byte	$45,$6E,$74,$65,$72,$20,$73,$6F,$6D,$65,$74,$68,$69,$6E,$67,$3A
-	.byte	$20,$00
-S0001:
-	.byte	$48,$65,$6C,$6C,$6F,$20,$77,$6F,$72,$6C,$64,$0D,$00
+	.byte	$54,$72,$79,$69,$6E,$67,$20,$74,$6F,$20,$6C,$6F,$61,$64,$20,$61
+	.byte	$68,$61,$74,$61,$6B,$65,$2E,$70,$74,$33,$0D,$00
+S0009:
+	.byte	$54,$68,$65,$20,$71,$75,$69,$63,$6B,$20,$62,$72,$6F,$77,$6E,$20
+	.byte	$66,$6F,$78,$20,$25,$64,$00
 S0005:
-	.byte	$25,$64,$20,$00
-S0007	:=	S0005+0
+	.byte	$54,$72,$79,$69,$6E,$67,$20,$74,$6F,$20,$6C,$6F,$61,$64,$20,$66
+	.byte	$6F,$6E,$74,$0D,$00
+S0008:
+	.byte	$46,$6F,$6E,$74,$20,$73,$74,$61,$74,$75,$73,$20,$3D,$20,$25,$78
+	.byte	$0D,$00
+S000B:
+	.byte	$73,$6E,$6F,$77,$6D,$61,$6E,$2E,$76,$69,$6D,$00
+S0004:
+	.byte	$61,$68,$61,$74,$61,$6B,$65,$2E,$70,$74,$33,$00
+S000A:
+	.byte	$2F,$64,$61,$74,$61,$2F,$69,$6D,$61,$67,$65,$00
 S0003:
-	.byte	$25,$73,$00
-S0006	:=	S0004+17
-
-; ---------------------------------------------------------------
-; void __near__ delay (void)
-; ---------------------------------------------------------------
-
-.segment	"CODE"
-
-.proc	_delay: near
-
-.segment	"CODE"
-
-	jsr     decsp2
-	ldx     #$00
-	txa
-	jsr     stax0sp
-L0002:	jsr     ldax0sp
-	cmp     #$10
-	txa
-	sbc     #$27
-	bvc     L0006
-	eor     #$80
-L0006:	bpl     L0003
-	ldx     #$00
-	lda     #$01
-	jsr     addeq0sp
-	ldx     #$00
-	lda     #$01
-	jsr     subeq0sp
-	ldx     #$00
-	lda     #$01
-	jsr     addeq0sp
-	bra     L0002
-L0003:	jmp     incsp2
-
-.endproc
+	.byte	$2F,$64,$65,$6D,$6F,$73,$2F,$70,$74,$33,$00
+S0007:
+	.byte	$63,$68,$72,$6F,$6D,$65,$2E,$66,$30,$30,$00
+S0001:
+	.byte	$56,$65,$72,$73,$69,$6F,$6E,$20,$33,$0D,$00
+S0006:
+	.byte	$2F,$66,$6F,$6E,$74,$00
 
 ; ---------------------------------------------------------------
 ; int __near__ main (void)
@@ -79,14 +77,20 @@ L0003:	jmp     incsp2
 
 .segment	"CODE"
 
-	ldy     #$0D
-	jsr     subysp
+	jsr     decsp2
+	lda     #$02
+	jsr     _dfcl_mode
+	lda     #$20
+	jsr     pusha
+	lda     #$01
+	jsr     pusha
+	lda     #$06
+	jsr     _dfcl_colour
 	lda     #<(S0001)
 	ldx     #>(S0001)
 	jsr     pushax
 	ldy     #$02
 	jsr     _printf
-	jsr     _delay
 	lda     #<(S0002)
 	ldx     #>(S0002)
 	jsr     pushax
@@ -94,70 +98,92 @@ L0003:	jmp     incsp2
 	jsr     _printf
 	lda     #<(S0003)
 	ldx     #>(S0003)
-	jsr     pushax
-	lda     #$05
-	jsr     leaa0sp
-	jsr     pushax
-	ldy     #$04
-	jsr     _scanf
+	jsr     _dfcl_chdir
+	jsr     stax0sp
 	lda     #<(S0004)
 	ldx     #>(S0004)
 	jsr     pushax
-	lda     #$05
-	jsr     leaa0sp
+	ldx     #$80
+	lda     #$00
+	jsr     _dfcl_ptload
+	jsr     stax0sp
+	ldx     #$80
+	lda     #$00
 	jsr     pushax
+	jsr     _dfcl_ptinit
+	lda     #$00
+	jsr     pusha
+	lda     #<(_pattern)
+	ldx     #>(_pattern)
+	jsr     _dfcl_sprpat
+	lda     #$00
+	jsr     pusha
+	lda     #$64
+	jsr     pusha
+	jsr     _dfcl_sprpos
+	lda     #$00
+	jsr     pusha
+	lda     #$04
+	jsr     _dfcl_sprcol
+	lda     #$00
+	jsr     pusha
+	jsr     _dfcl_sprnme
+	lda     #<(S0005)
+	ldx     #>(S0005)
+	jsr     pushax
+	ldy     #$02
+	jsr     _printf
+	lda     #<(S0006)
+	ldx     #>(S0006)
+	jsr     _dfcl_chdir
+	jsr     stax0sp
+	lda     #<(S0007)
+	ldx     #>(S0007)
+	jsr     _dfcl_font
+	jsr     stax0sp
+	lda     #<(S0008)
+	ldx     #>(S0008)
+	jsr     pushax
+	ldy     #$05
+	jsr     pushwysp
 	ldy     #$04
 	jsr     _printf
 	ldx     #$00
 	txa
 	jsr     stax0sp
-	bra     L0004
-L0002:	lda     #<(S0005)
-	ldx     #>(S0005)
+L0002:	jsr     ldax0sp
+	cmp     #$64
+	txa
+	sbc     #$00
+	bvc     L0006
+	eor     #$80
+L0006:	bpl     L0007
+	lda     #<(S0009)
+	ldx     #>(S0009)
 	jsr     pushax
-	ldy     #$03
-	jsr     ldaxysp
-	jsr     incax5
-	jsr     leaaxsp
-	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	jsr     pusha0
+	ldy     #$05
+	jsr     pushwysp
 	ldy     #$04
 	jsr     _printf
 	ldx     #$00
 	lda     #$01
 	jsr     addeq0sp
-	jsr     _delay
-L0004:	jsr     ldax0sp
-	jsr     incax3
-	jsr     leaaxsp
-	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	bne     L0002
-	lda     #<(S0006)
-	ldx     #>(S0006)
+	bra     L0002
+L0007:	lda     #$61
+	jsr     _dfcl_mode
+	lda     #<(S000A)
+	ldx     #>(S000A)
+	jsr     _dfcl_chdir
+	jsr     stax0sp
+	lda     #<(S000B)
+	ldx     #>(S000B)
 	jsr     pushax
-	ldy     #$02
-	jsr     _printf
-L0005:	jsr     _getchar
-	ldy     #$02
-	sta     (c_sp),y
-	lda     #<(S0007)
-	ldx     #>(S0007)
-	jsr     pushax
-	ldy     #$04
-	lda     (c_sp),y
-	jsr     pusha0
-	ldy     #$04
-	jsr     _printf
-	ldy     #$02
-	lda     (c_sp),y
-	cmp     #$0D
-	bne     L0005
-	ldx     #$AD
-	lda     #$DE
+	ldx     #$00
+	txa
+	jsr     _dfcl_vload
+	jsr     stax0sp
+	ldx     #$D0
+	lda     #$10
 	rts
 
 .endproc

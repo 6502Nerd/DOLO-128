@@ -1969,6 +1969,7 @@ df_rt_setvdp
 
 df_rt_colour
 	jsr df_rt_parm_3ints
+dfcl_colour
 	; colour is a combination of b and c parms
 	lda df_tmpptrb
 	asl a
@@ -1990,8 +1991,7 @@ df_rt_colour
 	tay
 	pla
 	; A = colour, YX = address
-	jsr vdp_poke
-	rts
+	jmp vdp_poke
 df_rt_colour_border
 	lda #7
 	plx
@@ -2030,6 +2030,7 @@ df_rt_sprite
 ; pattern array is a mim 4 element int
 df_rt_spritepat
 	jsr df_rt_parm_2ints
+dfcl_sprpat
 	; save sprite number
 	stx df_tmpptra
 	stz df_tmpptra+1
@@ -2352,8 +2353,9 @@ df_rt_bsave_done
 	pla
 	jmp df_rt_file_cleanup		; Clean up FS
 
-df_rt_file_errc3				; Stepping stone!!!
-	bcs df_rt_file_errc3
+df_rt_file_errc3
+	SWBRK DFERR_FNAME
+
 
 ;* common filename procesing routine
 ;* 
@@ -2388,13 +2390,12 @@ df_rt_save
 df_rt_file_cleanup
 	; close the file
 	jsr io_close
-	clc
 	; restore to default device io
-	jmp io_set_default
-;	clc
-;	rts
+	jsr io_set_default
+	clc
+	rts
 
-; load 'x',"file" where 0=serial, 1=SDCard
+; load "file"
 df_rt_load
 	jsr df_rt_parse_file
 	jsr io_open_read
@@ -2465,9 +2466,30 @@ df_rt_mkdir
 	bcs df_rt_file_errc
 	rts
 
+; cload addr, fname
+df_rt_cload
+	jsr df_rt_neval				; Get addr
+	jsr df_ost_popInt			; X,A = addr
+	phx							; And save on stack
+	pha
+	jsr df_rt_cload_sub
+	pla							; Get address off stack
+	sta df_tmpptra+1
+	pla
+	sta df_tmpptra
+	jmp (df_tmpptra)
+df_rt_cload_sub
+	sec							; Set to memory
+	php
+	ldy #0						; No header
+	phy
+	pha							; Put X,A on stack, high first
+	phx
+	jmp df_rt_bload_file		; Load the filename, when return back to cload
+
 ; bload MEM,HEAD,ADDR,FNAME
 df_rt_bload
-	; Get mem type, 0=RAM, else VRAM
+	; Get mem type, 'r'=RAM, 'v'=VRAM
 	jsr df_rt_neval				; Get mem type
 	jsr df_ost_popInt			; X,A = mem type (only X)
 	; if check X for v or r
@@ -2520,6 +2542,7 @@ df_rt_bload_file
 	jsr df_rt_parse_file
 	jsr io_open_read
 	bcs df_rt_file_errc		; Error condition resets the stack
+df_rt_bload_dfcl
 	; On the stack:
 	; 101+x = adlo
 	; 102+x = adhi
@@ -2580,7 +2603,6 @@ df_rt_ptload_done
 
 ; Loads a song into any part of RAM including shadow RAM
 ; Always assumes the top half of memory is in bank 2 (vs bank 3 default)
-	SWBRK DFERR_FNAME
 df_rt_ptload
 	jsr df_rt_neval				; Get address
 	jsr df_ost_popInt			; X,A = Address

@@ -29,3 +29,4 @@
 	jmp snd_set				; Vec 6
 	jmp vdp_wr_addr			; Vec 7
 	jmp	vdp_rd_addr			; Vec 8
+	jmp snd_get				; Vec 9

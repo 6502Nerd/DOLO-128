@@ -11,5 +11,4 @@ _bank0_start=0xc000
 	include "vdp\vdp.s"
 	include "vdp\graph.s"
 	; End of Code
-_code_end
 _bank0_end

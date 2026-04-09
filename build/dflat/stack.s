@@ -132,7 +132,9 @@ df_ost_pushInt
 ;* Y - type
 ;****************************************
 df_ost_pushParmX
-	sty tmp_d		; Save Type
+	pha				; Save A
+	phy				; Save Y
+;	sty tmp_d		; Save Type
 	ldy df_parmtop	; Get stack index
 	; push high byte first (A)
 	sta df_rtstck,y
@@ -141,11 +143,13 @@ df_ost_pushParmX
 	txa
 	sta df_rtstck,y
 	iny
-	lda tmp_d		; get Type
+;	lda tmp_d		; get Type
+	pla				; Get Type
 	sta df_rtstck,y
 	iny
 	; save new top of stack
 	sty df_parmtop
+	pla				; restore A
 	rts
 
 ;****************************************
