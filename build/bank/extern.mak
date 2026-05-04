@@ -37,8 +37,6 @@ gr_point
 gr_get
 gr_set_cur
 snd_get_note
-snd_get_joy0
-snd_set
 vdp_peek
 vdp_poke
 vdp_init

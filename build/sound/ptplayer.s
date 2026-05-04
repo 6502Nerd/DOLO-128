@@ -256,7 +256,7 @@ s1	pla
 	inc DelyCnt                                                                                                                                    
         inc ANtSkCn                                                 
 _MUTE	                                                            
-        lda #0x3f
+        lda #0x4f         ; Set Port A=output, Port B=input on AY3 (01 binary)
         sta AYREGS+Mixer  ; This is the daddy - switch off all channels and noise
         lda #00                                                     
         sta z80_H                                                   

@@ -2133,7 +2133,7 @@ df_rt_snd_common
 	tax
 	; get low byte of period
 	ldy df_tmpptrb
-	jsr _snd_set
+	jsr snd_set
 	; increment reg number to high byte
 	inx
 	; get high byte of period
@@ -2141,7 +2141,7 @@ df_rt_snd_common
 	and #0x0f
 	tay
 	; set period
-	jsr _snd_set
+	jsr snd_set
 	; get volume register index (8 = channel 1)
 	clc
 	lda df_tmpptra
@@ -2156,7 +2156,7 @@ df_rt_snd_common
 	ora #0x10
 df_rt_sound_env_skip
 	tay
-	jmp _snd_set
+	jmp snd_set
 ;	rts
 
 ; sound chan,period,volume	
@@ -2165,15 +2165,13 @@ df_rt_sound
 df_rt_dosound
 	; check which channel (0 = noise)
 	lda df_tmpptra
-	beq df_rt_sound_noise
-	jmp df_rt_snd_common
-df_rt_sound_noise
+	bne df_rt_snd_common
 	; ok update the noise channel, volume is irrelevant
 	ldx #6
 	lda df_tmpptrb
 	and #0x1f
 	tay
-	jmp _snd_set
+	jmp snd_set
 ;	clc
 ;	rts
 
@@ -2205,6 +2203,7 @@ df_rt_music
 ; play tonemask,noisemask,envelope,period
 df_rt_play
 	jsr df_rt_parm_4ints
+df_rt_dfcl_sndconfig
 	; parm 1 = tone enable
 	lda df_tmpptra
 	and #7
@@ -2218,29 +2217,30 @@ df_rt_play
 	ora df_tmpptra
 	; we now have bits set for channels to enable
 	; but need to invert for the 8910
-	; keep top 2 bits 0 as these are port a and b inputs
 	eor #0x3f
+	; top two bits = 01 for portb input and porta output
+	ora #0x40
 	tay
 	; reg 7 is control register
 	ldx #7
-	jsr _snd_set
+	jsr snd_set
 	; parm 3 = envelope mode
 	lda df_tmpptrc
 	and #0xf
 	tay
 	; 13 is envelope shape register
 	ldx #13
-	jsr _snd_set
+	jsr snd_set
 	; parm 4 = envelope period
 	; 11 is envelope period register
 	ldx #11
 	; get low
 	ldy df_tmpptrd
-	jsr _snd_set
+	jsr snd_set
 	; get high
 	inx
 	ldy df_tmpptrd+1
-	jmp _snd_set
+	jmp snd_set
 ;	clc
 ;	rts
 
@@ -2767,6 +2767,7 @@ df_rt_reset
 	; save lvar in tmpb, vvt ptr in tmpa
 	stx df_tmpptrb
 	sta df_tmpptrb+1
+df_rt_dfcl_reset
 	; load the vdp count as the reset value of timer
 	; turn off interrupts while reading vdp lo,hi
 	ldy #1	; This is in readiness to read high byte of var value
@@ -2929,7 +2930,7 @@ df_rt_stick
 	jsr df_rt_getnval
 	; only low byte is used
 	stx df_tmpptra
-	jsr _snd_get_joy0
+	jsr snd_get_joy0
 	tya
 	; invert the bits so that 1=switch on
 	eor #0xff

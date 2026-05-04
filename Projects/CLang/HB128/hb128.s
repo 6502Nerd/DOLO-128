@@ -1,6 +1,9 @@
 .include "hb128.inc"
 
-.export  _dfcl_mode, _dfcl_colour, _dfcl_line, _dfcl_circle, _dfcl_box
+.export _dfcl_vpoke, _dfcl_vpeek
+.export _dfcl_vbint, _dfcl_wait, _dfcl_resettimer, _dfcl_elapsedtime
+.export _dfcl_stick, _dfcl_sndchannel, _dfcl_sndconfig
+.export _dfcl_mode, _dfcl_colour, _dfcl_line, _dfcl_circle, _dfcl_box
 .export _dfcl_plot, _dfcl_cls, _dfcl_scrn, _dfcl_gotoxy
 .export _dfcl_ptinit, _dfcl_ptload, _dfcl_ptrun, _dfcl_ptstop
 .export _dfcl_sprpat, _dfcl_sprcol, _dfcl_sprpos, _dfcl_sprnme
@@ -49,6 +52,130 @@ __switch_bank3:
     sta _dfcl1_IO_0+_dfcl1_PRB
     pla
     rts
+
+; void dfcl_vdp_vbint(void(*)());
+_dfcl_vbint:
+    php
+    sei
+    cpx #0
+    bne dfcl_vbint_ok
+    lda #>_dfcl0_null_handler
+    ldx #<_dfcl0_null_handler
+dfcl_vbint_ok:
+    sta _dfcl0_int_uservdp
+    stx _dfcl0_int_uservdp+1
+    plp
+    rts
+
+; void dfcl_vpoke(unsigned char *addr, unsigned char val);
+_dfcl_vpoke:
+    pha
+    jsr popax
+    pha
+    phx
+    ply
+    plx
+    pla
+    jmp _dfcl0_vdp_poke
+
+; unsigned char dfcl_vpeek(unsigned char *addr);
+_dfcl_vpeek:
+    pha
+    txa
+    plx
+    jsr _dfcl0_vdp_peek
+    ldx #0
+    rts
+
+
+; void dfcl_sndconfig(unsigned char tone, unsigned char noise, unsigned char env, unsigned int period);
+_dfcl_sndconfig:
+    sta _dfcl0_df_tmpptrd
+    stx _dfcl0_df_tmpptrd+1
+    jsr popa
+    sta _dfcl0_df_tmpptrc
+    jsr popa
+    sta _dfcl0_df_tmpptrb
+    jsr popa
+    sta _dfcl0_df_tmpptra
+    jsr __switch_bank1
+    jmp _dfcl1_df_rt_dfcl_sndconfig
+        
+
+; void dfcl_sndchannel(unsigned char chan, unsigned char vol, unsigned int period);
+_dfcl_sndchannel:
+    ; dflat routine is chan, period, vol - parm 2 and 3 swapped
+    sta _dfcl0_df_tmpptrb
+    stx _dfcl0_df_tmpptrb+1
+    jsr popa
+    sta _dfcl0_df_tmpptrc
+    jsr popa
+    sta _dfcl0_df_tmpptra
+    jsr __switch_bank1
+    jmp _dfcl1_df_rt_dosound
+
+; void dfcl_resettimer(unsigned int *t);
+_dfcl_resettimer:
+    sta _dfcl0_df_tmpptrb
+    stx _dfcl0_df_tmpptrb+1
+    jsr __switch_bank1
+    jmp _dfcl1_df_rt_dfcl_reset
+
+; unsigned int dfcl_elapsedtime(unsigned int t);
+_dfcl_elapsedtime:
+    sta _dfcl0_df_tmpptra
+    stx _dfcl0_df_tmpptra+1
+dfcl_saferead_timer:
+    lda _dfcl0_vdp_int_cnt
+    ldx _dfcl0_vdp_int_cnt+1
+    cmp _dfcl0_vdp_int_cnt
+    bne dfcl_saferead_timer
+    sbc _dfcl0_df_tmpptra
+    pha
+    txa
+    sbc _dfcl0_df_tmpptra+1
+    tax
+    pla
+    rts
+
+; void dfcl_wait(unsigned int d);
+_dfcl_wait:
+	; put d in to Y,X
+    tay
+dfcl_wait_loop:
+	; check X,Y==0
+	tya
+	bne dfcl_wait_countdown
+	txa
+	bne dfcl_wait_countdown
+	; Done (wait 0 returns immediately)
+	rts
+dfcl_wait_countdown:
+	; get vdp low byte timer val in A for tick wait
+	lda _dfcl0_vdp_int_cnt
+	dey
+	cpy #$ff
+	bne dfcl_wait_tick
+	dex
+dfcl_wait_tick:
+	; check if a tick has occurred (i.e. val <> A)
+	cmp _dfcl0_vdp_int_cnt
+	beq dfcl_wait_tick
+	bne dfcl_wait_loop		; Always
+
+
+; unsigned char dfcl_stick(unsigned char mask);
+_dfcl_stick:
+	; only low byte is used
+	sta _dfcl0_df_tmpptra
+	jsr _dfcl0_snd_get_joy0
+	tya
+	; invert the bits so that 1=switch on
+	eor #$ff
+	and _dfcl0_df_tmpptra
+	ldx #0
+	rts
+
 
 ; void dfcl_mode(unsigned char mode);
 _dfcl_mode:

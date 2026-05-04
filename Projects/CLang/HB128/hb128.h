@@ -1,6 +1,18 @@
 #ifndef _HB128_H_
 #define _HB128_H_
 
+extern void dfcl_wait(unsigned int d);
+extern void dfcl_vbint(void(*)());
+
+extern void dfcl_vpoke(unsigned char *addr, unsigned char val);
+extern unsigned char dfcl_vpeek(unsigned char *addr);
+
+extern unsigned char dfcl_stick(unsigned char mask);
+extern void dfcl_sndconfig(unsigned char tone, unsigned char noise, unsigned char env, unsigned int period);
+extern void dfcl_sndchannel(unsigned char chan, unsigned char vol, unsigned int period);
+extern void dfcl_resettimer(unsigned int *t);
+extern unsigned int dfcl_elapsedtime(unsigned int t);
+
 extern void dfcl_mode(unsigned char mode);
 extern void dfcl_colour(unsigned char reg, unsigned char fg, unsigned char bg);
 extern void dfcl_line(unsigned char x1, unsigned char y1, unsigned char x2, unsigned char y2);
@@ -25,4 +37,5 @@ extern char dfcl_chdir(char *dir);
 extern char dfcl_vload(char *fname, unsigned int vaddr);
 extern char dfcl_font(char *fname);
 extern char dfcl_bload(char *fname, unsigned int vaddr);
+
 #endif // _HB128_H_
