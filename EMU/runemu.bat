@@ -1,0 +1,1 @@
+call hb128bbc.exe hb128bbc -harddisk software/filesystem/sdcard64m.img

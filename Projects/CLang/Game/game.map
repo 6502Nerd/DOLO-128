@@ -1,0 +1,1205 @@
+Modules list:
+-------------
+game.o:
+    CODE              Offs=000000  Size=000E0B  Align=00001  Fill=0000
+    RODATA            Offs=000000  Size=000028  Align=00001  Fill=0000
+    BSS               Offs=000000  Size=00038B  Align=00001  Fill=0000
+    DATA              Offs=000000  Size=000021  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+data.o:
+    CODE              Offs=000E0B  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000028  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=00038B  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=000021  Size=000788  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+vbint.o:
+    CODE              Offs=000E0B  Size=0000CB  Align=00001  Fill=0000
+    RODATA            Offs=000028  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=00038B  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007A9  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+engine.o:
+    CODE              Offs=000ED6  Size=000152  Align=00001  Fill=0000
+    RODATA            Offs=000028  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=00038B  Size=000003  Align=00001  Fill=0000
+    DATA              Offs=0007A9  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(_file.o):
+    CODE              Offs=001028  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000028  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=00038E  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007A9  Size=00001E  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(_hextab.o):
+    CODE              Offs=001028  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000028  Size=000010  Align=00001  Fill=0000
+    BSS               Offs=00038E  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007C7  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(_longminstr.o):
+    CODE              Offs=001028  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000038  Size=00000C  Align=00001  Fill=0000
+    BSS               Offs=00038E  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007C7  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(_printf.o):
+    CODE              Offs=001028  Size=0003A2  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=00038E  Size=00002B  Align=00001  Fill=0000
+    DATA              Offs=0007C7  Size=000003  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(_seterrno.o):
+    CODE              Offs=0013CA  Size=000009  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(addeqsp.o):
+    CODE              Offs=0013D3  Size=000011  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(addysp.o):
+    CODE              Offs=0013E4  Size=00000E  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(aslax2.o):
+    CODE              Offs=0013F2  Size=00000B  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(aslax3.o):
+    CODE              Offs=0013FD  Size=00000E  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(aslax4.o):
+    CODE              Offs=00140B  Size=000011  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(aslax7.o):
+    CODE              Offs=00141C  Size=00000A  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(asrax1.o):
+    CODE              Offs=001426  Size=00000A  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(asrax2.o):
+    CODE              Offs=001430  Size=00000F  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(axlong.o):
+    CODE              Offs=00143F  Size=00000D  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(condes.o):
+    CODE              Offs=00144C  Size=00000C  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007CA  Size=000025  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+    ONCE              Offs=000000  Size=00000C  Align=00001  Fill=0000
+..\HB128\sbc.lib(copydata.o):
+    CODE              Offs=001458  Size=00002D  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(cputc.o):
+    CODE              Offs=001485  Size=000003  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(crt0.o):
+    CODE              Offs=001488  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+    STARTUP           Offs=000000  Size=00001C  Align=00001  Fill=0000
+..\HB128\sbc.lib(ctype.o):
+    CODE              Offs=001488  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=000044  Size=00008B  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(ctypemask.o):
+    CODE              Offs=001488  Size=00001E  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(decsp2.o):
+    CODE              Offs=0014A6  Size=00000D  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(decsp4.o):
+    CODE              Offs=0014B3  Size=00000D  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(decsp6.o):
+    CODE              Offs=0014C0  Size=00000D  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(decsp8.o):
+    CODE              Offs=0014CD  Size=00000D  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(errno.o):
+    CODE              Offs=0014DA  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003B9  Size=000002  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(fwrite.o):
+    CODE              Offs=0014DA  Size=000079  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BB  Size=000002  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(incax2.o):
+    CODE              Offs=001553  Size=000007  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(incaxy.o):
+    CODE              Offs=00155A  Size=00000B  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(incsp2.o):
+    CODE              Offs=001565  Size=000016  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(incsp3.o):
+    CODE              Offs=00157B  Size=000005  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(incsp4.o):
+    CODE              Offs=001580  Size=000005  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(incsp6.o):
+    CODE              Offs=001585  Size=000005  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(ldaxsp.o):
+    CODE              Offs=00158A  Size=000009  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(ldptr1sp.o):
+    CODE              Offs=001593  Size=00000C  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(lneg.o):
+    CODE              Offs=00159F  Size=00001E  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(lpush.o):
+    CODE              Offs=0015BD  Size=000021  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(ltoa.o):
+    CODE              Offs=0015DE  Size=000095  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(mod.o):
+    CODE              Offs=001673  Size=000011  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(mul.o):
+    CODE              Offs=001684  Size=000045  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(mul8.o):
+    CODE              Offs=0016C9  Size=00003A  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(mulax3.o):
+    CODE              Offs=001703  Size=000011  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(negabs.o):
+    CODE              Offs=001714  Size=000012  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(or.o):
+    CODE              Offs=001726  Size=000012  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(popa.o):
+    CODE              Offs=001738  Size=00000C  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(popptr1.o):
+    CODE              Offs=001744  Size=00000E  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(printf.o):
+    CODE              Offs=001752  Size=000033  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BD  Size=000001  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(push1.o):
+    CODE              Offs=001785  Size=000005  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(pusha.o):
+    CODE              Offs=00178A  Size=000016  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(pushax.o):
+    CODE              Offs=0017A0  Size=00001A  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(pushwsp.o):
+    CODE              Offs=0017BA  Size=00001C  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(shelp.o):
+    CODE              Offs=0017D6  Size=000020  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(shl.o):
+    CODE              Offs=0017F6  Size=000033  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(staspidx.o):
+    CODE              Offs=001829  Size=000016  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(staxsp.o):
+    CODE              Offs=00183F  Size=00000B  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(strlen.o):
+    CODE              Offs=00184A  Size=000016  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(strlower.o):
+    CODE              Offs=001860  Size=000027  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(subeqsp.o):
+    CODE              Offs=001887  Size=000015  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(subysp.o):
+    CODE              Offs=00189C  Size=00000D  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(udiv.o):
+    CODE              Offs=0018A9  Size=00004F  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(vfprintf.o):
+    CODE              Offs=0018F8  Size=000061  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007EF  Size=000008  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(write.o):
+    CODE              Offs=001959  Size=000046  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007F7  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(zerobss.o):
+    CODE              Offs=00199F  Size=000023  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007F7  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(zeropage.o):
+    CODE              Offs=0019C2  Size=000000  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007F7  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=000000  Size=00001A  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+..\HB128\sbc.lib(hb128.o):
+    CODE              Offs=0019C2  Size=000293  Align=00001  Fill=0000
+    RODATA            Offs=0000CF  Size=000000  Align=00001  Fill=0000
+    BSS               Offs=0003BE  Size=000000  Align=00001  Fill=0000
+    DATA              Offs=0007F7  Size=000000  Align=00001  Fill=0000
+    ZEROPAGE          Offs=00001A  Size=000000  Align=00001  Fill=0000
+    NULL              Offs=000000  Size=000000  Align=00001  Fill=0000
+
+
+Segment list:
+-------------
+Name                   Start     End    Size  Align
+----------------------------------------------------
+NULL                  000000  000000  000000  00001
+ZEROPAGE              000091  0000AA  00001A  00001
+STARTUP               000D00  000D1B  00001C  00001
+ONCE                  000D1C  000D27  00000C  00001
+CODE                  000D28  00297C  001C55  00001
+RODATA                00297D  002A4B  0000CF  00001
+DATA                  002A4C  003242  0007F7  00001
+BSS                   003243  003600  0003BE  00001
+
+
+Exports list by name:
+---------------------
+__BSS_LOAD__              003243  LA    __BSS_RUN__               003243 RLA    
+__BSS_SIZE__              0003BE REA    __CONSTRUCTOR_COUNT__     000000 REA    
+__CONSTRUCTOR_TABLE__     000D28 RLA    __DATA_LOAD__             002A4C RLA    
+__DATA_RUN__              002A4C RLA    __DATA_SIZE__             0007F7 REA    
+__DESTRUCTOR_COUNT__      000000 REA    __DESTRUCTOR_TABLE__      002A4C RLA    
+__RAM_FILEOFFS__          000000  EA    __RAM_LAST__              003601  LA    
+__RAM_SIZE__              00AB00 REA    __RAM_START__             000D00 RLA    
+__STACKSIZE__             000800 REA    __STARTUP__               000001 REA    
+__ZP_FILEOFFS__           000000  EA    __ZP_LAST__               0000AB  LA    
+__ZP_SIZE__               000046  EA    __ZP_START__              000091  LA    
+___errno                  0035FC RLA    ___seterrno               0020F2 RLA    
+__ctype                   0029C1 RLA    __ctypeidx                0029CC RLA    
+__filetab                 0031F5  LA    __hextab                  0029A5 RLA    
+__longminstr              0029B5 RLA    __printf                  001E41 RLA    
+_abs                      00243C  LA    _cputc                    0021AD RLA    
+_dfcl_bload               002977  LA    _dfcl_box                 002805  LA    
+_dfcl_chdir               002931  LA    _dfcl_circle              0027DC  LA    
+_dfcl_cls                 00281C  LA    _dfcl_colour              0027CA RLA    
+_dfcl_cursor              0027C7 RLA    _dfcl_elapsedtime         002789  LA    
+_dfcl_font                00296A  LA    _dfcl_gotoxy              002842  LA    
+_dfcl_line                0027EE  LA    _dfcl_mode                0027C1 RLA    
+_dfcl_plot                002822 RLA    _dfcl_ptinit              00284F  LA    
+_dfcl_ptload              002860  LA    _dfcl_ptrun               002857  LA    
+_dfcl_ptstop              00285D  LA    _dfcl_resettimer          00277F  LA    
+_dfcl_scrn                002833  LA    _dfcl_sndchannel          00276B  LA    
+_dfcl_sndconfig           002752  LA    _dfcl_sprcol              00291B  LA    
+_dfcl_sprnme              002920  LA    _dfcl_sprpat              0028C6  LA    
+_dfcl_sprpos              0028D4  LA    _dfcl_stick               0027B4 RLA    
+_dfcl_vbint               00272B RLA    _dfcl_vdp_setreg          00271C RLA    
+_dfcl_vload               002964  LA    _dfcl_vpeek               002749  LA    
+_dfcl_vpoke               00273D RLA    _dfcl_wait                00279E RLA    
+_exit                     000D18  LA    _fwrite                   002202 RLA    
+_init                     000D00  LA    _initScrBuf               001220  LA    
+_initSuperTileDef         000FB4  LA    _init_spr                 00179E  LA    
+_int_c                    003544 RLA    _int_v                    003543 RLA    
+_ltoa                     00231E RLA    _main                     0019A8 RLA    
+_mapS                     003546 RLA    _mapX                     003545 RLA    
+_maxCombos                003548  LA    _move_spr                 0018CB  LA    
+_msg                      002A4C  LA    _nameIdx                  00354A  LA    
+_printf                   00247A RLA    _processTileCombo         000F59  LA    
+_renderView               0012F6  LA    _renderViewAsm            001CB7 RLA    
+_scrBuf                   003243 RLA    _showStats                001259  LA    
+_spr_col                  0035AC RLA    _spr_cycle                0035CC  LA    
+_spr_pat                  00358C RLA    _spr_x                    00354C RLA    
+_spr_y                    00356C RLA    _spritePattern            0031B5 RLA    
+_sprite_space             003547  LA    _stderr                   003211  LA    
+_stdin                    00320D  LA    _stdout                   00320F RLA    
+_strlen                   002572 RLA    _strlen_ptr4              002576  LA    
+_strlower                 002588 RLA    _strlwr                   002588  LA    
+_superTileDef             002B6D RLA    _superTileMap             002BB5 RLA    
+_tileCombos               003443 RLA    _tileDef                  002A6D RLA    
+_ultoa                    00235F RLA    _vb_handler               001BB0 RLA    
+_vfprintf                 002658 RLA    _write                    002681 RLA    
+_writeTileCombos          000D28  LA    _x_coord                  002FB5 RLA    
+_y_coord                  0030B5 RLA    addeq0sp                  0020FB RLA    
+addeqysp                  0020FD RLA    addysp                    00210D RLA    
+addysp1                   00210C RLA    aslax2                    00211A RLA    
+aslax3                    002125 RLA    aslax4                    002133 RLA    
+aslax7                    002144 RLA    aslaxy                    002525  LA    
+asrax1                    00214E RLA    asrax2                    002158 RLA    
+axlong                    002167 RLA    axulong                   00216D RLA    
+c_sp                      000091 RLZ    condes                    003216  LA    
+copydata                  002180 RLA    ctypemask                 0021B0  LA    
+ctypemaskdirect           0021B4 RLA    decsp2                    0021CE RLA    
+decsp4                    0021DB RLA    decsp6                    0021E8 RLA    
+decsp8                    0021F5 RLA    donelib                   002174 RLA    
+incax2                    00227B RLA    incax4                    002282  LA    
+incaxy                    002284 RLA    incsp2                    002295 RLA    
+incsp3                    0022A3 RLA    incsp4                    0022A8 RLA    
+incsp6                    0022AD RLA    initlib                   000D1C RLA    
+ldax0sp                   0022B2 RLA    ldaxysp                   0022B4 RLA    
+ldptr10sp                 0022BB RLA    ldptr1ysp                 0022BD RLA    
+mul8x16                   0023F3 RLA    mul8x16a                  0023FD RLA    
+mulax3                    00242B RLA    negax                     002440 RLA    
+negeax                    0022C7 RLA    popa                      002460 RLA    
+popax                     00228D RLA    popptr1                   00246C RLA    
+popsargsudiv16            0024FE RLA    ptr1                      000099 RLZ    
+ptr2                      00009B RLZ    ptr3                      00009D RLZ    
+ptr4                      00009F RLZ    push0                     0024C8  LA    
+push0ax                   0022E8  LA    push1                     0024AD RLA    
+pusha                     0024B6 RLA    pusha0                    0024CA RLA    
+pusha0sp                  0024B2  LA    pushax                    0024CC RLA    
+pushaysp                  0024B4  LA    pusheax                   0022EE RLA    
+pushl0                    0022E5  LA    pushw0sp                  0024E2 RLA    
+pushwysp                  0024E4 RLA    regbank                   0000A5 RLZ    
+regsave                   000095  LZ    shlax2                    00211A  LA    
+shlax3                    002125  LA    shlax4                    002133  LA    
+shlax7                    002144  LA    shlaxy                    002525 RLA    
+sreg                      000093 RLZ    staspidx                  002551 RLA    
+stax0sp                   002567 RLA    staxysp                   002569 RLA    
+subeq0sp                  0025AF RLA    subeqysp                  0025B1 RLA    
+subysp                    0025C4 RLA    tmp1                      0000A1 RLZ    
+tmp2                      0000A2 RLZ    tmp3                      0000A3 RLZ    
+tmp4                      0000A4 RLZ    tosaslax                  00251E  LA    
+tosmoda0                  00239B RLA    tosmodax                  00239D  LA    
+tosmula0                  0023F1  LA    tosmulax                  0023AC  LA    
+tosora0                   00244E RLA    tosorax                   002450  LA    
+tosshlax                  00251E  LA    tosudiva0                 0025D1  LA    
+tosudivax                 0025D3 RLA    tosumula0                 0023F1  LA    
+tosumulax                 0023AC RLA    udiv16                    0025E2 RLA    
+zerobss                   0026C7 RLA    
+
+
+Exports list by value:
+----------------------
+__ZP_FILEOFFS__           000000  EA    __DESTRUCTOR_COUNT__      000000 REA    
+__RAM_FILEOFFS__          000000  EA    __CONSTRUCTOR_COUNT__     000000 REA    
+__STARTUP__               000001 REA    __ZP_SIZE__               000046  EA    
+c_sp                      000091 RLZ    __ZP_START__              000091  LA    
+sreg                      000093 RLZ    regsave                   000095  LZ    
+ptr1                      000099 RLZ    ptr2                      00009B RLZ    
+ptr3                      00009D RLZ    ptr4                      00009F RLZ    
+tmp1                      0000A1 RLZ    tmp2                      0000A2 RLZ    
+tmp3                      0000A3 RLZ    tmp4                      0000A4 RLZ    
+regbank                   0000A5 RLZ    __ZP_LAST__               0000AB  LA    
+__BSS_SIZE__              0003BE REA    __DATA_SIZE__             0007F7 REA    
+__STACKSIZE__             000800 REA    __RAM_START__             000D00 RLA    
+_init                     000D00  LA    _exit                     000D18  LA    
+initlib                   000D1C RLA    __CONSTRUCTOR_TABLE__     000D28 RLA    
+_writeTileCombos          000D28  LA    _processTileCombo         000F59  LA    
+_initSuperTileDef         000FB4  LA    _initScrBuf               001220  LA    
+_showStats                001259  LA    _renderView               0012F6  LA    
+_init_spr                 00179E  LA    _move_spr                 0018CB  LA    
+_main                     0019A8 RLA    _vb_handler               001BB0 RLA    
+_renderViewAsm            001CB7 RLA    __printf                  001E41 RLA    
+___seterrno               0020F2 RLA    addeq0sp                  0020FB RLA    
+addeqysp                  0020FD RLA    addysp1                   00210C RLA    
+addysp                    00210D RLA    shlax2                    00211A  LA    
+aslax2                    00211A RLA    aslax3                    002125 RLA    
+shlax3                    002125  LA    shlax4                    002133  LA    
+aslax4                    002133 RLA    aslax7                    002144 RLA    
+shlax7                    002144  LA    asrax1                    00214E RLA    
+asrax2                    002158 RLA    axlong                    002167 RLA    
+axulong                   00216D RLA    donelib                   002174 RLA    
+copydata                  002180 RLA    _cputc                    0021AD RLA    
+ctypemask                 0021B0  LA    ctypemaskdirect           0021B4 RLA    
+decsp2                    0021CE RLA    decsp4                    0021DB RLA    
+decsp6                    0021E8 RLA    decsp8                    0021F5 RLA    
+_fwrite                   002202 RLA    incax2                    00227B RLA    
+incax4                    002282  LA    incaxy                    002284 RLA    
+popax                     00228D RLA    incsp2                    002295 RLA    
+incsp3                    0022A3 RLA    incsp4                    0022A8 RLA    
+incsp6                    0022AD RLA    ldax0sp                   0022B2 RLA    
+ldaxysp                   0022B4 RLA    ldptr10sp                 0022BB RLA    
+ldptr1ysp                 0022BD RLA    negeax                    0022C7 RLA    
+pushl0                    0022E5  LA    push0ax                   0022E8  LA    
+pusheax                   0022EE RLA    _ltoa                     00231E RLA    
+_ultoa                    00235F RLA    tosmoda0                  00239B RLA    
+tosmodax                  00239D  LA    tosumulax                 0023AC RLA    
+tosmulax                  0023AC  LA    tosmula0                  0023F1  LA    
+tosumula0                 0023F1  LA    mul8x16                   0023F3 RLA    
+mul8x16a                  0023FD RLA    mulax3                    00242B RLA    
+_abs                      00243C  LA    negax                     002440 RLA    
+tosora0                   00244E RLA    tosorax                   002450  LA    
+popa                      002460 RLA    popptr1                   00246C RLA    
+_printf                   00247A RLA    push1                     0024AD RLA    
+pusha0sp                  0024B2  LA    pushaysp                  0024B4  LA    
+pusha                     0024B6 RLA    push0                     0024C8  LA    
+pusha0                    0024CA RLA    pushax                    0024CC RLA    
+pushw0sp                  0024E2 RLA    pushwysp                  0024E4 RLA    
+popsargsudiv16            0024FE RLA    tosaslax                  00251E  LA    
+tosshlax                  00251E  LA    shlaxy                    002525 RLA    
+aslaxy                    002525  LA    staspidx                  002551 RLA    
+stax0sp                   002567 RLA    staxysp                   002569 RLA    
+_strlen                   002572 RLA    _strlen_ptr4              002576  LA    
+_strlwr                   002588  LA    _strlower                 002588 RLA    
+subeq0sp                  0025AF RLA    subeqysp                  0025B1 RLA    
+subysp                    0025C4 RLA    tosudiva0                 0025D1  LA    
+tosudivax                 0025D3 RLA    udiv16                    0025E2 RLA    
+_vfprintf                 002658 RLA    _write                    002681 RLA    
+zerobss                   0026C7 RLA    _dfcl_vdp_setreg          00271C RLA    
+_dfcl_vbint               00272B RLA    _dfcl_vpoke               00273D RLA    
+_dfcl_vpeek               002749  LA    _dfcl_sndconfig           002752  LA    
+_dfcl_sndchannel          00276B  LA    _dfcl_resettimer          00277F  LA    
+_dfcl_elapsedtime         002789  LA    _dfcl_wait                00279E RLA    
+_dfcl_stick               0027B4 RLA    _dfcl_mode                0027C1 RLA    
+_dfcl_cursor              0027C7 RLA    _dfcl_colour              0027CA RLA    
+_dfcl_circle              0027DC  LA    _dfcl_line                0027EE  LA    
+_dfcl_box                 002805  LA    _dfcl_cls                 00281C  LA    
+_dfcl_plot                002822 RLA    _dfcl_scrn                002833  LA    
+_dfcl_gotoxy              002842  LA    _dfcl_ptinit              00284F  LA    
+_dfcl_ptrun               002857  LA    _dfcl_ptstop              00285D  LA    
+_dfcl_ptload              002860  LA    _dfcl_sprpat              0028C6  LA    
+_dfcl_sprpos              0028D4  LA    _dfcl_sprcol              00291B  LA    
+_dfcl_sprnme              002920  LA    _dfcl_chdir               002931  LA    
+_dfcl_vload               002964  LA    _dfcl_font                00296A  LA    
+_dfcl_bload               002977  LA    __hextab                  0029A5 RLA    
+__longminstr              0029B5 RLA    __ctype                   0029C1 RLA    
+__ctypeidx                0029CC RLA    __DESTRUCTOR_TABLE__      002A4C RLA    
+__DATA_LOAD__             002A4C RLA    _msg                      002A4C  LA    
+__DATA_RUN__              002A4C RLA    _tileDef                  002A6D RLA    
+_superTileDef             002B6D RLA    _superTileMap             002BB5 RLA    
+_x_coord                  002FB5 RLA    _y_coord                  0030B5 RLA    
+_spritePattern            0031B5 RLA    __filetab                 0031F5  LA    
+_stdin                    00320D  LA    _stdout                   00320F RLA    
+_stderr                   003211  LA    condes                    003216  LA    
+__BSS_RUN__               003243 RLA    __BSS_LOAD__              003243  LA    
+_scrBuf                   003243 RLA    _tileCombos               003443 RLA    
+_int_v                    003543 RLA    _int_c                    003544 RLA    
+_mapX                     003545 RLA    _mapS                     003546 RLA    
+_sprite_space             003547  LA    _maxCombos                003548  LA    
+_nameIdx                  00354A  LA    _spr_x                    00354C RLA    
+_spr_y                    00356C RLA    _spr_pat                  00358C RLA    
+_spr_col                  0035AC RLA    _spr_cycle                0035CC  LA    
+___errno                  0035FC RLA    __RAM_LAST__              003601  LA    
+__RAM_SIZE__              00AB00 REA    
+
+
+Imports list:
+-------------
+__BSS_LOAD__ ([linker generated]):
+__BSS_RUN__ ([linker generated]):
+    zerobss.o                 common/zerobss.s:8
+__BSS_SIZE__ ([linker generated]):
+    zerobss.o                 common/zerobss.s:8
+__CONSTRUCTOR_COUNT__ ([linker generated]):
+    condes.o                  runtime/condes.s:18
+__CONSTRUCTOR_TABLE__ ([linker generated]):
+    condes.o                  runtime/condes.s:18
+__DATA_LOAD__ ([linker generated]):
+    copydata.o                common/copydata.s:8
+__DATA_RUN__ ([linker generated]):
+    copydata.o                common/copydata.s:8
+__DATA_SIZE__ ([linker generated]):
+    copydata.o                common/copydata.s:8
+__DESTRUCTOR_COUNT__ ([linker generated]):
+    condes.o                  runtime/condes.s:19
+__DESTRUCTOR_TABLE__ ([linker generated]):
+    condes.o                  runtime/condes.s:19
+__RAM_FILEOFFS__ ([linker generated]):
+__RAM_LAST__ ([linker generated]):
+__RAM_SIZE__ ([linker generated]):
+    crt0.o                    crt0.s:12
+__RAM_START__ ([linker generated]):
+    crt0.o                    crt0.s:12
+__STACKSIZE__ ([linker generated]):
+    [linker generated]        ..\HB128\dolo128.cfg:6
+__STARTUP__ (crt0.o):
+    game.o                    game.s:13
+__ZP_FILEOFFS__ ([linker generated]):
+__ZP_LAST__ ([linker generated]):
+__ZP_SIZE__ ([linker generated]):
+__ZP_START__ ([linker generated]):
+___errno (errno.o):
+    _seterrno.o               /home/runner/work/cc65/cc65/asminc/errno.inc:7
+___seterrno (_seterrno.o):
+    fwrite.o                  /home/runner/work/cc65/cc65/asminc/errno.inc:9
+__ctype (ctype.o):
+    ctypemask.o               common/ctypemask.s:23
+__ctypeidx (ctype.o):
+    ctypemask.o               common/ctypemask.s:24
+__filetab (_file.o):
+__hextab (_hextab.o):
+    ltoa.o                    common/ltoa.s:10
+__longminstr (_longminstr.o):
+    ltoa.o                    common/ltoa.s:10
+__printf (_printf.o):
+    vfprintf.o                common/vfprintf.s:10
+_abs (negabs.o):
+_cputc (cputc.o):
+    write.o                   write.s:13
+_dfcl_bload (hb128.o):
+_dfcl_box (hb128.o):
+_dfcl_chdir (hb128.o):
+_dfcl_circle (hb128.o):
+_dfcl_cls (hb128.o):
+_dfcl_colour (hb128.o):
+    game.o                    game.s:22
+_dfcl_cursor (hb128.o):
+    game.o                    game.s:21
+_dfcl_elapsedtime (hb128.o):
+_dfcl_font (hb128.o):
+_dfcl_gotoxy (hb128.o):
+_dfcl_line (hb128.o):
+_dfcl_mode (hb128.o):
+    game.o                    game.s:20
+_dfcl_plot (hb128.o):
+    game.o                    game.s:23
+_dfcl_ptinit (hb128.o):
+_dfcl_ptload (hb128.o):
+_dfcl_ptrun (hb128.o):
+_dfcl_ptstop (hb128.o):
+_dfcl_resettimer (hb128.o):
+_dfcl_scrn (hb128.o):
+_dfcl_sndchannel (hb128.o):
+_dfcl_sndconfig (hb128.o):
+_dfcl_sprcol (hb128.o):
+_dfcl_sprnme (hb128.o):
+_dfcl_sprpat (hb128.o):
+_dfcl_sprpos (hb128.o):
+_dfcl_stick (hb128.o):
+    game.o                    game.s:19
+_dfcl_vbint (hb128.o):
+    game.o                    game.s:16
+_dfcl_vdp_setreg (hb128.o):
+    game.o                    game.s:17
+_dfcl_vload (hb128.o):
+_dfcl_vpeek (hb128.o):
+_dfcl_vpoke (hb128.o):
+    game.o                    game.s:18
+_dfcl_wait (hb128.o):
+    game.o                    game.s:15
+_exit (crt0.o):
+_fwrite (fwrite.o):
+    vfprintf.o                common/vfprintf.s:10
+_init (crt0.o):
+_initScrBuf (game.o):
+_initSuperTileDef (game.o):
+_init_spr (game.o):
+_int_c (game.o):
+    vbint.o                   vbint.s:8
+_int_v (game.o):
+    vbint.o                   vbint.s:8
+_ltoa (ltoa.o):
+    _printf.o                 common/_printf.s:12
+_main (game.o):
+    crt0.o                    crt0.s:9
+_mapS (game.o):
+    engine.o                  engine.s:7
+_mapX (game.o):
+    engine.o                  engine.s:7
+_maxCombos (game.o):
+_move_spr (game.o):
+_msg (game.o):
+_nameIdx (game.o):
+_printf (printf.o):
+    game.o                    game.s:14
+_processTileCombo (game.o):
+_renderView (game.o):
+_renderViewAsm (engine.o):
+    game.o                    game.s:29
+_scrBuf (game.o):
+    engine.o                  engine.s:7
+    vbint.o                   vbint.s:8
+_showStats (game.o):
+_spr_col (game.o):
+    vbint.o                   vbint.s:9
+_spr_cycle (game.o):
+_spr_pat (game.o):
+    vbint.o                   vbint.s:9
+_spr_x (game.o):
+    vbint.o                   vbint.s:9
+_spr_y (game.o):
+    vbint.o                   vbint.s:9
+_spritePattern (data.o):
+    game.o                    game.s:28
+_sprite_space (game.o):
+_stderr (_file.o):
+_stdin (_file.o):
+_stdout (_file.o):
+    printf.o                  common/printf.s:8
+_strlen (strlen.o):
+    _printf.o                 common/_printf.s:13
+_strlen_ptr4 (strlen.o):
+_strlower (strlower.o):
+    _printf.o                 common/_printf.s:13
+_strlwr (strlower.o):
+_superTileDef (data.o):
+    engine.o                  engine.s:6
+    game.o                    game.s:26
+_superTileMap (data.o):
+    engine.o                  engine.s:6
+    game.o                    game.s:27
+_tileCombos (game.o):
+    engine.o                  engine.s:6
+_tileDef (data.o):
+    game.o                    game.s:25
+_ultoa (ltoa.o):
+    _printf.o                 common/_printf.s:12
+_vb_handler (vbint.o):
+    game.o                    game.s:24
+_vfprintf (vfprintf.o):
+    printf.o                  common/printf.s:8
+_write (write.o):
+    fwrite.o                  common/fwrite.s:10
+_writeTileCombos (game.o):
+_x_coord (data.o):
+    game.o                    game.s:39
+_y_coord (data.o):
+    game.o                    game.s:40
+addeq0sp (addeqsp.o):
+    write.o                   write.s:60
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+addeqysp (addeqsp.o):
+    write.o                   write.s:60
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+addysp (addysp.o):
+    write.o                   write.s:60
+    fwrite.o                  common/fwrite.s:11
+    printf.o                  common/printf.s:8
+    incsp6.o                  runtime/incsp6.s:8
+    incsp4.o                  runtime/incsp4.s:8
+    incsp3.o                  runtime/incsp3.s:8
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+addysp1 (addysp.o):
+    or.o                      runtime/or.s:9
+aslax2 (aslax2.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+aslax3 (aslax3.o):
+    game.o                    game.s:2018
+aslax4 (aslax4.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+aslax7 (aslax7.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+aslaxy (shl.o):
+asrax1 (asrax1.o):
+    game.o                    game.s:2018
+asrax2 (asrax2.o):
+    game.o                    game.s:2018
+axlong (axlong.o):
+    _printf.o                 common/_printf.s:11
+axulong (axlong.o):
+    _printf.o                 common/_printf.s:11
+c_sp (zeropage.o):
+    write.o                   write.s:10
+    popptr1.o                 runtime/popptr1.s:9
+    popa.o                    runtime/popa.s:8
+    lpush.o                   runtime/lpush.s:13
+    _printf.o                 /home/runner/work/cc65/cc65/asminc/zeropage.inc:11
+    vfprintf.o                common/vfprintf.s:11
+    subysp.o                  runtime/subysp.s:9
+    subeqsp.o                 runtime/subeqsp.s:8
+    staxsp.o                  runtime/staxsp.s:8
+    staspidx.o                runtime/staspidx.s:9
+    pushwsp.o                 runtime/pushwsp.s:8
+    pushax.o                  runtime/pushax.s:8
+    pusha.o                   runtime/pusha.s:8
+    printf.o                  common/printf.s:9
+    or.o                      runtime/or.s:10
+    ldptr1sp.o                runtime/ldptr1sp.s:8
+    ldaxsp.o                  runtime/ldaxsp.s:8
+    incsp2.o                  runtime/incsp2.s:8
+    decsp8.o                  runtime/decsp8.s:8
+    decsp6.o                  runtime/decsp6.s:8
+    decsp4.o                  runtime/decsp4.s:8
+    decsp2.o                  runtime/decsp2.s:8
+    crt0.o                    C:\Users\dolom\cc65\asminc/zeropage.inc:11
+    addysp.o                  runtime/addysp.s:8
+    addeqsp.o                 runtime/addeqsp.s:8
+    game.o                    game.s:10
+condes (condes.o):
+copydata (copydata.o):
+    crt0.o                    crt0.s:14
+ctypemask (ctypemask.o):
+ctypemaskdirect (ctypemask.o):
+    strlower.o                common/strlower.s:14
+decsp2 (decsp2.o):
+    write.o                   write.s:60
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+decsp4 (decsp4.o):
+    lpush.o                   runtime/lpush.s:12
+    game.o                    game.s:2018
+decsp6 (decsp6.o):
+    _printf.o                 common/_printf.s:11
+    game.o                    game.s:2018
+decsp8 (decsp8.o):
+    game.o                    game.s:2018
+donelib (condes.o):
+    crt0.o                    crt0.s:14
+incax2 (incax2.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+incax4 (incaxy.o):
+incaxy (incaxy.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+incsp2 (incsp2.o):
+    popptr1.o                 runtime/popptr1.s:8
+    staspidx.o                runtime/staspidx.s:8
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+incsp3 (incsp3.o):
+    game.o                    game.s:2018
+incsp4 (incsp4.o):
+    game.o                    game.s:2018
+incsp6 (incsp6.o):
+    fwrite.o                  common/fwrite.s:11
+    vfprintf.o                common/vfprintf.s:9
+    game.o                    game.s:2018
+initlib (condes.o):
+    crt0.o                    crt0.s:14
+ldax0sp (ldaxsp.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+ldaxysp (ldaxsp.o):
+    write.o                   write.s:60
+    fwrite.o                  common/fwrite.s:11
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+ldptr10sp (ldptr1sp.o):
+    write.o                   write.s:60
+ldptr1ysp (ldptr1sp.o):
+    game.o                    game.s:2018
+mul8x16 (mul8.o):
+    mul.o                     runtime/mul.s:8
+mul8x16a (mul8.o):
+    mul.o                     runtime/mul.s:8
+mulax3 (mulax3.o):
+    game.o                    game.s:2018
+negax (negabs.o):
+    shelp.o                   runtime/shelp.s:11
+    mod.o                     runtime/mod.s:11
+negeax (lneg.o):
+    ltoa.o                    common/ltoa.s:9
+popa (popa.o):
+    hb128.o                   hb128.s:12
+popax (incsp2.o):
+    ltoa.o                    common/ltoa.s:9
+    _printf.o                 common/_printf.s:11
+    hb128.o                   hb128.s:12
+    shl.o                     runtime/shl.s:15
+    shelp.o                   runtime/shelp.s:11
+popptr1 (popptr1.o):
+    mul8.o                    runtime/mul8.s:9
+    mul.o                     runtime/mul.s:9
+    ltoa.o                    common/ltoa.s:9
+    hb128.o                   hb128.s:12
+    udiv.o                    runtime/udiv.s:9
+popsargsudiv16 (shelp.o):
+    mod.o                     runtime/mod.s:11
+ptr1 (zeropage.o):
+    write.o                   write.s:11
+    strlower.o                common/strlower.s:13
+    popptr1.o                 runtime/popptr1.s:9
+    mul8.o                    runtime/mul8.s:10
+    mul.o                     runtime/mul.s:10
+    ltoa.o                    common/ltoa.s:11
+    fwrite.o                  common/fwrite.s:14
+    copydata.o                common/copydata.s:9
+    _printf.o                 /home/runner/work/cc65/cc65/asminc/zeropage.inc:12
+    hb128.o                   hb128.s:13
+    zerobss.o                 common/zerobss.s:9
+    vfprintf.o                common/vfprintf.s:11
+    udiv.o                    runtime/udiv.s:10
+    staspidx.o                runtime/staspidx.s:9
+    shelp.o                   runtime/shelp.s:12
+    printf.o                  common/printf.s:9
+    mulax3.o                  runtime/mulax3.s:9
+    ldptr1sp.o                runtime/ldptr1sp.s:8
+    engine.o                  engine.s:5
+    game.o                    game.s:11
+ptr2 (zeropage.o):
+    strlower.o                common/strlower.s:13
+    ltoa.o                    common/ltoa.s:11
+    copydata.o                common/copydata.s:9
+    _printf.o                 /home/runner/work/cc65/cc65/asminc/zeropage.inc:12
+ptr3 (zeropage.o):
+    ltoa.o                    common/ltoa.s:11
+    engine.o                  engine.s:5
+ptr4 (zeropage.o):
+    strlen.o                  common/strlen.s:12
+    mul8.o                    runtime/mul8.s:10
+    mul.o                     runtime/mul.s:10
+    udiv.o                    runtime/udiv.s:10
+    shelp.o                   runtime/shelp.s:12
+    engine.o                  engine.s:5
+push0 (pushax.o):
+push0ax (lpush.o):
+push1 (push1.o):
+    _printf.o                 common/_printf.s:11
+    vfprintf.o                common/vfprintf.s:9
+pusha (pusha.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+pusha0 (pushax.o):
+    push1.o                   runtime/push1.s:8
+    fwrite.o                  common/fwrite.s:11
+    game.o                    game.s:2018
+pusha0sp (pusha.o):
+pushax (pushax.o):
+    write.o                   write.s:60
+    fwrite.o                  common/fwrite.s:11
+    _printf.o                 common/_printf.s:11
+    hb128.o                   hb128.s:12
+    printf.o                  common/printf.s:8
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+pushaysp (pusha.o):
+pusheax (lpush.o):
+    _printf.o                 common/_printf.s:11
+pushl0 (lpush.o):
+pushw0sp (pushwsp.o):
+    game.o                    game.s:2018
+pushwysp (pushwsp.o):
+    write.o                   write.s:60
+    fwrite.o                  common/fwrite.s:11
+    vfprintf.o                common/vfprintf.s:9
+regbank (zeropage.o):
+    _printf.o                 /home/runner/work/cc65/cc65/asminc/zeropage.inc:14
+regsave (zeropage.o):
+shlax2 (aslax2.o):
+shlax3 (aslax3.o):
+shlax4 (aslax4.o):
+shlax7 (aslax7.o):
+shlaxy (shl.o):
+    game.o                    game.s:2018
+sreg (zeropage.o):
+    lneg.o                    runtime/lneg.s:11
+    ltoa.o                    common/ltoa.s:11
+    lpush.o                   runtime/lpush.s:13
+    axlong.o                  runtime/axlong.s:9
+    _printf.o                 /home/runner/work/cc65/cc65/asminc/zeropage.inc:11
+    udiv.o                    runtime/udiv.s:10
+    mod.o                     runtime/mod.s:12
+    game.o                    game.s:10
+staspidx (staspidx.o):
+    game.o                    game.s:2018
+stax0sp (staxsp.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+staxysp (staxsp.o):
+    write.o                   write.s:60
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+subeq0sp (subeqsp.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+subeqysp (subeqsp.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+subysp (subysp.o):
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+    game.o                    game.s:2018
+tmp1 (zeropage.o):
+    mul.o                     runtime/mul.s:10
+    ltoa.o                    common/ltoa.s:11
+    copydata.o                common/copydata.s:9
+    _printf.o                 /home/runner/work/cc65/cc65/asminc/zeropage.inc:13
+    staspidx.o                runtime/staspidx.s:9
+    shl.o                     runtime/shl.s:16
+    shelp.o                   runtime/shelp.s:12
+    or.o                      runtime/or.s:10
+    mod.o                     runtime/mod.s:12
+    incaxy.o                  runtime/incaxy.s:8
+    asrax2.o                  runtime/asrax2.s:8
+    asrax1.o                  runtime/asrax1.s:8
+    aslax4.o                  runtime/aslax4.s:8
+    aslax3.o                  runtime/aslax3.s:8
+    aslax2.o                  runtime/aslax2.s:8
+    engine.o                  engine.s:5
+tmp2 (zeropage.o):
+    shelp.o                   runtime/shelp.s:12
+    engine.o                  engine.s:5
+tmp3 (zeropage.o):
+    engine.o                  engine.s:5
+tmp4 (zeropage.o):
+    engine.o                  engine.s:5
+tosaslax (shl.o):
+tosmoda0 (mod.o):
+    game.o                    game.s:2018
+tosmodax (mod.o):
+tosmula0 (mul8.o):
+tosmulax (mul.o):
+tosora0 (or.o):
+    game.o                    game.s:2018
+tosorax (or.o):
+tosshlax (shl.o):
+tosudiva0 (udiv.o):
+tosudivax (udiv.o):
+    fwrite.o                  common/fwrite.s:12
+tosumula0 (mul8.o):
+tosumulax (mul.o):
+    fwrite.o                  common/fwrite.s:12
+udiv16 (udiv.o):
+    shelp.o                   runtime/shelp.s:11
+zerobss (zerobss.o):
+    crt0.o                    crt0.s:14
+

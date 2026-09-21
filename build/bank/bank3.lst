@@ -1,7 +1,7 @@
 AS65 Assembler for R6502 [1.42].                                     Page    1
 ---------------------------------- bank3.s -----------------------------------
 
-5572 lines read, no errors in pass 1.
+5578 lines read, no errors in pass 1.
 c000 =                       _bank0_start=0xc000
                              	include "kernel\kernel.s"
                              ;************************************************
@@ -680,7 +680,7 @@ c000 =                       _bank0_start=0xc000
                              ;************************************************
                              
                              ;* Start dflat program memory
-0cb6 =                       DF_PROGSTART=	mem_start
+0cb9 =                       DF_PROGSTART=	mem_start
                              ;* This is the top of usable dflat memory plus 1
 c000 =                       DF_MEMTOP	=	0xc000
                              
@@ -830,7 +830,7 @@ c000 =                       DF_MEMTOP	=	0xc000
                              ;************************************************
                              
                              ;* Start dflat program memory
-0cb6 =                       DF_PROGSTART=	mem_start
+0cb9 =                       DF_PROGSTART=	mem_start
                              ;* This is the top of usable dflat memory plus 1
 c000 =                       DF_MEMTOP	=	0xc000
                              
@@ -1288,35 +1288,37 @@ c000 =                       bankjsr_nul_addr	=	0xc000
                              ; Self-modifying code or code that needs to run w
 0c0c =                       ram_code	ds  64		; 64 bytes of RAM code space
 0c4c =                       pt3_int		ds	1		; =1 when PT3 interrupt routine is
-                             
+0c4d =                       pt3_amplA	ds	1		; PT3 channel A volume
+0c4e =                       pt3_amplB	ds	1		; PT3 channel B volume
+0c4f =                       pt3_amplC	ds	1		; PT3 channel C volume
                              
                              ; Active IO device settings
-0c4d =                       io_default	ds	1		; The default device number - es
+0c50 =                       io_default	ds	1		; The default device number - es
                              ; Copy of jump tables to active device io routine
-0c4e =                       io_block	ds	io_struct
+0c51 =                       io_block	ds	io_struct
                              
                              ; Copy of FAT16 directory
-0c5e =                       fs_direntry	ds	FATFileDesc ; copy of dir entry - 
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   21
 ---------------------------------- bank3.s -----------------------------------
 
+0c61 =                       fs_direntry	ds	FATFileDesc ; copy of dir entry - 
+                             
                              ; Filesystem parameters
-0c7e =                       fs_bootsect	ds	4		; Start of partition (usually 0
-0c82 =                       fs_fatsect	ds	4		; Start of FAT tables
-0c86 =                       fs_rootsect	ds	4		; Start of Root Directory
-0c8a =                       fs_datasect	ds	4		; Start of Data Area
-0c8e =                       fs_dirsect	ds	4		; Current directory sector numbe
-0c92 =                       fs_dirclust	ds	2		; Current directory cluster num
+0c81 =                       fs_bootsect	ds	4		; Start of partition (usually 0
+0c85 =                       fs_fatsect	ds	4		; Start of FAT tables
+0c89 =                       fs_rootsect	ds	4		; Start of Root Directory
+0c8d =                       fs_datasect	ds	4		; Start of Data Area
+0c91 =                       fs_dirsect	ds	4		; Current directory sector numbe
+0c95 =                       fs_dirclust	ds	2		; Current directory cluster num
                              
                              ; Working and scratch for filesystem - some data 
-0c94 =                       fs_scratch	ds	32		; 32 bytes should be more than 
+0c97 =                       fs_scratch	ds	32		; 32 bytes should be more than 
                              
                              ; Dflat top of memory+1 - normally initialised to
-0cb4 =                       df_memtop	ds	2
+0cb7 =                       df_memtop	ds	2
                              
                              ;***** THIS IS THE START OF FREE SPACE for DFLAT 
-0cb6 =                       mem_start
+0cb9 =                       mem_start
                              
                              
                              
@@ -1361,11 +1363,11 @@ c001 :                       _OSVectors
                              ;*  Free to use for any non-commercial purpose su
                              ;*  appropriate credit of my authorship please!
                              ;*
-                             ;*  OSVEC.S
-                             ;*  Simply this is a bunch of JMP XXXX the order 
 AS65 Assembler for R6502 [1.42].                                     Page   22
 ---------------------------------- bank3.s -----------------------------------
 
+                             ;*  OSVEC.S
+                             ;*  Simply this is a bunch of JMP XXXX the order 
                              ;*  will always be maintained.  This is to allow 
                              ;*  code programs to be able to rely on fixed loc
                              ;*  some key low-level functions.
@@ -1426,11 +1428,11 @@ c091 :                       _fs_delete_w
 c0a9 :                       _fs_close_w
                               _bankjsr $d525, 2
                              
-c0c1 :                       _fs_get_byte_w
-                              _bankjsr $d242, 2
 AS65 Assembler for R6502 [1.42].                                     Page   23
 ---------------------------------- bank3.s -----------------------------------
 
+c0c1 :                       _fs_get_byte_w
+                              _bankjsr $d242, 2
                              
 c0d9 :                       _fs_open_read_w
                               _bankjsr $d411, 2
@@ -1457,13 +1459,13 @@ c181 :                       _ser_put_byte
                               _bankjsr $d284, 0
                              
 c199 :                       _gr_get_key
-                              _bankjsr $e390, 0
+                              _bankjsr $e399, 0
                              
 c1b1 :                       _gr_put_byte
-                              _bankjsr $e39d, 0
+                              _bankjsr $e3a6, 0
                              
 c1c9 :                       _gr_init_screen
-                              _bankjsr $de59, 0
+                              _bankjsr $de62, 0
                              
 c1e1 :                       _init_acia
                               _bankjsr $d291, 0
@@ -1491,42 +1493,42 @@ c289 :                       _kb_read_raw
                              
 c2a1 :                       _kb_read_dip
                               _bankjsr $d322, 0
-                             
-c2b9 :                       _command_line
 AS65 Assembler for R6502 [1.42].                                     Page   24
 ---------------------------------- bank3.s -----------------------------------
 
+                             
+c2b9 :                       _command_line
                               _bankjsr $cc20, 0
                              
 c2d1 :                       _gr_cls
-                              _bankjsr $de6c, 0
+                              _bankjsr $de75, 0
                              
 c2e9 :                       _gr_init_hires
-                              _bankjsr $de16, 0
+                              _bankjsr $de1e, 0
                              
 c301 :                       _gr_line
-                              _bankjsr $e1ca, 0
+                              _bankjsr $e1d3, 0
                              
 c319 :                       _gr_box
-                              _bankjsr $e00a, 0
+                              _bankjsr $e013, 0
                              
 c331 :                       _gr_circle
-                              _bankjsr $e115, 0
+                              _bankjsr $e11e, 0
                              
 c349 :                       _gr_plot
-                              _bankjsr $ded7, 0
+                              _bankjsr $dee0, 0
                              
 c361 :                       _gr_hchar
-                              _bankjsr $df15, 0
+                              _bankjsr $df1e, 0
                              
 c379 :                       _gr_point
-                              _bankjsr $dfbb, 0
+                              _bankjsr $dfc4, 0
                              
 c391 :                       _gr_get
-                              _bankjsr $def2, 0
+                              _bankjsr $defb, 0
                              
 c3a9 :                       _gr_set_cur
-                              _bankjsr $defa, 0
+                              _bankjsr $df03, 0
                              
 c3c1 :                       _snd_get_note
                               _bankjsr $d658, 0
@@ -1556,11 +1558,11 @@ c481 :                       _rtc_nvwrite
                               _bankjsr $d637, 0
                              
 c499 :                       _fs_dir_fhandle_str
-                              _bankjsr $d671, 2
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   25
 ---------------------------------- bank3.s -----------------------------------
 
+                              _bankjsr $d671, 2
+                             
 c4b1 :                       _sd_sendcmd17
                               _bankjsr $cdef, 2
                              
@@ -1621,11 +1623,11 @@ c559 :                       mod_sz_io_s
                              ;* io_init
                              ;* Initialise the default device and make active
                              ;* No keys pressed = serial (default)
-                             ;* F0 pressed = KB/VDP
-                             ;* F1 pressed = Serial
 AS65 Assembler for R6502 [1.42].                                     Page   26
 ---------------------------------- bank3.s -----------------------------------
 
+                             ;* F0 pressed = KB/VDP
+                             ;* F1 pressed = Serial
                              ;* Keyboard and screen or serial port
                              ;* Output : None
                              ;* Regs affected : P, A
@@ -1645,7 +1647,7 @@ c56b : a901             [ 2] 	lda #1
 c56d : 48               [ 3] 	pha
 c56e :                       io_init_set_default
 c56e : 68               [ 4] 	pla
-c56f : 8d4d0c           [ 4] 	sta io_default
+c56f : 8d500c           [ 4] 	sta io_default
 c572 : 4c75c5           [ 3] 	jmp io_set_default	; Activate the default device
                              
                              ;****************************************
@@ -1656,7 +1658,7 @@ c572 : 4c75c5           [ 3] 	jmp io_set_default	; Activate the default device
                              ;* Regs affected : P, A
                              ;****************************************
 c575 :                       io_set_default			; Entry point for default
-c575 : ad4d0c           [ 4] 	lda io_default
+c575 : ad500c           [ 4] 	lda io_default
 c578 :                       io_active_device		; Entry point for A set
 c578 : 0a               [ 2] 	asl	a				; x16 the Block number
 c579 : 0a               [ 2] 	asl a
@@ -1667,7 +1669,7 @@ c57d : a200             [ 2] 	ldx #0
                              	; Copy device settings to io block
 c57f :                       io_copy_data
 c57f : b9f3c5           [ 4] 	lda io_devices,y
-c582 : 9d4e0c           [ 5] 	sta io_block,x
+c582 : 9d510c           [ 5] 	sta io_block,x
 c585 : c8               [ 2] 	iny
 c586 : e8               [ 2] 	inx
 c587 : e010             [ 2] 	cpx #io_struct
@@ -1685,12 +1687,12 @@ c58f : 60               [ 6] 	rts
                              ;* Regs affected : P, A
                              ;****************************************
 c590 :                       io_get_ch
-c590 : 6c4e0c           [ 6] 	jmp (io_block+io_get_byte)
-                             	
-                             
+c590 : 6c510c           [ 6] 	jmp (io_block+io_get_byte)
 AS65 Assembler for R6502 [1.42].                                     Page   27
 ---------------------------------- bank3.s -----------------------------------
 
+                             	
+                             
                              ;****************************************
                              ;* io_put_ch
                              ;* Put a char
@@ -1698,7 +1700,7 @@ c590 : 6c4e0c           [ 6] 	jmp (io_block+io_get_byte)
                              ;* Regs affected : P, A
                              ;****************************************
 c593 :                       io_put_ch
-c593 : 6c500c           [ 6] 	jmp (io_block+io_put_byte)
+c593 : 6c530c           [ 6] 	jmp (io_block+io_put_byte)
                              	
                              ;****************************************
                              ;* io_open_read
@@ -1708,7 +1710,7 @@ c593 : 6c500c           [ 6] 	jmp (io_block+io_put_byte)
                              ;* Regs affected : All
                              ;****************************************
 c596 :                       io_open_read
-c596 : 6c520c           [ 6] 	jmp (io_block+io_open_r)
+c596 : 6c550c           [ 6] 	jmp (io_block+io_open_r)
                              	
                              ;****************************************
                              ;* io_open_write
@@ -1718,7 +1720,7 @@ c596 : 6c520c           [ 6] 	jmp (io_block+io_open_r)
                              ;* Regs affected : All
                              ;****************************************
 c599 :                       io_open_write
-c599 : 6c540c           [ 6] 	jmp (io_block+io_open_w)
+c599 : 6c570c           [ 6] 	jmp (io_block+io_open_w)
                              
                              ;****************************************
                              ;* io_close
@@ -1728,7 +1730,7 @@ c599 : 6c540c           [ 6] 	jmp (io_block+io_open_w)
                              ;* Regs affected : All
                              ;****************************************
 c59c :                       io_close
-c59c : 6c560c           [ 6] 	jmp (io_block+io_close_f)
+c59c : 6c590c           [ 6] 	jmp (io_block+io_close_f)
                              	
                              ;****************************************
                              ;* io_delete
@@ -1738,7 +1740,7 @@ c59c : 6c560c           [ 6] 	jmp (io_block+io_close_f)
                              ;* Regs affected : All
                              ;****************************************
 c59f :                       io_delete
-c59f : 6c580c           [ 6] 	jmp (io_block+io_del_f)
+c59f : 6c5b0c           [ 6] 	jmp (io_block+io_del_f)
                              	
                              ;****************************************
                              ;* io_read_line
@@ -1751,11 +1753,11 @@ c59f : 6c580c           [ 6] 	jmp (io_block+io_del_f)
                              ;****************************************
 c5a2 :                       io_read_line
 c5a2 : 863b             [ 3] 	stx buf_adr			; Save pointer to storage
-c5a4 : 853c             [ 3] 	sta buf_adr+1
-c5a6 : 843d             [ 3] 	sty buf_sz			; Max length
 AS65 Assembler for R6502 [1.42].                                     Page   28
 ---------------------------------- bank3.s -----------------------------------
 
+c5a4 : 853c             [ 3] 	sta buf_adr+1
+c5a6 : 843d             [ 3] 	sty buf_sz			; Max length
 c5a8 : 08               [ 3] 	php					; Save echo state
 c5a9 : a000             [ 2] 	ldy #0x00			; Starting at first byte
 c5ab :                       io_get_line_byte
@@ -1816,11 +1818,11 @@ c5ed : d0f6             [ 3] 	bne io_print_line_byte		; Carry on until zero fo
 c5ef :                       io_print_done
 c5ef : 68               [ 4] 	pla
 c5f0 : 60               [ 6] 	rts
-                             
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   29
 ---------------------------------- bank3.s -----------------------------------
 
+                             
+                             
                              ;*** Null operation just clc and return ***
 c5f1 :                       io_null_op
 c5f1 : 18               [ 2] 	clc
@@ -1881,11 +1883,11 @@ c623 :                       mod_sz_io_e
                              ;*	OS vectored access to VDP routines for M/C fro
                              ;*
                              ;************************************************
-                             
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page   30
 ---------------------------------- bank3.s -----------------------------------
 
+                             
+                             ;****************************************
                              ;* vdp_wr_reg
                              ;* Write to Register A the value X
                              ;* Input : A - Register Number, X - Data
@@ -1946,11 +1948,11 @@ c647 : 60               [ 6] 	rts								; 6
                              	
                              ;****************************************
                              ;* vdp_rd_addr
-                             ;* Set read address 
-                             ;* Input : A - high, X - low 
 AS65 Assembler for R6502 [1.42].                                     Page   31
 ---------------------------------- bank3.s -----------------------------------
 
+                             ;* Set read address 
+                             ;* Input : A - high, X - low 
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
@@ -2011,11 +2013,11 @@ c669 : 60               [ 6] 	rts
                              ;*		   X = Low Address
                              ;*		   A = High Address
                              ;* Output : A = byte read
-                             ;* Regs affected : None
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page   32
 ---------------------------------- bank3.s -----------------------------------
 
+                             ;* Regs affected : None
+                             ;****************************************
 c66a :                       vdp_peek
 c66a : 08               [ 3] 	php
 c66b : 78               [ 2] 	sei
@@ -2076,11 +2078,11 @@ c69a : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* snd_get
-                             ;* Get AY register X to Y
-                             ;* Input : X = Reg no
 AS65 Assembler for R6502 [1.42].                                     Page   33
 ---------------------------------- bank3.s -----------------------------------
 
+                             ;* Get AY register X to Y
+                             ;* Input : X = Reg no
                              ;* Output : Y = Value
                              ;* Regs affected : None
                              ;****************************************
@@ -2141,11 +2143,11 @@ c6df : 68               [ 4] 	pla
 c6e0 : 68               [ 4] 	pla
 c6e1 : 60               [ 6] 	rts
                              
-                             	include "kernel\main.s"
-                             ;************************************************
 AS65 Assembler for R6502 [1.42].                                     Page   34
 ---------------------------------- bank3.s -----------------------------------
 
+                             	include "kernel\main.s"
+                             ;************************************************
                              ;*
                              ;*	BBC-128 HOMEBREW COMPUTER
                              ;*	Hardware and software design by @6502Nerd (Dol
@@ -2175,7 +2177,7 @@ c6e8 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
-c6e8 : 4275696c64203a..       db "Build : 04-05-2026\r"
+c6e8 : 4275696c64203a..       db "Build : 19-09-2026\r"
 c6fb : 3132384b204272..       db "128K Breadboard Computer\r"
 c714 : 42792040363530..       db "By @6502Nerd\r"
 c721 : 436f7079726967..       db "Copyright (c) 2025\r",0
@@ -2206,11 +2208,11 @@ c735 :                       init_nmi
                              	; Core IRQ handler
 c735 : a94a             [ 2] 	lda #lo(nmi)
 c737 : 8d000c           [ 4] 	sta int_nmi
-c73a : a9c7             [ 2] 	lda #hi(nmi)
-c73c : 8d010c           [ 4] 	sta int_nmi+1
 AS65 Assembler for R6502 [1.42].                                     Page   35
 ---------------------------------- bank3.s -----------------------------------
 
+c73a : a9c7             [ 2] 	lda #hi(nmi)
+c73c : 8d010c           [ 4] 	sta int_nmi+1
                              
 c73f : a997             [ 2] 	lda #lo(null_handler)
 c741 : 8d0a0c           [ 4] 	sta int_usercia1
@@ -2271,11 +2273,11 @@ c77e : 8d080c           [ 4] 	sta int_usercia0
 c781 : a9c7             [ 2] 	lda #hi(null_handler)
 c783 : 8d090c           [ 4] 	sta int_usercia0+1
                              
-c786 : 60               [ 6] 	rts
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   36
 ---------------------------------- bank3.s -----------------------------------
 
+c786 : 60               [ 6] 	rts
+                             
                              ;* Calls the master IRQ handler
 c787 :                       call_irq_master
 c787 : 6c020c           [ 6] 	jmp (int_irq)
@@ -2336,11 +2338,11 @@ c7b6 : 8d0004           [ 4] 	sta IO_0+PRB
                              	; Switch out ROM for RAM
 c7b9 : ad8004           [ 4] 	lda IO_1+PRB                    ; Get current RO
 c7bc : 48               [ 3] 	pha
-c7bd : 29df             [ 2] 	and #(0xff ^ MM_DIS)            ; Switch off ROM
-c7bf : 8d8004           [ 4] 	sta IO_1+PRB                    ; Update port to
 AS65 Assembler for R6502 [1.42].                                     Page   37
 ---------------------------------- bank3.s -----------------------------------
 
+c7bd : 29df             [ 2] 	and #(0xff ^ MM_DIS)            ; Switch off ROM
+c7bf : 8d8004           [ 4] 	sta IO_1+PRB                    ; Update port to
 c7c2 : ee4c0c           [ 6] 	inc pt3_int 				  	; Set PT3 interrupt flag
 c7c5 : 2093c7           [ 6] 	jsr call_irq_usercia1			; Call user cia1 handler
                              	; Restore ROM
@@ -2401,11 +2403,11 @@ c812 : 0980             [ 2]     ora #%10000000          ; 10 = bank 1
 c814 : 8d0004           [ 4]     sta IO_0+PRB
                              
                              	_pullAXY
-                             
-                             	; Save the registers in temp area
 AS65 Assembler for R6502 [1.42].                                     Page   38
 ---------------------------------- bank3.s -----------------------------------
 
+                             
+                             	; Save the registers in temp area
 c81a : 8579             [ 3] 	sta num_a
 c81c : 867a             [ 3] 	stx num_a+1
 c81e : 847b             [ 3] 	sty num_a+2
@@ -2466,11 +2468,11 @@ c85e : a521             [ 3] 	lda gr_scrngeom+gr_cur_ptr+1
 c860 : 6900             [ 2] 	adc #0
                              
 c862 : 2030c6           [ 6] 	jsr vdp_wr_addr
-                             	
-c865 : a507             [ 3] 	lda vdp_curstat
 AS65 Assembler for R6502 [1.42].                                     Page   39
 ---------------------------------- bank3.s -----------------------------------
 
+                             	
+c865 : a507             [ 3] 	lda vdp_curstat
 c867 : 2980             [ 2] 	and #0x80
 c869 : 4508             [ 3] 	eor vdp_curval		; EOR top bit with what is under
 c86b : 2058c6           [ 6] 	jsr vdp_wr_vram
@@ -2531,11 +2533,11 @@ c886 : a000             [ 2] 	ldy #0x00
 c888 :                       long_delay_1
 c888 : ea               [ 2] 	nop
 c889 : ea               [ 2] 	nop
-c88a : ea               [ 2] 	nop
-c88b : ea               [ 2] 	nop
 AS65 Assembler for R6502 [1.42].                                     Page   40
 ---------------------------------- bank3.s -----------------------------------
 
+c88a : ea               [ 2] 	nop
+c88b : ea               [ 2] 	nop
 c88c : 88               [ 2] 	dey
 c88d : d0f9             [ 3] 	bne long_delay_1
 c88f : ca               [ 2] 	dex
@@ -2596,11 +2598,11 @@ c8b8 : 68               [ 4] 	pla
 c8b9 : aa               [ 2] 	tax
 c8ba : 68               [ 4] 	pla
 c8bb : 60               [ 6] 	rts
-                             
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page   41
 ---------------------------------- bank3.s -----------------------------------
 
+                             
+                             ;****************************************
                              ;* util_clr_mem
                              ;* Clear a block of main ram
                              ;* Input : X, A = Block start, Y = Block size
@@ -2661,11 +2663,11 @@ c8e8 : 60               [ 6] 	rts					; A high nibble
                              ;****************************************
 c8e9 :                       str_x_to_a
 c8e9 : 0920             [ 2] 	ora #0x20			; Make alpha in to lower case
-c8eb : 38               [ 2] 	sec					; Process high char in A
-c8ec : e930             [ 2] 	sbc #'0'			; Convert to hex nibble
 AS65 Assembler for R6502 [1.42].                                     Page   42
 ---------------------------------- bank3.s -----------------------------------
 
+c8eb : 38               [ 2] 	sec					; Process high char in A
+c8ec : e930             [ 2] 	sbc #'0'			; Convert to hex nibble
 c8ee : c90a             [ 2] 	cmp #10				; If A < 10 then
 c8f0 : 9002             [ 3] 	bcc skip_x_f_1		; skip a-f adjustment
 c8f2 : e927             [ 2] 	sbc #0x27			; Sub 7 to get in to A-F range
@@ -2726,11 +2728,11 @@ c929 : 88               [ 2] 	dey
 c92a : d003             [ 3] 	bne con_n_not_hex
 c92c :                       con_hex_jmp
 c92c : 4c51c9           [ 3] 	jmp con_hex_to_a_int
-c92f :                       con_n_not_hex
-c92f : 88               [ 2] 	dey
 AS65 Assembler for R6502 [1.42].                                     Page   43
 ---------------------------------- bank3.s -----------------------------------
 
+c92f :                       con_n_not_hex
+c92f : 88               [ 2] 	dey
 c930 : d003             [ 3] 	bne con_n_err
 c932 :                       con_bin_jmp
 c932 : 4c90c9           [ 3] 	jmp con_bin_to_a_int
@@ -2791,11 +2793,11 @@ c97a : 8579             [ 3] 	sta num_a
 c97c : c8               [ 2] 	iny
 c97d : ca               [ 2] 	dex
 c97e : d0d5             [ 3] 	bne con_hex_digit
-                             	; if got to a 5th digit then error
-c980 :                       con_hex_err
 AS65 Assembler for R6502 [1.42].                                     Page   44
 ---------------------------------- bank3.s -----------------------------------
 
+                             	; if got to a 5th digit then error
+c980 :                       con_hex_err
 c980 : 38               [ 2] 	sec
 c981 : 60               [ 6] 	rts
                              	; found a non-hex digit
@@ -2856,11 +2858,11 @@ c9b5 : 60               [ 6] 	rts
                              ;****************************************
                              ;* con_d_to_a
                              ;* Convert decimal string to accumulator (SIGNED)
-                             ;* Input : Pointer to string (X=L, A=H)
-                             ;* Output : num_a, num_a+1 contains word, X=numbe
 AS65 Assembler for R6502 [1.42].                                     Page   45
 ---------------------------------- bank3.s -----------------------------------
 
+                             ;* Input : Pointer to string (X=L, A=H)
+                             ;* Output : num_a, num_a+1 contains word, X=numbe
                              ;* Regs affected : CS = Error
                              ;****************************************
 c9b6 :                       con_dec_to_a
@@ -2921,11 +2923,11 @@ c9ff : 6914             [ 2] 	adc #20
 ca01 : 8587             [ 3] 	sta num_tmp+2
 ca03 : 80d7             [ 4] 	bra str_d_process_digit
 ca05 :                       str_d_digits_done
-                             	; check if minus
-ca05 : b285             [ 5] 	lda (num_tmp)
 AS65 Assembler for R6502 [1.42].                                     Page   46
 ---------------------------------- bank3.s -----------------------------------
 
+                             	; check if minus
+ca05 : b285             [ 5] 	lda (num_tmp)
 ca07 : c92d             [ 2] 	cmp #'-'
 ca09 : d011             [ 3] 	bne str_d_skip_neg
 ca0b : a688             [ 3] 	ldx num_tmp+3		; Must have >= 2 chars
@@ -2986,11 +2988,11 @@ ca98 : 60               [ 6] 	rts
 ca99 :                       int_to_bcd
 ca99 : 08               [ 3] 	php
 ca9a : 48               [ 3] 	pha
-ca9b : da               [ 3] 	phx
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   47
 ---------------------------------- bank3.s -----------------------------------
 
+ca9b : da               [ 3] 	phx
+                             
 ca9c : 8685             [ 3] 	stx num_tmp
 ca9e : 8586             [ 3] 	sta num_tmp+1
 caa0 : c980             [ 2] 	cmp #0x80			; Negative?
@@ -3051,11 +3053,11 @@ cae7 : 6579             [ 3] 	adc num_a
 cae9 : 8579             [ 3] 	sta num_a
 caeb : a57a             [ 3] 	lda num_a+1
 caed : 657a             [ 3] 	adc num_a+1
-caef : 857a             [ 3] 	sta num_a+1
-caf1 : a57b             [ 3] 	lda num_a+2
 AS65 Assembler for R6502 [1.42].                                     Page   48
 ---------------------------------- bank3.s -----------------------------------
 
+caef : 857a             [ 3] 	sta num_a+1
+caf1 : a57b             [ 3] 	lda num_a+2
 caf3 : 657b             [ 3] 	adc num_a+2
 caf5 : 857b             [ 3] 	sta num_a+2
 caf7 : ca               [ 2] 	dex
@@ -3116,11 +3118,11 @@ cb2c :                       int_str
 cb2c : 28               [ 4] 	plp							; Get C but immediately
 cb2d : 08               [ 3] 	php							; Save C (due to loop check later)
 cb2e : b579             [ 4] 	lda num_a,x					; Get BCD digit
-cb30 : 8590             [ 3] 	sta num_buf+7				; Save A it for the units later
-cb32 : 4a               [ 2] 	lsr a						; Tens - shift to lower nibble
 AS65 Assembler for R6502 [1.42].                                     Page   49
 ---------------------------------- bank3.s -----------------------------------
 
+cb30 : 8590             [ 3] 	sta num_buf+7				; Save A it for the units later
+cb32 : 4a               [ 2] 	lsr a						; Tens - shift to lower nibble
 cb33 : 4a               [ 2] 	lsr a
 cb34 : 4a               [ 2] 	lsr a
 cb35 : 4a               [ 2] 	lsr a
@@ -3181,11 +3183,11 @@ cb54 : 60               [ 6] 	rts
                              ;	dex
                              ;	iny
                              ;	cpy #3						; 3 BCD digits max
-                             ;	bne bcd_str
-                             ;
 AS65 Assembler for R6502 [1.42].                                     Page   50
 ---------------------------------- bank3.s -----------------------------------
 
+                             ;	bne bcd_str
+                             ;
                              ;	ply
                              ;	plx
                              ;	pla
@@ -3246,11 +3248,11 @@ cb54 : 60               [ 6] 	rts
                              ;* Output is big endian, input is not
                              ;* Regs affected : P
                              ;****************************************
-cb55 :                       str_a_to_d
-cb55 : 60               [ 6] 	rts
 AS65 Assembler for R6502 [1.42].                                     Page   51
 ---------------------------------- bank3.s -----------------------------------
 
+cb55 :                       str_a_to_d
+cb55 : 60               [ 6] 	rts
                              	
                              ;****************************************
                              ;* print_a_to_d
@@ -3311,11 +3313,11 @@ cb98 : aa               [ 2] 	tax					; Save the mode temporarily
 cb99 : 68               [ 4] 	pla					; Get the default mode from stack
 cb9a : 8a               [ 2] 	txa					; And push the NV mode that was read
 cb9b : 48               [ 3] 	pha
-cb9c : a20f             [ 2] 	ldx #NV_COLOUR		; NV location for the default co
-cb9e : 2069c4           [ 6] 	jsr _rtc_nvread		; Try to read location (assumed
 AS65 Assembler for R6502 [1.42].                                     Page   52
 ---------------------------------- bank3.s -----------------------------------
 
+cb9c : a20f             [ 2] 	ldx #NV_COLOUR		; NV location for the default co
+cb9e : 2069c4           [ 6] 	jsr _rtc_nvread		; Try to read location (assumed
 cba1 : 8515             [ 3] 	sta vdp_base+vdp_bord_col	; Save it to the borde
 cba3 :                       kernel_skip_nv	
 cba3 : 68               [ 4] 	pla					; Get the mode (either default or the NV
@@ -3376,11 +3378,11 @@ cbf1 : 60               [ 6] 	rts
                              ;	101,x = disable ROM value
                              ;	102,x = original ROM value
                              ;	103,x = new RAM bank select value
-                             ;	104,x = original RAM bank select value
-                             ; tmp_a = address to poke to
 AS65 Assembler for R6502 [1.42].                                     Page   53
 ---------------------------------- bank3.s -----------------------------------
 
+                             ;	104,x = original RAM bank select value
+                             ; tmp_a = address to poke to
 cbf2 :                       ram_code_s
 cbf2 : 08               [ 3] 	php							; Save processor status
 cbf3 : 78               [ 2] 	sei							; Disable VDP interrupts
@@ -3441,11 +3443,11 @@ cc17 :                       mod_sz_kernel_e
                              ;                   - optimizations: zp variables
                              ;                   => file_end = $9027
                              ;
-                             ; --------------------------------
-                             ; WK: working / TS: test version |
 AS65 Assembler for R6502 [1.42].                                     Page   54
 ---------------------------------- bank3.s -----------------------------------
 
+                             ; --------------------------------
+                             ; WK: working / TS: test version |
                              ; ===============================================
                              ; TODO:
                              ; - lda ($AC),y -> lda ($AC,x)
@@ -3506,11 +3508,11 @@ cc17 :                       PT3START
 cc17 : 4c66cc           [ 3]         jmp _doStart
 cc1a :                       PT3PAUSE
 cc1a : 4c4ccc           [ 3]         jmp _doPause
-cc1d :                       PT3RESUME
-cc1d : 4c60cc           [ 3]         jmp _doResume
 AS65 Assembler for R6502 [1.42].                                     Page   55
 ---------------------------------- bank3.s -----------------------------------
 
+cc1d :                       PT3RESUME
+cc1d : 4c60cc           [ 3]         jmp _doResume
                              
                              ; We need to copy all this code to shadow RAM beh
                              ; Also ensure we're in **Bank 2** (not Bank 3) of
@@ -3571,11 +3573,11 @@ cc5f : 60               [ 6]         rts
                              ; Reinstate the PT3 IRQ
 cc60 :                       _doResume
                                      ; Enable T1 interrupt on VIA 1
-cc60 : a9c0             [ 2]         lda #0b11000000
-cc62 : 8d8e04           [ 4]         sta IO_1+IER
 AS65 Assembler for R6502 [1.42].                                     Page   56
 ---------------------------------- bank3.s -----------------------------------
 
+cc60 : a9c0             [ 2]         lda #0b11000000
+cc62 : 8d8e04           [ 4]         sta IO_1+IER
 cc65 : 60               [ 6]         rts
                              
                              
@@ -3636,11 +3638,11 @@ ccaf : a9c0             [ 2]         lda #0b11000000
 ccb1 : 8d8e04           [ 4]         sta IO_1+IER
                              ;_doStart_test
                                      ; Restore ROM
-ccb4 : 68               [ 4]         pla                             ; Get ori
-ccb5 : 8d8004           [ 4]         sta IO_1+PRB                    ; Update 
 AS65 Assembler for R6502 [1.42].                                     Page   57
 ---------------------------------- bank3.s -----------------------------------
 
+ccb4 : 68               [ 4]         pla                             ; Get ori
+ccb5 : 8d8004           [ 4]         sta IO_1+PRB                    ; Update 
                                      ; Restore RAM bank
 ccb8 : 68               [ 4]         pla                             ; Get ori
 ccb9 : 8d0004           [ 4]         sta IO_0+PRB                    ; Update 
@@ -3678,18 +3680,18 @@ ccee : d001             [ 3]         bne s1
 ccf0 : 60               [ 6] 	rts
 ccf1 : 68               [ 4] s1	pla                                           
 ccf2 : 68               [ 4]         pla       ; dépile 2 fois puisque rts sh
-ccf3 : ee55da           [ 6] 	inc DelyCnt                                     
-ccf6 : ee19da           [ 6]         inc ANtSkCn                              
+ccf3 : ee61da           [ 6] 	inc DelyCnt                                     
+ccf6 : ee25da           [ 6]         inc ANtSkCn                              
 ccf9 :                       _MUTE	                                           
 ccf9 : a94f             [ 2]         lda #0x4f         ; Set Port A=output, Po
-ccfb : 8d62da           [ 4]         sta AYREGS+Mixer  ; This is the daddy - s
+ccfb : 8d6eda           [ 4]         sta AYREGS+Mixer  ; This is the daddy - s
 ccfe : a900             [ 2]         lda #00                                  
 cd00 : 85f4             [ 3]         sta z80_H                                
 cd02 : 85f3             [ 3] 	sta z80_L                                       
                              ;	sta AYREGS+AmplA                               
                              ;	sta AYREGS+AmplB                               
                              ;       sta AYREGS+AmplC
-cd04 : 4c59d8           [ 3] 	jmp ROUT                                        
+cd04 : 4c65d8           [ 3] 	jmp ROUT                                        
                              
 cd07 :                       INIT
 cd07 : a5f3             [ 3] 	lda z80_L                                       
@@ -3701,11 +3703,11 @@ cd12 : a5f4             [ 3]         lda z80_H
 cd14 : 8d18d0           [ 4]         sta MODADDR+7
 cd17 : 8d5bd3           [ 4]         sta MDADDR2+7
 cd1a : 85f6             [ 3]         sta z80_IX+1
-cd1c : 48               [ 3]         pha
-cd1d : a964             [ 2]         lda #lo(100)                             
 AS65 Assembler for R6502 [1.42].                                     Page   58
 ---------------------------------- bank3.s -----------------------------------
 
+cd1c : 48               [ 3]         pha
+cd1d : a964             [ 2]         lda #lo(100)                             
 cd1f : 85f1             [ 3]         sta z80_E
 cd21 : a900             [ 2]         lda #00
 cd23 : 85f2             [ 3]         sta z80_D
@@ -3766,15 +3768,15 @@ cd90 : 8d4bd3           [ 4]         sta OrnPtrs+8
 cd93 : a969             [ 2]         lda #lo(105)                             
 cd95 : 18               [ 2]         clc                                      
 cd96 : 65f1             [ 3]         adc z80_E
-cd98 : 8d01d0           [ 4]         sta SamPtrs+1
-cd9b : a900             [ 2]         lda #00
 AS65 Assembler for R6502 [1.42].                                     Page   59
 ---------------------------------- bank3.s -----------------------------------
 
+cd98 : 8d01d0           [ 4]         sta SamPtrs+1
+cd9b : a900             [ 2]         lda #00
                                      ;INIT zeroes from VARS to VAR0END-1 (area
 cd9d : a06c             [ 2]         ldy #(VAR0END-VARS-1)
 cd9f :                       LOOP_LDIR 
-cd9f : 99fed9           [ 5]         sta VARS,y
+cd9f : 990ada           [ 5]         sta VARS,y
 cda2 : 88               [ 2]         dey         ; (carry not modified)
 cda3 : 10fa             [ 3]         bpl LOOP_LDIR
                                      ; A = #00  
@@ -3784,37 +3786,37 @@ cdaa : a5ed             [ 3]         lda SETUP
 cdac : 297f             [ 2]         and #%01111111
 cdae : 85ed             [ 3]         sta SETUP
                                      
-cdb0 : a99c             [ 2] 	lda #lo(T1_)
+cdb0 : a9a8             [ 2] 	lda #lo(T1_)
 cdb2 : 85f1             [ 3]         sta z80_E
 cdb4 : a9d9             [ 2]         lda #hi(T1_)
 cdb6 : 85f2             [ 3]         sta z80_D
 cdb8 : a901             [ 2]         lda #$01                                 
-cdba : 8d55da           [ 4] 	sta DelyCnt                                     
-cdbd : 8d19da           [ 4]         sta ANtSkCn
-cdc0 : 8d36da           [ 4]         sta BNtSkCn
-cdc3 : 8d53da           [ 4]         sta CNtSkCn
+cdba : 8d61da           [ 4] 	sta DelyCnt                                     
+cdbd : 8d25da           [ 4]         sta ANtSkCn
+cdc0 : 8d42da           [ 4]         sta BNtSkCn
+cdc3 : 8d5fda           [ 4]         sta CNtSkCn
 cdc6 : a9f0             [ 2]         lda #$F0
-cdc8 : 8d1ada           [ 4] 	sta AVolume                                     
-cdcb : 8d37da           [ 4] 	sta BVolume                                     
-cdce : 8d54da           [ 4] 	sta CVolume                                     
-cdd1 : a998             [ 2]         lda #lo(EMPTYSAMORN)                     
+cdc8 : 8d26da           [ 4] 	sta AVolume                                     
+cdcb : 8d43da           [ 4] 	sta BVolume                                     
+cdce : 8d60da           [ 4] 	sta CVolume                                     
+cdd1 : a9a4             [ 2]         lda #lo(EMPTYSAMORN)                     
 cdd3 : 85f3             [ 3]         sta z80_L
 cdd5 : 8d86d6           [ 4]         sta AdInPtA+1
-cdd8 : 8d0bda           [ 4]         sta AOrnPtr
-cddb : 8d28da           [ 4]         sta BOrnPtr
-cdde : 8d45da           [ 4]         sta COrnPtr
-cde1 : 8d0dda           [ 4]         sta ASamPtr
-cde4 : 8d2ada           [ 4]         sta BSamPtr
-cde7 : 8d47da           [ 4]         sta CSamPtr
+cdd8 : 8d17da           [ 4]         sta AOrnPtr
+cddb : 8d34da           [ 4]         sta BOrnPtr
+cdde : 8d51da           [ 4]         sta COrnPtr
+cde1 : 8d19da           [ 4]         sta ASamPtr
+cde4 : 8d36da           [ 4]         sta BSamPtr
+cde7 : 8d53da           [ 4]         sta CSamPtr
 cdea : a9d9             [ 2]         lda #hi(EMPTYSAMORN)
 cdec : 85f4             [ 3]         sta z80_H
 cdee : 8d8ad6           [ 4] 	sta AdInPtA+5                                   
-cdf1 : 8d0cda           [ 4] 	sta AOrnPtr+1                                   
-cdf4 : 8d29da           [ 4] 	sta BOrnPtr+1                                   
-cdf7 : 8d46da           [ 4] 	sta COrnPtr+1                                   
-cdfa : 8d0eda           [ 4] 	sta ASamPtr+1                                   
-cdfd : 8d2bda           [ 4] 	sta BSamPtr+1                                   
-ce00 : 8d48da           [ 4] 	sta CSamPtr+1                                   
+cdf1 : 8d18da           [ 4] 	sta AOrnPtr+1                                   
+cdf4 : 8d35da           [ 4] 	sta BOrnPtr+1                                   
+cdf7 : 8d52da           [ 4] 	sta COrnPtr+1                                   
+cdfa : 8d1ada           [ 4] 	sta ASamPtr+1                                   
+cdfd : 8d37da           [ 4] 	sta BSamPtr+1                                   
+ce00 : 8d54da           [ 4] 	sta CSamPtr+1                                   
                              	    			                                         
                                      
 ce03 : a00d             [ 2] 	ldy #13                    
@@ -3831,11 +3833,11 @@ ce12 : 8db9d1           [ 4]         sta Version+1
 ce15 : 48               [ 3] 	pha             ; save version nb
 ce16 : c904             [ 2]         cmp #4          ; version 4 ?            
 ce18 : 9003             [ 3]         bcc s7b         ; < 4 (inverse carry)
-ce1a : 18               [ 2]         clc
-ce1b : 9001             [ 3]         bcc s8b         ; always
 AS65 Assembler for R6502 [1.42].                                     Page   60
 ---------------------------------- bank3.s -----------------------------------
 
+ce1a : 18               [ 2]         clc
+ce1b : 9001             [ 3]         bcc s8b         ; always
 ce1d : 38               [ 2] s7b     sec
 ce1e : a063             [ 2] s8b     ldy #99                 
 ce20 : b1f5             [ 5]         lda (z80_IX),y  
@@ -3846,7 +3848,7 @@ ce25 : aa               [ 2]         tax             ; save A
                              ;A - NoteTableNumber*2+VersionForNoteTable
                              ;(xx1b - 3.xx..3.4r, xx0b - 3.4x..3.6x..VTII1.0)
                              
-ce26 : a948             [ 2]      	lda #lo(NT_DATA)											    
+ce26 : a954             [ 2]      	lda #lo(NT_DATA)											    
 ce28 : 85f3             [ 3]      	sta z80_L
 ce2a : a9d9             [ 2]      	lda #hi(NT_DATA)
 ce2c : 85f4             [ 3]      	sta z80_H
@@ -3896,11 +3898,11 @@ ce7c : 85f4             [ 3]     	sta z80_H
                              
 ce7e : b1f1             [ 5] 	lda (z80_E),y												
 ce80 : 18               [ 2] 	clc                                             
-ce81 : 6958             [ 2]         adc #lo(T_)
-ce83 : 85ef             [ 3] 	sta z80_C
 AS65 Assembler for R6502 [1.42].                                     Page   61
 ---------------------------------- bank3.s -----------------------------------
 
+ce81 : 6964             [ 2]         adc #lo(T_)
+ce83 : 85ef             [ 3] 	sta z80_C
 ce85 : 48               [ 3]         pha                                      
 ce86 : 69d9             [ 2]         adc #hi(T_)                              
 ce88 : 38               [ 2] 	sec                                             
@@ -3908,7 +3910,7 @@ ce89 : e5ef             [ 3]         sbc z80_C
 ce8b : 85f0             [ 3]         sta z80_B                                
 ce8d : 48               [ 3] 	pha
                              
-ce8e : a95b             [ 2] 	lda #lo(NT_)											
+ce8e : a967             [ 2] 	lda #lo(NT_)											
 ce90 : 85f1             [ 3] 	sta z80_E
 ce92 : 48               [ 3] 	pha															
 ce93 : a9db             [ 2] 	lda #hi(NT_)
@@ -3961,11 +3963,11 @@ cedb : e6f4             [ 5]         inc z80_H
 cedd :                       sd      
 cedd : a5f0             [ 3]         lda z80_B													
 cedf : 6900             [ 2] 	adc #00 													
-cee1 : 91f3             [ 5] 	sta (z80_L),y												
-cee3 : 18               [ 2] 	clc                                             
 AS65 Assembler for R6502 [1.42].                                     Page   62
 ---------------------------------- bank3.s -----------------------------------
 
+cee1 : 91f3             [ 5] 	sta (z80_L),y												
+cee3 : 18               [ 2] 	clc                                             
 cee4 : a5f1             [ 3]         lda z80_E
 cee6 : 65f3             [ 3]         adc z80_L
 cee8 : 85f3             [ 3]         sta z80_L
@@ -4009,10 +4011,10 @@ cf20 : 85f2             [ 3] 	sta z80_D
 cf22 : 68               [ 4] 	pla
 cf23 : 85f1             [ 3] 	sta z80_E
                                      								
-cf25 : c964             [ 2] 	cmp #lo(TCOLD_1)		        								
+cf25 : c970             [ 2] 	cmp #lo(TCOLD_1)		        								
 cf27 : d005             [ 3]         bne CORR_1													
 cf29 : a9fd             [ 2] 	lda #$FD													
-cf2b : 8d89db           [ 4] 	sta NT_+$2E									 				
+cf2b : 8d95db           [ 4] 	sta NT_+$2E									 				
                              
 cf2e :                       CORR_1	
 cf2e : 18               [ 2]         clc                                      
@@ -4026,11 +4028,11 @@ cf38 : 18               [ 2] 	clc
 cf39 : 65f3             [ 3]         adc z80_L
 cf3b : 85f3             [ 3]         sta z80_L
 cf3d : a5f0             [ 3]         lda z80_B
-cf3f : 65f4             [ 3]         adc z80_H
-cf41 : 85f4             [ 3]         sta z80_H                                
 AS65 Assembler for R6502 [1.42].                                     Page   63
 ---------------------------------- bank3.s -----------------------------------
 
+cf3f : 65f4             [ 3]         adc z80_H
+cf41 : 85f4             [ 3]         sta z80_H                                
 cf43 : 28               [ 4] 	plp             ; restore carry (du ror)	       
 cf44 : 9007             [ 3] 	bcc CORR_2                                      
 cf46 : b1f3             [ 5] 	lda (z80_L),y												
@@ -4078,7 +4080,7 @@ cf81 : 85f1             [ 3] 	sta z80_E
 cf83 : a9ea             [ 2] 	lda #$EA	; ($EA = NOP)			    					
 cf85 :                       M1          
 cf85 : 8daccf           [ 4]         sta M2														
-cf88 : a96b             [ 2] 	lda #lo(VT_+16)												
+cf88 : a977             [ 2] 	lda #lo(VT_+16)												
 cf8a : 85f5             [ 3] 	sta z80_IX
 cf8c : a9da             [ 2] 	lda #hi(VT_+16)
 cf8e : 85f6             [ 3] 	sta z80_IX+1
@@ -4091,11 +4093,11 @@ cf95 : a5f3             [ 3]         lda z80_L
 cf97 : 48               [ 3] 	pha
 cf98 : 65f1             [ 3]         adc z80_E
 cf9a : 85f1             [ 3]         sta z80_E
-cf9c : a5f4             [ 3] 	lda z80_H
-cf9e : 48               [ 3] 	pha
 AS65 Assembler for R6502 [1.42].                                     Page   64
 ---------------------------------- bank3.s -----------------------------------
 
+cf9c : a5f4             [ 3] 	lda z80_H
+cf9e : 48               [ 3] 	pha
 cf9f : 65f2             [ 3]         adc z80_D
 cfa1 : 85f2             [ 3]         sta z80_D
                              	    
@@ -4140,7 +4142,7 @@ cfdd : 18               [ 2]         clc
 cfde : a5ef             [ 3]         lda z80_C																								
 cfe0 : d0b2             [ 3] 	bne	INITV2													
                              
-cfe2 : 4c59d8           [ 3] 	jmp ROUT													
+cfe2 : 4c65d8           [ 3] 	jmp ROUT													
                              ; ===============================================
                              ; Pattern Decoder
 cfe5 :                       PD_OrSm	
@@ -4156,11 +4158,11 @@ cff6 : e6f0             [ 5]         inc z80_B
 cff8 :                       sj     
 cff8 : 4a               [ 2] 	lsr a 													    
 cff9 : 9002             [ 3]         bcc sj1
-cffb : 0980             [ 2]         ora #$80
-cffd :                       sj1     
 AS65 Assembler for R6502 [1.42].                                     Page   65
 ---------------------------------- bank3.s -----------------------------------
 
+cffb : 0980             [ 2]         ora #$80
+cffd :                       sj1     
 cffd :                       PD_SAM	
 cffd : 0a               [ 2]         asl a 											    		
 cffe :                       PD_SAM_	
@@ -4221,11 +4223,11 @@ d04d : e6ef             [ 5] 	inc z80_C
 d04f : d002             [ 3]         bne sl
 d051 : e6f0             [ 5]         inc z80_B
 d053 :                       sl     
-d053 : a011             [ 2] 	ldy #NNtSkp    		        								
-d055 : 91f5             [ 5] 	sta (z80_IX),y
 AS65 Assembler for R6502 [1.42].                                     Page   66
 ---------------------------------- bank3.s -----------------------------------
 
+d053 : a011             [ 2] 	ldy #NNtSkp    		        								
+d055 : 91f5             [ 5] 	sta (z80_IX),y
 d057 : 4c9ad0           [ 3]         jmp PD_LP2													
                              
 d05a :                       PD_ENV	
@@ -4286,11 +4288,11 @@ d0b5 : 9003             [ 3] so11	bcc so2
 d0b7 : 4cfdcf           [ 3]         jmp PD_SAM
 d0ba : 6910             [ 2] so2	adc #$10                                     
 d0bc : f04b             [ 4] 	beq PD_REL													
-d0be : 9003             [ 3] 	bcc so3 													
-d0c0 : 4c24d0           [ 3]         jmp PD_VOL
 AS65 Assembler for R6502 [1.42].                                     Page   67
 ---------------------------------- bank3.s -----------------------------------
 
+d0be : 9003             [ 3] 	bcc so3 													
+d0c0 : 4c24d0           [ 3]         jmp PD_VOL
 d0c3 : 6910             [ 2] so3	adc #$10                                     
 d0c5 : d003             [ 3] 	bne so4										    			
 d0c7 : 4c37d0           [ 3]         jmp PD_EOff
@@ -4326,7 +4328,7 @@ d0ff : 48               [ 3] 	pha             ; push E
 d100 : 4c96d0           [ 3] 	jmp PD_LOOP													
                              
 d103 :                       PD_NOIS									
-d103 : 8d59da           [ 4]         sta Ns_Base                              
+d103 : 8d65da           [ 4]         sta Ns_Base                              
 d106 : 4c9ad0           [ 3] 	jmp PD_LP2													
                              
 d109 :                       PD_REL	
@@ -4351,11 +4353,11 @@ d124 : 85f4             [ 3] 	sta z80_H
 d126 : a00b             [ 2] 	ldy #11
 d128 :                       bres
 d128 : 91f5             [ 5] 	sta (z80_IX),y          
-d12a : 88               [ 2] 	dey
-d12b : 10fb             [ 3]         bpl bres
 AS65 Assembler for R6502 [1.42].                                     Page   68
 ---------------------------------- bank3.s -----------------------------------
 
+d12a : 88               [ 2] 	dey
+d12b : 10fb             [ 3]         bpl bres
 d12d :                       PD_FIN	
 d12d : a011             [ 2] 	ldy #NNtSkp     						    				
 d12f : b1f5             [ 5] 	lda (z80_IX),y
@@ -4382,7 +4384,7 @@ d14f : 85ef             [ 3]         sta z80_C
 d151 : 9002             [ 3]         bcc st
 d153 : e6f0             [ 5]         inc z80_B
 d155 :                       st     
-d155 : a95b             [ 2] 	lda #lo(NT_)			; OPT										
+d155 : a967             [ 2] 	lda #lo(NT_)			; OPT										
 d157 : 85f1             [ 3] 	sta z80_E
 d159 : a9db             [ 2] 	lda #hi(NT_)           ; OPT
 d15b : 85f2             [ 3] 	sta z80_D
@@ -4416,11 +4418,11 @@ d188 : 6900             [ 2]         adc #00
 d18a : 85f4             [ 3]         sta z80_H
 d18c : a000             [ 2] 	ldy #00
 d18e : b1f3             [ 5]         lda (z80_L),y												
-d190 : 85f1             [ 3] 	sta z80_E
-d192 : c8               [ 2] 	iny                                             
 AS65 Assembler for R6502 [1.42].                                     Page   69
 ---------------------------------- bank3.s -----------------------------------
 
+d190 : 85f1             [ 3] 	sta z80_E
+d192 : c8               [ 2] 	iny                                             
 d193 : b1f3             [ 5] 	lda (z80_L),y											    
 d195 : 85f2             [ 3] 	sta z80_D
 d197 : a019             [ 2] 	ldy #TnDelt 
@@ -4481,11 +4483,11 @@ d1f1 : a6f4             [ 3] 	ldx z80_H
 d1f3 : 85f4             [ 3] 	sta z80_H
 d1f5 : 86f2             [ 3] 	stx z80_D
 d1f7 :                       NOSIG	
-d1f7 : 38               [ 2]         sec                            
-d1f8 : a5f3             [ 3]         lda z80_L
 AS65 Assembler for R6502 [1.42].                                     Page   70
 ---------------------------------- bank3.s -----------------------------------
 
+d1f7 : 38               [ 2]         sec                            
+d1f8 : a5f3             [ 3]         lda z80_L
 d1fa : e5f1             [ 3]         sbc z80_E
 d1fc : 85f3             [ 3]         sta z80_L
 d1fe : a5f4             [ 3]         lda z80_H
@@ -4546,11 +4548,11 @@ d25c :                       saa
 d25c :                       GL36	
 d25c : a005             [ 2]         ldy #TSlCnt                              
 d25e : 91f5             [ 5] 	sta (z80_IX),y                                  
-d260 : a000             [ 2]         ldy #00                                  
-d262 : b1ef             [ 5]         lda (z80_C),y
 AS65 Assembler for R6502 [1.42].                                     Page   71
 ---------------------------------- bank3.s -----------------------------------
 
+d260 : a000             [ 2]         ldy #00                                  
+d262 : b1ef             [ 5]         lda (z80_C),y
 d264 : 85f7             [ 3]         sta z80_AP
 d266 : c8               [ 2]         iny
 d267 : b1ef             [ 5]         lda (z80_C),y
@@ -4611,24 +4613,24 @@ d2bd : a006             [ 2] 	ldy #CrTnSl
 d2bf : 91f5             [ 5]         sta (z80_IX),y
 d2c1 : c8               [ 2] 	iny                                             
 d2c2 : 91f5             [ 5]         sta (z80_IX),y
-d2c4 : 60               [ 6] 	rts                                             
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   72
 ---------------------------------- bank3.s -----------------------------------
 
+d2c4 : 60               [ 6] 	rts                                             
+                             
 d2c5 :                       C_ENGLS	
 d2c5 : a000             [ 2]         ldy #00                                  
 d2c7 : b1ef             [ 5]         lda (z80_C),y
-d2c9 : 8d46d8           [ 4]         sta Env_Del+1                            
-d2cc : 8d58da           [ 4] 	sta CurEDel
+d2c9 : 8d52d8           [ 4]         sta Env_Del+1                            
+d2cc : 8d64da           [ 4] 	sta CurEDel
 d2cf : c8               [ 2]         iny
 d2d0 : b1ef             [ 5]         lda (z80_C),y
 d2d2 : 85f3             [ 3]         sta z80_L                                
-d2d4 : 8d4bd8           [ 4]         sta ESldAdd+1
+d2d4 : 8d57d8           [ 4]         sta ESldAdd+1
 d2d7 : c8               [ 2]         iny
 d2d8 : b1ef             [ 5]         lda (z80_C),y
 d2da : 85f4             [ 3]         sta z80_H                                
-d2dc : 8d53d8           [ 4] 	sta ESldAdd+9
+d2dc : 8d5fd8           [ 4] 	sta ESldAdd+9
 d2df : 18               [ 2]         clc
 d2e0 : a5ef             [ 3]         lda z80_C 
 d2e2 : 6903             [ 2]         adc #03
@@ -4653,15 +4655,15 @@ d2f9 : a014             [ 2]         ldy #Env_En
 d2fb : a5f1             [ 3]         lda z80_E
 d2fd : 91f5             [ 5]         sta (z80_IX),y
 d2ff : a5ee             [ 3]         lda z80_A                ; OPT (inverser 
-d301 : 8d68da           [ 4]         sta AYREGS+EnvTp
+d301 : 8d74da           [ 4]         sta AYREGS+EnvTp
 d304 : a000             [ 2] 	ldy #00                                         
 d306 : b1ef             [ 5]         lda (z80_C),y           
 d308 : 85f4             [ 3] 	sta z80_H                                       
-d30a : 8d6ada           [ 4]         sta EnvBase+1                            
+d30a : 8d76da           [ 4]         sta EnvBase+1                            
 d30d : c8               [ 2] 	iny                                             
 d30e : b1ef             [ 5]         lda (z80_C),y
 d310 : 85f3             [ 3] 	sta z80_L                                       
-d312 : 8d69da           [ 4] 	sta EnvBase
+d312 : 8d75da           [ 4] 	sta EnvBase
 d315 : a5ef             [ 3]         lda z80_C
 d317 : 18               [ 2]         clc
 d318 : 6902             [ 2]         adc #02
@@ -4671,16 +4673,16 @@ d31e : e6f0             [ 5]         inc z80_B
 d320 : a900             [ 2] sam	lda #00                                      
 d322 : a000             [ 2] 	ldy #PsInOr                                     
 d324 : 91f5             [ 5]         sta (z80_IX),y
-d326 : 8d58da           [ 4] 	sta CurEDel                                     
+d326 : 8d64da           [ 4] 	sta CurEDel                                     
 d329 : 85f4             [ 3] 	sta z80_H                                       
-d32b : 8d57da           [ 4]         sta CurESld+1                            
+d32b : 8d63da           [ 4]         sta CurESld+1                            
 d32e : 85f3             [ 3] 	sta z80_L                                       
 d330 : 85ee             [ 3]         sta z80_A
-d332 : 8d56da           [ 4] 	sta CurESld                                     
-d335 :                       C_NOP	
 AS65 Assembler for R6502 [1.42].                                     Page   73
 ---------------------------------- bank3.s -----------------------------------
 
+d332 : 8d62da           [ 4] 	sta CurESld                                     
+d335 :                       C_NOP	
 d335 : 60               [ 6]         rts                                      
                              
 d336 :                       SETORN	
@@ -4736,25 +4738,25 @@ d383 : 34d3                  	fcw C_NOP-1
                              ; ===============================================
 d385 :                       CHREGS	
 d385 : a900             [ 2]         lda #00                                  
-d387 : 85ee             [ 3] 	    sta z80_A       ; save
-d389 : 8d65da           [ 4]         sta Ampl                                 
-d38c : a5f3             [ 3] 	    lda z80_L                                   
+d387 : 85ee             [ 3]         sta z80_A       ; save
+d389 : 8d71da           [ 4]         sta Ampl                                 
+d38c : a5f3             [ 3]         lda z80_L                                
 d38e : 85fc             [ 3]         sta val3                                 
 d390 : a5f4             [ 3]         lda z80_H
-d392 : 85fd             [ 3]         sta val3+1
-d394 : a015             [ 2]         ldy #Flags                               
 AS65 Assembler for R6502 [1.42].                                     Page   74
 ---------------------------------- bank3.s -----------------------------------
 
+d392 : 85fd             [ 3]         sta val3+1
+d394 : a015             [ 2]         ldy #Flags                               
 d396 : a901             [ 2]         lda #%00000001
 d398 : 85f8             [ 3]         sta val1
 d39a : b1f5             [ 5]         lda (z80_IX),y
 d39c : 24f8             [ 3]         bit val1
-d39e : d003             [ 3] 	    bne saq
+d39e : d003             [ 3]         bne saq
 d3a0 : 4c1cd6           [ 3]         jmp CH_EXIT                              
 d3a3 :                       saq     	
                                                                               
-d3a3 : a00d             [ 2] 	    ldy #OrnPtr                                 
+d3a3 : a00d             [ 2]         ldy #OrnPtr                              
 d3a5 : b1f5             [ 5]         lda (z80_IX),y
 d3a7 : 85f3             [ 3]         sta z80_L
 d3a9 : 85f8             [ 3]         sta val1            ; save L
@@ -4769,11 +4771,11 @@ d3b6 : 85f1             [ 3]         sta z80_E
 d3b8 : c8               [ 2]         iny
 d3b9 : b1f3             [ 5]         lda (z80_L),y
 d3bb : 85f2             [ 3]         sta z80_D
-d3bd : a000             [ 2] 	    ldy #PsInOr                                 
+d3bd : a000             [ 2]         ldy #PsInOr                              
 d3bf : b1f5             [ 5]         lda (z80_IX),y
-d3c1 : 85f3             [ 3] 	    sta z80_L                                   
+d3c1 : 85f3             [ 3]         sta z80_L                                
 d3c3 : 85ee             [ 3]         sta z80_A                                
-d3c5 : 18               [ 2] 	    clc
+d3c5 : 18               [ 2]         clc
 d3c6 : a5f8             [ 3]         lda val1
 d3c8 : 65f3             [ 3]         adc z80_L
 d3ca : 85f3             [ 3]         sta z80_L
@@ -4789,49 +4791,49 @@ d3dc : 85f4             [ 3]         sta z80_H
 d3de : a5ee             [ 3]         lda z80_A                                
 d3e0 : 6901             [ 2]         adc #01
 d3e2 : c5f2             [ 3]         cmp z80_D                                
-d3e4 : 9003             [ 3] 	    bcc CH_ORPS                                 
-d3e6 : 18               [ 2] 	    clc
+d3e4 : 9003             [ 3]         bcc CH_ORPS                              
+d3e6 : 18               [ 2]         clc
 d3e7 : a5f1             [ 3]         lda z80_E                                
 d3e9 :                       CH_ORPS	
 d3e9 : a000             [ 2]         ldy #PsInOr                              
 d3eb : 91f5             [ 5]         sta (z80_IX),y
-d3ed : a012             [ 2] 	    ldy #Note                                   
+d3ed : a012             [ 2]         ldy #Note                                
 d3ef : b1f5             [ 5]         lda (z80_IX),y
-d3f1 : a000             [ 2] 	    ldy #00                                     
+d3f1 : a000             [ 2]         ldy #00                                  
 d3f3 : 71f3             [ 5]         adc (z80_L),y       ; adc ($AC,x)	
-d3f5 : 1002             [ 3] 	    bpl CH_NTP                                  
-d3f7 : a900             [ 2] 	    lda #00                                     
+d3f5 : 1002             [ 3]         bpl CH_NTP                               
+d3f7 : a900             [ 2]         lda #00                                  
 d3f9 :                       CH_NTP	
 d3f9 : c960             [ 2]         cmp #96                                  
-d3fb : 9002             [ 3] 	    bcc CH_NOK                                  
-d3fd : a95f             [ 2] 	    lda #95                                     
+d3fb : 9002             [ 3]         bcc CH_NOK                               
+d3fd : a95f             [ 2]         lda #95                                  
 d3ff :                       CH_NOK	
-d3ff : 0a               [ 2]         asl a                                    
-d400 : 85f7             [ 3]         sta z80_AP                               
 AS65 Assembler for R6502 [1.42].                                     Page   75
 ---------------------------------- bank3.s -----------------------------------
 
-d402 : a00f             [ 2] 	    ldy #SamPtr                                 
+d3ff : 0a               [ 2]         asl a                                    
+d400 : 85f7             [ 3]         sta z80_AP                               
+d402 : a00f             [ 2]         ldy #SamPtr                              
 d404 : b1f5             [ 5]         lda (z80_IX),y
 d406 : 85f3             [ 3]         sta z80_L
-d408 : 85f8             [ 3] 	    sta val1            ; save L
+d408 : 85f8             [ 3]         sta val1            ; save L
 d40a : c8               [ 2]         iny                                      
 d40b : b1f5             [ 5]         lda (z80_IX),y
 d40d : 85f4             [ 3]         sta z80_H
 d40f : 85f9             [ 3]         sta val1+1          ; save H
-d411 : a000             [ 2] 	    ldy #00
+d411 : a000             [ 2]         ldy #00
 d413 : b1f3             [ 5]         lda (z80_L),y                            
 d415 : 85f1             [ 3]         sta z80_E   
 d417 : c8               [ 2]         iny
 d418 : b1f3             [ 5]         lda (z80_L),y
 d41a : 85f2             [ 3]         sta z80_D   
                              
-d41c : a001             [ 2] 	    ldy #PsInSm                                 
+d41c : a001             [ 2]         ldy #PsInSm                              
 d41e : b1f5             [ 5]         lda (z80_IX),y
-d420 : 85f0             [ 3] 	    sta z80_B                                   
-d422 : 0a               [ 2] 	    asl a                                       
-d423 : 0a               [ 2] 	    asl a                                       
-d424 : 85f3             [ 3] 	    sta z80_L                                   
+d420 : 85f0             [ 3]         sta z80_B                                
+d422 : 0a               [ 2]         asl a                                    
+d423 : 0a               [ 2]         asl a                                    
+d424 : 85f3             [ 3]         sta z80_L                                
 d426 : 18               [ 2]         clc
 d427 : 65f8             [ 3]         adc val1
 d429 : 85f3             [ 3]         sta z80_L
@@ -4845,11 +4847,11 @@ d437 : a5f4             [ 3]         lda z80_H
 d439 : 6900             [ 2]         adc #00
 d43b : 85f4             [ 3]         sta z80_H
                              
-d43d : a5f0             [ 3] 	    lda z80_B                                   
+d43d : a5f0             [ 3]         lda z80_B                                
 d43f : 6901             [ 2]         adc #01
-d441 : c5f2             [ 3] 	    cmp z80_D                                   
-d443 : 9002             [ 3] 	    bcc CH_SMPS                                 
-d445 : a5f1             [ 3] 	    lda z80_E                                   
+d441 : c5f2             [ 3]         cmp z80_D                                
+d443 : 9002             [ 3]         bcc CH_SMPS                              
+d445 : a5f1             [ 3]         lda z80_E                                
 d447 :                       CH_SMPS	
 d447 : a001             [ 2]         ldy #PsInSm                              
 d449 : 91f5             [ 5]         sta (z80_IX),y
@@ -4865,17 +4867,17 @@ d458 : b1f5             [ 5]         lda (z80_IX),y
 d45a : 85f1             [ 3]         sta z80_E
 d45c : c8               [ 2]         iny
 d45d : b1f5             [ 5]         lda (z80_IX),y
-d45f : 85f2             [ 3] 	    sta z80_D                                   
-d461 : 18               [ 2] 	    clc                                         
+d45f : 85f2             [ 3]         sta z80_D                                
+d461 : 18               [ 2]         clc                                      
 d462 : a002             [ 2]         ldy #02
 d464 : b1f3             [ 5]         lda (z80_L),y                            
 d466 : 65f1             [ 3]         adc z80_E
 d468 : aa               [ 2]         tax
-d469 : c8               [ 2]         iny
-d46a : b1f3             [ 5]         lda (z80_L),y
 AS65 Assembler for R6502 [1.42].                                     Page   76
 ---------------------------------- bank3.s -----------------------------------
 
+d469 : c8               [ 2]         iny
+d46a : b1f3             [ 5]         lda (z80_L),y
 d46c : 65f2             [ 3]         adc z80_D
 d46e : 85f4             [ 3]         sta z80_H
 d470 : 85f2             [ 3]         sta z80_D
@@ -4885,11 +4887,11 @@ d475 : 85f1             [ 3]         sta z80_E
                              
 d477 : a940             [ 2]         lda #%01000000                           
 d479 : 24f0             [ 3]         bit z80_B
-d47b : f00b             [ 3] 	    beq CH_NOAC                                 
-d47d : a008             [ 2] 	    ldy #TnAcc                                  
+d47b : f00b             [ 3]         beq CH_NOAC                              
+d47d : a008             [ 2]         ldy #TnAcc                               
 d47f : a5f3             [ 3]         lda z80_L
 d481 : 91f5             [ 5]         sta (z80_IX),y
-d483 : c8               [ 2] 	    iny                                         
+d483 : c8               [ 2]         iny                                      
 d484 : a5f4             [ 3]         lda z80_H
 d486 : 91f5             [ 5]         sta (z80_IX),y
 d488 :                       CH_NOAC 												             
@@ -4897,7 +4899,7 @@ d488 : a5f7             [ 3]         lda z80_AP
 d48a : 85ee             [ 3]         sta z80_A                                
 d48c : 85f3             [ 3]         sta z80_L                                
 d48e : 18               [ 2]         clc
-d48f : a95b             [ 2]         lda #lo(NT_)
+d48f : a967             [ 2]         lda #lo(NT_)
 d491 : 65f3             [ 3]         adc z80_L
 d493 : 85f3             [ 3]         sta z80_L
 d495 : a9db             [ 2]         lda #hi(NT_)
@@ -4936,11 +4938,11 @@ d4cc : d003             [ 3]         bne saq1
 d4ce : 4c4cd5           [ 3]         jmp CH_AMP
 d4d1 : b1f5             [ 5] saq1	lda (z80_IX),y                              
 d4d3 : 38               [ 2]         sec
-d4d4 : e901             [ 2]         sbc #01
-d4d6 : 91f5             [ 5]         sta (z80_IX),y
 AS65 Assembler for R6502 [1.42].                                     Page   77
 ---------------------------------- bank3.s -----------------------------------
 
+d4d4 : e901             [ 2]         sbc #01
+d4d6 : 91f5             [ 5]         sta (z80_IX),y
 d4d8 : d072             [ 4] 	    bne CH_AMP                                  
 d4da : a016             [ 2] 	    ldy #TnSlDl                                 
 d4dc : b1f5             [ 5]         lda (z80_IX),y
@@ -5001,11 +5003,11 @@ d541 : a005             [ 2] 	ldy #TSlCnt
 d543 : 91f5             [ 5]         sta (z80_IX),y
 d545 : a006             [ 2] 	ldy #CrTnSl                                     
 d547 : 91f5             [ 5]         sta (z80_IX),y
-d549 : c8               [ 2]         iny                                      
-d54a : 91f5             [ 5]         sta (z80_IX),y
 AS65 Assembler for R6502 [1.42].                                     Page   78
 ---------------------------------- bank3.s -----------------------------------
 
+d549 : c8               [ 2]         iny                                      
+d54a : 91f5             [ 5]         sta (z80_IX),y
                              
 d54c :                       CH_AMP	
 d54c : a002             [ 2]         ldy #CrAmSl                              
@@ -5051,7 +5053,7 @@ d58e : a01c             [ 2]         ldy #Volume
 d590 : 11f5             [ 5]         ora (z80_IX),y
 d592 : 85f3             [ 3] 	    sta z80_L
 d594 : 18               [ 2]         clc                                      
-d595 : a95b             [ 2] 	lda #lo(VT_)                                    
+d595 : a967             [ 2] 	lda #lo(VT_)                                    
 d597 : 85f1             [ 3]         sta z80_E
 d599 : 65f3             [ 3]         adc z80_L
 d59b : 85f3             [ 3]         sta z80_L
@@ -5066,17 +5068,17 @@ d5ab :                       CH_ENV
 d5ab : a901             [ 2]         lda #%00000001                           
 d5ad : 24ef             [ 3]         bit z80_C
 d5af : d008             [ 3] 	    bne CH_NOEN                                 
-d5b1 : a014             [ 2] 	    ldy #Env_En                                 
-d5b3 : a5ee             [ 3]         lda z80_A
 AS65 Assembler for R6502 [1.42].                                     Page   79
 ---------------------------------- bank3.s -----------------------------------
 
+d5b1 : a014             [ 2] 	    ldy #Env_En                                 
+d5b3 : a5ee             [ 3]         lda z80_A
 d5b5 : 11f5             [ 5]         ora (z80_IX),y
 d5b7 : 85ee             [ 3]         sta z80_A
                              
 d5b9 :                       CH_NOEN	
 d5b9 : a5ee             [ 3]         lda z80_A
-d5bb : 8d65da           [ 4]         sta Ampl                                 
+d5bb : 8d71da           [ 4]         sta Ampl                                 
 d5be : a5ef             [ 3]         lda z80_C                                
 d5c0 : 85ee             [ 3]         sta z80_A
 d5c2 : a980             [ 2]         lda #%10000000                           
@@ -5102,9 +5104,9 @@ d5e2 : a004             [ 2] 	    ldy #CrEnSl
 d5e4 : a5ee             [ 3]         lda z80_A
 d5e6 : 91f5             [ 5]         sta (z80_IX),y
 d5e8 :                       NO_ENAC	
-d5e8 : a9ff             [ 2]         lda #lo(AddToEn+1)       ; OPT ?         
+d5e8 : a90b             [ 2]         lda #lo(AddToEn+1)       ; OPT ?         
 d5ea : 85f3             [ 3]         sta z80_L
-d5ec : a9d7             [ 2]         lda #hi(AddToEn+1)
+d5ec : a9d8             [ 2]         lda #hi(AddToEn+1)
 d5ee : 85f4             [ 3]         sta z80_H
 d5f0 : a5ee             [ 3]         lda z80_A
 d5f2 : a000             [ 2]         ldy #00                                  
@@ -5119,7 +5121,7 @@ d5fe : 6a               [ 2]         ror a
 d5ff : a003             [ 2] 	    ldy #CrNsSl                                 
 d601 : 18               [ 2]         clc
 d602 : 71f5             [ 5]         adc (z80_IX),y
-d604 : 8d5ada           [ 4] 	    sta AddToNs                                 
+d604 : 8d66da           [ 4] 	    sta AddToNs                                 
 d607 : 85ee             [ 3]         sta z80_A       ; save
 d609 : a920             [ 2] 	    lda #%00100000                              
 d60b : 24f0             [ 3]         bit z80_B
@@ -5131,12 +5133,12 @@ d615 :                       CH_MIX
 d615 : a5f0             [ 3]         lda z80_B                                
 d617 : 6a               [ 2] 	    ror a                                       
 d618 : 2948             [ 2] 	    and #$48                                    
-d61a : 85ee             [ 3]         sta z80_A
-d61c :                       CH_EXIT	
 AS65 Assembler for R6502 [1.42].                                     Page   80
 ---------------------------------- bank3.s -----------------------------------
 
-d61c : a962             [ 2]         lda #lo(AYREGS+Mixer)                    
+d61a : 85ee             [ 3]         sta z80_A
+d61c :                       CH_EXIT	
+d61c : a96e             [ 2]         lda #lo(AYREGS+Mixer)                    
 d61e : 85f3             [ 3]         sta z80_L
 d620 : a9da             [ 2]         lda #hi(AYREGS+Mixer)
 d622 : 85f4             [ 3]         sta z80_H
@@ -5181,14 +5183,14 @@ d667 : 60               [ 6]         rts
                              ; ===============================================
 d668 :                       PLAY    
 d668 : a900             [ 2]         lda #00                                  
-d66a : 8dffd7           [ 4] 	    sta AddToEn+1                               
-d66d : 8d62da           [ 4] 	    sta AYREGS+Mixer                            
+d66a : 8d0bd8           [ 4] 	    sta AddToEn+1                               
+d66d : 8d6eda           [ 4] 	    sta AYREGS+Mixer                            
 d670 : a9ff             [ 2] 	    lda #$FF                                    
-d672 : 8d68da           [ 4] 	    sta AYREGS+EnvTp                            
-d675 : ce55da           [ 6] 	    dec DelyCnt                                 
+d672 : 8d74da           [ 4] 	    sta AYREGS+EnvTp                            
+d675 : ce61da           [ 6] 	    dec DelyCnt                                 
 d678 : f003             [ 3] 	    beq sat1                                    
 d67a : 4c85d7           [ 3]         jmp PL2
-d67d : ce19da           [ 6] sat1	dec ANtSkCn                                 
+d67d : ce25da           [ 6] sat1	dec ANtSkCn                                 
 d680 : f003             [ 3] 	    beq sat2                                    
 d682 : 4c3cd7           [ 3]         jmp PL1B
 d685 :                       AdInPtA
@@ -5196,15 +5198,15 @@ d685 : a901             [ 2] sat2	lda #01
 d687 : 85ef             [ 3]         sta z80_C
 d689 : a901             [ 2]         lda #01
 d68b : 85f0             [ 3]         sta z80_B
-d68d : a000             [ 2] 	    ldy #00                                     
-d68f : b1ef             [ 5]         lda (z80_C),y       ; lda ($AC,x)	       
 AS65 Assembler for R6502 [1.42].                                     Page   81
 ---------------------------------- bank3.s -----------------------------------
 
+d68d : a000             [ 2] 	    ldy #00                                     
+d68f : b1ef             [ 5]         lda (z80_C),y       ; lda ($AC,x)	       
 d691 : f003             [ 3] 	    beq sat3            ; test 0                
 d693 : 4c27d7           [ 3]         jmp PL1A
 d696 : 85f2             [ 3] sat3	sta z80_D                                   
-d698 : 8d59da           [ 4] 	    sta Ns_Base                                 
+d698 : 8d65da           [ 4] 	    sta Ns_Base                                 
 d69b : adbecc           [ 4] 	    lda CrPsPtr                                 
 d69e : 85f3             [ 3]         sta z80_L
 d6a0 : adbfcc           [ 4]         lda CrPsPtr+1
@@ -5261,11 +5263,11 @@ d6f9 : 18               [ 2]         clc
 d6fa : 65f1             [ 3]         adc z80_E               ; OPT (adc MODADD
 d6fc : 85ef             [ 3]         sta z80_C
 d6fe : c8               [ 2]         iny
-d6ff : b1f3             [ 5]         lda (z80_L),y
-d701 : 65f2             [ 3]         adc z80_D               ; OPT (adc MODADD
 AS65 Assembler for R6502 [1.42].                                     Page   82
 ---------------------------------- bank3.s -----------------------------------
 
+d6ff : b1f3             [ 5]         lda (z80_L),y
+d701 : 65f2             [ 3]         adc z80_D               ; OPT (adc MODADD
 d703 : 85f0             [ 3]         sta z80_B   
 d705 : c8               [ 2]         iny
 d706 : b1f3             [ 5]         lda (z80_L),y                            
@@ -5289,9 +5291,9 @@ d724 : 8d70d7           [ 4]         sta AdInPtC+5
 d727 :                       PSP_	
                              
 d727 :                       PL1A	
-d727 : a9fe             [ 2]         lda #lo(ChanA)                           
+d727 : a90a             [ 2]         lda #lo(ChanA)                           
 d729 : 85f5             [ 3]         sta z80_IX
-d72b : a9d9             [ 2]         lda #hi(ChanA)
+d72b : a9da             [ 2]         lda #hi(ChanA)
 d72d : 85f6             [ 3]         sta z80_IX+1
 d72f : 2082d0           [ 6] 	jsr PTDECOD                                     
 d732 : a5ef             [ 3] 	lda z80_C                                       
@@ -5300,9 +5302,9 @@ d737 : a5f0             [ 3]         lda z80_B
 d739 : 8d8ad6           [ 4]         sta AdInPtA+5
                              
 d73c :                       PL1B	
-d73c : ce36da           [ 6]         dec BNtSkCn                              
+d73c : ce42da           [ 6]         dec BNtSkCn                              
 d73f : d01d             [ 3] 	bne PL1C                                        
-d741 : a91b             [ 2] 	lda #lo(ChanB)                                  
+d741 : a927             [ 2] 	lda #lo(ChanB)                                  
 d743 : 85f5             [ 3]         sta z80_IX
 d745 : a9da             [ 2]         lda #hi(ChanB)
 d747 : 85f6             [ 3]         sta z80_IX+1
@@ -5318,19 +5320,19 @@ d759 : a5f0             [ 3]         lda z80_B
 d75b : 8d4ed7           [ 4]         sta AdInPtB+5
                              
 d75e :                       PL1C	
-d75e : ce53da           [ 6]         dec CNtSkCn                              
+d75e : ce5fda           [ 6]         dec CNtSkCn                              
 d761 : d01d             [ 3] 	bne PL1D                                        
-d763 : a938             [ 2] 	lda #lo(ChanC)                                  
+d763 : a944             [ 2] 	lda #lo(ChanC)                                  
 d765 : 85f5             [ 3]         sta z80_IX
 d767 : a9da             [ 2]         lda #hi(ChanC)
 d769 : 85f6             [ 3]         sta z80_IX+1
 d76b :                       AdInPtC
 d76b : a901             [ 2] 	lda #01                                         
-d76d : 85ef             [ 3]         sta z80_C
-d76f : a901             [ 2]         lda #01
 AS65 Assembler for R6502 [1.42].                                     Page   83
 ---------------------------------- bank3.s -----------------------------------
 
+d76d : 85ef             [ 3]         sta z80_C
+d76f : a901             [ 2]         lda #01
 d771 : 85f0             [ 3]         sta z80_B
 d773 : 2082d0           [ 6] 	jsr PTDECOD                                     
 d776 : a5ef             [ 3] 	lda z80_C                                       
@@ -5341,197 +5343,201 @@ d77d : 8d70d7           [ 4]         sta AdInPtC+5
 d780 :                       Delay
 d780 :                       PL1D	
 d780 : a93e             [ 2]         lda #$3E                                 
-d782 : 8d55da           [ 4] 	    sta DelyCnt                                 
+d782 : 8d61da           [ 4] 	    sta DelyCnt                                 
                              
 d785 :                       PL2	
-d785 : a9fe             [ 2]         lda #lo(ChanA)                           
+d785 : a90a             [ 2]         lda #lo(ChanA)                           
 d787 : 85f5             [ 3]         sta z80_IX
-d789 : a9d9             [ 2]         lda #hi(ChanA)
+d789 : a9da             [ 2]         lda #hi(ChanA)
 d78b : 85f6             [ 3]         sta z80_IX+1
-d78d : ad5bda           [ 4] 	    lda AYREGS+TonA                             
+d78d : ad67da           [ 4]         lda AYREGS+TonA                          
 d790 : 85f3             [ 3]         sta z80_L
-d792 : ad5cda           [ 4]         lda AYREGS+TonA+1
+d792 : ad68da           [ 4]         lda AYREGS+TonA+1
 d795 : 85f4             [ 3]         sta z80_H
-d797 : 2085d3           [ 6] 	    jsr CHREGS                                  
-d79a : a5f3             [ 3] 	    lda z80_L                                   
-d79c : 8d5bda           [ 4]         sta AYREGS+TonA
+d797 : 2085d3           [ 6]         jsr CHREGS                               
+d79a : a5f3             [ 3]         lda z80_L                                
+d79c : 8d67da           [ 4]         sta AYREGS+TonA
 d79f : a5f4             [ 3]         lda z80_H
-d7a1 : 8d5cda           [ 4]         sta AYREGS+TonA+1
-d7a4 : ad65da           [ 4] 	    lda Ampl                                    
-d7a7 : 8d63da           [ 4] 	    sta AYREGS+AmplA                            
+d7a1 : 8d68da           [ 4]         sta AYREGS+TonA+1
+d7a4 : ad71da           [ 4]         lda Ampl                                 
+d7a7 : 8d6fda           [ 4]         sta AYREGS+AmplA
+d7aa : 8d4d0c           [ 4]         sta pt3_amplA
                              	
-d7aa : a91b             [ 2]         lda #lo(ChanB)                           
-d7ac : 85f5             [ 3]         sta z80_IX
-d7ae : a9da             [ 2]         lda #hi(ChanB)
-d7b0 : 85f6             [ 3]         sta z80_IX+1
-d7b2 : ad5dda           [ 4] 	    lda AYREGS+TonB                             
-d7b5 : 85f3             [ 3]         sta z80_L
-d7b7 : ad5eda           [ 4]         lda AYREGS+TonB+1
-d7ba : 85f4             [ 3]         sta z80_H
-d7bc : 2085d3           [ 6] 	    jsr CHREGS                                  
-d7bf : a5f3             [ 3] 	    lda z80_L                                   
-d7c1 : 8d5dda           [ 4]         sta AYREGS+TonB
-d7c4 : a5f4             [ 3]         lda z80_H
-d7c6 : 8d5eda           [ 4]         sta AYREGS+TonB+1
-d7c9 : ad65da           [ 4] 	    lda Ampl                                    
-d7cc : 8d64da           [ 4] 	    sta AYREGS+AmplB                            
+d7ad : a927             [ 2]         lda #lo(ChanB)                           
+d7af : 85f5             [ 3]         sta z80_IX
+d7b1 : a9da             [ 2]         lda #hi(ChanB)
+d7b3 : 85f6             [ 3]         sta z80_IX+1
+d7b5 : ad69da           [ 4]         lda AYREGS+TonB                          
+d7b8 : 85f3             [ 3]         sta z80_L
+d7ba : ad6ada           [ 4]         lda AYREGS+TonB+1
+d7bd : 85f4             [ 3]         sta z80_H
+d7bf : 2085d3           [ 6]         jsr CHREGS                               
+d7c2 : a5f3             [ 3]         lda z80_L                                
+d7c4 : 8d69da           [ 4]         sta AYREGS+TonB
+d7c7 : a5f4             [ 3]         lda z80_H
+d7c9 : 8d6ada           [ 4]         sta AYREGS+TonB+1
+d7cc : ad71da           [ 4]         lda Ampl                                 
+d7cf : 8d70da           [ 4]         sta AYREGS+AmplB                         
+d7d2 : 8d4e0c           [ 4]         sta pt3_amplB
                              	    
-d7cf : a938             [ 2]         lda #lo(ChanC)                           
-d7d1 : 85f5             [ 3]         sta z80_IX
-d7d3 : a9da             [ 2]         lda #hi(ChanC)
-d7d5 : 85f6             [ 3]         sta z80_IX+1
-d7d7 : ad5fda           [ 4] 	    lda AYREGS+TonC                             
-d7da : 85f3             [ 3]         sta z80_L
-d7dc : ad60da           [ 4]         lda AYREGS+TonC+1
-d7df : 85f4             [ 3]         sta z80_H
-d7e1 : 2085d3           [ 6] 	    jsr CHREGS                                  
-d7e4 : a5f3             [ 3] 	    lda z80_L                                   
-d7e6 : 8d5fda           [ 4]         sta AYREGS+TonC
-d7e9 : a5f4             [ 3]         lda z80_H
-d7eb : 8d60da           [ 4]         sta AYREGS+TonC+1
-                             
-d7ee : ad59da           [ 4] 	    lda Ns_Base_AddToNs                         
-d7f1 : 85f3             [ 3]         sta z80_L
-d7f3 : ad5ada           [ 4]         lda Ns_Base_AddToNs+1
+d7d5 : a944             [ 2]         lda #lo(ChanC)                           
+d7d7 : 85f5             [ 3]         sta z80_IX
+d7d9 : a9da             [ 2]         lda #hi(ChanC)
+d7db : 85f6             [ 3]         sta z80_IX+1
+d7dd : ad6bda           [ 4]         lda AYREGS+TonC                          
+d7e0 : 85f3             [ 3]         sta z80_L
+d7e2 : ad6cda           [ 4]         lda AYREGS+TonC+1
+d7e5 : 85f4             [ 3]         sta z80_H
+d7e7 : 2085d3           [ 6]         jsr CHREGS                               
+d7ea : a5f3             [ 3]         lda z80_L                                
+d7ec : 8d6bda           [ 4]         sta AYREGS+TonC
+d7ef : a5f4             [ 3]         lda z80_H
+d7f1 : 8d6cda           [ 4]         sta AYREGS+TonC+1
 AS65 Assembler for R6502 [1.42].                                     Page   84
 ---------------------------------- bank3.s -----------------------------------
 
-d7f6 : 85f4             [ 3]         sta z80_H                                
-d7f8 : 18               [ 2] 	    clc                                         
-d7f9 : 65f3             [ 3]         adc z80_L
-d7fb : 8d61da           [ 4] 	    sta AYREGS+Noise                            
+d7f4 : ad71da           [ 4]         lda Ampl                                 
+d7f7 : 8d4f0c           [ 4]         sta pt3_amplC
                              
-d7fe :                       AddToEn
-d7fe : a93e             [ 2] 	    lda #$3E                                    
-d800 : 85f1             [ 3] 	    sta z80_E                                   
-d802 : 0a               [ 2] 	    asl a                                       
-d803 : 9004             [ 3] 	    bcc sau                                     
-d805 : a9ff             [ 2]         lda #$FF
-d807 : d002             [ 3]         bne sau1      ; always
-d809 : a900             [ 2] sau     lda #00
-d80b : 85f2             [ 3] sau1	sta z80_D                                   
-d80d : ad6ada           [ 4]         lda EnvBase+1
-d810 : 85f4             [ 3]         sta z80_H           ; OPT ?
-d812 : ad69da           [ 4]         lda EnvBase                              
-d815 : 85f3             [ 3]         sta z80_L           ; OPT ?
-d817 : 18               [ 2] 	    clc                                         
-d818 : 65f1             [ 3]         adc z80_E
-d81a : 85f3             [ 3]         sta z80_L
-d81c : a5f2             [ 3]         lda z80_D
-d81e : 65f4             [ 3]         adc z80_H           ; OPT ?
-d820 : 85f4             [ 3]         sta z80_H 
-d822 : ad57da           [ 4]         lda CurESld+1
-d825 : 85f2             [ 3]         sta z80_D
-d827 : ad56da           [ 4]         lda CurESld                              
-d82a : 85f1             [ 3]         sta z80_E
-d82c : 18               [ 2] 	    clc                                         
-d82d : 65f3             [ 3]         adc z80_L
-d82f : 8d66da           [ 4]         sta AYREGS+Env                           
-d832 : a5f2             [ 3]         lda z80_D
-d834 : 65f4             [ 3]         adc z80_H
-d836 : 8d67da           [ 4] 	    sta AYREGS+Env+1                            
+d7fa : ad65da           [ 4]         lda Ns_Base_AddToNs                      
+d7fd : 85f3             [ 3]         sta z80_L
+d7ff : ad66da           [ 4]         lda Ns_Base_AddToNs+1
+d802 : 85f4             [ 3]         sta z80_H                                
+d804 : 18               [ 2]         clc                                      
+d805 : 65f3             [ 3]         adc z80_L
+d807 : 8d6dda           [ 4]         sta AYREGS+Noise                         
                              
-d839 : a900             [ 2]         lda #00                                  
-d83b : 0d58da           [ 4]         ora CurEDel         ; OPT ?              
-d83e : f019             [ 3] 	    beq ROUT                                    
-d840 : ce58da           [ 6] 	    dec CurEDel                                 
-d843 : d014             [ 3] 	    bne ROUT                                    
-d845 :                       Env_Del
-d845 : a93e             [ 2] 	    lda #$3E                                    
-d847 : 8d58da           [ 4] 	    sta CurEDel                                 
-d84a :                       ESldAdd
-d84a : a9ac             [ 2] 	    lda #$AC                                    
-d84c : 18               [ 2]         clc
-d84d : 65f1             [ 3]         adc z80_E       
-d84f : 8d56da           [ 4]         sta CurESld
-d852 : a9ac             [ 2]         lda #$AC
-d854 : 65f2             [ 3]         adc z80_D
-d856 : 8d57da           [ 4] 	    sta CurESld+1
+d80a :                       AddToEn
+d80a : a93e             [ 2]         lda #$3E                                 
+d80c : 85f1             [ 3]         sta z80_E                                
+d80e : 0a               [ 2]         asl a                                    
+d80f : 9004             [ 3]         bcc sau                                  
+d811 : a9ff             [ 2]         lda #$FF
+d813 : d002             [ 3]         bne sau1      ; always
+d815 : a900             [ 2] sau     lda #00
+d817 : 85f2             [ 3] sau1	sta z80_D                                   
+d819 : ad76da           [ 4]         lda EnvBase+1
+d81c : 85f4             [ 3]         sta z80_H           ; OPT ?
+d81e : ad75da           [ 4]         lda EnvBase                              
+d821 : 85f3             [ 3]         sta z80_L           ; OPT ?
+d823 : 18               [ 2] 	    clc                                         
+d824 : 65f1             [ 3]         adc z80_E
+d826 : 85f3             [ 3]         sta z80_L
+d828 : a5f2             [ 3]         lda z80_D
+d82a : 65f4             [ 3]         adc z80_H           ; OPT ?
+d82c : 85f4             [ 3]         sta z80_H 
+d82e : ad63da           [ 4]         lda CurESld+1
+d831 : 85f2             [ 3]         sta z80_D
+d833 : ad62da           [ 4]         lda CurESld                              
+d836 : 85f1             [ 3]         sta z80_E
+d838 : 18               [ 2] 	    clc                                         
+d839 : 65f3             [ 3]         adc z80_L
+d83b : 8d72da           [ 4]         sta AYREGS+Env                           
+d83e : a5f2             [ 3]         lda z80_D
+d840 : 65f4             [ 3]         adc z80_H
+d842 : 8d73da           [ 4] 	    sta AYREGS+Env+1                            
+                             
+d845 : a900             [ 2]         lda #00                                  
+d847 : 0d64da           [ 4]         ora CurEDel         ; OPT ?              
+d84a : f019             [ 3] 	    beq ROUT                                    
+d84c : ce64da           [ 6] 	    dec CurEDel                                 
+d84f : d014             [ 3] 	    bne ROUT                                    
+d851 :                       Env_Del
+d851 : a93e             [ 2] 	    lda #$3E                                    
+d853 : 8d64da           [ 4] 	    sta CurEDel                                 
+d856 :                       ESldAdd
+d856 : a9ac             [ 2] 	    lda #$AC                                    
+d858 : 18               [ 2]         clc
+d859 : 65f1             [ 3]         adc z80_E       
+d85b : 8d62da           [ 4]         sta CurESld
+d85e : a9ac             [ 2]         lda #$AC
+d860 : 65f2             [ 3]         adc z80_D
+d862 : 8d63da           [ 4] 	    sta CurESld+1
                              ; ===============================================
                              
-d859 :                       ROUT
-d859 : ae5cda           [ 4]         ldx AYREGS+1    ; hi ToneA
-d85c : ad5bda           [ 4]         lda AYREGS+0    ; lo ToneA
-d85f : 20e2d8           [ 6]         jsr FIX16BITS
-                                     
-d862 : a901             [ 2]         lda #01             
-d864 : 2021d9           [ 6]         jsr ay_set
-d867 : 98               [ 2]         tya
-d868 : aa               [ 2]         tax
+d865 :                       ROUT
+d865 : ae68da           [ 4]         ldx AYREGS+1    ; hi ToneA
+d868 : ad67da           [ 4]         lda AYREGS+0    ; lo ToneA
 AS65 Assembler for R6502 [1.42].                                     Page   85
 ---------------------------------- bank3.s -----------------------------------
 
-d869 : a900             [ 2]         lda #00
-d86b : 2021d9           [ 6]         jsr ay_set
+d86b : 20eed8           [ 6]         jsr FIX16BITS
+                                     
+d86e : a901             [ 2]         lda #01             
+d870 : 202dd9           [ 6]         jsr ay_set
+d873 : 98               [ 2]         tya
+d874 : aa               [ 2]         tax
+d875 : a900             [ 2]         lda #00
+d877 : 202dd9           [ 6]         jsr ay_set
                              
-d86e : ae5eda           [ 4]         ldx AYREGS+3    ; hi ToneB
-d871 : ad5dda           [ 4]         lda AYREGS+2    ; lo ToneB
-d874 : 20e2d8           [ 6]         jsr FIX16BITS 
+d87a : ae6ada           [ 4]         ldx AYREGS+3    ; hi ToneB
+d87d : ad69da           [ 4]         lda AYREGS+2    ; lo ToneB
+d880 : 20eed8           [ 6]         jsr FIX16BITS 
                              
-d877 : a903             [ 2]         lda #03             
-d879 : 2021d9           [ 6]         jsr ay_set
-d87c : 98               [ 2]         tya
-d87d : aa               [ 2]         tax
-d87e : a902             [ 2]         lda #02             
-d880 : 2021d9           [ 6]         jsr ay_set
+d883 : a903             [ 2]         lda #03             
+d885 : 202dd9           [ 6]         jsr ay_set
+d888 : 98               [ 2]         tya
+d889 : aa               [ 2]         tax
+d88a : a902             [ 2]         lda #02             
+d88c : 202dd9           [ 6]         jsr ay_set
                              
-d883 : ae60da           [ 4]         ldx AYREGS+5    ; hi ToneC
-d886 : ad5fda           [ 4]         lda AYREGS+4    ; lo ToneC
-d889 : 20e2d8           [ 6]         jsr FIX16BITS 
+d88f : ae6cda           [ 4]         ldx AYREGS+5    ; hi ToneC
+d892 : ad6bda           [ 4]         lda AYREGS+4    ; lo ToneC
+d895 : 20eed8           [ 6]         jsr FIX16BITS 
                              
-d88c : a905             [ 2]         lda #05             
-d88e : 2021d9           [ 6]         jsr ay_set
-d891 : 98               [ 2]         tya
-d892 : aa               [ 2]         tax
-d893 : a904             [ 2]         lda #04             
-d895 : 2021d9           [ 6]         jsr ay_set
+d898 : a905             [ 2]         lda #05             
+d89a : 202dd9           [ 6]         jsr ay_set
+d89d : 98               [ 2]         tya
+d89e : aa               [ 2]         tax
+d89f : a904             [ 2]         lda #04             
+d8a1 : 202dd9           [ 6]         jsr ay_set
                              
-d898 : ad61da           [ 4]         lda AYREGS+6    ; data
+d8a4 : ad6dda           [ 4]         lda AYREGS+6    ; data
                                      ;jsr FIX8BITS
-d89b : 4a               [ 2]         lsr a             ; /2 
-d89c : aa               [ 2]         tax
-d89d : a906             [ 2]         lda #06             
-d89f : 2021d9           [ 6]         jsr ay_set
+d8a7 : 4a               [ 2]         lsr a             ; /2 
+d8a8 : aa               [ 2]         tax
+d8a9 : a906             [ 2]         lda #06             
+d8ab : 202dd9           [ 6]         jsr ay_set
                              
-d8a2 : ae62da           [ 4]         ldx AYREGS+7    ; data
-d8a5 : a907             [ 2]         lda #07
-d8a7 : 2021d9           [ 6]         jsr ay_set
+d8ae : ae6eda           [ 4]         ldx AYREGS+7    ; data
+d8b1 : a907             [ 2]         lda #07
+d8b3 : 202dd9           [ 6]         jsr ay_set
                              
-d8aa : ae63da           [ 4]         ldx AYREGS+8    ; data
-d8ad : a908             [ 2]         lda #08             
-d8af : 2021d9           [ 6]         jsr ay_set
+d8b6 : ae6fda           [ 4]         ldx AYREGS+8    ; data
+d8b9 : a908             [ 2]         lda #08             
+d8bb : 202dd9           [ 6]         jsr ay_set
                              
-d8b2 : ae64da           [ 4]         ldx AYREGS+9    ; data
-d8b5 : a909             [ 2]         lda #09             
-d8b7 : 2021d9           [ 6]         jsr ay_set
+d8be : ae70da           [ 4]         ldx AYREGS+9    ; data
+d8c1 : a909             [ 2]         lda #09             
+d8c3 : 202dd9           [ 6]         jsr ay_set
                              
-d8ba : ae65da           [ 4]         ldx AYREGS+10   ; data
-d8bd : a90a             [ 2]         lda #10             
-d8bf : 2021d9           [ 6]         jsr ay_set
+d8c6 : ae71da           [ 4]         ldx AYREGS+10   ; data
+d8c9 : a90a             [ 2]         lda #10             
+d8cb : 202dd9           [ 6]         jsr ay_set
                              
-d8c2 : ae67da           [ 4]         ldx AYREGS+12   ; hi Env
-d8c5 : ad66da           [ 4]         lda AYREGS+11   ; lo Env
-d8c8 : 20e2d8           [ 6]         jsr FIX16BITS 
+d8ce : ae73da           [ 4]         ldx AYREGS+12   ; hi Env
+d8d1 : ad72da           [ 4]         lda AYREGS+11   ; lo Env
+d8d4 : 20eed8           [ 6]         jsr FIX16BITS 
                              
-d8cb : a90c             [ 2]         lda #12             
-d8cd : 2021d9           [ 6]         jsr ay_set
-d8d0 : 98               [ 2]         tya
-d8d1 : aa               [ 2]         tax
-d8d2 : a90b             [ 2]         lda #11             
-d8d4 : 2021d9           [ 6]         jsr ay_set
-                             
-                                     ; shunte R13 si $FF (Y=13) => plus géné
-d8d7 : ae68da           [ 4]         ldx AYREGS+13
-d8da : 3005             [ 3]         bmi FIN_RTS
+d8d7 : a90c             [ 2]         lda #12             
+d8d9 : 202dd9           [ 6]         jsr ay_set
+d8dc : 98               [ 2]         tya
+d8dd : aa               [ 2]         tax
 AS65 Assembler for R6502 [1.42].                                     Page   86
 ---------------------------------- bank3.s -----------------------------------
 
-d8dc : a90d             [ 2]         lda #13
-d8de : 2021d9           [ 6]         jsr ay_set
-d8e1 :                       FIN_RTS
-d8e1 : 60               [ 6]         rts
+d8de : a90b             [ 2]         lda #11             
+d8e0 : 202dd9           [ 6]         jsr ay_set
+                             
+                                     ; shunte R13 si $FF (Y=13) => plus géné
+d8e3 : ae74da           [ 4]         ldx AYREGS+13
+d8e6 : 3005             [ 3]         bmi FIN_RTS
+d8e8 : a90d             [ 2]         lda #13
+d8ea : 202dd9           [ 6]         jsr ay_set
+d8ed :                       FIN_RTS
+d8ed : 60               [ 6]         rts
                              ; -------------------------------------
-d8e2 :                       FIX16BITS       ; INT(256*2*1000/1773) = 289 = 25
+d8ee :                       FIX16BITS       ; INT(256*2*1000/1773) = 289 = 25
                                              ; Homebrew is 1.34Mhz
                                              ; So calculation = 386 = 256 + 12
                                              ; IN:  register A is low byte
@@ -5539,58 +5545,58 @@ d8e2 :                       FIX16BITS       ; INT(256*2*1000/1773) = 289 = 25
                                              ; OUT: register Y is low byte
                                              ;      register X is high byte
                              
-d8e2 : 86f8             [ 3]         stx TA1         ; Reg 1 = 256*AX
-d8e4 : 85fa             [ 3]         sta TB1
-d8e6 : 86f9             [ 3]         stx TA2         ; Reg 2 = 256*AX
-d8e8 : 85fb             [ 3]         sta TB2
-d8ea : 64fd             [ 3]         stz TC2
-d8ec : 86fe             [ 3]         stx TB3         ; Reg 3 = AX
-d8ee : 85ff             [ 3]         sta TC3
+d8ee : 86f8             [ 3]         stx TA1         ; Reg 1 = 256*AX
+d8f0 : 85fa             [ 3]         sta TB1
+d8f2 : 86f9             [ 3]         stx TA2         ; Reg 2 = 256*AX
+d8f4 : 85fb             [ 3]         sta TB2
+d8f6 : 64fd             [ 3]         stz TC2
+d8f8 : 86fe             [ 3]         stx TB3         ; Reg 3 = AX
+d8fa : 85ff             [ 3]         sta TC3
                                      
                                      ; x128 for homebrew
                                      ; which is same as right shift 1 time of 
-d8f0 : 46f9             [ 5]         lsr TA2
-d8f2 : 66fb             [ 5]         ror TB2
-d8f4 : 66fd             [ 5]         ror TC2
+d8fc : 46f9             [ 5]         lsr TA2
+d8fe : 66fb             [ 5]         ror TB2
+d900 : 66fd             [ 5]         ror TC2
                                              
                                      ; x02 + x128 for homebrew
                                      ; shift reg 3 left, the carry added to re
-d8f6 : 06ff             [ 5]         asl TC3
-d8f8 : 26fe             [ 5]         rol TB3
-d8fa : a5f9             [ 3]         lda TA2
-d8fc : 6900             [ 2]         adc #0
-d8fe : 85f9             [ 3]         sta TA2
+d902 : 06ff             [ 5]         asl TC3
+d904 : 26fe             [ 5]         rol TB3
+d906 : a5f9             [ 3]         lda TA2
+d908 : 6900             [ 2]         adc #0
+d90a : 85f9             [ 3]         sta TA2
                                      ; Now add the rest of reg 3 to reg 2
-d900 : a5ff             [ 3]         lda TC3
-d902 : 65fd             [ 3]         adc TC2
-d904 : 85fd             [ 3]         sta TC2
-d906 : a5fe             [ 3]         lda TB3
-d908 : 65fb             [ 3]         adc TB2
-d90a : 85fb             [ 3]         sta TB2
-d90c : a900             [ 2]         lda #0
-d90e : 65f9             [ 3]         adc TA2
-d910 : 85f9             [ 3]         sta TA2
+d90c : a5ff             [ 3]         lda TC3
+d90e : 65fd             [ 3]         adc TC2
+d910 : 85fd             [ 3]         sta TC2
+d912 : a5fe             [ 3]         lda TB3
+d914 : 65fb             [ 3]         adc TB2
+d916 : 85fb             [ 3]         sta TB2
+d918 : a900             [ 2]         lda #0
+d91a : 65f9             [ 3]         adc TA2
+d91c : 85f9             [ 3]         sta TA2
                              
                                      ; Add reg 2(x128+x2) to reg 1(x256) and t
-d912 : a5fb             [ 3]         lda TB2
-d914 : 65fa             [ 3]         adc TB1
-d916 : a8               [ 2]         tay         ; sta TB1
-d917 : a5f9             [ 3]         lda TA2
-d919 : 65f8             [ 3]         adc TA1
+d91e : a5fb             [ 3]         lda TB2
+d920 : 65fa             [ 3]         adc TB1
+d922 : a8               [ 2]         tay         ; sta TB1
+d923 : a5f9             [ 3]         lda TA2
+d925 : 65f8             [ 3]         adc TA1
                                      ; sta TA1
                              
                                      ; / 2 (16bits)
-d91b : 4a               [ 2]         lsr a         ; lsr TA1
-d91c : aa               [ 2]         tax         ; ldx TA1
-d91d : 98               [ 2]         tya         ; lda TB1     
-d91e : 6a               [ 2]         ror a         ; ror TB1
-d91f : a8               [ 2]         tay         ; ldy TB1
-d920 : 60               [ 6]         rts 
-                             
-                             ; HB-BBC-128 settings:
+d927 : 4a               [ 2]         lsr a         ; lsr TA1
+d928 : aa               [ 2]         tax         ; ldx TA1
 AS65 Assembler for R6502 [1.42].                                     Page   87
 ---------------------------------- bank3.s -----------------------------------
 
+d929 : 98               [ 2]         tya         ; lda TB1     
+d92a : 6a               [ 2]         ror a         ; ror TB1
+d92b : a8               [ 2]         tay         ; ldy TB1
+d92c : 60               [ 6]         rts 
+                             
+                             ; HB-BBC-128 settings:
                              ;* AY-3-8910 definitions
                              ;* The sound chip is accessed through VIA 2
 0480 =                       IO_1		= 0x0480
@@ -5614,152 +5620,152 @@ d920 : 60               [ 6]         rts
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
-d921 :                       ay_set
-d921 : 48               [ 3]         pha
+d92d :                       ay_set
+d92d : 48               [ 3]         pha
                              
-d922 : a9ff             [ 2] 	lda #0xff			; Set Port A to output
-d924 : 8d8304           [ 4] 	sta IO_1 + DDRA
+d92e : a9ff             [ 2] 	lda #0xff			; Set Port A to output
+d930 : 8d8304           [ 4] 	sta IO_1 + DDRA
                              
-d927 : 68               [ 4]         pla
-d928 : 8d8104           [ 4] 	sta SND_ADBUS			; Put A on the sound bus (A = re
+d933 : 68               [ 4]         pla
+d934 : 8d8104           [ 4] 	sta SND_ADBUS			; Put A on the sound bus (A = re
                              
-d92b : ad8004           [ 4] 	lda SND_MODE			; Need to preserve contents of ot
-d92e : 29bd             [ 2] 	and #SND_DESELECT_MASK	        ; Mask off mode b
-d930 : 0942             [ 2] 	ora #SND_SELSETADDR		; Select AY mode to latch a
-d932 : 8d8004           [ 4] 	sta SND_MODE			; This write will process the dat
+d937 : ad8004           [ 4] 	lda SND_MODE			; Need to preserve contents of ot
+d93a : 29bd             [ 2] 	and #SND_DESELECT_MASK	        ; Mask off mode b
+d93c : 0942             [ 2] 	ora #SND_SELSETADDR		; Select AY mode to latch a
+d93e : 8d8004           [ 4] 	sta SND_MODE			; This write will process the dat
                              
-d935 : 29bd             [ 2] 	and #SND_DESELECT_MASK	        ; Mask off mode b
-d937 : 8d8004           [ 4] 	sta SND_MODE			; This write will deselect the AY
+d941 : 29bd             [ 2] 	and #SND_DESELECT_MASK	        ; Mask off mode b
+d943 : 8d8004           [ 4] 	sta SND_MODE			; This write will deselect the AY
                              	
-d93a : 8e8104           [ 4] 	stx SND_ADBUS			; Put X on the sound bus (X = va
-d93d : 0902             [ 2] 	ora #SND_SELWRITE		; Select mode for writing dat
-d93f : 8d8004           [ 4] 	sta SND_MODE			; This write will process the dat
+d946 : 8e8104           [ 4] 	stx SND_ADBUS			; Put X on the sound bus (X = va
+d949 : 0902             [ 2] 	ora #SND_SELWRITE		; Select mode for writing dat
+d94b : 8d8004           [ 4] 	sta SND_MODE			; This write will process the dat
                              	
-d942 : 29bd             [ 2] 	and #SND_DESELECT_MASK	        ; Mask off mode b
-d944 : 8d8004           [ 4] 	sta SND_MODE			; This write will deselect the AY
+d94e : 29bd             [ 2] 	and #SND_DESELECT_MASK	        ; Mask off mode b
+d950 : 8d8004           [ 4] 	sta SND_MODE			; This write will deselect the AY
                              
-d947 : 60               [ 6] 	rts
+d953 : 60               [ 6] 	rts
                              
                              ; ===============================================
-d948 :                       NT_DATA	
-d948 : 64                            fcb (T_NEW_0-T1_)*2
-d949 : 2a                    	    fcb TCNEW_0-T_
-d94a : 65                    	    fcb (T_OLD_0-T1_)*2+1
-d94b : 00                    	    fcb TCOLD_0-T_
-d94c : 01                    	    fcb (T_NEW_1-T1_)*2+1
-d94d : 0c                    	    fcb TCNEW_1-T_
-d94e : 01                    	    fcb (T_OLD_1-T1_)*2+1
-d94f : 0c                    	    fcb TCOLD_1-T_
-d950 : 94                    	    fcb (T_NEW_2-T1_)*2
-d951 : 35                    	    fcb TCNEW_2-T_
-d952 : 30                    	    fcb (T_OLD_2-T1_)*2
+d954 :                       NT_DATA	
+d954 : 64                            fcb (T_NEW_0-T1_)*2
+d955 : 2a                    	    fcb TCNEW_0-T_
+d956 : 65                    	    fcb (T_OLD_0-T1_)*2+1
+d957 : 00                    	    fcb TCOLD_0-T_
+d958 : 01                    	    fcb (T_NEW_1-T1_)*2+1
 AS65 Assembler for R6502 [1.42].                                     Page   88
 ---------------------------------- bank3.s -----------------------------------
 
-d953 : 0e                    	    fcb TCOLD_2-T_
-d954 : 60                    	    fcb (T_NEW_3-T1_)*2
-d955 : 20                    	    fcb TCNEW_3-T_
-d956 : 60                    	    fcb (T_OLD_3-T1_)*2
-d957 : 21                    	    fcb TCOLD_3-T_
+d959 : 0c                    	    fcb TCNEW_1-T_
+d95a : 01                    	    fcb (T_OLD_1-T1_)*2+1
+d95b : 0c                    	    fcb TCOLD_1-T_
+d95c : 94                    	    fcb (T_NEW_2-T1_)*2
+d95d : 35                    	    fcb TCNEW_2-T_
+d95e : 30                    	    fcb (T_OLD_2-T1_)*2
+d95f : 0e                    	    fcb TCOLD_2-T_
+d960 : 60                    	    fcb (T_NEW_3-T1_)*2
+d961 : 20                    	    fcb TCNEW_3-T_
+d962 : 60                    	    fcb (T_OLD_3-T1_)*2
+d963 : 21                    	    fcb TCOLD_3-T_
                              
-d958 :                       T_
+d964 :                       T_
                              
-d958 : 0105090b0d0f1315      TCOLD_0	fcb $00+1,$04+1,$08+1,$0A+1,$0C+1,$0E+1,$
-d960 : 19253d00              	    fcb $18+1,$24+1,$3C+1,0
-d964 : 5d00                  TCOLD_1	fcb $5C+1,0
-d966 : 31374d535f7182..      TCOLD_2	fcb $30+1,$36+1,$4C+1,$52+1,$5E+1,$70+1,$
-d96f : 9ea0a6a8aaacae..      	    fcb $9E,$A0,$A6,$A8,$AA,$AC,$AE,$AE,0
-d978 : 57                    TCNEW_3	fcb $56+1
-d979 : 1f2325292d2f33..      TCOLD_3	fcb $1E+1,$22+1,$24+1,$28+1,$2C+1,$2E+1,$
-d982 : 1d2123272b2d3155      TCNEW_0	fcb $1C+1,$20+1,$22+1,$26+1,$2A+1,$2C+1,$
-d98a : bdbf00                	    fcb $BC+1,$BE+1,0
-d964 =                       TCNEW_1 = TCOLD_1
-d98d : 1b2125292b3b4d5f      TCNEW_2	fcb $1A+1,$20+1,$24+1,$28+1,$2A+1,$3A+1,$
-d995 : bbbdbf00              	    fcb $BA+1,$BC+1,$BE+1,0
+d964 : 0105090b0d0f1315      TCOLD_0	fcb $00+1,$04+1,$08+1,$0A+1,$0C+1,$0E+1,$
+d96c : 19253d00              	    fcb $18+1,$24+1,$3C+1,0
+d970 : 5d00                  TCOLD_1	fcb $5C+1,0
+d972 : 31374d535f7182..      TCOLD_2	fcb $30+1,$36+1,$4C+1,$52+1,$5E+1,$70+1,$
+d97b : 9ea0a6a8aaacae..      	    fcb $9E,$A0,$A6,$A8,$AA,$AC,$AE,$AE,0
+d984 : 57                    TCNEW_3	fcb $56+1
+d985 : 1f2325292d2f33..      TCOLD_3	fcb $1E+1,$22+1,$24+1,$28+1,$2C+1,$2E+1,$
+d98e : 1d2123272b2d3155      TCNEW_0	fcb $1C+1,$20+1,$22+1,$26+1,$2A+1,$2C+1,$
+d996 : bdbf00                	    fcb $BC+1,$BE+1,0
+d970 =                       TCNEW_1 = TCOLD_1
+d999 : 1b2125292b3b4d5f      TCNEW_2	fcb $1A+1,$20+1,$24+1,$28+1,$2A+1,$3A+1,$
+d9a1 : bbbdbf00              	    fcb $BA+1,$BC+1,$BE+1,0
                              
-d998 =                       EMPTYSAMORN = *-1
-d999 : 010090                	    fcb 1,0,$90 ;delete #90 if you don't need de
+d9a4 =                       EMPTYSAMORN = *-1
+d9a5 : 010090                	    fcb 1,0,$90 ;delete #90 if you don't need de
                              
                              ;first 12 values of tone tables
                              
-d99c :                       T1_ 	
-d99c : f01d                          fcw $1DF0
-d99e : 201c                          fcw $1C20
-d9a0 : c01a                          fcw $1AC0
-d9a2 : 0019                          fcw $1900
-d9a4 : b017                          fcw $17B0
-d9a6 : 5016                          fcw $1650
-d9a8 : 1015                          fcw $1510
-d9aa : e013                          fcw $13E0
+d9a8 :                       T1_ 	
+d9a8 : f01d                          fcw $1DF0
+d9aa : 201c                          fcw $1C20
+d9ac : c01a                          fcw $1AC0
+d9ae : 0019                          fcw $1900
+d9b0 : b017                          fcw $17B0
+d9b2 : 5016                          fcw $1650
+d9b4 : 1015                          fcw $1510
+d9b6 : e013                          fcw $13E0
                              
-d9ac : c012                          fcw $12C0
-d9ae : c011                          fcw $11C0
-d9b0 : b010                          fcw $10B0
-d9b2 : c00f                          fcw $0FC0
-d9b4 : 7c1a                          fcw $1A7C
-d9b6 : 0019                          fcw $1900
-d9b8 : 9817                          fcw $1798
-d9ba : 4416                          fcw $1644
+d9b8 : c012                          fcw $12C0
+d9ba : c011                          fcw $11C0
+d9bc : b010                          fcw $10B0
+d9be : c00f                          fcw $0FC0
+d9c0 : 7c1a                          fcw $1A7C
+d9c2 : 0019                          fcw $1900
+d9c4 : 9817                          fcw $1798
+d9c6 : 4416                          fcw $1644
                              
-d9bc : 0415                          fcw $1504
-d9be : d813                          fcw $13D8
-d9c0 : b812                          fcw $12B8
-d9c2 : ac11                          fcw $11AC
-d9c4 : b010                          fcw $10B0
-d9c6 : c00f                          fcw $0FC0
-d9c8 : dc0e                          fcw $0EDC
-d9ca : 080e                          fcw $0E08
+d9c8 : 0415                          fcw $1504
+d9ca : d813                          fcw $13D8
+d9cc : b812                          fcw $12B8
+d9ce : ac11                          fcw $11AC
+d9d0 : b010                          fcw $10B0
+d9d2 : c00f                          fcw $0FC0
+d9d4 : dc0e                          fcw $0EDC
+d9d6 : 080e                          fcw $0E08
                              
-d9cc : b419                          fcw $19B4
-d9ce : 4418                          fcw $1844
-d9d0 : e616                          fcw $16E6
-d9d2 : 9e15                          fcw $159E
-d9d4 : 6614                          fcw $1466
-d9d6 : 4213                          fcw $1342
-d9d8 : 2e12                          fcw $122E
-d9da : 2811                          fcw $1128
+d9d8 : b419                          fcw $19B4
+d9da : 4418                          fcw $1844
 AS65 Assembler for R6502 [1.42].                                     Page   89
 ---------------------------------- bank3.s -----------------------------------
 
+d9dc : e616                          fcw $16E6
+d9de : 9e15                          fcw $159E
+d9e0 : 6614                          fcw $1466
+d9e2 : 4213                          fcw $1342
+d9e4 : 2e12                          fcw $122E
+d9e6 : 2811                          fcw $1128
                              
-d9dc : 3210                          fcw $1032
-d9de : 480f                          fcw $0F48
-d9e0 : 6e0e                          fcw $0E6E
-d9e2 : 9e0d                          fcw $0D9E
-d9e4 : da0c                          fcw $0CDA
-d9e6 : 201a                          fcw $1A20
-d9e8 : aa18                          fcw $18AA
-d9ea : 4817                          fcw $1748
+d9e8 : 3210                          fcw $1032
+d9ea : 480f                          fcw $0F48
+d9ec : 6e0e                          fcw $0E6E
+d9ee : 9e0d                          fcw $0D9E
+d9f0 : da0c                          fcw $0CDA
+d9f2 : 201a                          fcw $1A20
+d9f4 : aa18                          fcw $18AA
+d9f6 : 4817                          fcw $1748
                              
-d9ec : f815                          fcw $15F8
-d9ee : be14                          fcw $14BE
-d9f0 : 9413                          fcw $1394
-d9f2 : 7a12                          fcw $127A
-d9f4 : 7011                          fcw $1170
-d9f6 : 7610                          fcw $1076
-d9f8 : 8a0f                          fcw $0F8A
-d9fa : aa0e                          fcw $0EAA
+d9f8 : f815                          fcw $15F8
+d9fa : be14                          fcw $14BE
+d9fc : 9413                          fcw $1394
+d9fe : 7a12                          fcw $127A
+da00 : 7011                          fcw $1170
+da02 : 7610                          fcw $1076
+da04 : 8a0f                          fcw $0F8A
+da06 : aa0e                          fcw $0EAA
                              
-d9fc : d80d                          fcw $0DD8
+da08 : d80d                          fcw $0DD8
                              
-d99c =                       T_OLD_1	= T1_
-d9b4 =                       T_OLD_2	= T_OLD_1+24
-d9cc =                       T_OLD_3	= T_OLD_2+24
-d9ce =                       T_OLD_0	= T_OLD_3+2
-d9ce =                       T_NEW_0	= T_OLD_0
-d99c =                       T_NEW_1	= T_OLD_1
-d9e6 =                       T_NEW_2	= T_NEW_0+24
-d9cc =                       T_NEW_3	= T_OLD_3
+d9a8 =                       T_OLD_1	= T1_
+d9c0 =                       T_OLD_2	= T_OLD_1+24
+d9d8 =                       T_OLD_3	= T_OLD_2+24
+d9da =                       T_OLD_0	= T_OLD_3+2
+d9da =                       T_NEW_0	= T_OLD_0
+d9a8 =                       T_NEW_1	= T_OLD_1
+d9f2 =                       T_NEW_2	= T_NEW_0+24
+d9d8 =                       T_NEW_3	= T_OLD_3
                              
-d9fe =                       FILE_END =*
+da0a =                       FILE_END =*
                              ; ===========================
                              
-d9fe :                       .bss        ; uninitialized data stuff
+da0a :                       .bss        ; uninitialized data stuff
                              
                              ;vars from here can be stripped
                              ;you can move VARS to any other address
                              
-d9fe :                       VARS
+da0a :                       VARS
                              ;ChannelsVars
                              
                              ; STRUCT "CHP"
@@ -5777,128 +5783,128 @@ d9fe :                       VARS
 000d =                       OrnPtr	= 13
 000f =                       SamPtr	= 15
 0011 =                       NNtSkp	= 17
+AS65 Assembler for R6502 [1.42].                                     Page   90
+---------------------------------- bank3.s -----------------------------------
+
 0012 =                       Note	= 18
 0013 =                       SlToNt	= 19
 0014 =                       Env_En	= 20
 0015 =                       Flags	= 21
 0016 =                       TnSlDl	= 22
 0017 =                       TSlStp	= 23
-AS65 Assembler for R6502 [1.42].                                     Page   90
----------------------------------- bank3.s -----------------------------------
-
 0019 =                       TnDelt	= 25
 001b =                       NtSkCn	= 27
 001c =                       Volume	= 28
                              ; end STRUCT
                              
                              ; CHANNEL A
-d9fe :                       ChanA	
+da0a :                       ChanA	
                              ;reset group
-d9fe : 00                    APsInOr	fcb 0
-d9ff : 00                    APsInSm	fcb 0
-da00 : 00                    ACrAmSl	fcb 0
-da01 : 00                    ACrNsSl	fcb 0
-da02 : 00                    ACrEnSl	fcb 0
-da03 : 00                    ATSlCnt	fcb 0
-da04 : 0000                  ACrTnSl	fcw 0
-da06 : 0000                  ATnAcc	fcw 0
-da08 : 00                    ACOnOff	fcb 0
+da0a : 00                    APsInOr	fcb 0
+da0b : 00                    APsInSm	fcb 0
+da0c : 00                    ACrAmSl	fcb 0
+da0d : 00                    ACrNsSl	fcb 0
+da0e : 00                    ACrEnSl	fcb 0
+da0f : 00                    ATSlCnt	fcb 0
+da10 : 0000                  ACrTnSl	fcw 0
+da12 : 0000                  ATnAcc	fcw 0
+da14 : 00                    ACOnOff	fcb 0
                              ;reset group
                              
-da09 : 00                    AOnOffD	fcb 0
+da15 : 00                    AOnOffD	fcb 0
                              
-da0a : 00                    AOffOnD	fcb 0
-da0b : 0000                  AOrnPtr	fcw 0
-da0d : 0000                  ASamPtr	fcw 0
-da0f : 00                    ANNtSkp	fcb 0
-da10 : 00                    ANote	fcb 0
-da11 : 00                    ASlToNt	fcb 0
-da12 : 00                    AEnv_En	fcb 0
-da13 : 00                    AFlags	fcb 0
+da16 : 00                    AOffOnD	fcb 0
+da17 : 0000                  AOrnPtr	fcw 0
+da19 : 0000                  ASamPtr	fcw 0
+da1b : 00                    ANNtSkp	fcb 0
+da1c : 00                    ANote	fcb 0
+da1d : 00                    ASlToNt	fcb 0
+da1e : 00                    AEnv_En	fcb 0
+da1f : 00                    AFlags	fcb 0
                               ;Enabled - 0,SimpleGliss - 2
-da14 : 00                    ATnSlDl	fcb 0
-da15 : 0000                  ATSlStp	fcw 0
-da17 : 0000                  ATnDelt	fcw 0
-da19 : 00                    ANtSkCn	fcb 0
-da1a : 00                    AVolume	fcb 0
+da20 : 00                    ATnSlDl	fcb 0
+da21 : 0000                  ATSlStp	fcw 0
+da23 : 0000                  ATnDelt	fcw 0
+da25 : 00                    ANtSkCn	fcb 0
+da26 : 00                    AVolume	fcb 0
                              	
                              ; CHANNEL B
-da1b :                       ChanB
+da27 :                       ChanB
                              ;reset group
-da1b : 00                    BPsInOr	fcb 0
-da1c : 00                    BPsInSm	fcb 0
-da1d : 00                    BCrAmSl	fcb 0
-da1e : 00                    BCrNsSl	fcb 0
-da1f : 00                    BCrEnSl	fcb 0
-da20 : 00                    BTSlCnt	fcb 0
-da21 : 0000                  BCrTnSl	fcw 0
-da23 : 0000                  BTnAcc	fcw 0
-da25 : 00                    BCOnOff	fcb 0
+da27 : 00                    BPsInOr	fcb 0
+da28 : 00                    BPsInSm	fcb 0
+da29 : 00                    BCrAmSl	fcb 0
+da2a : 00                    BCrNsSl	fcb 0
+da2b : 00                    BCrEnSl	fcb 0
+da2c : 00                    BTSlCnt	fcb 0
+da2d : 0000                  BCrTnSl	fcw 0
+da2f : 0000                  BTnAcc	fcw 0
+da31 : 00                    BCOnOff	fcb 0
                              ;reset group
                              
-da26 : 00                    BOnOffD	fcb 0
+da32 : 00                    BOnOffD	fcb 0
                              
-da27 : 00                    BOffOnD	fcb 0
-da28 : 0000                  BOrnPtr	fcw 0
-da2a : 0000                  BSamPtr	fcw 0
-da2c : 00                    BNNtSkp	fcb 0
-da2d : 00                    BNote	fcb 0
-da2e : 00                    BSlToNt	fcb 0
-da2f : 00                    BEnv_En	fcb 0
-da30 : 00                    BFlags	fcb 0
-                              ;Enabled - 0,SimpleGliss - 2
-da31 : 00                    BTnSlDl	fcb 0
+da33 : 00                    BOffOnD	fcb 0
+da34 : 0000                  BOrnPtr	fcw 0
+da36 : 0000                  BSamPtr	fcw 0
+da38 : 00                    BNNtSkp	fcb 0
 AS65 Assembler for R6502 [1.42].                                     Page   91
 ---------------------------------- bank3.s -----------------------------------
 
-da32 : 0000                  BTSlStp	fcw 0
-da34 : 0000                  BTnDelt	fcw 0
-da36 : 00                    BNtSkCn	fcb 0
-da37 : 00                    BVolume	fcb 0
+da39 : 00                    BNote	fcb 0
+da3a : 00                    BSlToNt	fcb 0
+da3b : 00                    BEnv_En	fcb 0
+da3c : 00                    BFlags	fcb 0
+                              ;Enabled - 0,SimpleGliss - 2
+da3d : 00                    BTnSlDl	fcb 0
+da3e : 0000                  BTSlStp	fcw 0
+da40 : 0000                  BTnDelt	fcw 0
+da42 : 00                    BNtSkCn	fcb 0
+da43 : 00                    BVolume	fcb 0
                              
                              ; CHANNEL C
-da38 :                       ChanC
+da44 :                       ChanC
                              ;reset group
-da38 : 00                    CPsInOr	fcb 0
-da39 : 00                    CPsInSm	fcb 0
-da3a : 00                    CCrAmSl	fcb 0
-da3b : 00                    CCrNsSl	fcb 0
-da3c : 00                    CCrEnSl	fcb 0
-da3d : 00                    CTSlCnt	fcb 0
-da3e : 0000                  CCrTnSl	fcw 0
-da40 : 0000                  CTnAcc	fcw 0
-da42 : 00                    CCOnOff	fcb 0
+da44 : 00                    CPsInOr	fcb 0
+da45 : 00                    CPsInSm	fcb 0
+da46 : 00                    CCrAmSl	fcb 0
+da47 : 00                    CCrNsSl	fcb 0
+da48 : 00                    CCrEnSl	fcb 0
+da49 : 00                    CTSlCnt	fcb 0
+da4a : 0000                  CCrTnSl	fcw 0
+da4c : 0000                  CTnAcc	fcw 0
+da4e : 00                    CCOnOff	fcb 0
                              ;reset group
                              
-da43 : 00                    COnOffD	fcb 0
+da4f : 00                    COnOffD	fcb 0
                              
-da44 : 00                    COffOnD	fcb 0
-da45 : 0000                  COrnPtr	fcw 0
-da47 : 0000                  CSamPtr	fcw 0
-da49 : 00                    CNNtSkp	fcb 0
-da4a : 00                    CNote	fcb 0
-da4b : 00                    CSlToNt	fcb 0
-da4c : 00                    CEnv_En	fcb 0
-da4d : 00                    CFlags	fcb 0
+da50 : 00                    COffOnD	fcb 0
+da51 : 0000                  COrnPtr	fcw 0
+da53 : 0000                  CSamPtr	fcw 0
+da55 : 00                    CNNtSkp	fcb 0
+da56 : 00                    CNote	fcb 0
+da57 : 00                    CSlToNt	fcb 0
+da58 : 00                    CEnv_En	fcb 0
+da59 : 00                    CFlags	fcb 0
                               ;Enabled - 0,SimpleGliss - 2
-da4e : 00                    CTnSlDl	fcb 0
-da4f : 0000                  CTSlStp	fcw 0
-da51 : 0000                  CTnDelt	fcw 0
-da53 : 00                    CNtSkCn	fcb 0
-da54 : 00                    CVolume	fcb 0
+da5a : 00                    CTnSlDl	fcb 0
+da5b : 0000                  CTSlStp	fcw 0
+da5d : 0000                  CTnDelt	fcw 0
+da5f : 00                    CNtSkCn	fcb 0
+da60 : 00                    CVolume	fcb 0
                              
                              ; ------------
                              
                              ;GlobalVars
-da55 : 00                    DelyCnt	fcb 0
-da56 : 0000                  CurESld	fcw 0
-da58 : 00                    CurEDel	fcb 0
-da59 :                       Ns_Base_AddToNs
-da59 : 00                    Ns_Base	fcb 0
-da5a : 00                    AddToNs	fcb 0
+da61 : 00                    DelyCnt	fcb 0
+da62 : 0000                  CurESld	fcw 0
+da64 : 00                    CurEDel	fcb 0
+da65 :                       Ns_Base_AddToNs
+da65 : 00                    Ns_Base	fcb 0
+da66 : 00                    AddToNs	fcb 0
                              
                              ; ===========================
-da5b :                       AYREGS ; AY registers
+da67 :                       AYREGS ; AY registers
                              
 0000 =                       TonA	= 0
 0002 =                       TonB	= 2
@@ -5907,31 +5913,31 @@ da5b :                       AYREGS ; AY registers
 0007 =                       Mixer	= 7
 0008 =                       AmplA	= 8
 0009 =                       AmplB	= 9
+AS65 Assembler for R6502 [1.42].                                     Page   92
+---------------------------------- bank3.s -----------------------------------
+
 000a =                       AmplC	= 10
 000b =                       Env	    = 11
 000d =                       EnvTp	= 13
                              ; ---
                              
-da65 =                       Ampl	= AYREGS+AmplC
-AS65 Assembler for R6502 [1.42].                                     Page   92
----------------------------------- bank3.s -----------------------------------
-
+da71 =                       Ampl	= AYREGS+AmplC
                              ; ===========================
-da5b : 00000000000000..      VT_	ds 256 ;CreatedVolumeTableAddress
+da67 : 00000000000000..      VT_	ds 256 ;CreatedVolumeTableAddress
                              
-da69 =                       EnvBase	= VT_+14
-da6b =                       VAR0END	= VT_+16 ;INIT zeroes from VARS to VAR0EN
+da75 =                       EnvBase	= VT_+14
+da77 =                       VAR0END	= VT_+16 ;INIT zeroes from VARS to VAR0EN
                              
                              ; ===========================
-db5b : 00000000000000..      NT_	ds 192 ;CreatedNoteTableAddress
+db67 : 00000000000000..      NT_	ds 192 ;CreatedNoteTableAddress
                              
-dc1b =                       VARS_END = *
-dc1b :                       PT3END
-dc1b :                       PT3_code_end
+dc27 =                       VARS_END = *
+dc27 :                       PT3END
+dc27 :                       PT3_code_end
                              
                              
                              	; End of Code
-dc1b :                       _bank3_end
+dc27 :                       _bank3_end
                              
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.

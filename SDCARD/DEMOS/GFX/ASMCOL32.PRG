@@ -1,6 +1,6 @@
 110 def_demo(screenMode)
-111 iframe=23381
-112 idelay=2664
+111 iframe=23038
+112 idelay=2638
 130 dim code$[200,5]
 150 cursor 0
 170 osvwrreg=0xc001+3*2
@@ -19,7 +19,7 @@
 380 .osvvia1:.ds 2
 385 .delay:.ds 2
 386 .frame:.ds 2
-387 vdpvec=8:via1timervec=12
+387 vdpvec=0x0c06:via1timervec=0x0c0a
 390 ;
 410 .init
 430 sei:lda vdpvec:sta osvdp:lda vdpvec+1:sta osvdp+1

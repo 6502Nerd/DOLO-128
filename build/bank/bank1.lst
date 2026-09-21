@@ -1,7 +1,7 @@
 AS65 Assembler for R6502 [1.42].                                     Page    1
 ---------------------------------- bank1.s -----------------------------------
 
-13628 lines read, no errors in pass 1.
+13630 lines read, no errors in pass 1.
 c000 =                       _bank1_start=0xc000
                              	include "kernel\kernel.s"
                              ;************************************************
@@ -680,7 +680,7 @@ c000 =                       _bank1_start=0xc000
                              ;************************************************
                              
                              ;* Start dflat program memory
-0cb6 =                       DF_PROGSTART=	mem_start
+0cb9 =                       DF_PROGSTART=	mem_start
                              ;* This is the top of usable dflat memory plus 1
 c000 =                       DF_MEMTOP	=	0xc000
                              
@@ -830,7 +830,7 @@ c000 =                       DF_MEMTOP	=	0xc000
                              ;************************************************
                              
                              ;* Start dflat program memory
-0cb6 =                       DF_PROGSTART=	mem_start
+0cb9 =                       DF_PROGSTART=	mem_start
                              ;* This is the top of usable dflat memory plus 1
 c000 =                       DF_MEMTOP	=	0xc000
                              
@@ -1288,35 +1288,37 @@ c000 =                       bankjsr_nul_addr	=	0xc000
                              ; Self-modifying code or code that needs to run w
 0c0c =                       ram_code	ds  64		; 64 bytes of RAM code space
 0c4c =                       pt3_int		ds	1		; =1 when PT3 interrupt routine is
-                             
+0c4d =                       pt3_amplA	ds	1		; PT3 channel A volume
+0c4e =                       pt3_amplB	ds	1		; PT3 channel B volume
+0c4f =                       pt3_amplC	ds	1		; PT3 channel C volume
                              
                              ; Active IO device settings
-0c4d =                       io_default	ds	1		; The default device number - es
+0c50 =                       io_default	ds	1		; The default device number - es
                              ; Copy of jump tables to active device io routine
-0c4e =                       io_block	ds	io_struct
+0c51 =                       io_block	ds	io_struct
                              
                              ; Copy of FAT16 directory
-0c5e =                       fs_direntry	ds	FATFileDesc ; copy of dir entry - 
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   21
 ---------------------------------- bank1.s -----------------------------------
 
+0c61 =                       fs_direntry	ds	FATFileDesc ; copy of dir entry - 
+                             
                              ; Filesystem parameters
-0c7e =                       fs_bootsect	ds	4		; Start of partition (usually 0
-0c82 =                       fs_fatsect	ds	4		; Start of FAT tables
-0c86 =                       fs_rootsect	ds	4		; Start of Root Directory
-0c8a =                       fs_datasect	ds	4		; Start of Data Area
-0c8e =                       fs_dirsect	ds	4		; Current directory sector numbe
-0c92 =                       fs_dirclust	ds	2		; Current directory cluster num
+0c81 =                       fs_bootsect	ds	4		; Start of partition (usually 0
+0c85 =                       fs_fatsect	ds	4		; Start of FAT tables
+0c89 =                       fs_rootsect	ds	4		; Start of Root Directory
+0c8d =                       fs_datasect	ds	4		; Start of Data Area
+0c91 =                       fs_dirsect	ds	4		; Current directory sector numbe
+0c95 =                       fs_dirclust	ds	2		; Current directory cluster num
                              
                              ; Working and scratch for filesystem - some data 
-0c94 =                       fs_scratch	ds	32		; 32 bytes should be more than 
+0c97 =                       fs_scratch	ds	32		; 32 bytes should be more than 
                              
                              ; Dflat top of memory+1 - normally initialised to
-0cb4 =                       df_memtop	ds	2
+0cb7 =                       df_memtop	ds	2
                              
                              ;***** THIS IS THE START OF FREE SPACE for DFLAT 
-0cb6 =                       mem_start
+0cb9 =                       mem_start
                              
                              
                              
@@ -1361,11 +1363,11 @@ c001 :                       _OSVectors
                              ;*  Free to use for any non-commercial purpose su
                              ;*  appropriate credit of my authorship please!
                              ;*
-                             ;*  OSVEC.S
-                             ;*  Simply this is a bunch of JMP XXXX the order 
 AS65 Assembler for R6502 [1.42].                                     Page   22
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;*  OSVEC.S
+                             ;*  Simply this is a bunch of JMP XXXX the order 
                              ;*  will always be maintained.  This is to allow 
                              ;*  code programs to be able to rely on fixed loc
                              ;*  some key low-level functions.
@@ -1426,11 +1428,11 @@ c091 :                       _fs_delete_w
 c0a9 :                       _fs_close_w
                               _bankjsr $d525, 2
                              
-c0c1 :                       _fs_get_byte_w
-                              _bankjsr $d242, 2
 AS65 Assembler for R6502 [1.42].                                     Page   23
 ---------------------------------- bank1.s -----------------------------------
 
+c0c1 :                       _fs_get_byte_w
+                              _bankjsr $d242, 2
                              
 c0d9 :                       _fs_open_read_w
                               _bankjsr $d411, 2
@@ -1457,13 +1459,13 @@ c181 :                       _ser_put_byte
                               _bankjsr $d284, 0
                              
 c199 :                       _gr_get_key
-                              _bankjsr $e390, 0
+                              _bankjsr $e399, 0
                              
 c1b1 :                       _gr_put_byte
-                              _bankjsr $e39d, 0
+                              _bankjsr $e3a6, 0
                              
 c1c9 :                       _gr_init_screen
-                              _bankjsr $de59, 0
+                              _bankjsr $de62, 0
                              
 c1e1 :                       _init_acia
                               _bankjsr $d291, 0
@@ -1491,42 +1493,42 @@ c289 :                       _kb_read_raw
                              
 c2a1 :                       _kb_read_dip
                               _bankjsr $d322, 0
-                             
-c2b9 :                       _command_line
 AS65 Assembler for R6502 [1.42].                                     Page   24
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+c2b9 :                       _command_line
                               _bankjsr $cc20, 0
                              
 c2d1 :                       _gr_cls
-                              _bankjsr $de6c, 0
+                              _bankjsr $de75, 0
                              
 c2e9 :                       _gr_init_hires
-                              _bankjsr $de16, 0
+                              _bankjsr $de1e, 0
                              
 c301 :                       _gr_line
-                              _bankjsr $e1ca, 0
+                              _bankjsr $e1d3, 0
                              
 c319 :                       _gr_box
-                              _bankjsr $e00a, 0
+                              _bankjsr $e013, 0
                              
 c331 :                       _gr_circle
-                              _bankjsr $e115, 0
+                              _bankjsr $e11e, 0
                              
 c349 :                       _gr_plot
-                              _bankjsr $ded7, 0
+                              _bankjsr $dee0, 0
                              
 c361 :                       _gr_hchar
-                              _bankjsr $df15, 0
+                              _bankjsr $df1e, 0
                              
 c379 :                       _gr_point
-                              _bankjsr $dfbb, 0
+                              _bankjsr $dfc4, 0
                              
 c391 :                       _gr_get
-                              _bankjsr $def2, 0
+                              _bankjsr $defb, 0
                              
 c3a9 :                       _gr_set_cur
-                              _bankjsr $defa, 0
+                              _bankjsr $df03, 0
                              
 c3c1 :                       _snd_get_note
                               _bankjsr $d658, 0
@@ -1556,11 +1558,11 @@ c481 :                       _rtc_nvwrite
                               _bankjsr $d637, 0
                              
 c499 :                       _fs_dir_fhandle_str
-                              _bankjsr $d671, 2
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   25
 ---------------------------------- bank1.s -----------------------------------
 
+                              _bankjsr $d671, 2
+                             
 c4b1 :                       _sd_sendcmd17
                               _bankjsr $cdef, 2
                              
@@ -1621,11 +1623,11 @@ c559 :                       mod_sz_io_s
                              ;* io_init
                              ;* Initialise the default device and make active
                              ;* No keys pressed = serial (default)
-                             ;* F0 pressed = KB/VDP
-                             ;* F1 pressed = Serial
 AS65 Assembler for R6502 [1.42].                                     Page   26
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;* F0 pressed = KB/VDP
+                             ;* F1 pressed = Serial
                              ;* Keyboard and screen or serial port
                              ;* Output : None
                              ;* Regs affected : P, A
@@ -1645,7 +1647,7 @@ c56b : a901             [ 2] 	lda #1
 c56d : 48               [ 3] 	pha
 c56e :                       io_init_set_default
 c56e : 68               [ 4] 	pla
-c56f : 8d4d0c           [ 4] 	sta io_default
+c56f : 8d500c           [ 4] 	sta io_default
 c572 : 4c75c5           [ 3] 	jmp io_set_default	; Activate the default device
                              
                              ;****************************************
@@ -1656,7 +1658,7 @@ c572 : 4c75c5           [ 3] 	jmp io_set_default	; Activate the default device
                              ;* Regs affected : P, A
                              ;****************************************
 c575 :                       io_set_default			; Entry point for default
-c575 : ad4d0c           [ 4] 	lda io_default
+c575 : ad500c           [ 4] 	lda io_default
 c578 :                       io_active_device		; Entry point for A set
 c578 : 0a               [ 2] 	asl	a				; x16 the Block number
 c579 : 0a               [ 2] 	asl a
@@ -1667,7 +1669,7 @@ c57d : a200             [ 2] 	ldx #0
                              	; Copy device settings to io block
 c57f :                       io_copy_data
 c57f : b9f3c5           [ 4] 	lda io_devices,y
-c582 : 9d4e0c           [ 5] 	sta io_block,x
+c582 : 9d510c           [ 5] 	sta io_block,x
 c585 : c8               [ 2] 	iny
 c586 : e8               [ 2] 	inx
 c587 : e010             [ 2] 	cpx #io_struct
@@ -1685,12 +1687,12 @@ c58f : 60               [ 6] 	rts
                              ;* Regs affected : P, A
                              ;****************************************
 c590 :                       io_get_ch
-c590 : 6c4e0c           [ 6] 	jmp (io_block+io_get_byte)
-                             	
-                             
+c590 : 6c510c           [ 6] 	jmp (io_block+io_get_byte)
 AS65 Assembler for R6502 [1.42].                                     Page   27
 ---------------------------------- bank1.s -----------------------------------
 
+                             	
+                             
                              ;****************************************
                              ;* io_put_ch
                              ;* Put a char
@@ -1698,7 +1700,7 @@ c590 : 6c4e0c           [ 6] 	jmp (io_block+io_get_byte)
                              ;* Regs affected : P, A
                              ;****************************************
 c593 :                       io_put_ch
-c593 : 6c500c           [ 6] 	jmp (io_block+io_put_byte)
+c593 : 6c530c           [ 6] 	jmp (io_block+io_put_byte)
                              	
                              ;****************************************
                              ;* io_open_read
@@ -1708,7 +1710,7 @@ c593 : 6c500c           [ 6] 	jmp (io_block+io_put_byte)
                              ;* Regs affected : All
                              ;****************************************
 c596 :                       io_open_read
-c596 : 6c520c           [ 6] 	jmp (io_block+io_open_r)
+c596 : 6c550c           [ 6] 	jmp (io_block+io_open_r)
                              	
                              ;****************************************
                              ;* io_open_write
@@ -1718,7 +1720,7 @@ c596 : 6c520c           [ 6] 	jmp (io_block+io_open_r)
                              ;* Regs affected : All
                              ;****************************************
 c599 :                       io_open_write
-c599 : 6c540c           [ 6] 	jmp (io_block+io_open_w)
+c599 : 6c570c           [ 6] 	jmp (io_block+io_open_w)
                              
                              ;****************************************
                              ;* io_close
@@ -1728,7 +1730,7 @@ c599 : 6c540c           [ 6] 	jmp (io_block+io_open_w)
                              ;* Regs affected : All
                              ;****************************************
 c59c :                       io_close
-c59c : 6c560c           [ 6] 	jmp (io_block+io_close_f)
+c59c : 6c590c           [ 6] 	jmp (io_block+io_close_f)
                              	
                              ;****************************************
                              ;* io_delete
@@ -1738,7 +1740,7 @@ c59c : 6c560c           [ 6] 	jmp (io_block+io_close_f)
                              ;* Regs affected : All
                              ;****************************************
 c59f :                       io_delete
-c59f : 6c580c           [ 6] 	jmp (io_block+io_del_f)
+c59f : 6c5b0c           [ 6] 	jmp (io_block+io_del_f)
                              	
                              ;****************************************
                              ;* io_read_line
@@ -1751,11 +1753,11 @@ c59f : 6c580c           [ 6] 	jmp (io_block+io_del_f)
                              ;****************************************
 c5a2 :                       io_read_line
 c5a2 : 863b             [ 3] 	stx buf_adr			; Save pointer to storage
-c5a4 : 853c             [ 3] 	sta buf_adr+1
-c5a6 : 843d             [ 3] 	sty buf_sz			; Max length
 AS65 Assembler for R6502 [1.42].                                     Page   28
 ---------------------------------- bank1.s -----------------------------------
 
+c5a4 : 853c             [ 3] 	sta buf_adr+1
+c5a6 : 843d             [ 3] 	sty buf_sz			; Max length
 c5a8 : 08               [ 3] 	php					; Save echo state
 c5a9 : a000             [ 2] 	ldy #0x00			; Starting at first byte
 c5ab :                       io_get_line_byte
@@ -1816,11 +1818,11 @@ c5ed : d0f6             [ 3] 	bne io_print_line_byte		; Carry on until zero fo
 c5ef :                       io_print_done
 c5ef : 68               [ 4] 	pla
 c5f0 : 60               [ 6] 	rts
-                             
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   29
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             
                              ;*** Null operation just clc and return ***
 c5f1 :                       io_null_op
 c5f1 : 18               [ 2] 	clc
@@ -1881,11 +1883,11 @@ c623 :                       mod_sz_io_e
                              ;*	OS vectored access to VDP routines for M/C fro
                              ;*
                              ;************************************************
-                             
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page   30
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             ;****************************************
                              ;* vdp_wr_reg
                              ;* Write to Register A the value X
                              ;* Input : A - Register Number, X - Data
@@ -1946,11 +1948,11 @@ c647 : 60               [ 6] 	rts								; 6
                              	
                              ;****************************************
                              ;* vdp_rd_addr
-                             ;* Set read address 
-                             ;* Input : A - high, X - low 
 AS65 Assembler for R6502 [1.42].                                     Page   31
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;* Set read address 
+                             ;* Input : A - high, X - low 
                              ;* Output : None
                              ;* Regs affected : None
                              ;****************************************
@@ -2011,11 +2013,11 @@ c669 : 60               [ 6] 	rts
                              ;*		   X = Low Address
                              ;*		   A = High Address
                              ;* Output : A = byte read
-                             ;* Regs affected : None
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page   32
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;* Regs affected : None
+                             ;****************************************
 c66a :                       vdp_peek
 c66a : 08               [ 3] 	php
 c66b : 78               [ 2] 	sei
@@ -2076,11 +2078,11 @@ c69a : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* snd_get
-                             ;* Get AY register X to Y
-                             ;* Input : X = Reg no
 AS65 Assembler for R6502 [1.42].                                     Page   33
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;* Get AY register X to Y
+                             ;* Input : X = Reg no
                              ;* Output : Y = Value
                              ;* Regs affected : None
                              ;****************************************
@@ -2141,11 +2143,11 @@ c6df : 68               [ 4] 	pla
 c6e0 : 68               [ 4] 	pla
 c6e1 : 60               [ 6] 	rts
                              
-                             	include "kernel\main.s"
-                             ;************************************************
 AS65 Assembler for R6502 [1.42].                                     Page   34
 ---------------------------------- bank1.s -----------------------------------
 
+                             	include "kernel\main.s"
+                             ;************************************************
                              ;*
                              ;*	BBC-128 HOMEBREW COMPUTER
                              ;*	Hardware and software design by @6502Nerd (Dol
@@ -2175,7 +2177,7 @@ c6e8 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
-c6e8 : 4275696c64203a..       db "Build : 04-05-2026\r"
+c6e8 : 4275696c64203a..       db "Build : 19-09-2026\r"
 c6fb : 3132384b204272..       db "128K Breadboard Computer\r"
 c714 : 42792040363530..       db "By @6502Nerd\r"
 c721 : 436f7079726967..       db "Copyright (c) 2025\r",0
@@ -2206,11 +2208,11 @@ c735 :                       init_nmi
                              	; Core IRQ handler
 c735 : a94a             [ 2] 	lda #lo(nmi)
 c737 : 8d000c           [ 4] 	sta int_nmi
-c73a : a9c7             [ 2] 	lda #hi(nmi)
-c73c : 8d010c           [ 4] 	sta int_nmi+1
 AS65 Assembler for R6502 [1.42].                                     Page   35
 ---------------------------------- bank1.s -----------------------------------
 
+c73a : a9c7             [ 2] 	lda #hi(nmi)
+c73c : 8d010c           [ 4] 	sta int_nmi+1
                              
 c73f : a997             [ 2] 	lda #lo(null_handler)
 c741 : 8d0a0c           [ 4] 	sta int_usercia1
@@ -2271,11 +2273,11 @@ c77e : 8d080c           [ 4] 	sta int_usercia0
 c781 : a9c7             [ 2] 	lda #hi(null_handler)
 c783 : 8d090c           [ 4] 	sta int_usercia0+1
                              
-c786 : 60               [ 6] 	rts
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   36
 ---------------------------------- bank1.s -----------------------------------
 
+c786 : 60               [ 6] 	rts
+                             
                              ;* Calls the master IRQ handler
 c787 :                       call_irq_master
 c787 : 6c020c           [ 6] 	jmp (int_irq)
@@ -2336,11 +2338,11 @@ c7b6 : 8d0004           [ 4] 	sta IO_0+PRB
                              	; Switch out ROM for RAM
 c7b9 : ad8004           [ 4] 	lda IO_1+PRB                    ; Get current RO
 c7bc : 48               [ 3] 	pha
-c7bd : 29df             [ 2] 	and #(0xff ^ MM_DIS)            ; Switch off ROM
-c7bf : 8d8004           [ 4] 	sta IO_1+PRB                    ; Update port to
 AS65 Assembler for R6502 [1.42].                                     Page   37
 ---------------------------------- bank1.s -----------------------------------
 
+c7bd : 29df             [ 2] 	and #(0xff ^ MM_DIS)            ; Switch off ROM
+c7bf : 8d8004           [ 4] 	sta IO_1+PRB                    ; Update port to
 c7c2 : ee4c0c           [ 6] 	inc pt3_int 				  	; Set PT3 interrupt flag
 c7c5 : 2093c7           [ 6] 	jsr call_irq_usercia1			; Call user cia1 handler
                              	; Restore ROM
@@ -2401,11 +2403,11 @@ c812 : 0980             [ 2]     ora #%10000000          ; 10 = bank 1
 c814 : 8d0004           [ 4]     sta IO_0+PRB
                              
                              	_pullAXY
-                             
-                             	; Save the registers in temp area
 AS65 Assembler for R6502 [1.42].                                     Page   38
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             	; Save the registers in temp area
 c81a : 8579             [ 3] 	sta num_a
 c81c : 867a             [ 3] 	stx num_a+1
 c81e : 847b             [ 3] 	sty num_a+2
@@ -2466,11 +2468,11 @@ c85e : a521             [ 3] 	lda gr_scrngeom+gr_cur_ptr+1
 c860 : 6900             [ 2] 	adc #0
                              
 c862 : 2030c6           [ 6] 	jsr vdp_wr_addr
-                             	
-c865 : a507             [ 3] 	lda vdp_curstat
 AS65 Assembler for R6502 [1.42].                                     Page   39
 ---------------------------------- bank1.s -----------------------------------
 
+                             	
+c865 : a507             [ 3] 	lda vdp_curstat
 c867 : 2980             [ 2] 	and #0x80
 c869 : 4508             [ 3] 	eor vdp_curval		; EOR top bit with what is under
 c86b : 2058c6           [ 6] 	jsr vdp_wr_vram
@@ -2531,11 +2533,11 @@ c886 : a000             [ 2] 	ldy #0x00
 c888 :                       long_delay_1
 c888 : ea               [ 2] 	nop
 c889 : ea               [ 2] 	nop
-c88a : ea               [ 2] 	nop
-c88b : ea               [ 2] 	nop
 AS65 Assembler for R6502 [1.42].                                     Page   40
 ---------------------------------- bank1.s -----------------------------------
 
+c88a : ea               [ 2] 	nop
+c88b : ea               [ 2] 	nop
 c88c : 88               [ 2] 	dey
 c88d : d0f9             [ 3] 	bne long_delay_1
 c88f : ca               [ 2] 	dex
@@ -2596,11 +2598,11 @@ c8b8 : 68               [ 4] 	pla
 c8b9 : aa               [ 2] 	tax
 c8ba : 68               [ 4] 	pla
 c8bb : 60               [ 6] 	rts
-                             
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page   41
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             ;****************************************
                              ;* util_clr_mem
                              ;* Clear a block of main ram
                              ;* Input : X, A = Block start, Y = Block size
@@ -2661,11 +2663,11 @@ c8e8 : 60               [ 6] 	rts					; A high nibble
                              ;****************************************
 c8e9 :                       str_x_to_a
 c8e9 : 0920             [ 2] 	ora #0x20			; Make alpha in to lower case
-c8eb : 38               [ 2] 	sec					; Process high char in A
-c8ec : e930             [ 2] 	sbc #'0'			; Convert to hex nibble
 AS65 Assembler for R6502 [1.42].                                     Page   42
 ---------------------------------- bank1.s -----------------------------------
 
+c8eb : 38               [ 2] 	sec					; Process high char in A
+c8ec : e930             [ 2] 	sbc #'0'			; Convert to hex nibble
 c8ee : c90a             [ 2] 	cmp #10				; If A < 10 then
 c8f0 : 9002             [ 3] 	bcc skip_x_f_1		; skip a-f adjustment
 c8f2 : e927             [ 2] 	sbc #0x27			; Sub 7 to get in to A-F range
@@ -2726,11 +2728,11 @@ c929 : 88               [ 2] 	dey
 c92a : d003             [ 3] 	bne con_n_not_hex
 c92c :                       con_hex_jmp
 c92c : 4c51c9           [ 3] 	jmp con_hex_to_a_int
-c92f :                       con_n_not_hex
-c92f : 88               [ 2] 	dey
 AS65 Assembler for R6502 [1.42].                                     Page   43
 ---------------------------------- bank1.s -----------------------------------
 
+c92f :                       con_n_not_hex
+c92f : 88               [ 2] 	dey
 c930 : d003             [ 3] 	bne con_n_err
 c932 :                       con_bin_jmp
 c932 : 4c90c9           [ 3] 	jmp con_bin_to_a_int
@@ -2791,11 +2793,11 @@ c97a : 8579             [ 3] 	sta num_a
 c97c : c8               [ 2] 	iny
 c97d : ca               [ 2] 	dex
 c97e : d0d5             [ 3] 	bne con_hex_digit
-                             	; if got to a 5th digit then error
-c980 :                       con_hex_err
 AS65 Assembler for R6502 [1.42].                                     Page   44
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; if got to a 5th digit then error
+c980 :                       con_hex_err
 c980 : 38               [ 2] 	sec
 c981 : 60               [ 6] 	rts
                              	; found a non-hex digit
@@ -2856,11 +2858,11 @@ c9b5 : 60               [ 6] 	rts
                              ;****************************************
                              ;* con_d_to_a
                              ;* Convert decimal string to accumulator (SIGNED)
-                             ;* Input : Pointer to string (X=L, A=H)
-                             ;* Output : num_a, num_a+1 contains word, X=numbe
 AS65 Assembler for R6502 [1.42].                                     Page   45
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;* Input : Pointer to string (X=L, A=H)
+                             ;* Output : num_a, num_a+1 contains word, X=numbe
                              ;* Regs affected : CS = Error
                              ;****************************************
 c9b6 :                       con_dec_to_a
@@ -2921,11 +2923,11 @@ c9ff : 6914             [ 2] 	adc #20
 ca01 : 8587             [ 3] 	sta num_tmp+2
 ca03 : 80d7             [ 4] 	bra str_d_process_digit
 ca05 :                       str_d_digits_done
-                             	; check if minus
-ca05 : b285             [ 5] 	lda (num_tmp)
 AS65 Assembler for R6502 [1.42].                                     Page   46
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; check if minus
+ca05 : b285             [ 5] 	lda (num_tmp)
 ca07 : c92d             [ 2] 	cmp #'-'
 ca09 : d011             [ 3] 	bne str_d_skip_neg
 ca0b : a688             [ 3] 	ldx num_tmp+3		; Must have >= 2 chars
@@ -2986,11 +2988,11 @@ ca98 : 60               [ 6] 	rts
 ca99 :                       int_to_bcd
 ca99 : 08               [ 3] 	php
 ca9a : 48               [ 3] 	pha
-ca9b : da               [ 3] 	phx
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   47
 ---------------------------------- bank1.s -----------------------------------
 
+ca9b : da               [ 3] 	phx
+                             
 ca9c : 8685             [ 3] 	stx num_tmp
 ca9e : 8586             [ 3] 	sta num_tmp+1
 caa0 : c980             [ 2] 	cmp #0x80			; Negative?
@@ -3051,11 +3053,11 @@ cae7 : 6579             [ 3] 	adc num_a
 cae9 : 8579             [ 3] 	sta num_a
 caeb : a57a             [ 3] 	lda num_a+1
 caed : 657a             [ 3] 	adc num_a+1
-caef : 857a             [ 3] 	sta num_a+1
-caf1 : a57b             [ 3] 	lda num_a+2
 AS65 Assembler for R6502 [1.42].                                     Page   48
 ---------------------------------- bank1.s -----------------------------------
 
+caef : 857a             [ 3] 	sta num_a+1
+caf1 : a57b             [ 3] 	lda num_a+2
 caf3 : 657b             [ 3] 	adc num_a+2
 caf5 : 857b             [ 3] 	sta num_a+2
 caf7 : ca               [ 2] 	dex
@@ -3116,11 +3118,11 @@ cb2c :                       int_str
 cb2c : 28               [ 4] 	plp							; Get C but immediately
 cb2d : 08               [ 3] 	php							; Save C (due to loop check later)
 cb2e : b579             [ 4] 	lda num_a,x					; Get BCD digit
-cb30 : 8590             [ 3] 	sta num_buf+7				; Save A it for the units later
-cb32 : 4a               [ 2] 	lsr a						; Tens - shift to lower nibble
 AS65 Assembler for R6502 [1.42].                                     Page   49
 ---------------------------------- bank1.s -----------------------------------
 
+cb30 : 8590             [ 3] 	sta num_buf+7				; Save A it for the units later
+cb32 : 4a               [ 2] 	lsr a						; Tens - shift to lower nibble
 cb33 : 4a               [ 2] 	lsr a
 cb34 : 4a               [ 2] 	lsr a
 cb35 : 4a               [ 2] 	lsr a
@@ -3181,11 +3183,11 @@ cb54 : 60               [ 6] 	rts
                              ;	dex
                              ;	iny
                              ;	cpy #3						; 3 BCD digits max
-                             ;	bne bcd_str
-                             ;
 AS65 Assembler for R6502 [1.42].                                     Page   50
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;	bne bcd_str
+                             ;
                              ;	ply
                              ;	plx
                              ;	pla
@@ -3246,11 +3248,11 @@ cb54 : 60               [ 6] 	rts
                              ;* Output is big endian, input is not
                              ;* Regs affected : P
                              ;****************************************
-cb55 :                       str_a_to_d
-cb55 : 60               [ 6] 	rts
 AS65 Assembler for R6502 [1.42].                                     Page   51
 ---------------------------------- bank1.s -----------------------------------
 
+cb55 :                       str_a_to_d
+cb55 : 60               [ 6] 	rts
                              	
                              ;****************************************
                              ;* print_a_to_d
@@ -3311,11 +3313,11 @@ cb98 : aa               [ 2] 	tax					; Save the mode temporarily
 cb99 : 68               [ 4] 	pla					; Get the default mode from stack
 cb9a : 8a               [ 2] 	txa					; And push the NV mode that was read
 cb9b : 48               [ 3] 	pha
-cb9c : a20f             [ 2] 	ldx #NV_COLOUR		; NV location for the default co
-cb9e : 2069c4           [ 6] 	jsr _rtc_nvread		; Try to read location (assumed
 AS65 Assembler for R6502 [1.42].                                     Page   52
 ---------------------------------- bank1.s -----------------------------------
 
+cb9c : a20f             [ 2] 	ldx #NV_COLOUR		; NV location for the default co
+cb9e : 2069c4           [ 6] 	jsr _rtc_nvread		; Try to read location (assumed
 cba1 : 8515             [ 3] 	sta vdp_base+vdp_bord_col	; Save it to the borde
 cba3 :                       kernel_skip_nv	
 cba3 : 68               [ 4] 	pla					; Get the mode (either default or the NV
@@ -3376,11 +3378,11 @@ cbf1 : 60               [ 6] 	rts
                              ;	101,x = disable ROM value
                              ;	102,x = original ROM value
                              ;	103,x = new RAM bank select value
-                             ;	104,x = original RAM bank select value
-                             ; tmp_a = address to poke to
 AS65 Assembler for R6502 [1.42].                                     Page   53
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;	104,x = original RAM bank select value
+                             ; tmp_a = address to poke to
 cbf2 :                       ram_code_s
 cbf2 : 08               [ 3] 	php							; Save processor status
 cbf3 : 78               [ 2] 	sei							; Disable VDP interrupts
@@ -3441,11 +3443,11 @@ cc18 : a579             [ 3] 	lda num_a
 cc1a : 657d             [ 3] 	adc num_b
 cc1c : 8579             [ 3] 	sta num_a
 cc1e : a57a             [ 3] 	lda num_a+1
-cc20 : 657e             [ 3] 	adc num_b+1
-cc22 : 857a             [ 3] 	sta num_a+1
 AS65 Assembler for R6502 [1.42].                                     Page   54
 ---------------------------------- bank1.s -----------------------------------
 
+cc20 : 657e             [ 3] 	adc num_b+1
+cc22 : 857a             [ 3] 	sta num_a+1
 cc24 : 60               [ 6] 	rts
                              	
                              ;****************************************
@@ -3506,11 +3508,11 @@ cc6a : 60               [ 6] 	rts
                              ;* Mult : A * B result in A
                              ;****************************************
 cc6b :                       int_mult
-                             	_cpyZPWord num_a,num_tmp
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   55
 ---------------------------------- bank1.s -----------------------------------
 
+                             	_cpyZPWord num_a,num_tmp
+                             
 cc73 : 6479             [ 3] 	stz num_a
 cc75 : 647a             [ 3] 	stz num_a+1
 cc77 : a010             [ 2] 	ldy #16
@@ -3571,11 +3573,11 @@ ccc2 : 0679             [ 5] 	asl num_a
 ccc4 : 267a             [ 5] 	rol num_a+1
                              	; shift in to remainder
 ccc6 : 2681             [ 5] 	rol num_x
-ccc8 : 2682             [ 5] 	rol num_x+1
-                             	; try and subtract b from remainder
 AS65 Assembler for R6502 [1.42].                                     Page   56
 ---------------------------------- bank1.s -----------------------------------
 
+ccc8 : 2682             [ 5] 	rol num_x+1
+                             	; try and subtract b from remainder
 ccca : 38               [ 2] 	sec
 cccb : a581             [ 3] 	lda num_x
 cccd : e57d             [ 3] 	sbc num_b
@@ -3636,11 +3638,11 @@ ccf2 : 60               [ 6] 	rts
                              
 ccf3 :                       mod_sz_dflat_s
                              
-                             ;	include "dflat/error.s"  ** included in the mai
-                             	include "dflat/var.s"
 AS65 Assembler for R6502 [1.42].                                     Page   57
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;	include "dflat/error.s"  ** included in the mai
+                             	include "dflat/var.s"
                              ;************************************************
                              ;*
                              ;*	BBC128
@@ -3701,11 +3703,11 @@ cd03 :                       df_var_match_vnt
                              	; If reached top of VVT then not found
 cd03 : a5d7             [ 3] 	lda df_tmpptra
 cd05 : c5a3             [ 3] 	cmp df_vvtstrt
-cd07 : d006             [ 3] 	bne df_var_match_vnt_do
-cd09 : a5d8             [ 3] 	lda df_tmpptra+1
 AS65 Assembler for R6502 [1.42].                                     Page   58
 ---------------------------------- bank1.s -----------------------------------
 
+cd07 : d006             [ 3] 	bne df_var_match_vnt_do
+cd09 : a5d8             [ 3] 	lda df_tmpptra+1
 cd0b : c5a4             [ 3] 	cmp df_vvtstrt+1
 cd0d : f042             [ 3] 	beq df_var_find_no_vnt
 cd0f :                       df_var_match_vnt_do
@@ -3766,11 +3768,11 @@ cd51 :                       df_var_find_no_vnt
 cd51 : a900             [ 2] 	lda #0
 cd53 : aa               [ 2] 	tax
 cd54 : 38               [ 2] 	sec
-cd55 : 60               [ 6] 	rts
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   59
 ---------------------------------- bank1.s -----------------------------------
 
+cd55 : 60               [ 6] 	rts
+                             
 cd56 :                       df_var_find_true
                              	; Get slot address into x,a
 cd56 : a6d7             [ 3] 	ldx df_tmpptra
@@ -3831,11 +3833,11 @@ cd8c :                       df_var_move_byte_do
                              	; First the source byte VVT size higher in memor
 cd8c : a008             [ 2] 	ldy #DFVVT_SZ
 cd8e : b1d7             [ 5] 	lda (df_tmpptra),y
-                             	; And copy to new position lower in memory
-cd90 : a000             [ 2] 	ldy #0
 AS65 Assembler for R6502 [1.42].                                     Page   60
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; And copy to new position lower in memory
+cd90 : a000             [ 2] 	ldy #0
 cd92 : 91d7             [ 5] 	sta (df_tmpptra),y
                              	; Increment memory pointer
                              	_incZPWord df_tmpptra
@@ -3896,11 +3898,11 @@ cdcc : 60               [ 6] 	rts
 cdcd :                       df_var_analyse
                              	; start at the current buffer position
 cdcd : a4b2             [ 3] 	ldy df_linoff
-                             	
-                             	; actual number of alpha nums = -1 to start
 AS65 Assembler for R6502 [1.42].                                     Page   61
 ---------------------------------- bank1.s -----------------------------------
 
+                             	
+                             	; actual number of alpha nums = -1 to start
 cdcf : a2ff             [ 2] 	ldx #-1
                              
                              	; Default type is INT
@@ -3961,11 +3963,11 @@ cdff : c8               [ 2] 	iny
 ce00 :                       df_var_analyse_chk_arry
                              	; Check for array type vs PROC
 ce00 : b9000a           [ 4] 	lda df_linbuff,y
-ce03 : c95b             [ 2] 	cmp #'['
-ce05 : d006             [ 3] 	bne df_var_finalise_len
 AS65 Assembler for R6502 [1.42].                                     Page   62
 ---------------------------------- bank1.s -----------------------------------
 
+ce03 : c95b             [ 2] 	cmp #'['
+ce05 : d006             [ 3] 	bne df_var_finalise_len
 ce07 : a5d7             [ 3] 	lda df_tmpptra
 ce09 : 0980             [ 2] 	ora #DFVVT_PTR
 ce0b : 85d7             [ 3] 	sta df_tmpptra
@@ -4026,11 +4028,11 @@ ce32 : 85d7             [ 3] 	sta df_tmpptra
 ce34 : b009             [ 3] 	bcs df_var_findcreate_errp
                              	; check if mask needs to be applied
 ce36 : 68               [ 4] 	pla
-ce37 : f009             [ 3] 	beq df_var_analyse_ok
-                             	; else mask and check
 AS65 Assembler for R6502 [1.42].                                     Page   63
 ---------------------------------- bank1.s -----------------------------------
 
+ce37 : f009             [ 3] 	beq df_var_analyse_ok
+                             	; else mask and check
 ce39 : 25d7             [ 3] 	and df_tmpptra
                              	; mask match is ok
 ce3b : d005             [ 3] 	bne df_var_analyse_ok
@@ -4091,11 +4093,11 @@ ce71 : 919f             [ 5] 	sta (df_vntstrt),y
 ce73 : 86b2             [ 3] 	stx df_linoff				; Update line pointer
                              
                              	; Return address of slot in X,A
-ce75 : a6a5             [ 3] 	ldx df_vvtend
-ce77 : a5a6             [ 3] 	lda df_vvtend+1
 AS65 Assembler for R6502 [1.42].                                     Page   64
 ---------------------------------- bank1.s -----------------------------------
 
+ce75 : a6a5             [ 3] 	ldx df_vvtend
+ce77 : a5a6             [ 3] 	lda df_vvtend+1
                              	
 ce79 : 18               [ 2] 	clc
 ce7a : 60               [ 6] 	rts
@@ -4156,11 +4158,11 @@ ce81 :                       df_tk_get_buf
 ce81 : a4b2             [ 3] 	ldy df_linoff
 ce83 : b9000a           [ 4] 	lda df_linbuff,y
 ce86 : f003             [ 3] 	beq df_tk_get_buf_null
-ce88 : c8               [ 2] 	iny
-ce89 : 84b2             [ 3] 	sty df_linoff
 AS65 Assembler for R6502 [1.42].                                     Page   65
 ---------------------------------- bank1.s -----------------------------------
 
+ce88 : c8               [ 2] 	iny
+ce89 : 84b2             [ 3] 	sty df_linoff
 ce8b :                       df_tk_get_buf_null
 ce8b : 60               [ 6] 	rts
                              
@@ -4221,11 +4223,11 @@ ceb0 : 209ace           [ 6] 	jsr df_tk_isdigit
 ceb3 : b00a             [ 3] 	bcs df_tk_ishex_truep
 ceb5 : 0920             [ 2] 	ora #0x20
 ceb7 : c967             [ 2] 	cmp #'f'+1
-ceb9 : b006             [ 3] 	bcs df_tk_ishex_false
-cebb : c961             [ 2] 	cmp #'a'
 AS65 Assembler for R6502 [1.42].                                     Page   66
 ---------------------------------- bank1.s -----------------------------------
 
+ceb9 : b006             [ 3] 	bcs df_tk_ishex_false
+cebb : c961             [ 2] 	cmp #'a'
 cebd : 9002             [ 3] 	bcc df_tk_ishex_false
                              	; C must be 1 here
 cebf :                       df_tk_ishex_truep
@@ -4286,11 +4288,11 @@ cedd :                       df_tk_ws_loop1
 cedd : 207bce           [ 6] 	jsr df_tk_peek_buf
 cee0 : 20f8ce           [ 6] 	jsr df_tk_isws
 cee3 : 90f1             [ 3] 	bcc df_tk_rts1
-cee5 : e6b2             [ 5] 	inc df_linoff
-cee7 : 208cce           [ 6] 	jsr df_tk_put_tok
 AS65 Assembler for R6502 [1.42].                                     Page   67
 ---------------------------------- bank1.s -----------------------------------
 
+cee5 : e6b2             [ 5] 	inc df_linoff
+cee7 : 208cce           [ 6] 	jsr df_tk_put_tok
 ceea : 90f1             [ 3] 	bcc df_tk_skip_ws		; Always as put_tok clears C
                              
                              ;****************************************
@@ -4351,11 +4353,11 @@ cf0d :                       df_tk_expect_tok
 cf0d : 20ffce           [ 6] 	jsr df_tk_expect
 cf10 : b0c4             [ 4] 	bcs df_tk_rts1
 cf12 : 2081ce           [ 6] 	jsr df_tk_get_buf
-cf15 : 4c8cce           [ 3] 	jmp df_tk_put_tok
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   68
 ---------------------------------- bank1.s -----------------------------------
 
+cf15 : 4c8cce           [ 3] 	jmp df_tk_put_tok
+                             
                              ;****************************************
                              ;* Find a character expected ignoring ws
                              ;* Input A = expected char
@@ -4416,11 +4418,11 @@ cf59 : a579             [ 3] 	lda num_a
 cf5b : 208cce           [ 6] 	jsr df_tk_put_tok
 cf5e : a57a             [ 3] 	lda num_a+1
 cf60 : 4c8cce           [ 3] 	jmp df_tk_put_tok
-                             
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page   69
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             ;****************************************
                              ;* Tokenise a constant char
                              ;****************************************
 cf63 :                       df_tk_char
@@ -4481,11 +4483,11 @@ cfa1 : 20ddce           [ 6] 	jsr df_tk_skip_ws
 cfa4 : 207bce           [ 6] 	jsr df_tk_peek_buf
                              	; Minus symbol could be start of a number
 cfa7 : c92d             [ 2] 	cmp #'-'
-cfa9 : f005             [ 3] 	beq df_tk_const_try_num
-cfab : 209ace           [ 6] 	jsr df_tk_isdigit
 AS65 Assembler for R6502 [1.42].                                     Page   70
 ---------------------------------- bank1.s -----------------------------------
 
+cfa9 : f005             [ 3] 	beq df_tk_const_try_num
+cfab : 209ace           [ 6] 	jsr df_tk_isdigit
 cfae : 9003             [ 3] 	bcc df_tk_const_try_str
 cfb0 :                       df_tk_const_try_num
 cfb0 : 4c1fcf           [ 3] 	jmp df_tk_num
@@ -4546,11 +4548,11 @@ cfe6 : c926             [ 2] 	cmp #DFTK_VARPARM
 cfe8 : d006             [ 3] 	bne df_tk_parm_skip_var
                              	; get the qualifier and put in token buffer
 cfea : 2081ce           [ 6] 	jsr df_tk_get_buf
-cfed : 208cce           [ 6] 	jsr df_tk_put_tok
-cff0 :                       df_tk_parm_skip_var
 AS65 Assembler for R6502 [1.42].                                     Page   71
 ---------------------------------- bank1.s -----------------------------------
 
+cfed : 208cce           [ 6] 	jsr df_tk_put_tok
+cff0 :                       df_tk_parm_skip_var
                              	; don't have a certain type of var
 cff0 : a900             [ 2] 	lda #0
 cff2 : 4cc3cf           [ 3] 	jmp df_tk_var
@@ -4611,11 +4613,11 @@ d024 : 85c5             [ 3] 	sta df_procptr+1
                              	; Put PROC escape in token buffer
 d026 : a912             [ 2] 	lda #DFTK_PROC
 d028 : 208cce           [ 6] 	jsr df_tk_put_tok
-                             	; Get variable address and put in token buffer
-d02b : a5c4             [ 3] 	lda df_procptr
 AS65 Assembler for R6502 [1.42].                                     Page   72
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; Get variable address and put in token buffer
+d02b : a5c4             [ 3] 	lda df_procptr
 d02d : 208cce           [ 6] 	jsr df_tk_put_tok
 d030 : a5c5             [ 3] 	lda df_procptr+1
 d032 : 208cce           [ 6] 	jsr df_tk_put_tok
@@ -4676,11 +4678,11 @@ d07d : d006             [ 3] 	bne df_tk_proc_skip_args
                              	; put arg count in dim2
 d07f : a004             [ 2] 	ldy #DFVVT_DIM2
 d081 : a5c2             [ 3] 	lda df_procargs
-d083 : 91c4             [ 5] 	sta (df_procptr),y
-d085 :                       df_tk_proc_skip_args
 AS65 Assembler for R6502 [1.42].                                     Page   73
 ---------------------------------- bank1.s -----------------------------------
 
+d083 : 91c4             [ 5] 	sta (df_procptr),y
+d085 :                       df_tk_proc_skip_args
 d085 : 18               [ 2] 	clc
 d086 : 60               [ 6] 	rts
 d087 :                       df_tk_proc_errp
@@ -4741,11 +4743,11 @@ d0b4 : 38               [ 2] 	sec
 d0b5 : 60               [ 6] 	rts
 d0b6 :                       df_tk_nterm_cont
                              	; if open bracket then process it
-d0b6 : c928             [ 2] 	cmp #'('
-d0b8 : d009             [ 3] 	bne df_tk_nterm_tryfn
 AS65 Assembler for R6502 [1.42].                                     Page   74
 ---------------------------------- bank1.s -----------------------------------
 
+d0b6 : c928             [ 2] 	cmp #'('
+d0b8 : d009             [ 3] 	bne df_tk_nterm_tryfn
                              	; get the bracket and put in token buffer
 d0ba : 2081ce           [ 6] 	jsr df_tk_get_buf
 d0bd : 208cce           [ 6] 	jsr df_tk_put_tok
@@ -4806,11 +4808,11 @@ d103 : 0980             [ 2] 	ora #DFTK_TOKEN
 d105 : 208cce           [ 6] 	jsr df_tk_put_tok
 d108 : 18               [ 2] 	clc
 d109 : 60               [ 6] 	rts
-                             
-                             	
 AS65 Assembler for R6502 [1.42].                                     Page   75
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             	
                              ;****************************************
                              ;* Parse numeric expression
                              ;****************************************
@@ -4871,11 +4873,11 @@ d133 : 4c16d0           [ 3] 	jmp df_tk_proc
                              ;****************************************
 d136 :                       df_tk_parse_command
                              	; only looking for keywords
-d136 : a901             [ 2] 	lda #DFTK_KW
-d138 : 20fdd1           [ 6] 	jsr df_tk_matchtok
 AS65 Assembler for R6502 [1.42].                                     Page   76
 ---------------------------------- bank1.s -----------------------------------
 
+d136 : a901             [ 2] 	lda #DFTK_KW
+d138 : 20fdd1           [ 6] 	jsr df_tk_matchtok
                              	; if didn't find regular keywords then try non f
 d13b : b010             [ 3] 	bcs df_tk_parse_command_err
                              	; if match then store token in the line buffer
@@ -4936,11 +4938,11 @@ d177 : a5b3             [ 3] 	lda df_tokoff
 d179 : 85b5             [ 3] 	sta df_nxtstidx
 d17b : a900             [ 2] 	lda #0
 d17d : 208cce           [ 6] 	jsr df_tk_put_tok				; Offset to next statement
-d180 : 207bce           [ 6] 	jsr df_tk_peek_buf				; Check for a single space
-d183 : 20f8ce           [ 6] 	jsr df_tk_isws					; and first character
 AS65 Assembler for R6502 [1.42].                                     Page   77
 ---------------------------------- bank1.s -----------------------------------
 
+d180 : 207bce           [ 6] 	jsr df_tk_peek_buf				; Check for a single space
+d183 : 20f8ce           [ 6] 	jsr df_tk_isws					; and first character
 d186 : 9002             [ 3] 	bcc df_tk_skip_1_spc
 d188 : e6b2             [ 5] 	inc df_linoff					; Don't tokenise this single s
 d18a :                       df_tk_skip_1_spc
@@ -5001,11 +5003,11 @@ d1cd :                       df_tk_parseerror
                              
                              
                              ;****************************************
-                             ;* df_tk_parsestatement
-                             ;* Execute parse routine for this statement
 AS65 Assembler for R6502 [1.42].                                     Page   78
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;* df_tk_parsestatement
+                             ;* Execute parse routine for this statement
                              ;* Input: df_tokoff is the token found
                              ;* Return: CC = Parsed ok, CS = Error
                              ;****************************************
@@ -5066,11 +5068,11 @@ d206 : a900             [ 2] 	lda #0
 d208 : 85b9             [ 3] 	sta df_symoff
 d20a :                       df_tk_checknexttok
                              	; check this token type first
-d20a : 68               [ 4] 	pla
-d20b : 48               [ 3] 	pha
 AS65 Assembler for R6502 [1.42].                                     Page   79
 ---------------------------------- bank1.s -----------------------------------
 
+d20a : 68               [ 4] 	pla
+d20b : 48               [ 3] 	pha
 d20c : a6b9             [ 3] 	ldx df_symoff
 d20e : 3d9dd5           [ 4] 	and df_tk_tokentype,x
 d211 : f032             [ 3] 	beq df_tk_symnomatch
@@ -5131,11 +5133,11 @@ d24b : 3009             [ 3] 	bmi  df_tk_foundsymend
                              
 d253 : 4c47d2           [ 3] 	jmp df_tk_symnextentry
 d256 :                       df_tk_foundsymend
-                             	; Increment char to point to new symbol
-                             	; for matching with line buffer
 AS65 Assembler for R6502 [1.42].                                     Page   80
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; Increment char to point to new symbol
+                             	; for matching with line buffer
                              	_incZPWord df_symtab
                              
                              	; If next char is not zero then
@@ -5196,11 +5198,11 @@ d27e : 60               [ 6] 	rts
                              ;*  dflat uses four key tables to tokenise and ru
                              ;*  - df_tokensyms    - table of token symbols
                              ;*  - df_tk_tokentype - table of token types
-                             ;*  - df_tk_tokenjmp  - table of tokenising routi
-                             ;*  - df_rt_tokenjmp  - table of runtime routines
 AS65 Assembler for R6502 [1.42].                                     Page   81
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;*  - df_tk_tokenjmp  - table of tokenising routi
+                             ;*  - df_rt_tokenjmp  - table of runtime routines
                              ;*  The key is the token symbols.  When a line is
                              ;*  in to the raw (untokenised) buffer, df_tokens
                              ;*  used to identify tokens.  The position of the
@@ -5261,11 +5263,11 @@ d345 : 6d757369e3            	db	"musi",'c'+0x80				; music
 d34a : 706c61f9              	db	"pla",'y'+0x80				; play
 d34e : 736176e5              	db	"sav",'e'+0x80				; save
 d352 : 6c6f61e4              	db	"loa",'d'+0x80				; load
-d356 : 6469f2                	db	"di",'r'+0x80				; dir (compact listing)
-d359 : 646972ec              	db	"dir",'l'+0x80				; dirl (long listing)
 AS65 Assembler for R6502 [1.42].                                     Page   82
 ---------------------------------- bank1.s -----------------------------------
 
+d356 : 6469f2                	db	"di",'r'+0x80				; dir (compact listing)
+d359 : 646972ec              	db	"dir",'l'+0x80				; dirl (long listing)
 d35d : 6465ec                	db 	"de",'l'+0x80				; del
 d360 : 726561e4              	db	"rea",'d'+0x80				; read
 d364 : 6e65f7                	db	"ne",'w'+0x80				; new
@@ -5326,11 +5328,11 @@ d470 : 61646472a8            	db	"addr",'('+0x80				; addr(var)
 d475 : 6e767065656ba8        	db  "nvpeek",'('+0x80			; nvpeek(addr)
 d47c : 66637265617465a8      	db	"fcreate",'('+0x80			; success=fcreate(filena
 d484 : 666f70656ea8          	db	"fopen",'('+0x80			; success=fopen(filename)
-d48a : 676574a8              	db	"get",'('+0x80				; alias for key()
-                             ; Numeric operators, in priority
 AS65 Assembler for R6502 [1.42].                                     Page   83
 ---------------------------------- bank1.s -----------------------------------
 
+d48a : 676574a8              	db	"get",'('+0x80				; alias for key()
+                             ; Numeric operators, in priority
 d48e : aa                    	db	'*'+0x80					; Multiply
 d48f : af                    	db 	'/'+0x80					; Divide
 d490 : dc                    	db 	'\\'+0x80					; Modulus
@@ -5391,11 +5393,11 @@ d4ab : a8d6                  	dw	df_tk_println
 d4ad : 9cd6                  	dw	df_tk_printat
 d4af : a8d6                  	dw	df_tk_print
 d4b1 : f0d6                  	dw	df_tk_def
-d4b3 : 58d7                  	dw	df_tk_enddef
-d4b5 : 5ad7                  	dw	df_tk_return
 AS65 Assembler for R6502 [1.42].                                     Page   84
 ---------------------------------- bank1.s -----------------------------------
 
+d4b3 : 58d7                  	dw	df_tk_enddef
+d4b5 : 5ad7                  	dw	df_tk_return
 d4b7 : 58d7                  	dw	df_tk_abort
 d4b9 : ded6                  	dw	df_tk_local
 d4bb : cfd6                  	dw	df_tk_dim
@@ -5456,11 +5458,11 @@ d527 : 79d7                  	dw	df_tk_bload
 d529 : 61d7                  	dw	df_tk_cload
 d52b : 85d7                  	dw	df_tk_bsave
 d52d : 5dd7                  	dw	df_tk_himem
-d52f : 58d7                  	dw	df_tk_monitor
-d531 : 5dd7                  	dw	df_tk_chdir
 AS65 Assembler for R6502 [1.42].                                     Page   85
 ---------------------------------- bank1.s -----------------------------------
 
+d52f : 58d7                  	dw	df_tk_monitor
+d531 : 5dd7                  	dw	df_tk_chdir
 d533 : 5dd7                  	dw	df_tk_mkdir
 d535 : 23d7                  	dw	df_tk_datetime
 d537 : 61d7                  	dw	df_tk_nvpoke
@@ -5521,11 +5523,11 @@ d59b : 58d7                  	dw	df_tk_eq
                              	
                              	
                              	
-                             	
-                             	
 AS65 Assembler for R6502 [1.42].                                     Page   86
 ---------------------------------- bank1.s -----------------------------------
 
+                             	
+                             	
                              	include "dflat/tktyptab.s"
                              ;************************************************
                              ;*
@@ -5586,11 +5588,11 @@ d5b7 : 01                    	db	DFTK_KW
 d5b8 : 01                    	db	DFTK_KW
 d5b9 : 01                    	db	DFTK_KW
 d5ba : 01                    	db	DFTK_KW
-d5bb : 01                    	db	DFTK_KW
-d5bc : 01                    	db	DFTK_KW
 AS65 Assembler for R6502 [1.42].                                     Page   87
 ---------------------------------- bank1.s -----------------------------------
 
+d5bb : 01                    	db	DFTK_KW
+d5bc : 01                    	db	DFTK_KW
 d5bd : 01                    	db	DFTK_KW
 d5be : 01                    	db	DFTK_KW
 d5bf : 01                    	db	DFTK_KW
@@ -5651,11 +5653,11 @@ d5f4 : 42                    	db 	DFTK_FN | DFTK_STR
 d5f5 : 42                    	db 	DFTK_FN | DFTK_STR
 d5f6 : 42                    	db 	DFTK_FN | DFTK_STR
 d5f7 : 42                    	db 	DFTK_FN | DFTK_STR
-d5f8 : 32                    	db 	DFTK_FN | DFTK_INT | DFTK_BYT
-d5f9 : 32                    	db 	DFTK_FN | DFTK_INT | DFTK_BYT
 AS65 Assembler for R6502 [1.42].                                     Page   88
 ---------------------------------- bank1.s -----------------------------------
 
+d5f8 : 32                    	db 	DFTK_FN | DFTK_INT | DFTK_BYT
+d5f9 : 32                    	db 	DFTK_FN | DFTK_INT | DFTK_BYT
 d5fa : 32                    	db 	DFTK_FN | DFTK_INT | DFTK_BYT
 d5fb : 32                    	db 	DFTK_FN | DFTK_INT | DFTK_BYT
 d5fc : 32                    	db 	DFTK_FN | DFTK_INT | DFTK_BYT
@@ -5716,11 +5718,11 @@ d618 : 3f                    	db 	DFTK_OP | DFTK_INT | DFTK_BYT + 7
                              ;*  anywhere near the size of rtsubs.s (the runti
                              ;*  equivalent of this) because there is so much 
                              ;*  synactically.
-                             ;*  The tokenised output is put in to its own buf
-                             ;*  if the whole input was tokenised successfully
 AS65 Assembler for R6502 [1.42].                                     Page   89
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;*  The tokenised output is put in to its own buf
+                             ;*  if the whole input was tokenised successfully
                              ;*  dflat will either try and execute (if in imme
                              ;*  mode), or save it to program memory in line n
                              ;*  order.
@@ -5781,11 +5783,11 @@ d64a : 60               [ 6] 	rts
                              
 d64b :                       df_tk_comment
                              	; copy all subsequent chars to token
-d64b : 2081ce           [ 6] 	jsr df_tk_get_buf
-d64e : f005             [ 3] 	beq df_tk_comment_done
 AS65 Assembler for R6502 [1.42].                                     Page   90
 ---------------------------------- bank1.s -----------------------------------
 
+d64b : 2081ce           [ 6] 	jsr df_tk_get_buf
+d64e : f005             [ 3] 	beq df_tk_comment_done
 d650 : 208cce           [ 6] 	jsr df_tk_put_tok
 d653 : 80f6             [ 3] 	bra df_tk_comment
 d655 :                       df_tk_comment_done
@@ -5846,11 +5848,11 @@ d69a : 18               [ 2] 	clc
 d69b : 60               [ 6] 	rts
                              
 d69c :                       df_tk_printat
-                             	; Must get 2 parms for x,y
-d69c : 2061d7           [ 6] 	jsr df_tk_2parms
 AS65 Assembler for R6502 [1.42].                                     Page   91
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; Must get 2 parms for x,y
+d69c : 2061d7           [ 6] 	jsr df_tk_2parms
                              	; if not at the end then keep going
 d69f : a92c             [ 2] 	lda #','
 d6a1 : 200dcf           [ 6] 	jsr df_tk_expect_tok
@@ -5911,11 +5913,11 @@ d6de : 20ddce           [ 6] 	jsr df_tk_skip_ws
 d6e1 : 2019d6           [ 6] 	jsr df_tk_variable
 d6e4 : 20f5cf           [ 6] 	jsr df_tk_localvar
                              	; if not at the end then keep going
-d6e7 : a92c             [ 2] 	lda #','
-d6e9 : 200dcf           [ 6] 	jsr df_tk_expect_tok
 AS65 Assembler for R6502 [1.42].                                     Page   92
 ---------------------------------- bank1.s -----------------------------------
 
+d6e7 : a92c             [ 2] 	lda #','
+d6e9 : 200dcf           [ 6] 	jsr df_tk_expect_tok
 d6ec : 90f0             [ 3] 	bcc df_tk_local
 d6ee : 18               [ 2] 	clc
 d6ef : 60               [ 6] 	rts
@@ -5976,11 +5978,11 @@ d722 : 60               [ 6] 	rts
                              
                              ; date time expects a string variable only
 d723 :                       df_tk_datetime
-d723 : 20ddce           [ 6] 	jsr df_tk_skip_ws
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   93
 ---------------------------------- bank1.s -----------------------------------
 
+d723 : 20ddce           [ 6] 	jsr df_tk_skip_ws
+                             
                              	; tokenise a variable
 d726 : a904             [ 2] 	lda #DFVVT_STR
 d728 : 20c3cf           [ 6] 	jsr df_tk_var
@@ -6041,11 +6043,11 @@ d752 : 2061d7           [ 6] 	jsr df_tk_2parms
 d755 : 4c2fd7           [ 3] 	jmp df_tk_closebrkt
                              
                              ;all these commands require no parameters
-d758 :                       df_tk_else
-d758 :                       df_tk_endif
 AS65 Assembler for R6502 [1.42].                                     Page   94
 ---------------------------------- bank1.s -----------------------------------
 
+d758 :                       df_tk_else
+d758 :                       df_tk_endif
 d758 :                       df_tk_enddef
 d758 :                       df_tk_abort
 d758 :                       df_tk_repeat
@@ -6106,11 +6108,11 @@ d75d :                       df_tk_font
 d75d :                       df_tk_device
 d75d :                       df_tk_ptrun
                              ;df_tk_goto
-                             ;df_tk_gosub
-                             
 AS65 Assembler for R6502 [1.42].                                     Page   95
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;df_tk_gosub
+                             
 d75d :                       df_tk_asm_org
 d75d :                       df_tk_asm_opt
 d75d :                       df_tk_asm_ds
@@ -6171,11 +6173,11 @@ d77c : a92c             [ 2] 	lda #','
 d77e : 2018cf           [ 6] 	jsr df_tk_expect_tok_err
 d781 : 2061d7           [ 6] 	jsr df_tk_2parms
 d784 : 60               [ 6] 	rts
-                             
-                             ; these commands expect 5 numeric parameters
 AS65 Assembler for R6502 [1.42].                                     Page   96
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             ; these commands expect 5 numeric parameters
 d785 :                       df_tk_sprite
 d785 :                       df_tk_bsave
 d785 :                       df_tk_5parms
@@ -6236,11 +6238,11 @@ d795 : a49c             [ 3] 	ldy df_prgstrt+1
 d797 : 8486             [ 3] 	sty num_tmp+1
 d799 : 8679             [ 3] 	stx num_a			; num_a contains the line number to 
 d79b : 857a             [ 3] 	sta num_a+1
-d79d :                       df_pg_check_next_line	; Also used during runtime 
-d79d : a585             [ 3] 	lda num_tmp
 AS65 Assembler for R6502 [1.42].                                     Page   97
 ---------------------------------- bank1.s -----------------------------------
 
+d79d :                       df_pg_check_next_line	; Also used during runtime 
+d79d : a585             [ 3] 	lda num_tmp
 d79f : c59d             [ 3] 	cmp df_prgend
 d7a1 : d011             [ 3] 	bne df_pg_check_line
 d7a3 : a586             [ 3] 	lda num_tmp+1
@@ -6301,11 +6303,11 @@ d7e2 :                       df_pg_insert_block
                              	
                              	; Save address as this is the lowest address
 d7e2 : 8679             [ 3] 	stx num_a
-d7e4 : 857a             [ 3] 	sta num_a+1
-                             	; End of program space is the first byte to move
 AS65 Assembler for R6502 [1.42].                                     Page   98
 ---------------------------------- bank1.s -----------------------------------
 
+d7e4 : 857a             [ 3] 	sta num_a+1
+                             	; End of program space is the first byte to move
 d7e6 : a59d             [ 3] 	lda df_prgend
 d7e8 : 8581             [ 3] 	sta num_x
 d7ea : a59e             [ 3] 	lda df_prgend+1
@@ -6366,11 +6368,11 @@ d82c : a57a             [ 3] 	lda num_a+1
 d82e : c59e             [ 3] 	cmp df_prgend+1
 d830 : d011             [ 3] 	bne df_pg_delete_next_byte
                              	; Finished, update program end pointer
-d832 : 8479             [ 3] 	sty num_a
-d834 : 38               [ 2] 	sec
 AS65 Assembler for R6502 [1.42].                                     Page   99
 ---------------------------------- bank1.s -----------------------------------
 
+d832 : 8479             [ 3] 	sty num_a
+d834 : 38               [ 2] 	sec
 d835 : a59d             [ 3] 	lda df_prgend
 d837 : e579             [ 3] 	sbc num_a
 d839 : 859d             [ 3] 	sta df_prgend
@@ -6431,11 +6433,11 @@ d867 : a205             [ 2] 	ldx #lo(df_pg_prompt_msg)
 d869 : a9d9             [ 2] 	lda #hi(df_pg_prompt_msg)
 d86b : 20dec5           [ 6] 	jsr io_print_line
 d86e : a900             [ 2] 	lda #0
-d870 : 8594             [ 3] 	sta df_immed
-d872 :                       df_pg_getcommand
 AS65 Assembler for R6502 [1.42].                                     Page  100
 ---------------------------------- bank1.s -----------------------------------
 
+d870 : 8594             [ 3] 	sta df_immed
+d872 :                       df_pg_getcommand
                              	; current line is the token buffer when editing
 d872 : a980             [ 2] 	lda #lo(df_tokbuff)
 d874 : 85bc             [ 3] 	sta df_currlin
@@ -6496,11 +6498,11 @@ d8c2 : 60               [ 6] 	rts
 d8c3 :                       df_pg_line_number
                              	; Check if this line exists
 d8c3 : ad810a           [ 4] 	lda df_tokbuff+DFTK_LINNUM
-d8c6 : aa               [ 2] 	tax
-d8c7 : ad820a           [ 4] 	lda df_tokbuff+DFTK_LINNUM+1
 AS65 Assembler for R6502 [1.42].                                     Page  101
 ---------------------------------- bank1.s -----------------------------------
 
+d8c6 : aa               [ 2] 	tax
+d8c7 : ad820a           [ 4] 	lda df_tokbuff+DFTK_LINNUM+1
 d8ca : 2091d7           [ 6] 	jsr df_pg_find_line
                              	; Save line address for later X then A
 d8cd : 8539             [ 3] 	sta tmp_d
@@ -6561,11 +6563,11 @@ d902 : 10f8             [ 4] 	bpl df_pg_insertlinbyte
 d904 : 60               [ 6] 	rts
                              	
 d905 :                       df_pg_prompt_msg
-d905 : 52656164790d00        	db "Ready",UTF_CR,0
-                             
 AS65 Assembler for R6502 [1.42].                                     Page  102
 ---------------------------------- bank1.s -----------------------------------
 
+d905 : 52656164790d00        	db "Ready",UTF_CR,0
+                             
 d90c :                       mod_sz_progedit_e
                              
                              	include "dflat/runtime.s"
@@ -6626,11 +6628,11 @@ d92f : 86cb             [ 3] 	stx df_currdat+1
                              	; if nest counter zeroed
 d931 : 86c9             [ 3] 	stx df_ifnest
                              
-                             	; clear proc addresses
-d933 : 2037d9           [ 6] 	jsr df_rt_init_vvt
 AS65 Assembler for R6502 [1.42].                                     Page  103
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; clear proc addresses
+d933 : 2037d9           [ 6] 	jsr df_rt_init_vvt
                              
                              ;	clc
 d936 : 60               [ 6] 	rts
@@ -6691,11 +6693,11 @@ d978 : 60               [ 6] 	rts
                              ;****************************************
 d979 :                       df_rt_getnval
                              	; evaluate the expression
-d979 : 207fd9           [ 6] 	jsr df_rt_neval
-                             	; get X,A off operator stack
 AS65 Assembler for R6502 [1.42].                                     Page  104
 ---------------------------------- bank1.s -----------------------------------
 
+d979 : 207fd9           [ 6] 	jsr df_rt_neval
+                             	; get X,A off operator stack
 d97c : 4cfbf2           [ 3] 	jmp df_ost_popInt
                              
                              
@@ -6756,11 +6758,11 @@ d9b0 :                       df_rt_neval_tk
 d9b0 : 297f             [ 2] 	and #0x7f
                              	; check if op (look up type using X as index)
                              	; X contains the current operator index
-                             
-d9b2 : aa               [ 2] 	tax
 AS65 Assembler for R6502 [1.42].                                     Page  105
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+d9b2 : aa               [ 2] 	tax
 d9b3 : bd9dd5           [ 4] 	lda df_tk_tokentype,x
                              	; A contains token type
 d9b6 : 48               [ 3] 	pha
@@ -6821,11 +6823,11 @@ d9e0 : aa               [ 2] 	tax
 d9e1 : f01c             [ 3] 	beq df_rt_neval_pushOp
                              	; use it to index in to type table
 d9e3 : bd9dd5           [ 4] 	lda df_tk_tokentype,x
-                             	; mask off to keep priority
-d9e6 : 2907             [ 2] 	and #DFTK_OPMSK
 AS65 Assembler for R6502 [1.42].                                     Page  106
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; mask off to keep priority
+d9e6 : 2907             [ 2] 	and #DFTK_OPMSK
                              	; compare with the saved token type which includ
 d9e8 : c5d9             [ 3] 	cmp df_tmpptrb
                              	; if top of stack >= current then C=1
@@ -6886,11 +6888,11 @@ da17 : c6da                  	dw df_rt_eval_bytbin
 da19 : d2da                  	dw df_rt_eval_reserved
 da1b : c6da                  	dw df_rt_eval_intdec
 da1d : c6da                  	dw df_rt_eval_inthex
-da1f : c6da                  	dw df_rt_eval_intbin
-da21 : d2da                  	dw df_rt_eval_reserved
 AS65 Assembler for R6502 [1.42].                                     Page  107
 ---------------------------------- bank1.s -----------------------------------
 
+da1f : c6da                  	dw df_rt_eval_intbin
+da21 : d2da                  	dw df_rt_eval_reserved
 da23 : d2da                  	dw df_rt_eval_reserved
 da25 : d2da                  	dw df_rt_eval_reserved
 da27 : d2da                  	dw df_rt_eval_reserved
@@ -6951,11 +6953,11 @@ da4b : c92c             [ 2] 	cmp #','
 da4d : f05d             [ 3] 	beq df_rt_seval_done
 da4f : c929             [ 2] 	cmp #')'
 da51 : f059             [ 3] 	beq df_rt_seval_done
-da53 : d04a             [ 3] 	bne df_rt_seval_nextbyte
-da55 :                       df_rt_seval_esc
 AS65 Assembler for R6502 [1.42].                                     Page  108
 ---------------------------------- bank1.s -----------------------------------
 
+da53 : d04a             [ 3] 	bne df_rt_seval_nextbyte
+da55 :                       df_rt_seval_esc
                              	; the only escape char is STRLIT, VAR or PROC
 da55 : c910             [ 2] 	cmp #DFTK_STRLIT
 da57 : f04b             [ 3] 	beq	df_rt_seval_esc_strlit
@@ -7016,11 +7018,11 @@ da94 : 85da             [ 3] 	sta df_tmpptrb+1
                              	; go and copy the string
 da96 : 20b0da           [ 6] 	jsr df_rt_copyStr
                              	; now save the destination
-da99 : a5d8             [ 3] 	lda df_tmpptra+1
-da9b : 48               [ 3] 	pha
 AS65 Assembler for R6502 [1.42].                                     Page  109
 ---------------------------------- bank1.s -----------------------------------
 
+da99 : a5d8             [ 3] 	lda df_tmpptra+1
+da9b : 48               [ 3] 	pha
 da9c : a5d7             [ 3] 	lda df_tmpptra
 da9e : 48               [ 3] 	pha
                              
@@ -7081,11 +7083,11 @@ dac6 :                       df_rt_eval_chr
                              	; numeric constant
 dac6 : c8               [ 2] 	iny
 dac7 : b1bc             [ 5] 	lda (df_currlin),y
-dac9 : aa               [ 2] 	tax
-daca : c8               [ 2] 	iny
 AS65 Assembler for R6502 [1.42].                                     Page  110
 ---------------------------------- bank1.s -----------------------------------
 
+dac9 : aa               [ 2] 	tax
+daca : c8               [ 2] 	iny
 dacb : b1bc             [ 5] 	lda (df_currlin),y
                              	; save offset before calling any routine
 dacd : 84be             [ 3] 	sty df_exeoff
@@ -7146,11 +7148,11 @@ daf5 :                       df_rt_arry_parm2
                              	; go get array parm 1
 daf5 : 20eeda           [ 6] 	jsr df_rt_arry_parm
 daf8 : 48               [ 3] 	pha
-daf9 : a200             [ 2] 	ldx #0
-dafb : a4be             [ 3] 	ldy df_exeoff
 AS65 Assembler for R6502 [1.42].                                     Page  111
 ---------------------------------- bank1.s -----------------------------------
 
+daf9 : a200             [ 2] 	ldx #0
+dafb : a4be             [ 3] 	ldy df_exeoff
 dafd :                       df_rt_arry_parm2_term
 dafd : b1bc             [ 5] 	lda (df_currlin),y
 daff : c95d             [ 2] 	cmp #']'
@@ -7211,11 +7213,11 @@ db2d : f00a             [ 3] 	beq df_rt_eval_var_notarry
                              ;	beq df_rt_eval_var_simple
                              	; if next ch is not [ then simple copy
                              	; using knowledge that next char either will be 
-db2f : c8               [ 2] 	iny
-db30 : b1bc             [ 5] 	lda (df_currlin),y
 AS65 Assembler for R6502 [1.42].                                     Page  112
 ---------------------------------- bank1.s -----------------------------------
 
+db2f : c8               [ 2] 	iny
+db30 : b1bc             [ 5] 	lda (df_currlin),y
 db32 : 88               [ 2] 	dey
 db33 : c95b             [ 2] 	cmp #'['
 db35 : d01a             [ 3] 	bne df_rt_eval_var_simple
@@ -7276,11 +7278,11 @@ db61 : e6be             [ 5] 	inc df_exeoff
 db63 : a200             [ 2] 	ldx #0
 db65 : a000             [ 2] 	ldy #0
                              
-                             	; ** Array handling routine **
-                             	; A on stack = type
 AS65 Assembler for R6502 [1.42].                                     Page  113
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; ** Array handling routine **
+                             	; A on stack = type
                              	; save vvt address
 db67 : a5d8             [ 3] 	lda df_tmpptra+1
 db69 : 48               [ 3] 	pha
@@ -7341,11 +7343,11 @@ dbaa : 857d             [ 3] 	sta num_b
                              	; (y-1)*dim1 num_a has result
 dbac : 2044cc           [ 6] 	jsr int_fast_mult
 dbaf :                       df_rt_eval_var_nomult
-                             	; move x to a
-dbaf : 8a               [ 2] 	txa
 AS65 Assembler for R6502 [1.42].                                     Page  114
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; move x to a
+dbaf : 8a               [ 2] 	txa
                              	; add x to num_a
 dbb0 : 18               [ 2] 	clc
 dbb1 : 6579             [ 3] 	adc num_a
@@ -7406,11 +7408,11 @@ dbf3 : a000             [ 2] 	ldy #0
 dbf5 : b179             [ 5] 	lda (num_a),y
 dbf7 : aa               [ 2] 	tax
 dbf8 : 98               [ 2] 	tya			; Make A=0
-dbf9 : 4cdbf2           [ 3] 	jmp df_ost_pushInt
-dbfc :                       df_rt_eval_var_str
 AS65 Assembler for R6502 [1.42].                                     Page  115
 ---------------------------------- bank1.s -----------------------------------
 
+dbf9 : 4cdbf2           [ 3] 	jmp df_ost_pushInt
+dbfc :                       df_rt_eval_var_str
 dbfc : 28               [ 4] 	plp
 dbfd :                       df_rt_eval_ptr
                              ;	clc
@@ -7471,11 +7473,11 @@ dc30 : 60               [ 6] 	rts
 dc31 :                       df_rt_parm_2ints
                              	; evaluate 1st parm
 dc31 : 207fd9           [ 6] 	jsr df_rt_neval
-                             	; jump over comma
-dc34 : e6be             [ 5] 	inc df_exeoff
 AS65 Assembler for R6502 [1.42].                                     Page  116
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; jump over comma
+dc34 : e6be             [ 5] 	inc df_exeoff
                              	; evaluate the 2nd parm
 dc36 : 207fd9           [ 6] 	jsr df_rt_neval
                              	
@@ -7536,11 +7538,11 @@ dc6f : 207fd9           [ 6] 	jsr df_rt_neval
 dc72 : e6be             [ 5] 	inc df_exeoff
                              	; evaluate the 2nd parm
 dc74 : 207fd9           [ 6] 	jsr df_rt_neval
-dc77 : e6be             [ 5] 	inc df_exeoff
-                             	; evaluate the 3rd parm
 AS65 Assembler for R6502 [1.42].                                     Page  117
 ---------------------------------- bank1.s -----------------------------------
 
+dc77 : e6be             [ 5] 	inc df_exeoff
+                             	; evaluate the 3rd parm
 dc79 : 207fd9           [ 6] 	jsr df_rt_neval
 dc7c : e6be             [ 5] 	inc df_exeoff
                              	; evaluate the 4th parm
@@ -7601,11 +7603,11 @@ dcb1 :                       df_rt_exec_found_tok
 dcb1 : c8               [ 2] 	iny
 dcb2 : 84be             [ 3] 	sty df_exeoff
                              	; Run that statement - if end of return will pul
-                             	; and effectively do an rts from this routine.
-dcb4 : 2007dd           [ 6] 	jsr df_rt_run_token
 AS65 Assembler for R6502 [1.42].                                     Page  118
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; and effectively do an rts from this routine.
+dcb4 : 2007dd           [ 6] 	jsr df_rt_run_token
                              
                              	; check for break, asynch get
 dcb7 : a592             [ 3] 	lda df_checkmsk
@@ -7666,11 +7668,11 @@ dcf8 :                       df_rt_exec_ctrl_c
                              	SWBRK DFERR_BREAK
                              
 dcfa :                       df_rt_exec_ctrl_z
-                             	; Force a break with zero error number
-                             	; this will drop in to the monitor
 AS65 Assembler for R6502 [1.42].                                     Page  119
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; Force a break with zero error number
+                             	; this will drop in to the monitor
                              	SWBRK 0
                              
                              
@@ -7731,11 +7733,11 @@ dd18 : f007             [ 3] 	beq df_rt_nextstat_ln
                              	; else make this Y
 dd1a : a8               [ 2] 	tay
                              	; X = line low
-dd1b : a6c6             [ 3] 	ldx df_lineptr
-                             	; A = line high
 AS65 Assembler for R6502 [1.42].                                     Page  120
 ---------------------------------- bank1.s -----------------------------------
 
+dd1b : a6c6             [ 3] 	ldx df_lineptr
+                             	; A = line high
 dd1d : a5c7             [ 3] 	lda df_lineptr+1
 dd1f : 18               [ 2] 	clc
 dd20 : 60               [ 6] 	rts
@@ -7796,11 +7798,11 @@ dd5e : 60               [ 6] 	rts
                              ;****************************************
                              ;* Find proc definition in procptr
                              ;* Only call if proc not found before
-                             ;****************************************
-dd5f :                       df_rt_findproc
 AS65 Assembler for R6502 [1.42].                                     Page  121
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;****************************************
+dd5f :                       df_rt_findproc
                              	; start at program beginning
                              	_cpyZPWord df_prgstrt,df_lineptr
                              
@@ -7861,11 +7863,11 @@ dda7 : 88               [ 2] 	dey
 dda8 :                       df_rt_findescval_loop
 dda8 : c8               [ 2] 	iny
 dda9 : b1bc             [ 5] 	lda (df_currlin),y
-ddab : c920             [ 2] 	cmp #DFTK_ESCVAL
-ddad : b0f9             [ 3] 	bcs df_rt_findescval_loop
 AS65 Assembler for R6502 [1.42].                                     Page  122
 ---------------------------------- bank1.s -----------------------------------
 
+ddab : c920             [ 2] 	cmp #DFTK_ESCVAL
+ddad : b0f9             [ 3] 	bcs df_rt_findescval_loop
 ddaf : 84be             [ 3] 	sty df_exeoff
 ddb1 : 60               [ 6] 	rts
                              
@@ -7926,11 +7928,11 @@ dddf : a8               [ 2] 	tay
 dde0 : 84ac             [ 3] 	sty df_rtstop
 dde2 : 18               [ 2] 	clc
 dde3 : 60               [ 6] 	rts
-                             
-                             	include "dflat/rtjmptab.s"
 AS65 Assembler for R6502 [1.42].                                     Page  123
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             	include "dflat/rtjmptab.s"
                              ;************************************************
                              ;*
                              ;*	BBC-128 HOMEBREW COMPUTER
@@ -7991,11 +7993,11 @@ de1a : f6e4                  	dw	df_rt_mode
 de1c : 7ae4                  	dw	df_rt_plot
 de1e : e3e4                  	dw	df_rt_cursor
 de20 : 70e4                  	dw	df_rt_cls
-de22 : c6e9                  	dw	df_rt_vpoke
-de24 : dde9                  	dw	df_rt_setvdp
 AS65 Assembler for R6502 [1.42].                                     Page  124
 ---------------------------------- bank1.s -----------------------------------
 
+de22 : c6e9                  	dw	df_rt_vpoke
+de24 : dde9                  	dw	df_rt_setvdp
 de26 : e7e9                  	dw	df_rt_colour
 de28 : 35ea                  	dw	df_rt_spritepat
 de2a : 63ea                  	dw	df_rt_spritepos
@@ -8056,11 +8058,11 @@ de94 : 85f0                  	dw	df_rt_left
 de96 : 96f0                  	dw	df_rt_right
 de98 : b1f0                  	dw	df_rt_mid
 de9a : cff0                  	dw	df_rt_len
-de9c : 22ef                  	dw	df_rt_mem
-de9e : 81ef                  	dw	df_rt_scrn
 AS65 Assembler for R6502 [1.42].                                     Page  125
 ---------------------------------- bank1.s -----------------------------------
 
+de9c : 22ef                  	dw	df_rt_mem
+de9e : 81ef                  	dw	df_rt_scrn
 dea0 : d9ee                  	dw	df_rt_rnd
 dea2 : 9def                  	dw	df_rt_elapsed
 dea4 : bbef                  	dw	df_rt_call
@@ -8121,11 +8123,11 @@ df00 : a7e8                  	dw df_rt_lst_proc
                              
                              	include "dflat/rtsubs.s"
                              ;************************************************
-                             ;*
-                             ;*	BBC-128 HOMEBREW COMPUTER
 AS65 Assembler for R6502 [1.42].                                     Page  126
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;*
+                             ;*	BBC-128 HOMEBREW COMPUTER
                              ;*	Hardware and software design by @6502Nerd (Dol
                              ;*	Copyright 2014-20
                              ;*  Free to use for any non-commercial purpose su
@@ -8186,11 +8188,11 @@ df1c : 2013dc           [ 6] 	jsr df_rt_get2Ints
                              	_subZPWord df_tmpptra,df_tmpptrb
                              
 df2c : 4c02df           [ 3] 	jmp df_rt_putintres
-                             
-                             ; multiply
 AS65 Assembler for R6502 [1.42].                                     Page  127
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             ; multiply
 df2f :                       df_rt_mult
 df2f : 2013dc           [ 6] 	jsr df_rt_get2Ints
                              	_cpyZPWord df_tmpptra,num_a
@@ -8251,11 +8253,11 @@ dfab :                       df_rt_lsrbit
 dfab : ca               [ 2] 	dex
 dfac : f007             [ 3] 	beq df_rt_lsrdone
 dfae : 46d8             [ 5] 	lsr df_tmpptra+1
-dfb0 : 66d7             [ 5] 	ror df_tmpptra
-dfb2 : 4cabdf           [ 3] 	jmp df_rt_lsrbit
 AS65 Assembler for R6502 [1.42].                                     Page  128
 ---------------------------------- bank1.s -----------------------------------
 
+dfb0 : 66d7             [ 5] 	ror df_tmpptra
+dfb2 : 4cabdf           [ 3] 	jmp df_rt_lsrbit
 dfb5 :                       df_rt_lsrdone
 dfb5 : 4c02df           [ 3] 	jmp df_rt_putintres
                              
@@ -8316,11 +8318,11 @@ dffe :                       df_rt_bsuba
 dffe : 38               [ 2] 	sec
 dfff : a5d9             [ 3] 	lda df_tmpptrb
 e001 : e5d7             [ 3] 	sbc df_tmpptra
-e003 : a5da             [ 3] 	lda df_tmpptrb+1
-e005 : e5d8             [ 3] 	sbc df_tmpptra+1
 AS65 Assembler for R6502 [1.42].                                     Page  129
 ---------------------------------- bank1.s -----------------------------------
 
+e003 : a5da             [ 3] 	lda df_tmpptrb+1
+e005 : e5d8             [ 3] 	sbc df_tmpptra+1
 e007 : 5002             [ 3] 	bvc df_rt_bsubaFin
 e009 : 4980             [ 2] 	eor #0x80
 e00b :                       df_rt_bsubaFin
@@ -8381,11 +8383,11 @@ e04a : 2013dc           [ 6] 	jsr df_rt_get2Ints
 e04d : 20e5df           [ 6] 	jsr df_rt_aequb
 e050 : f0c0             [ 3] 	beq df_rt_false
 e052 : d0b8             [ 3] 	bne df_rt_true
-                             
-                             ; Common usage of boolean operators for num and s
 AS65 Assembler for R6502 [1.42].                                     Page  130
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             ; Common usage of boolean operators for num and s
                              
 e054 :                       df_rt_comlt
                              	; First find the data type on the stack
@@ -8446,11 +8448,11 @@ e094 : f0b4             [ 3] 	beq df_rt_ne
                              
                              ; string less than or equal
 e096 :                       df_rt_slte
-e096 : 20c8e0           [ 6] 	jsr df_rt_str_comp
-e099 : 9005             [ 3] 	bcc df_rt_str_comp_true
 AS65 Assembler for R6502 [1.42].                                     Page  131
 ---------------------------------- bank1.s -----------------------------------
 
+e096 : 20c8e0           [ 6] 	jsr df_rt_str_comp
+e099 : 9005             [ 3] 	bcc df_rt_str_comp_true
 e09b : f003             [ 3] 	beq df_rt_str_comp_true
 e09d :                       df_rt_str_comp_false
 e09d : 4c12e0           [ 3] 	jmp df_rt_false
@@ -8511,11 +8513,11 @@ e0da : 60               [ 6] 	rts
                              
                              
                              
-                             
-e0db :                       df_rt_monitor
 AS65 Assembler for R6502 [1.42].                                     Page  132
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+e0db :                       df_rt_monitor
 e0db : 20b9c2           [ 6] 	jsr _command_line
 e0de : 60               [ 6] 	rts
                              	
@@ -8576,11 +8578,11 @@ e0df : 4c3df3           [ 3] 	jmp df_clear
                              ; 	rts
                              
                              ; df_rt_retsub
-                             ; 	; The top of stack needs to be a gosub return 
-                             ; 	jsr df_rst_popByte
 AS65 Assembler for R6502 [1.42].                                     Page  133
 ---------------------------------- bank1.s -----------------------------------
 
+                             ; 	; The top of stack needs to be a gosub return 
+                             ; 	jsr df_rst_popByte
                              ; 	cmp #DFRT_GOSUB
                              ; 	bne df_rt_retsub_err
                              ; 	; pop the stat and continue
@@ -8641,11 +8643,11 @@ e122 : d019             [ 3] 	bne df_rt_check_while
 e124 : c6c9             [ 5] 	dec df_ifnest
                              	; if not zero then go find more commands
 e126 : d0e2             [ 3] 	bne df_rt_findwend
-                             	; else found it, restore if nest
-                             	; and skip the wend statement
 AS65 Assembler for R6502 [1.42].                                     Page  134
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; else found it, restore if nest
+                             	; and skip the wend statement
 e128 : 68               [ 4] 	pla
 e129 : 85c9             [ 3] 	sta df_ifnest
 e12b : a6bf             [ 3] 	ldx df_nextlin
@@ -8706,11 +8708,11 @@ e171 :                       df_rt_if_stat_err
                              	
                              ; find matching else/elseif/endif
                              ; C = 0 match else/elseif/endif
-                             ; C = 1 match endif only
-                             ; endif is always matched
 AS65 Assembler for R6502 [1.42].                                     Page  135
 ---------------------------------- bank1.s -----------------------------------
 
+                             ; C = 1 match endif only
+                             ; endif is always matched
                              ; ** MAKE SURE NEXTLIN IS POPULATED! **
 e173 :                       df_rt_if_match
                              	; save the current if nest level
@@ -8771,11 +8773,11 @@ e1a5 : 28               [ 4] 	plp
 e1a6 : fa               [ 4] 	plx
 e1a7 : 86c9             [ 3] 	stx df_ifnest
                              
-                             	;A contains the token found, Y is index in to df
-                             ;	clc
 AS65 Assembler for R6502 [1.42].                                     Page  136
 ---------------------------------- bank1.s -----------------------------------
 
+                             	;A contains the token found, Y is index in to df
+                             ;	clc
 e1a9 : 60               [ 6] 	rts
                              
 e1aa :                       df_rt_endif
@@ -8836,11 +8838,11 @@ e1dc : f01e             [ 3] 	beq df_rt_do_else
                              
 e1de : c994             [ 2] 	cmp #DFRT_ENDIF
                              	; else: df_nextlin and df_nxtstidx points to the
-e1e0 : f01d             [ 3] 	beq df_rt_if_done
-                             
 AS65 Assembler for R6502 [1.42].                                     Page  137
 ---------------------------------- bank1.s -----------------------------------
 
+e1e0 : f01d             [ 3] 	beq df_rt_if_done
+                             
                              	; elif detected - increment past the token and e
                              	; make this the current line and token index
                              	_cpyZPWord df_nextlin,df_currlin
@@ -8901,11 +8903,11 @@ e21e : 92d7             [ 5] 	sta (df_tmpptra)
                              	; find end value
                              	; evaluate the end value
 e220 : e6be             [ 5] 	inc df_exeoff
-e222 : 2079d9           [ 6] 	jsr df_rt_getnval
-                             	; and put on rt stack
 AS65 Assembler for R6502 [1.42].                                     Page  138
 ---------------------------------- bank1.s -----------------------------------
 
+e222 : 2079d9           [ 6] 	jsr df_rt_getnval
+                             	; and put on rt stack
 e225 : 20b5f2           [ 6] 	jsr df_rst_pushWord
                              
                              	; find step value
@@ -8966,11 +8968,11 @@ e27b : 68               [ 4] 	pla					; check if if +ve or -ve step
 e27c : 1005             [ 3] 	bpl df_rt_check_pos
                              	; call gte operation but no need to get ints
                              	; as already in ptra and ptrb
-e27e : 2039e0           [ 6] 	jsr df_rt_gte_calc
-e281 : 8003             [ 3] 	bra df_rt_next_check
 AS65 Assembler for R6502 [1.42].                                     Page  139
 ---------------------------------- bank1.s -----------------------------------
 
+e27e : 2039e0           [ 6] 	jsr df_rt_gte_calc
+e281 : 8003             [ 3] 	bra df_rt_next_check
 e283 :                       df_rt_check_pos	
                              	; call lte operation but no need to get ints
                              	; as already in ptra and ptrb
@@ -9031,11 +9033,11 @@ e2b8 :                       df_rt_until_err
                              	
 e2ba :                       df_rt_sadd
                              ;	clc
-e2ba : 60               [ 6] 	rts
-                             	
 AS65 Assembler for R6502 [1.42].                                     Page  140
 ---------------------------------- bank1.s -----------------------------------
 
+e2ba : 60               [ 6] 	rts
+                             	
 e2bb :                       df_rt_print_num
 e2bb : 20fbf2           [ 6] 	jsr df_ost_popInt
 e2be : 18               [ 2] 	clc
@@ -9096,11 +9098,11 @@ e2ff : 4ce6e2           [ 3] 	jmp df_rt_datlinstart
 e302 :                       df_rt_getdatatk
 e302 : b1ca             [ 5] 	lda (df_currdat),y
 e304 : 10e8             [ 4] 	bpl df_rt_datastatement
-                             	; found data statement?
-e306 : c996             [ 2] 	cmp #DFRT_DATA
 AS65 Assembler for R6502 [1.42].                                     Page  141
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; found data statement?
+e306 : c996             [ 2] 	cmp #DFRT_DATA
                              	; if not then go to next line
 e308 : d0ea             [ 4] 	bne df_rt_datnextlin
 e30a : 84cc             [ 3] 	sty df_datoff
@@ -9161,11 +9163,11 @@ e34e : a903             [ 2] 	lda #3
 e350 : 85b6             [ 3] 	sta df_curstidx
                              
                              	; get type from vvt ptr in tmpa
-e352 : a1d7             [ 6] 	lda (df_tmpptra,x)
-e354 : a8               [ 2] 	tay
 AS65 Assembler for R6502 [1.42].                                     Page  142
 ---------------------------------- bank1.s -----------------------------------
 
+e352 : a1d7             [ 6] 	lda (df_tmpptra,x)
+e354 : a8               [ 2] 	tay
                              	; get lvar point from tmpb
 e355 : a6d9             [ 3] 	ldx df_tmpptrb
 e357 : a5da             [ 3] 	lda df_tmpptrb+1
@@ -9226,11 +9228,11 @@ e38b : 20bfdd           [ 6] 	jsr df_rt_getlvar
 e38e : 86d9             [ 3] 	stx df_tmpptrb
 e390 : 85da             [ 3] 	sta df_tmpptrb+1
 e392 : a078             [ 2] 	ldy #120
-                             	; go read a line of input
-                             	; X,A is ptr has the input, Y is size
 AS65 Assembler for R6502 [1.42].                                     Page  143
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; go read a line of input
+                             	; X,A is ptr has the input, Y is size
 e394 : 38               [ 2] 	sec
 e395 : 20a2c5           [ 6] 	jsr io_read_line
                              	; check the type
@@ -9291,11 +9293,11 @@ e3d3 : b1bc             [ 5] 	lda (df_currlin),y
 e3d5 : aa               [ 2] 	tax
 e3d6 : c8               [ 2] 	iny
 e3d7 : b1bc             [ 5] 	lda (df_currlin),y
-e3d9 : 84be             [ 3] 	sty df_exeoff
-                             	; localise this variable
 AS65 Assembler for R6502 [1.42].                                     Page  144
 ---------------------------------- bank1.s -----------------------------------
 
+e3d9 : 84be             [ 3] 	sty df_exeoff
+                             	; localise this variable
 e3db : 2089f2           [ 6] 	jsr df_rt_proc_local
                              	; increment local counter
 e3de : 68               [ 4] 	pla
@@ -9356,11 +9358,11 @@ e413 :                       df_rt_skip_dim_chk
 e413 : a5d7             [ 3] 	lda df_tmpptra
 e415 : 48               [ 3] 	pha
 e416 : a5d8             [ 3] 	lda df_tmpptra+1
-e418 : 48               [ 3] 	pha
-e419 : 20f5da           [ 6] 	jsr df_rt_arry_parm2
 AS65 Assembler for R6502 [1.42].                                     Page  145
 ---------------------------------- bank1.s -----------------------------------
 
+e418 : 48               [ 3] 	pha
+e419 : 20f5da           [ 6] 	jsr df_rt_arry_parm2
                              	; Restore slot address
 e41c : 68               [ 4] 	pla
 e41d : 85d8             [ 3] 	sta df_tmpptra+1
@@ -9421,11 +9423,11 @@ e464 : 92d7             [ 5] 	sta (df_tmpptra)
                              	; don't increment byte again - go check for more
 e466 : 8086             [ 4] 	bra df_rt_dim_loop	
 e468 :                       df_rt_dim_next_byte
-e468 : e6be             [ 5] 	inc df_exeoff
-e46a : 8080             [ 4] 	bra df_rt_dim
 AS65 Assembler for R6502 [1.42].                                     Page  146
 ---------------------------------- bank1.s -----------------------------------
 
+e468 : e6be             [ 5] 	inc df_exeoff
+e46a : 8080             [ 4] 	bra df_rt_dim
 e46c :                       df_rt_dim_done
                              ;	clc
 e46c : 28               [ 4] 	plp
@@ -9486,11 +9488,11 @@ e4a6 :                       df_rt_plotstr
 e4a6 : 20f7f2           [ 6] 	jsr df_ost_popPtr
                              	; save pointer to tmpa
 e4a9 : 86d7             [ 3] 	stx df_tmpptra
-e4ab : 85d8             [ 3] 	sta df_tmpptra+1
-e4ad : a416             [ 3] 	ldy vdp_base+vdp_gmode	; Check if in hires mode
 AS65 Assembler for R6502 [1.42].                                     Page  147
 ---------------------------------- bank1.s -----------------------------------
 
+e4ab : 85d8             [ 3] 	sta df_tmpptra+1
+e4ad : a416             [ 3] 	ldy vdp_base+vdp_gmode	; Check if in hires mode
 e4af : c010             [ 2] 	cpy #0x10
 e4b1 : b017             [ 3] 	bcs df_rt_hplotstr
                              	; get y and x in that order
@@ -9544,18 +9546,18 @@ e4e9 :                       df_rt_himem
                              	; evaluate the expression
 e4e9 : 2079d9           [ 6] 	jsr df_rt_getnval
                              	; write X,A to df_memtop
-e4ec : 8eb40c           [ 4] 	stx df_memtop
-e4ef : 8db50c           [ 4] 	sta df_memtop+1
+e4ec : 8eb70c           [ 4] 	stx df_memtop
+e4ef : 8db80c           [ 4] 	sta df_memtop+1
                              	; now clear everything down
 e4f2 : 4c3df3           [ 3] 	jmp df_clear
 e4f5 : 60               [ 6] 	rts
                              
 e4f6 :                       df_rt_mode
-e4f6 :                       df_rt_hires
-                             	; evaluate the expression
 AS65 Assembler for R6502 [1.42].                                     Page  148
 ---------------------------------- bank1.s -----------------------------------
 
+e4f6 :                       df_rt_hires
+                             	; evaluate the expression
 e4f6 : 2079d9           [ 6] 	jsr df_rt_getnval
                              	; only interested in low byte
 e4f9 : 8a               [ 2] 	txa
@@ -9616,11 +9618,11 @@ e53c : 4c31c3           [ 3] 	jmp _gr_circle
                              
 e53f :                       df_rt_line
 e53f : 2053dc           [ 6] 	jsr df_rt_parm_4ints
-e542 : a5d7             [ 3] 	lda df_tmpptra				; load x0
-e544 : 8579             [ 3] 	sta num_a
 AS65 Assembler for R6502 [1.42].                                     Page  149
 ---------------------------------- bank1.s -----------------------------------
 
+e542 : a5d7             [ 3] 	lda df_tmpptra				; load x0
+e544 : 8579             [ 3] 	sta num_a
 e546 : a5d9             [ 3] 	lda	df_tmpptrb				; load y0
 e548 : 857a             [ 3] 	sta num_a+1
 e54a : a5db             [ 3] 	lda df_tmpptrc				; load x1
@@ -9681,11 +9683,11 @@ e5a6 : aa               [ 2] 	tax
 e5a7 : a5d8             [ 3] 	lda df_tmpptra+1
 e5a9 : 6900             [ 2] 	adc #0
 e5ab : 20b5f2           [ 6] 	jsr df_rst_pushWord			; Put pointer on runtime s
-                             	; previous cursor is starting position
-                             	; plus delta is new position
 AS65 Assembler for R6502 [1.42].                                     Page  150
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; previous cursor is starting position
+                             	; plus delta is new position
 e5ae : 68               [ 4] 	pla							; get y0 off stack
 e5af : 18               [ 2] 	clc
 e5b0 : 857a             [ 3] 	sta num_a+1
@@ -9746,11 +9748,11 @@ e5ec : c8               [ 2] 	iny
                              ;	beq df_rt_print_done
 e5ed : c4b5             [ 3] 	cpy df_nxtstidx
 e5ef : f026             [ 4] 	beq df_rt_print_done
-e5f1 : b1bc             [ 5] 	lda (df_currlin),y
-e5f3 : c93a             [ 2] 	cmp #':'
 AS65 Assembler for R6502 [1.42].                                     Page  151
 ---------------------------------- bank1.s -----------------------------------
 
+e5f1 : b1bc             [ 5] 	lda (df_currlin),y
+e5f3 : c93a             [ 2] 	cmp #':'
 e5f5 : f020             [ 4] 	beq df_rt_print_done
 e5f7 : c920             [ 2] 	cmp #' '
 e5f9 : f0f1             [ 3] 	beq df_rt_print_ws
@@ -9811,11 +9813,11 @@ e633 : 91d7             [ 5] 	sta (df_tmpptra),y
                              
 e635 : 60               [ 6] 	rts
                              
-                             ; assign to a string variable
-                             ; X,A must have lvar
 AS65 Assembler for R6502 [1.42].                                     Page  152
 ---------------------------------- bank1.s -----------------------------------
 
+                             ; assign to a string variable
+                             ; X,A must have lvar
 e636 :                       df_rt_sassign
                              	; now go evaluate expression
                              	; with the destination being X,A
@@ -9876,11 +9878,11 @@ e663 : 4c22e6           [ 3] 	jmp df_rt_nassign
                              
                              ; general assignment execution
 e666 :                       df_rt_assign
-e666 : 203ce6           [ 6] 	jsr df_rt_generate_lvar
-                             	; go and do the assignment
 AS65 Assembler for R6502 [1.42].                                     Page  153
 ---------------------------------- bank1.s -----------------------------------
 
+e666 : 203ce6           [ 6] 	jsr df_rt_generate_lvar
+                             	; go and do the assignment
 e669 : 4c58e6           [ 3] 	jmp df_rt_doassign
                              	
                              ; comment or data token is ignored by runtime
@@ -9941,11 +9943,11 @@ e699 :                       df_rt_renum_update
 e699 : a001             [ 2] 	ldy #DFTK_LINNUM
 e69b : a5d9             [ 3] 	lda df_tmpptrb
 e69d : 91dd             [ 5] 	sta (df_tmpptrd),y
-e69f : c8               [ 2] 	iny
-e6a0 : a5da             [ 3] 	lda df_tmpptrb+1
 AS65 Assembler for R6502 [1.42].                                     Page  154
 ---------------------------------- bank1.s -----------------------------------
 
+e69f : c8               [ 2] 	iny
+e6a0 : a5da             [ 3] 	lda df_tmpptrb+1
 e6a2 : 91dd             [ 5] 	sta (df_tmpptrd),y
                              	; add increment to new line
                              	_addZPWord df_tmpptrb,df_tmpptrc
@@ -10006,11 +10008,11 @@ e6fb :                       df_rt_listgotnext
                              	; dec vnt #
 e6fb : c6d9             [ 5] 	dec df_tmpptrb
                              	; skip past zero terminator
-e6fd : c8               [ 2] 	iny
-                             	; add this to vnt pointer
 AS65 Assembler for R6502 [1.42].                                     Page  155
 ---------------------------------- bank1.s -----------------------------------
 
+e6fd : c8               [ 2] 	iny
+                             	; add this to vnt pointer
 e6fe : 18               [ 2] 	clc
 e6ff : 98               [ 2] 	tya
 e700 : 65d7             [ 3] 	adc df_tmpptra
@@ -10071,11 +10073,11 @@ e738 : b057             [ 3] 	bcs df_rt_listprgend
 e73a : 98               [ 2] 	tya
 e73b : 48               [ 3] 	pha
                              	; find the command
-e73c :                       df_rt_listp_findcmd
-e73c : c8               [ 2] 	iny
 AS65 Assembler for R6502 [1.42].                                     Page  156
 ---------------------------------- bank1.s -----------------------------------
 
+e73c :                       df_rt_listp_findcmd
+e73c : c8               [ 2] 	iny
 e73d : b1c6             [ 5] 	lda (df_lineptr),y
 e73f : 10fb             [ 3] 	bpl df_rt_listp_findcmd
                              	; restore y to stat beginning
@@ -10136,11 +10138,11 @@ e784 : 85d8             [ 3] 	sta df_tmpptra+1
 e786 : 4c91e7           [ 3] 	jmp df_rt_listprgend
                              	; NO ability to choose and ending line number!
                              
-                             ; Common listing routine used by LIST and SAVE
-                             ; tmpe = 0 means in LIST mode else SAVE mode
 AS65 Assembler for R6502 [1.42].                                     Page  157
 ---------------------------------- bank1.s -----------------------------------
 
+                             ; Common listing routine used by LIST and SAVE
+                             ; tmpe = 0 means in LIST mode else SAVE mode
                              ; can stop the listing in LIST mode with CTRL-C
 e789 :                       df_rt_listprg
                              	; program start and end as for pointer value
@@ -10201,11 +10203,11 @@ e7d7 : 68               [ 4] 	pla
 e7d8 :                       df_rt_list_line_only_fin
 e7d8 : 60               [ 6] 	rts
                              
-                             ;Using df_tmpptra as line pointer
-                             ;Print decode an entire line
 AS65 Assembler for R6502 [1.42].                                     Page  158
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;Using df_tmpptra as line pointer
+                             ;Print decode an entire line
 e7d9 :                       df_rt_list_all_line				; Start here to include nu
 e7d9 : 2013e9           [ 6] 	jsr df_rt_list_linnum
 e7dc :                       df_rt_list_line_only			; Start here for just the 
@@ -10266,11 +10268,11 @@ e824 : 88               [ 2] 	dey				; Y is on byte after esc byte
 e825 : 68               [ 4] 	pla
                              	; x2 to get jmp offset
 e826 : 0a               [ 2] 	asl a
-e827 : aa               [ 2] 	tax
-e828 : bddcde           [ 4] 	lda df_rt_escjmp,x
 AS65 Assembler for R6502 [1.42].                                     Page  159
 ---------------------------------- bank1.s -----------------------------------
 
+e827 : aa               [ 2] 	tax
+e828 : bddcde           [ 4] 	lda df_rt_escjmp,x
 e82b : 85db             [ 3] 	sta df_tmpptrc
 e82d : bdddde           [ 4] 	lda df_rt_escjmp+1,x
 e830 : 85dc             [ 3] 	sta df_tmpptrc+1
@@ -10331,11 +10333,11 @@ e878 : a5d9             [ 3] 	lda df_tmpptrb
 e87a : 85da             [ 3] 	sta df_tmpptrb+1
 e87c : a208             [ 2] 	ldx #8
 e87e : d002             [ 3] 	bne df_rt_lst_bin
-                             
-                             ; Decode a int binary
 AS65 Assembler for R6502 [1.42].                                     Page  160
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             ; Decode a int binary
 e880 :                       df_rt_lst_intbin
 e880 : a210             [ 2] 	ldx #16
                              	; FALL THROUGH
@@ -10396,11 +10398,11 @@ e8ca : f009             [ 3] 	beq df_rt_list_gotvvtend
                              	_incZPWord df_tmpptrc
                              
 e8d2 : 4cc8e8           [ 3] 	jmp df_rt_list_vvtend
-e8d5 :                       df_rt_list_gotvvtend
-                             	_incZPWord df_tmpptrc
 AS65 Assembler for R6502 [1.42].                                     Page  161
 ---------------------------------- bank1.s -----------------------------------
 
+e8d5 :                       df_rt_list_gotvvtend
+                             	_incZPWord df_tmpptrc
                              
                              	; move target slot address towards top of mem
 e8db : 18               [ 2] 	clc
@@ -10461,11 +10463,11 @@ e92d : c902             [ 2] 	cmp #2
 e92f : b001             [ 3] 	bcs df_rt_list_do_decode_tkn
 e931 : 60               [ 6] 	rts
 e932 :                       df_rt_list_do_decode_tkn
-e932 : aa               [ 2] 	tax
-e933 : a97f             [ 2] 	lda #lo(df_tokensyms)
 AS65 Assembler for R6502 [1.42].                                     Page  162
 ---------------------------------- bank1.s -----------------------------------
 
+e932 : aa               [ 2] 	tax
+e933 : a97f             [ 2] 	lda #lo(df_tokensyms)
 e935 : 85d9             [ 3] 	sta df_tmpptrb
 e937 : a9d2             [ 2] 	lda #hi(df_tokensyms)
 e939 : 85da             [ 3] 	sta df_tmpptrb+1
@@ -10526,11 +10528,11 @@ e98c : c920             [ 2] 	cmp #' '			; Skip all chars >=' '
 e98e : b0f4             [ 3] 	bcs df_rt_list_next_asm_ch
 e990 : 38               [ 2] 	sec					; Skip offset and mode bytes
 e991 : 65d9             [ 3] 	adc df_tmpptrb
-e993 : 85d9             [ 3] 	sta df_tmpptrb
-                             	_bcc 2
 AS65 Assembler for R6502 [1.42].                                     Page  163
 ---------------------------------- bank1.s -----------------------------------
 
+e993 : 85d9             [ 3] 	sta df_tmpptrb
+                             	_bcc 2
                              
 e997 : e6da             [ 5] 	inc df_tmpptrb+1
 e999 : ca               [ 2] 	dex					; One less symbol to skip over
@@ -10591,11 +10593,11 @@ e9e4 : 4c23c6           [ 3] 	jmp vdp_wr_reg
                              ;	rts
                              
 e9e7 :                       df_rt_colour
-e9e7 : 203cdc           [ 6] 	jsr df_rt_parm_3ints
-e9ea :                       dfcl_colour
 AS65 Assembler for R6502 [1.42].                                     Page  164
 ---------------------------------- bank1.s -----------------------------------
 
+e9e7 : 203cdc           [ 6] 	jsr df_rt_parm_3ints
+e9ea :                       dfcl_colour
                              	; colour is a combination of b and c parms
 e9ea : a5d9             [ 3] 	lda df_tmpptrb
 e9ec : 0a               [ 2] 	asl a
@@ -10656,11 +10658,11 @@ ea34 : 60               [ 6] 	rts
                              ; pattern array is a mim 4 element int
 ea35 :                       df_rt_spritepat
 ea35 : 2031dc           [ 6] 	jsr df_rt_parm_2ints
-ea38 :                       dfcl_sprpat
-                             	; save sprite number
 AS65 Assembler for R6502 [1.42].                                     Page  165
 ---------------------------------- bank1.s -----------------------------------
 
+ea38 :                       dfcl_sprpat
+                             	; save sprite number
 ea38 : 86d7             [ 3] 	stx df_tmpptra
 ea3a : 64d8             [ 3] 	stz df_tmpptra+1
                              	; multiply by 8 to get pattern offset
@@ -10721,11 +10723,11 @@ ea81 :                       df_rt_spriteattr
                              	; save A which contains the offset
 ea81 : 48               [ 3] 	pha
 ea82 : 2031dc           [ 6] 	jsr df_rt_parm_2ints
-                             	; calculate the sprite number in vram
-ea85 : a5d7             [ 3] 	lda df_tmpptra
 AS65 Assembler for R6502 [1.42].                                     Page  166
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; calculate the sprite number in vram
+ea85 : a5d7             [ 3] 	lda df_tmpptra
 ea87 : 0a               [ 2] 	asl a
 ea88 : 0a               [ 2] 	asl a
 ea89 : 6511             [ 3] 	adc vdp_base+vdp_addr_spa
@@ -10786,11 +10788,11 @@ eaca : 290f             [ 2] 	and #0x0f
 eacc : d002             [ 3] 	bne df_rt_sound_env_skip
                              	; envelope mode
 eace : 0910             [ 2] 	ora #0x10
-ead0 :                       df_rt_sound_env_skip
-ead0 : a8               [ 2] 	tay
 AS65 Assembler for R6502 [1.42].                                     Page  167
 ---------------------------------- bank1.s -----------------------------------
 
+ead0 :                       df_rt_sound_env_skip
+ead0 : a8               [ 2] 	tay
 ead1 : 4c74c6           [ 3] 	jmp snd_set
                              ;	rts
                              
@@ -10851,11 +10853,11 @@ eb11 : 0a               [ 2] 	asl a
 eb12 : 0a               [ 2] 	asl a
 eb13 : 05d7             [ 3] 	ora df_tmpptra
                              	; we now have bits set for channels to enable
-                             	; but need to invert for the 8910
-eb15 : 493f             [ 2] 	eor #0x3f
 AS65 Assembler for R6502 [1.42].                                     Page  168
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; but need to invert for the 8910
+eb15 : 493f             [ 2] 	eor #0x3f
                              	; top two bits = 01 for portb input and porta ou
 eb17 : 0940             [ 2] 	ora #0x40
 eb19 : a8               [ 2] 	tay
@@ -10916,11 +10918,11 @@ eb53 : da               [ 3] 	phx
 eb54 : e6be             [ 5] 	inc df_exeoff
 eb56 : 207fd9           [ 6] 	jsr df_rt_neval				; Get address
 eb59 : 20fbf2           [ 6] 	jsr df_ost_popInt			; X,A = Address
-eb5c : 48               [ 3] 	pha
-eb5d : da               [ 3] 	phx
 AS65 Assembler for R6502 [1.42].                                     Page  169
 ---------------------------------- bank1.s -----------------------------------
 
+eb5c : 48               [ 3] 	pha
+eb5d : da               [ 3] 	phx
                              
                              	; jump over comma
 eb5e : e6be             [ 5] 	inc df_exeoff
@@ -10981,11 +10983,11 @@ ebb1 : bc0101           [ 4] 	ldy 0x101,x					; Get low len byte
 ebb4 : f005             [ 3] 	beq df_rt_bsave_dech
 ebb6 : de0101           [ 6] 	dec 0x101,x					; A simple decrement
 ebb9 : 80c5             [ 3] 	bra df_rt_bsave_byte		; Process next byte
-ebbb :                       df_rt_bsave_dech
-ebbb : de0101           [ 6] 	dec 0x101,x					; Decrement low in readiness
 AS65 Assembler for R6502 [1.42].                                     Page  170
 ---------------------------------- bank1.s -----------------------------------
 
+ebbb :                       df_rt_bsave_dech
+ebbb : de0101           [ 6] 	dec 0x101,x					; Decrement low in readiness
 ebbe : de0201           [ 6] 	dec 0x102,x					; Decrement high
 ebc1 : 80bd             [ 3] 	bra df_rt_bsave_byte		; Process next byte
 ebc3 :                       df_rt_bsave_done
@@ -11046,11 +11048,11 @@ ebfa :                       df_rt_load
 ebfa : 20d5eb           [ 6] 	jsr df_rt_parse_file
 ebfd : 2096c5           [ 6] 	jsr io_open_read
 ec00 : b048             [ 3] 	bcs df_rt_file_errc
-                             	; no echo - very important
-                             	; else might try and write to a device
 AS65 Assembler for R6502 [1.42].                                     Page  171
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; no echo - very important
+                             	; else might try and write to a device
                              	; only open for reading (i.e. SD CARD)
                              
                              	; Initialise to line 10 in scratch, scratch+1
@@ -11111,11 +11113,11 @@ ec59 : b0ef             [ 3] 	bcs df_rt_file_errc
 ec5b : 60               [ 6] 	rts
                              
 ec5c :                       df_rt_mkdir
-ec5c : 20ceeb           [ 6] 	jsr df_rt_init_filename		; Parse filename
-ec5f : 2079c0           [ 6] 	jsr _fs_mkdir_w				; Try and make directory
 AS65 Assembler for R6502 [1.42].                                     Page  172
 ---------------------------------- bank1.s -----------------------------------
 
+ec5c : 20ceeb           [ 6] 	jsr df_rt_init_filename		; Parse filename
+ec5f : 2079c0           [ 6] 	jsr _fs_mkdir_w				; Try and make directory
 ec62 : b0e6             [ 3] 	bcs df_rt_file_errc
 ec64 : 60               [ 6] 	rts
                              
@@ -11176,11 +11178,11 @@ eca6 : 08               [ 3] 	php
 eca7 : a900             [ 2] 	lda #0						; No header
 eca9 : 48               [ 3] 	pha
 ecaa : a901             [ 2] 	lda #1						; 0x100 address - hi
-ecac : 48               [ 3] 	pha
-ecad : a900             [ 2] 	lda #0						; 0x100 address - lo
 AS65 Assembler for R6502 [1.42].                                     Page  173
 ---------------------------------- bank1.s -----------------------------------
 
+ecac : 48               [ 3] 	pha
+ecad : a900             [ 2] 	lda #0						; 0x100 address - lo
 ecaf : 48               [ 3] 	pha
 ecb0 : 800d             [ 3] 	bra df_rt_bload_file
 ecb2 :                       df_rt_vload
@@ -11241,11 +11243,11 @@ ecfa : 2090c5           [ 6] 	jsr io_get_ch				; Get a character
 ecfd : b011             [ 4] 	bcs df_rt_vload_done		; If EOF then done
 ecff : 86d7             [ 3] 	stx df_tmpptra				; Save address
 ed01 : 84d8             [ 3] 	sty df_tmpptra+1
-ed03 : 92d7             [ 5] 	sta (df_tmpptra)			; Poke byte to RAM
-ed05 :                       df_rt_vload_next
 AS65 Assembler for R6502 [1.42].                                     Page  174
 ---------------------------------- bank1.s -----------------------------------
 
+ed03 : 92d7             [ 5] 	sta (df_tmpptra)			; Poke byte to RAM
+ed05 :                       df_rt_vload_next
 ed05 : ba               [ 2] 	tsx							; Get SP to X
 ed06 : fe0101           [ 6] 	inc 0x101,x					; Increment low address
 ed09 : d003             [ 3] 	bne df_rt_vload_byte_skip
@@ -11306,11 +11308,11 @@ ed4b : 6435             [ 3] 	stz tmp_a					; Clear low address
 ed4d : 200c0c           [ 6] 	jsr ram_code				; Poke byte to RAM bank 2 and ma
 ed50 : c8               [ 2] 	iny							; Update page index
 ed51 : d0ef             [ 3] 	bne df_rt_ptload_byte		; Back for next byte
-ed53 : e6d8             [ 5] 	inc df_tmpptra+1			; Increment high address
-ed55 : 80eb             [ 3] 	bra df_rt_ptload_byte		; Back for next byte
 AS65 Assembler for R6502 [1.42].                                     Page  175
 ---------------------------------- bank1.s -----------------------------------
 
+ed53 : e6d8             [ 5] 	inc df_tmpptra+1			; Increment high address
+ed55 : 80eb             [ 3] 	bra df_rt_ptload_byte		; Back for next byte
                              
 ed57 :                       df_rt_ptinit
                              	; Get x,y
@@ -11371,11 +11373,11 @@ edbf : 209fc8           [ 6] 	jsr utilPrintCRLF
 edc2 :                       df_rt_dir_skip_crlf
 edc2 : fa               [ 4] 	plx							; Decrement file line counter
 edc3 : ca               [ 2] 	dex
-edc4 : d00d             [ 3] 	bne df_rt_dir_skip_pause
-edc6 : a2e0             [ 2] 	ldx #lo(df_rt_pausemsg)		; Show pause message
 AS65 Assembler for R6502 [1.42].                                     Page  176
 ---------------------------------- bank1.s -----------------------------------
 
+edc4 : d00d             [ 3] 	bne df_rt_dir_skip_pause
+edc6 : a2e0             [ 2] 	ldx #lo(df_rt_pausemsg)		; Show pause message
 edc8 : a9ed             [ 2] 	lda #hi(df_rt_pausemsg)
 edca : 20dec5           [ 6] 	jsr io_print_line
 edcd : 38               [ 2] 	sec
@@ -11436,11 +11438,11 @@ ee36 : 85da             [ 3] 	sta df_tmpptrb+1
 ee38 :                       df_rt_dfcl_reset
                              	; load the vdp count as the reset value of timer
                              	; turn off interrupts while reading vdp lo,hi
-ee38 : a001             [ 2] 	ldy #1	; This is in readiness to read high byte 
-                             	; Safe read of counter (2 bytes only) without di
 AS65 Assembler for R6502 [1.42].                                     Page  177
 ---------------------------------- bank1.s -----------------------------------
 
+ee38 : a001             [ 2] 	ldy #1	; This is in readiness to read high byte 
+                             	; Safe read of counter (2 bytes only) without di
 ee3a : a504             [ 3] 	lda vdp_int_cnt
 ee3c :                       df_rt_safe_read
 ee3c : 92d9             [ 5] 	sta (df_tmpptrb)
@@ -11501,11 +11503,11 @@ ee82 : 208eee           [ 6] 	jsr df_rt_datetime_conv
                              	; Get seconds binary and convert to BCD
 ee85 : ae0209           [ 4] 	ldx scratch+2
                              	; Separator character is null to terminate strin
-ee88 : a900             [ 2] 	lda #0
-ee8a : 208eee           [ 6] 	jsr df_rt_datetime_conv
 AS65 Assembler for R6502 [1.42].                                     Page  178
 ---------------------------------- bank1.s -----------------------------------
 
+ee88 : a900             [ 2] 	lda #0
+ee8a : 208eee           [ 6] 	jsr df_rt_datetime_conv
 ee8d : 60               [ 6] 	rts
 ee8e :                       df_rt_datetime_conv
 ee8e : 48               [ 3] 	pha
@@ -11566,11 +11568,11 @@ eed3 : aa               [ 2] 	tax
 eed4 : a900             [ 2] 	lda #0
 eed6 : 4cdbf2           [ 3] 	jmp df_ost_pushInt
                              
-                             ; Random number generator
-                             ; rnd(0) = get next number
 AS65 Assembler for R6502 [1.42].                                     Page  179
 ---------------------------------- bank1.s -----------------------------------
 
+                             ; Random number generator
+                             ; rnd(0) = get next number
                              ; rnd(>0) = set seed
 eed9 :                       df_rt_rnd
                              ;	inc df_exeoff
@@ -11631,11 +11633,11 @@ ef1a : 2079d9           [ 6] 	jsr df_rt_getnval
 ef1d : a900             [ 2] 	lda #0
 ef1f : 4cdbf2           [ 3] 	jmp df_ost_pushInt
                              
-                             
-                             
 AS65 Assembler for R6502 [1.42].                                     Page  180
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             
                              ;* Return memory footprint as follows:
                              ;* 0	Return free memory (start of vvt - end of he
                              ;* 1	Return program size (end of prg - start of p
@@ -11696,11 +11698,11 @@ ef7e : 4cdbf2           [ 3] 	jmp df_ost_pushInt
                              
                              	
                              ; s = scrn(x,y)
-ef81 :                       df_rt_scrn
-                             ;	inc df_exeoff
 AS65 Assembler for R6502 [1.42].                                     Page  181
 ---------------------------------- bank1.s -----------------------------------
 
+ef81 :                       df_rt_scrn
+                             ;	inc df_exeoff
 ef81 : 2031dc           [ 6] 	jsr df_rt_parm_2ints
 ef84 : a6d7             [ 3] 	ldx df_tmpptra
 ef86 : a4d9             [ 3] 	ldy df_tmpptrb
@@ -11761,11 +11763,11 @@ efd0 : 86d7             [ 3] 	stx df_tmpptra
 efd2 : 05d7             [ 3] 	ora df_tmpptra
 efd4 : f00f             [ 3] 	beq df_rt_sgn_z
 efd6 : 2980             [ 2] 	and #0x80
-efd8 : d006             [ 3] 	bne df_rt_sgn_n
-efda : a201             [ 2] 	ldx #1
 AS65 Assembler for R6502 [1.42].                                     Page  182
 ---------------------------------- bank1.s -----------------------------------
 
+efd8 : d006             [ 3] 	bne df_rt_sgn_n
+efda : a201             [ 2] 	ldx #1
 efdc : a900             [ 2] 	lda #0
 efde : f0e7             [ 3] 	beq df_rt_push_int1			; Always
 efe0 :                       df_rt_sgn_n
@@ -11826,11 +11828,11 @@ f018 : f00d             [ 3] 	beq df_str_src_end
 f01a : 81d9             [ 6] 	sta (df_tmpptrb,x)
                              	_incZPWord df_tmpptrb
                              
-f022 : c8               [ 2] 	iny
-f023 : d0ed             [ 3] 	bne df_rt_str_cpy_ch
 AS65 Assembler for R6502 [1.42].                                     Page  183
 ---------------------------------- bank1.s -----------------------------------
 
+f022 : c8               [ 2] 	iny
+f023 : d0ed             [ 3] 	bne df_rt_str_cpy_ch
                              	SWBRK DFERR_STRLONG
                              
 f027 :                       df_str_src_end
@@ -11891,11 +11893,11 @@ f068 : 68               [ 4] 	pla
 f069 : 91b0             [ 5] 	sta (df_sevalptr),y
 f06b : c8               [ 2] 	iny
                              	; zero terminator
-f06c : a900             [ 2] 	lda #0
-f06e : 91b0             [ 5] 	sta (df_sevalptr),y
 AS65 Assembler for R6502 [1.42].                                     Page  184
 ---------------------------------- bank1.s -----------------------------------
 
+f06c : a900             [ 2] 	lda #0
+f06e : 91b0             [ 5] 	sta (df_sevalptr),y
                              	; point to seval scratch area
 f070 : a6b0             [ 3] 	ldx df_sevalptr
 f072 : a5b1             [ 3] 	lda df_sevalptr+1
@@ -11956,11 +11958,11 @@ f0b1 :                       df_rt_mid
                              	; first get the string to act on
                              	; point to string accumulator
 f0b1 : 202fda           [ 6] 	jsr df_rt_seval
-                             	; now get start of string segment
-f0b4 : e6be             [ 5] 	inc df_exeoff
 AS65 Assembler for R6502 [1.42].                                     Page  185
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; now get start of string segment
+f0b4 : e6be             [ 5] 	inc df_exeoff
 f0b6 : 207fd9           [ 6] 	jsr df_rt_neval
                              	; number of chars to extract
 f0b9 : e6be             [ 5] 	inc df_exeoff
@@ -12021,11 +12023,11 @@ f100 :                       df_rt_val_err
                              ; stop execution
 f102 :                       df_rt_abort
                              	SWBRK DFERR_ABORT
-                             
-                             
 AS65 Assembler for R6502 [1.42].                                     Page  186
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             
                              ;* ok=fcreate(filename)
 f104 :                       df_rt_fcreate
 f104 : 20d5eb           [ 6] 	jsr df_rt_parse_file
@@ -12086,11 +12088,11 @@ f143 :                       mod_sz_rtsubs_e
                              ;*	BBC-128
                              ;*	Dolo Miah (@6502Nerd)
                              ;*	Copyright (c) 2020
-                             ;*  Free to use for any non-commercial purpose su
-                             ;*  credit of original my authorship please!
 AS65 Assembler for R6502 [1.42].                                     Page  187
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;*  Free to use for any non-commercial purpose su
+                             ;*  credit of original my authorship please!
                              ;*
                              ;*  PROC.S
                              ;*  dflat module to handle procedures:
@@ -12151,11 +12153,11 @@ f16f :                       df_rt_proc_addr
 f16f : e6be             [ 5] 	inc df_exeoff
                              	
                              	; get parm count
-f171 : a004             [ 2] 	ldy #DFVVT_DIM2
-f173 : b1c4             [ 5] 	lda (df_procptr),y	
 AS65 Assembler for R6502 [1.42].                                     Page  188
 ---------------------------------- bank1.s -----------------------------------
 
+f171 : a004             [ 2] 	ldy #DFVVT_DIM2
+f173 : b1c4             [ 5] 	lda (df_procptr),y	
 f175 : f018             [ 3] 	beq df_rt_proc_parm_none
                              	; push the right number of parms on
 f177 : 48               [ 3] 	pha
@@ -12216,11 +12218,11 @@ f1ab : a5b6             [ 3] 	lda df_curstidx
 f1ad : 48               [ 3] 	pha
 f1ae : a5b4             [ 3] 	lda df_eolidx
 f1b0 : 48               [ 3] 	pha
-f1b1 : a5c9             [ 3] 	lda df_ifnest
-f1b3 : 48               [ 3] 	pha
 AS65 Assembler for R6502 [1.42].                                     Page  189
 ---------------------------------- bank1.s -----------------------------------
 
+f1b1 : a5c9             [ 3] 	lda df_ifnest
+f1b3 : 48               [ 3] 	pha
                              
                              	; now initialise the data
 f1b4 : a001             [ 2] 	ldy #DFVVT_LO
@@ -12281,11 +12283,11 @@ f1f7 : f021             [ 4] 	beq df_rt_def_parm_done
 f1f9 : c911             [ 2] 	cmp #DFTK_VAR
 f1fb : f007             [ 4] 	beq df_rt_def_got_var
                              	; else check if non-local specifier
-f1fd : c926             [ 2] 	cmp #DFTK_VARPARM						; This is a regular ASCII
-f1ff : d0f1             [ 3] 	bne df_rt_def_find_var
 AS65 Assembler for R6502 [1.42].                                     Page  190
 ---------------------------------- bank1.s -----------------------------------
 
+f1fd : c926             [ 2] 	cmp #DFTK_VARPARM						; This is a regular ASCII
+f1ff : d0f1             [ 3] 	bne df_rt_def_find_var
 f201 :                       df_rt_def_got_varparm
                              	; set high bit
 f201 : 0980             [ 2] 	ora #0x80
@@ -12346,11 +12348,11 @@ f247 : 20fdf2           [ 6] 	jsr df_ost_popParmX	; Try to get this off the st
 f24a : a002             [ 2] 	ldy #DFVVT_HI
 f24c : 91d7             [ 5] 	sta (df_tmpptra),y
 f24e : 88               [ 2] 	dey
-f24f : 8a               [ 2] 	txa
-f250 : 91d7             [ 5] 	sta (df_tmpptra),y
 AS65 Assembler for R6502 [1.42].                                     Page  191
 ---------------------------------- bank1.s -----------------------------------
 
+f24f : 8a               [ 2] 	txa
+f250 : 91d7             [ 5] 	sta (df_tmpptra),y
                              
 f252 : 4c22f2           [ 3] 	jmp df_rt_def_load_var
 f255 :                       df_rt_def_load_var_done
@@ -12411,11 +12413,11 @@ f285 :                       df_rt_proc_unload_done
 f285 : 68               [ 4] 	pla					; Pull the return address off stack
 f286 : 68               [ 4] 	pla					; to get to the previous level
 f287 : 18               [ 2] 	clc
-f288 : 60               [ 6] 	rts
-                             	
 AS65 Assembler for R6502 [1.42].                                     Page  192
 ---------------------------------- bank1.s -----------------------------------
 
+f288 : 60               [ 6] 	rts
+                             	
                              ; push a local variable to the runtime stack
                              ; X,A = var slot
 f289 :                       df_rt_proc_local
@@ -12476,11 +12478,11 @@ f29d :                       mod_sz_runtime_e
                              
                              	; ROM code
                              	code  
-                             
-                             
 AS65 Assembler for R6502 [1.42].                                     Page  193
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             
                              ;****************************************
                              ;* Push a byte on to runtime stack
                              ;* A = byte
@@ -12541,11 +12543,11 @@ f2c9 : c8               [ 2] 	iny
 f2ca : b9000b           [ 4] 	lda df_rtstck,y
 f2cd : 84ac             [ 3] 	sty df_rtstop
 f2cf : 60               [ 6] 	rts
-                             
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page  194
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             ;****************************************
                              ;* Push a string pointer on to parm stack
                              ;* X,A - int
                              ;****************************************
@@ -12606,11 +12608,11 @@ f2f2 : 60               [ 6] 	rts
                              
                              ;****************************************
                              ;* Pop a string pointer off parm stack
-                             ;* X,A - int
-                             ;****************************************
 AS65 Assembler for R6502 [1.42].                                     Page  195
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;* X,A - int
+                             ;****************************************
 f2f3 :                       df_ost_popStr
 f2f3 : a904             [ 2] 	lda #DFST_STR
 f2f5 : d006             [ 3] 	bne df_ost_popParmX			; ALWAYS!
@@ -12671,11 +12673,11 @@ f317 : 60               [ 6] 	rts
                              ;****************************************
 f318 :                       df_st_malloc
                              	; save A in Y
-f318 : a8               [ 2] 	tay
-                             	; save old starend
 AS65 Assembler for R6502 [1.42].                                     Page  196
 ---------------------------------- bank1.s -----------------------------------
 
+f318 : a8               [ 2] 	tay
+                             	; save old starend
 f319 : a5ab             [ 3] 	lda df_starend+1
 f31b : 48               [ 3] 	pha
 f31c : a5aa             [ 3] 	lda df_starend
@@ -12706,9 +12708,9 @@ f330 :                       df_init
                              	; Initialise top of memory to default
                              	; This can be overridden by himem command
 f330 : a900             [ 2] 	lda #lo(DF_MEMTOP)
-f332 : 8db40c           [ 4] 	sta df_memtop
+f332 : 8db70c           [ 4] 	sta df_memtop
 f335 : a9c0             [ 2] 	lda #hi(DF_MEMTOP)
-f337 : 8db50c           [ 4] 	sta df_memtop+1
+f337 : 8db80c           [ 4] 	sta df_memtop+1
                              
                              	; Init program space
 f33a : 203df3           [ 6] 	jsr df_clear
@@ -12725,7 +12727,7 @@ f33a : 203df3           [ 6] 	jsr df_clear
                              ;****************************************
 f33d :                       df_clear
                              	; Start of program space
-f33d : a9b6             [ 2] 	lda #lo(DF_PROGSTART)
+f33d : a9b9             [ 2] 	lda #lo(DF_PROGSTART)
 f33f : 859b             [ 3] 	sta df_prgstrt
 f341 : 859d             [ 3] 	sta df_prgend
 f343 : a90c             [ 2] 	lda #hi(DF_PROGSTART)
@@ -12736,17 +12738,17 @@ f349 : a900             [ 2] 	lda #0
 f34b : a8               [ 2] 	tay
 f34c : 919b             [ 5] 	sta (df_prgstrt),y
                              	; No variables - zero the count
-f34e : 85a7             [ 3] 	sta df_varcnt
-                             
 AS65 Assembler for R6502 [1.42].                                     Page  197
 ---------------------------------- bank1.s -----------------------------------
 
+f34e : 85a7             [ 3] 	sta df_varcnt
+                             
                              	; Variable value table
                              	; Grows down from mem top
-f350 : adb40c           [ 4] 	lda df_memtop
+f350 : adb70c           [ 4] 	lda df_memtop
 f353 : 85a3             [ 3] 	sta df_vvtstrt
 f355 : 85a5             [ 3] 	sta df_vvtend
-f357 : adb50c           [ 4] 	lda df_memtop+1
+f357 : adb80c           [ 4] 	lda df_memtop+1
 f35a : 85a4             [ 3] 	sta df_vvtstrt+1
 f35c : 85a6             [ 3] 	sta df_vvtend+1
                              
@@ -12801,11 +12803,11 @@ f373 :                       mod_sz_dflat_e
                              ;*  Free to use for any non-commercial purpose su
                              ;*  credit of original my authorship please!
                              ;*
-                             ;*  ERROR.I
-                             ;*  Error definitions file.
 AS65 Assembler for R6502 [1.42].                                     Page  198
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;*  ERROR.I
+                             ;*  Error definitions file.
                              ;*  The macro to throw an error is elswhere, but 
                              ;*  It issues a 6502 BRK commmand with the next b
                              ;*  the error code.  The BRK handler then picks u
@@ -12866,11 +12868,11 @@ f3e6 : 4e6f206c696e6500      	db	"No line", 0
 f3ee : 4e6f2072657475..      	db	"No return ", 0
 f3f9 : 41626f7274656400      	db	"Aborted", 0
 f401 : 426f756e647300        	db	"Bounds", 0
-f408 : 4e6f206f726700        	db	"No org", 0
-f40f : 00                    	db	0
 AS65 Assembler for R6502 [1.42].                                     Page  199
 ---------------------------------- bank1.s -----------------------------------
 
+f408 : 4e6f206f726700        	db	"No org", 0
+f40f : 00                    	db	0
                              
 f410 :                       df_tk_error_inline
 f410 : 20696e206c696e..      	db	" in line ", 0
@@ -12931,11 +12933,11 @@ f465 : b1bc             [ 5] 	lda (df_currlin),y
 f467 : aa               [ 2] 	tax
 f468 : c8               [ 2] 	iny
 f469 : b1bc             [ 5] 	lda (df_currlin),y
-f46b : d004             [ 3] 	bne df_show_err_linnum
-f46d : e000             [ 2] 	cpx #0x00
 AS65 Assembler for R6502 [1.42].                                     Page  200
 ---------------------------------- bank1.s -----------------------------------
 
+f46b : d004             [ 3] 	bne df_show_err_linnum
+f46d : e000             [ 2] 	cpx #0x00
 f46f : f011             [ 3] 	beq df_show_err_fin
 f471 :                       df_show_err_linnum
                              	_println df_tk_error_inline
@@ -12996,11 +12998,11 @@ f4d8 : 2097c8           [ 6] 	jsr utilPrintSPC
 f4e2 : a57a             [ 3] 	lda num_a+1
 f4e4 : 20a7c8           [ 6] 	jsr utilPrintA
 f4e7 : 2097c8           [ 6] 	jsr utilPrintSPC
-                             
-                             	; Print Y
 AS65 Assembler for R6502 [1.42].                                     Page  201
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             	; Print Y
                              	_println_low df_msg_yreg
                              
 f4f1 : a57b             [ 3] 	lda num_a+2
@@ -13061,11 +13063,11 @@ f50c :                       mod_sz_asm_s
                              ;*	8	Indirect,X			XXX	(<byte>,x)
                              ;*	9	Indirect,Y			XXX	(<byte>),y
                              ;*	A	Absolute indirect	XXX	(<word>)
-                             ;*	B	Absolute indirect,x	XXX	(<word>,x)
-                             ;*	C	Immediate			XXX #<byte>
 AS65 Assembler for R6502 [1.42].                                     Page  202
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;*	B	Absolute indirect,x	XXX	(<word>,x)
+                             ;*	C	Immediate			XXX #<byte>
                              ;*	D	Accumulator			XXX (same as implied)
                              ;*	E	Implied				XXX
                              ;*	F	Relative			XXX	<byte>
@@ -13126,11 +13128,11 @@ f50c :                       df_tk_asm_parse_command
 f50c : 2041f5           [ 6] 	jsr df_tk_asm_matchtok
                              	; if no match with asm token they maybe a label?
 f50f : b01d             [ 3] 	bcs df_tk_asm_label
-f511 :                       df_tk_asm_found_command
-                             	; Before asm keyword, put the asm handler token
 AS65 Assembler for R6502 [1.42].                                     Page  203
 ---------------------------------- bank1.s -----------------------------------
 
+f511 :                       df_tk_asm_found_command
+                             	; Before asm keyword, put the asm handler token
 f511 : a997             [ 2] 	lda #DFRT_ASM
 f513 : 208cce           [ 6] 	jsr df_tk_put_tok
                              	; Set the MSB of found symbol index
@@ -13191,11 +13193,11 @@ f54f :                       df_tk_asm_checknexttok
 f54f : a4b2             [ 3] 	ldy df_linoff
 f551 :                       df_tk_asm_checktokch
                              	; Get symtable char
-f551 : a1b7             [ 6] 	lda (df_symtab,x)
-                             	; if less than ascii ' ' then reached end of
 AS65 Assembler for R6502 [1.42].                                     Page  204
 ---------------------------------- bank1.s -----------------------------------
 
+f551 : a1b7             [ 6] 	lda (df_symtab,x)
+                             	; if less than ascii ' ' then reached end of
                              	; this symbol and everything matched so found!
 f553 : c920             [ 2] 	cmp #' '
 f555 : 9033             [ 3] 	bcc df_tk_asm_symfound
@@ -13256,11 +13258,11 @@ f590 : b0d4             [ 3] 	bcs df_tk_asm_symnomatch
                              	; Save line buffer pointer (points to next char)
                              	; Clear C to indicate success (match)
 f592 : 84b2             [ 3] 	sty df_linoff
-f594 : a5b9             [ 3] 	lda df_symoff
-                             	; df_symtab points to the offset
 AS65 Assembler for R6502 [1.42].                                     Page  205
 ---------------------------------- bank1.s -----------------------------------
 
+f594 : a5b9             [ 3] 	lda df_symoff
+                             	; df_symtab points to the offset
 f596 :                       df_tk_asm_addr_mode_ok
 f596 : 18               [ 2] 	clc
 f597 : 60               [ 6] 	rts
@@ -13321,11 +13323,11 @@ f5d3 : 60               [ 6] 	rts
 f5d4 :                       df_tk_imm
                              	; Just one expression expected
 f5d4 : 200ad1           [ 6] 	jsr df_tk_expression
-f5d7 : 18               [ 2] 	clc
-f5d8 : 60               [ 6] 	rts
 AS65 Assembler for R6502 [1.42].                                     Page  206
 ---------------------------------- bank1.s -----------------------------------
 
+f5d7 : 18               [ 2] 	clc
+f5d8 : 60               [ 6] 	rts
                              	
                              ;* Tokenise indirect
 f5d9 :                       df_tk_indirect
@@ -13386,11 +13388,11 @@ f603 : 60               [ 6] 	rts
                              
                              
                              
-                             
-                             
 AS65 Assembler for R6502 [1.42].                                     Page  207
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+                             
                              
                              
                              
@@ -13451,11 +13453,11 @@ f61a : aa               [ 2] 	tax
                              	; Point to Xth symtable entry of addr modes and 
 f61b : 20ddf8           [ 6] 	jsr df_rt_asm_skip_to_sym
                              
-                             	; Get first addressing mode (ignoring offset byt
-f61e : a001             [ 2] 	ldy #1
 AS65 Assembler for R6502 [1.42].                                     Page  208
 ---------------------------------- bank1.s -----------------------------------
 
+                             	; Get first addressing mode (ignoring offset byt
+f61e : a001             [ 2] 	ldy #1
 f620 : b1b7             [ 5] 	lda (df_symtab),y
                              	; is it a directive?
 f622 : c910             [ 2] 	cmp #AM_DIR
@@ -13516,11 +13518,11 @@ f65d : 4cd1f7           [ 3] 	jmp df_rt_asm_printPC
                              ; before a write pass
                              ; First pass may result in ZP used a lot
                              ; Second pass resolves forward refs to ABS
-                             ; Final write pass then stores the code
-f660 :                       df_rt_asm_opt
 AS65 Assembler for R6502 [1.42].                                     Page  209
 ---------------------------------- bank1.s -----------------------------------
 
+                             ; Final write pass then stores the code
+f660 :                       df_rt_asm_opt
                              	; Get the value from expression
 f660 : 20baf8           [ 6] 	jsr df_rt_asm_get_operand
                              	; Put this in to OPT
@@ -13581,11 +13583,11 @@ f6b6 :                       df_rt_asm_data_write
 f6b6 : 20f5f7           [ 6] 	jsr df_rt_asm_printOPR
 f6b9 :                       df_rt_asm_data_write_skip1
 f6b9 : a902             [ 2] 	lda #2
-f6bb : 25d1             [ 3] 	and df_asmopt
-f6bd : f017             [ 3] 	beq df_rt_asm_data_write_skip2
 AS65 Assembler for R6502 [1.42].                                     Page  210
 ---------------------------------- bank1.s -----------------------------------
 
+f6bb : 25d1             [ 3] 	and df_asmopt
+f6bd : f017             [ 3] 	beq df_rt_asm_data_write_skip2
 f6bf : a5d4             [ 3] 	lda df_asmoprnd
 f6c1 : a000             [ 2] 	ldy #0
 f6c3 : 91cf             [ 5] 	sta (df_asmpc),y
@@ -13646,11 +13648,11 @@ f709 :                       df_rt_asm_mnem_try
 f709 : a5d2             [ 3] 	lda df_asmadmd					; With the addressing mode
 f70b : 20c5f8           [ 6] 	jsr df_rt_asm_find_addr_mode	; Find it for this 
 f70e : c900             [ 2] 	cmp #AM_NONE					; Exists?
-f710 : d014             [ 3] 	bne	df_rt_asm_mnem_chk			; If does then check it
-f712 :                       df_rt_asm_check_alt
 AS65 Assembler for R6502 [1.42].                                     Page  211
 ---------------------------------- bank1.s -----------------------------------
 
+f710 : d014             [ 3] 	bne	df_rt_asm_mnem_chk			; If does then check it
+f712 :                       df_rt_asm_check_alt
 f712 : a6d2             [ 3] 	ldx df_asmadmd					; Use ad mode as an index
 f714 : bd1af9           [ 4] 	lda df_asm_altaddrmode,x		; Else get alternate
 f717 : c900             [ 2] 	cmp #AM_NONE					; Is there an alternate?
@@ -13711,11 +13713,11 @@ f75f : 85d5             [ 3] 	sta df_asmoprnd+1
                              	; now calculate current operand-PC
 f761 : 38               [ 2] 	sec
 f762 : a5d4             [ 3] 	lda df_asmoprnd
-f764 : e5cf             [ 3] 	sbc df_asmpc
-f766 : 85d4             [ 3] 	sta df_asmoprnd
 AS65 Assembler for R6502 [1.42].                                     Page  212
 ---------------------------------- bank1.s -----------------------------------
 
+f764 : e5cf             [ 3] 	sbc df_asmpc
+f766 : 85d4             [ 3] 	sta df_asmoprnd
 f768 : a5d5             [ 3] 	lda df_asmoprnd+1
 f76a : e5d0             [ 3] 	sbc df_asmpc+1
                              	; put 0 in high operand storage
@@ -13776,11 +13778,11 @@ f7b1 :                       df_rt_asm_encode_print
 f7b1 : 20c1f7           [ 6] 	jsr df_rt_asm_print_mmen
                              	; advance pc
 f7b4 : 18               [ 2] 	clc
-f7b5 : a5cf             [ 3] 	lda df_asmpc
-f7b7 : 65d6             [ 3] 	adc df_asmlen
 AS65 Assembler for R6502 [1.42].                                     Page  213
 ---------------------------------- bank1.s -----------------------------------
 
+f7b5 : a5cf             [ 3] 	lda df_asmpc
+f7b7 : 65d6             [ 3] 	adc df_asmlen
 f7b9 : 85cf             [ 3] 	sta df_asmpc
                              	_bcc 2
                              
@@ -13841,11 +13843,11 @@ f807 : 20a7c8           [ 6] 	jsr utilPrintA
 f80a :                       df_rt_asm_printOPR_1
 f80a : a5d4             [ 3] 	lda df_asmoprnd
 f80c : 4ca7c8           [ 3] 	jmp utilPrintA
-                             
-f80f :                       df_rt_asm_printCR
 AS65 Assembler for R6502 [1.42].                                     Page  214
 ---------------------------------- bank1.s -----------------------------------
 
+                             
+f80f :                       df_rt_asm_printCR
                              	; Check the option bit 0 (Print)
 f80f : a901             [ 2] 	lda #0x01
 f811 : 25d1             [ 3] 	and df_asmopt
@@ -13906,11 +13908,11 @@ f859 : a90d             [ 2] 	lda #AM_IMP
 f85b : 85d2             [ 3] 	sta df_asmadmd
 f85d : 60               [ 6] 	rts
                              ; Process ABS or REL
-f85e :                       df_rt_asm_ABSREL	
-                             	; Evaluate operand
 AS65 Assembler for R6502 [1.42].                                     Page  215
 ---------------------------------- bank1.s -----------------------------------
 
+f85e :                       df_rt_asm_ABSREL	
+                             	; Evaluate operand
 f85e : 20baf8           [ 6] 	jsr df_rt_asm_get_operand
                              
 f861 : 206ee6           [ 6] 	jsr df_rt_eos			; End of statement?
@@ -13971,11 +13973,11 @@ f8a2 : a908             [ 2] 	lda #AM_ZPINDX
 f8a4 : 85d2             [ 3] 	sta df_asmadmd
 f8a6 : 60               [ 6] 	rts
                              ; Pure indirect mode found
-f8a7 :                       df_rt_asm_AM_ZPINDORY
-f8a7 : a907             [ 2] 	lda #AM_ZPIND			; Assume ZPIND
 AS65 Assembler for R6502 [1.42].                                     Page  216
 ---------------------------------- bank1.s -----------------------------------
 
+f8a7 :                       df_rt_asm_AM_ZPINDORY
+f8a7 : a907             [ 2] 	lda #AM_ZPIND			; Assume ZPIND
 f8a9 : c8               [ 2] 	iny
 f8aa : 84be             [ 3] 	sty df_exeoff
                              	; if at end of line/statement then pure indirect
@@ -14036,11 +14038,11 @@ f8dc : 60               [ 6] 	rts
                              ; A contains how many addr mode and op code bytes
                              ; df_symtab points to offset byte
 f8dd :                       df_rt_asm_skip_to_sym
-f8dd : e8               [ 2] 	inx				; so done when X=0
-                             	; Start at token symbols beginning
 AS65 Assembler for R6502 [1.42].                                     Page  217
 ---------------------------------- bank1.s -----------------------------------
 
+f8dd : e8               [ 2] 	inx				; so done when X=0
+                             	; Start at token symbols beginning
 f8de : a92b             [ 2] 	lda #lo(df_asm_tokensyms)
 f8e0 : 85b7             [ 3] 	sta df_symtab
 f8e2 : a9f9             [ 2] 	lda #hi(df_asm_tokensyms)
@@ -14101,11 +14103,11 @@ f909 : 00030303020202..      	db	0,3,3,3,2,2,2,2,2,2,3,3,2,1,1,2,0
 f91a :                       df_asm_altaddrmode
 f91a : 00                    	db AM_NONE		;AM_NONE	= 0
 f91b : 00                    	db AM_NONE		;AM_ABS	 	= 1
-f91c : 00                    	db AM_NONE		;AM_ABSX	= 2
-f91d : 00                    	db AM_NONE		;AM_ABSY	= 3
 AS65 Assembler for R6502 [1.42].                                     Page  218
 ---------------------------------- bank1.s -----------------------------------
 
+f91c : 00                    	db AM_NONE		;AM_ABSX	= 2
+f91d : 00                    	db AM_NONE		;AM_ABSY	= 3
 f91e : 01                    	db AM_ABS		;AM_ZP		= 4
 f91f : 02                    	db AM_ABSX		;AM_ZPX		= 5
 f920 : 03                    	db AM_ABSY		;AM_ZPY		= 6
@@ -14166,11 +14168,11 @@ f981 : 01cd                  	db	AM_ABS,		0xcd
 f983 : 02dd                  	db	AM_ABSX,	0xdd
 f985 : 03d9                  	db	AM_ABSY,	0xd9
 f987 : 08c1                  	db	AM_ZPINDX,	0xc1
-f989 : 09d1                  	db	AM_ZPINDY,	0xd1
-f98b : 07d2                  	db	AM_ZPIND,	0xd2
 AS65 Assembler for R6502 [1.42].                                     Page  219
 ---------------------------------- bank1.s -----------------------------------
 
+f989 : 09d1                  	db	AM_ZPINDY,	0xd1
+f98b : 07d2                  	db	AM_ZPIND,	0xd2
                              
 f98d : 656f7212              	db	"eor",		9*2
 f991 : 0c49                  	db	AM_IMM,		0x49
@@ -14231,11 +14233,11 @@ f9fd : 0d0a                  	db	AM_IMP,		0x0a
 f9ff : 0406                  	db	AM_ZP,		0x06
 fa01 : 0516                  	db	AM_ZPX,		0x16
 fa03 : 010e                  	db	AM_ABS,		0x0e
-fa05 : 021e                  	db	AM_ABSX,	0x1e
-fa07 : 6465630a              	db	"dec",		5*2
 AS65 Assembler for R6502 [1.42].                                     Page  220
 ---------------------------------- bank1.s -----------------------------------
 
+fa05 : 021e                  	db	AM_ABSX,	0x1e
+fa07 : 6465630a              	db	"dec",		5*2
 fa0b : 0d3a                  	db	AM_IMP,		0x3a
 fa0d : 04c6                  	db	AM_ZP,		0xc6
 fa0f : 05d6                  	db	AM_ZPX,		0xd6
@@ -14296,11 +14298,11 @@ fa91 : 73656902              	db	"sei",		1*2
 fa95 : 0d78                  	db	AM_IMP,		0x78
                              	
 fa97 : 63707806              	db	"cpx",		3*2
-fa9b : 0ce0                  	db	AM_IMM,		0xe0
-fa9d : 04e4                  	db	AM_ZP,		0xe4
 AS65 Assembler for R6502 [1.42].                                     Page  221
 ---------------------------------- bank1.s -----------------------------------
 
+fa9b : 0ce0                  	db	AM_IMM,		0xe0
+fa9d : 04e4                  	db	AM_ZP,		0xe4
 fa9f : 01ec                  	db	AM_ABS,		0xec
 faa1 : 63707906              	db	"cpy",		3*2
 faa5 : 0cc0                  	db	AM_IMM,		0xc0
@@ -14361,11 +14363,11 @@ fb2f : 62767302              	db	"bvs",		1*2
 fb33 : 0f70                  	db	AM_REL,		0x70
 fb35 : 6a6d7006              	db	"jmp",		3*2
 fb39 : 014c                  	db	AM_ABS,		0x4c
-fb3b : 0a6c                  	db	AM_ABSIND,	0x6c
-fb3d : 0b7c                  	db	AM_ABSINDX,	0x7c
 AS65 Assembler for R6502 [1.42].                                     Page  222
 ---------------------------------- bank1.s -----------------------------------
 
+fb3b : 0a6c                  	db	AM_ABSIND,	0x6c
+fb3d : 0b7c                  	db	AM_ABSINDX,	0x7c
 fb3f : 6a737202              	db	"jsr",		1*2
 fb43 : 0120                  	db	AM_ABS,		0x20
                              	
@@ -14426,11 +14428,11 @@ fbe3 : 0f5f                  	db	AM_REL,		0x5f
 fbe5 : 6262723602            	db	"bbr6",		1*2
 fbea : 0f6f                  	db	AM_REL,		0x6f
 fbec : 6262723702            	db	"bbr7",		1*2
-fbf1 : 0f7f                  	db	AM_REL,		0x7f
-fbf3 : 6262733002            	db	"bbs0",		1*2
 AS65 Assembler for R6502 [1.42].                                     Page  223
 ---------------------------------- bank1.s -----------------------------------
 
+fbf1 : 0f7f                  	db	AM_REL,		0x7f
+fbf3 : 6262733002            	db	"bbs0",		1*2
 fbf8 : 0f8f                  	db	AM_REL,		0x8f
 fbfa : 6262733102            	db	"bbs1",		1*2
 fbff : 0f9f                  	db	AM_REL,		0x9f
@@ -14491,11 +14493,11 @@ fc9b : 00                    	db	0
                              ;*  Free to use for any non-commercial purpose su
                              ;*  appropriate credit of my authorship please!
                              ;*
-                             ;*  ASMJUMPTAB.S
-                             ;*  Runtime token jump table for assembler.
 AS65 Assembler for R6502 [1.42].                                     Page  224
 ---------------------------------- bank1.s -----------------------------------
 
+                             ;*  ASMJUMPTAB.S
+                             ;*  Runtime token jump table for assembler.
                              ;*  dflat uses four key tables to tokenise and ru
                              ;*  - df_tokensyms    - table of token symbols
                              ;*  - df_tk_tokentype - table of token types

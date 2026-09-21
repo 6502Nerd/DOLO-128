@@ -31,11 +31,11 @@ _ser_get_byte
 _ser_put_byte
  _bankjsr $d284, 0
 _gr_get_key
- _bankjsr $e390, 0
+ _bankjsr $e399, 0
 _gr_put_byte
- _bankjsr $e39d, 0
+ _bankjsr $e3a6, 0
 _gr_init_screen
- _bankjsr $de59, 0
+ _bankjsr $de62, 0
 _init_acia
  _bankjsr $d291, 0
 _init_cia0
@@ -57,25 +57,25 @@ _kb_read_dip
 _command_line
  _bankjsr $cc20, 0
 _gr_cls
- _bankjsr $de6c, 0
+ _bankjsr $de75, 0
 _gr_init_hires
- _bankjsr $de16, 0
+ _bankjsr $de1e, 0
 _gr_line
- _bankjsr $e1ca, 0
+ _bankjsr $e1d3, 0
 _gr_box
- _bankjsr $e00a, 0
+ _bankjsr $e013, 0
 _gr_circle
- _bankjsr $e115, 0
+ _bankjsr $e11e, 0
 _gr_plot
- _bankjsr $ded7, 0
+ _bankjsr $dee0, 0
 _gr_hchar
- _bankjsr $df15, 0
+ _bankjsr $df1e, 0
 _gr_point
- _bankjsr $dfbb, 0
+ _bankjsr $dfc4, 0
 _gr_get
- _bankjsr $def2, 0
+ _bankjsr $defb, 0
 _gr_set_cur
- _bankjsr $defa, 0
+ _bankjsr $df03, 0
 _snd_get_note
  _bankjsr $d658, 0
 _vdp_peek

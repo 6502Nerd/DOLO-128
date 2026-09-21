@@ -1,9 +1,9 @@
 .include "hb128.inc"
 
-.export _dfcl_vpoke, _dfcl_vpeek
-.export _dfcl_vbint, _dfcl_wait, _dfcl_resettimer, _dfcl_elapsedtime
+.export _dfcl_vpoke, _dfcl_vpeek, _dfcl_vbint, _dfcl_vdp_setreg
+.export _dfcl_wait, _dfcl_resettimer, _dfcl_elapsedtime
 .export _dfcl_stick, _dfcl_sndchannel, _dfcl_sndconfig
-.export _dfcl_mode, _dfcl_colour, _dfcl_line, _dfcl_circle, _dfcl_box
+.export _dfcl_mode, _dfcl_cursor,_dfcl_colour, _dfcl_line, _dfcl_circle, _dfcl_box
 .export _dfcl_plot, _dfcl_cls, _dfcl_scrn, _dfcl_gotoxy
 .export _dfcl_ptinit, _dfcl_ptload, _dfcl_ptrun, _dfcl_ptstop
 .export _dfcl_sprpat, _dfcl_sprcol, _dfcl_sprpos, _dfcl_sprnme
@@ -51,6 +51,17 @@ __switch_bank3:
     and #%00111111          ; 00 = bank 3
     sta _dfcl1_IO_0+_dfcl1_PRB
     pla
+    rts
+
+; void dfcl_vdp_setreg(unsigned char reg, unsigned char val);
+_dfcl_vdp_setreg:
+    php
+    sei
+    sta _dfcl0_VDP_MODE1
+    jsr popa
+    ora #$80                ; Register + 0x80
+    sta _dfcl0_VDP_MODE1
+    plp
     rts
 
 ; void dfcl_vdp_vbint(void(*)());
@@ -181,6 +192,12 @@ _dfcl_stick:
 _dfcl_mode:
     jsr __switch_bank0
     jmp _dfcl0_gr_init_screen
+
+; void dfcl_cursor(unsigned char off);
+_dfcl_cursor:
+    sta _dfcl0_vdp_curoff
+    rts
+
 
 ; void dfcl_colour(unsigned char reg, unsigned char fg, unsigned char bg);
 _dfcl_colour:

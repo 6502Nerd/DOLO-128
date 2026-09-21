@@ -32,6 +32,7 @@ mod_sz_graph_s
 ;* A = Blank character
 ;****************************************
 gr_init_screen_common
+	inc vdp_curoff
 	; Store blank char
 	sta vdp_blank
 	; Save value for cursor
@@ -49,12 +50,16 @@ gr_init_screen_common
 	ldy #0
 	sty gr_scrngeom+gr_cur_y
 
+	; Reset cursor address
+	jsr gr_getXY_ptr
+	stx gr_scrngeom+gr_cur_ptr
+	sty gr_scrngeom+gr_cur_ptr+1
+
 	; Clear screen
 	jsr gr_cls
 
-	; Cursor pointer in to screen
-	jsr gr_set_cur	
-	
+	dec vdp_curoff
+
 	rts
 
 ;****************************************
@@ -145,6 +150,7 @@ gr_init_hires
 	lda #255
 	sta gr_scrngeom+gr_pixmask
 	
+	php
 	sei
 	; point to colour table
 	ldx vdp_base+vdp_addr_col
@@ -156,7 +162,7 @@ gr_init_hires
 	ldy #0x18						
 	jsr vdp_fill_vram
 
-	cli
+	plp
 	
 	; Now point screen at pattern for HIRES
 	lda vdp_base+vdp_addr_pat

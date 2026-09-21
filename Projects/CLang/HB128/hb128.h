@@ -3,6 +3,7 @@
 
 extern void dfcl_wait(unsigned int d);
 extern void dfcl_vbint(void(*)());
+extern void dfcl_vdp_setreg(unsigned char reg, unsigned char val);
 
 extern void dfcl_vpoke(unsigned char *addr, unsigned char val);
 extern unsigned char dfcl_vpeek(unsigned char *addr);
@@ -14,6 +15,7 @@ extern void dfcl_resettimer(unsigned int *t);
 extern unsigned int dfcl_elapsedtime(unsigned int t);
 
 extern void dfcl_mode(unsigned char mode);
+extern void dfcl_cursor(unsigned char off);
 extern void dfcl_colour(unsigned char reg, unsigned char fg, unsigned char bg);
 extern void dfcl_line(unsigned char x1, unsigned char y1, unsigned char x2, unsigned char y2);
 extern void dfcl_circle(unsigned char x, unsigned char y, unsigned char r);

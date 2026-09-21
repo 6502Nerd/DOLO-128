@@ -203,7 +203,7 @@ def_show_err_line_skip : $f4ab          62635
           df_lineidx : $00c8            200
           df_lineptr : $00c6            198
            df_linoff : $00b2            178
-           df_memtop : $0cb4           3252
+           df_memtop : $0cb7           3255
           df_msg_acc : $f503          62723
            df_msg_pc : $f4ff          62719
          df_msg_xreg : $f506          62726
@@ -1274,14 +1274,14 @@ df_var_vnt_sym_nomatch : $cd31          52529
      FS_BLK_FLG_LOAD : $0001              1   *
           FS_ERR_EOF : $0001              1   *
            fh_handle : $004a             74
-         fs_bootsect : $0c7e           3198
-         fs_datasect : $0c8a           3210
-         fs_dirclust : $0c92           3218
-         fs_direntry : $0c5e           3166
-          fs_dirsect : $0c8e           3214
-          fs_fatsect : $0c82           3202
-         fs_rootsect : $0c86           3206
-          fs_scratch : $0c94           3220
+         fs_bootsect : $0c81           3201
+         fs_datasect : $0c8d           3213
+         fs_dirclust : $0c95           3221
+         fs_direntry : $0c61           3169
+          fs_dirsect : $0c91           3217
+          fs_fatsect : $0c85           3205
+         fs_rootsect : $0c89           3209
+          fs_scratch : $0c97           3223
           gr_cur_off : $0006              6
           gr_cur_ptr : $0009              9
             gr_cur_x : $0007              7
@@ -1360,14 +1360,14 @@ df_var_vnt_sym_nomatch : $cd31          52529
          int_vdp_fin : $c86e          51310
      int_vdp_handler : $c843          51267
     io_active_device : $c578          50552
-            io_block : $0c4e           3150
+            io_block : $0c51           3153
             io_close : $c59c          50588
           io_close_f : $0008              8
 AS65 Assembler for R6502 [1.42].                                     Page   22
 ---------------------------------- bank1.s -----------------------------------
 
         io_copy_data : $c57f          50559
-          io_default : $0c4d           3149
+          io_default : $0c50           3152
            io_delete : $c59f          50591
             io_del_f : $000a             10
           io_devices : $c5f3          50675
@@ -1467,7 +1467,7 @@ df_var_vnt_sym_nomatch : $cd31          52529
                MM_Y1 : $0080            128   *
                 main : $c6e2          50914
         mem_clr_byte : $c8c4          51396
-           mem_start : $0cb6           3254
+           mem_start : $0cb9           3257
         mod_sz_asm_e : $fcb7          64695
         mod_sz_asm_s : $f50c          62732
       mod_sz_dflat_e : $f373          62323
@@ -1520,6 +1520,9 @@ df_var_vnt_sym_nomatch : $cd31          52529
         print_a_to_d : $cb56          52054
      print_a_to_d_ch : $cb5b          52059
     print_a_to_d_fin : $cb66          52070
+           pt3_amplA : $0c4d           3149
+           pt3_amplB : $0c4e           3150
+           pt3_amplC : $0c4f           3151
              pt3_int : $0c4c           3148
            RAM_ZMASK : $00cf            207   *
            ROM_ZMASK : $003f             63   *
@@ -1555,12 +1558,12 @@ df_var_vnt_sym_nomatch : $cd31          52529
              RTC_SET : $0080            128   *
             RTC_SQWE : $0080            128   *
               RTC_UF : $0010             16   *
-             RTC_UIE : $0010             16   *
-             RTC_UIP : $0080            128   *
-             RTC_VRT : $0080            128   *
 AS65 Assembler for R6502 [1.42].                                     Page   25
 ---------------------------------- bank1.s -----------------------------------
 
+             RTC_UIE : $0010             16   *
+             RTC_UIP : $0080            128   *
+             RTC_VRT : $0080            128   *
               RTC_YR : $0009              9   *
             RTC_2412 : $0002              2   *
             ram_code : $0c0c           3084
@@ -1620,12 +1623,12 @@ df_var_vnt_sym_nomatch : $cd31          52529
        SND_REG_CHBPL : $0002              2   *
       SND_REG_CHBVOL : $000a             10   *
        SND_REG_CHCPH : $0005              5   *
-       SND_REG_CHCPL : $0004              4   *
-        SND_REG_CHNP : $0006              6   *
-         SND_REG_CTL : $0007              7   *
 AS65 Assembler for R6502 [1.42].                                     Page   26
 ---------------------------------- bank1.s -----------------------------------
 
+       SND_REG_CHCPL : $0004              4   *
+        SND_REG_CHNP : $0006              6   *
+         SND_REG_CTL : $0007              7   *
       SND_REG_ENVCYC : $000d             13   *
        SND_REG_ENVPH : $000c             12   *
        SND_REG_ENVPL : $000b             11   *
@@ -1685,12 +1688,12 @@ df_var_vnt_sym_nomatch : $cd31          52529
 twos_complement_skip_X : $ca98          51864
              UTF_ACK : $0006              6   *
              UTF_BEL : $0007              7   *
-             UTF_BRK : $001a             26   *
-              UTF_CR : $000d             13   *
-             UTF_DEL : $007f            127   *
 AS65 Assembler for R6502 [1.42].                                     Page   27
 ---------------------------------- bank1.s -----------------------------------
 
+             UTF_BRK : $001a             26   *
+              UTF_CR : $000d             13   *
+             UTF_DEL : $007f            127   *
              UTF_ETB : $0017             23   *
              UTF_ETX : $0003              3   *
               UTF_FF : $000c             12   *
@@ -1750,12 +1753,12 @@ twos_complement_skip_X : $ca98          51864
                 _bcs : <macro>
       _cmd_immediate : $c4e1          50401
          _code_start : $c001          49153
-       _command_line : $c2b9          49849
-          _cpu_stack : $0100            256
-          _cpyZPWord : <macro>
 AS65 Assembler for R6502 [1.42].                                     Page   28
 ---------------------------------- bank1.s -----------------------------------
 
+       _command_line : $c2b9          49849
+          _cpu_stack : $0100            256
+          _cpyZPWord : <macro>
           _decZPWord : <macro>
          _decZPWordA : <macro>
             _df_init : $c031          49201
@@ -1815,12 +1818,12 @@ _fs_dir_root_start_w : $c151          49489
             _pushAXY : <macro>
        _restore_bank : $c01f          49183
     _rtc_gettimedate : $c439          50233
-           _rtc_init : $c421          50209
-         _rtc_nvread : $c469          50281
-        _rtc_nvwrite : $c481          50305
 AS65 Assembler for R6502 [1.42].                                     Page   29
 ---------------------------------- bank1.s -----------------------------------
 
+           _rtc_init : $c421          50209
+         _rtc_nvread : $c469          50281
+        _rtc_nvwrite : $c481          50305
     _rtc_setdatetime : $c451          50257
           _sbcZPByte : <macro>
        _sd_sendcmd17 : $c4b1          50353
@@ -1835,9 +1838,9 @@ _fs_dir_root_start_w : $c151          49489
            _vdp_poke : $c3f1          50161
           __65SC02__ : $0001              1
 
-1717 labels used
+1720 labels used
 
-13626 lines read, no errors in pass 1.
+13628 lines read, no errors in pass 1.
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
 Total size 16384 bytes.

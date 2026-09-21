@@ -213,7 +213,9 @@ int_usercia1 ds	2		; Where to jump for CIA1 interrupt
 ; Self-modifying code or code that needs to run with ROM disabled
 ram_code	ds  64		; 64 bytes of RAM code space
 pt3_int		ds	1		; =1 when PT3 interrupt routine is running
-
+pt3_amplA	ds	1		; PT3 channel A volume
+pt3_amplB	ds	1		; PT3 channel B volume
+pt3_amplC	ds	1		; PT3 channel C volume
 
 ; Active IO device settings
 io_default	ds	1		; The default device number - established on boot

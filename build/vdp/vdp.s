@@ -63,6 +63,7 @@ vdp_init
 ;* Regs affected : All
 ;****************************************
 vdp_init_mode
+	php
 	sei
 	ldx vdp_base_table+0,y		; Get delay
 	stx vdp_delay
@@ -115,15 +116,15 @@ vdp_init_mode
 	ldx vdp_base_table+17,y		; Get R6 value
 	jsr vdp_wr_reg				; Write X to Reg A
 
-	ldx vdp_base+vdp_bord_col	; Get border colour
-	bne vdp_init_skip_table		; If not zero (i.e. NV ram provided override) then don't take from table
+;	ldx vdp_base+vdp_bord_col	; Get border colour
+;	bne vdp_init_skip_table		; If not zero (i.e. NV ram provided override) then don't take from table
 	ldx vdp_base_table+18,y		; Else get R7 value from table
 	stx vdp_base+vdp_bord_col	; Save border colour to zp
 vdp_init_skip_table
 	lda #7						; Do R7, X contains colour
 	jsr vdp_wr_reg				; Write X to Reg A
 	
-	cli
+	plp
 
 	rts
 	
@@ -163,7 +164,17 @@ vdp_set_g1_mode
 vdp_set_g2_mode
 	ldy #vdp_base_table_g2-vdp_base_table
 	jsr vdp_init_mode
-	jmp init_fonts
+	; 3 copies of the fonts
+	ldx #0x00
+	lda #0x00
+	jsr init_fonts_sub
+	ldx #0x00
+	lda #0x08
+	jsr init_fonts_sub
+	ldx #0x00
+	lda #0x10
+	jsr init_fonts_sub
+	rts
 
 ;****************************************
 ;* vdp_set_hires
@@ -178,6 +189,7 @@ vdp_set_hires
 	
 	; No fonts to init but pre-fill name table
 	; to use all 3 character sets
+	php
 	sei
 
 	; Point at name table
@@ -186,17 +198,16 @@ vdp_set_hires
 	jsr vdp_wr_addr
 	
 	; set name for 3 pages (768)
-	ldx #0
+	lda #0
 	ldy #3
 vdp_set_hires_fill_nme
-	txa						; Name table is 0..255 for 3 pages
 	jsr vdp_wr_vram
-	inx
+	inc a
 	bne vdp_set_hires_fill_nme
 	dey
 	bne vdp_set_hires_fill_nme
 	
-	cli
+	plp
 	
 	rts
 
@@ -212,8 +223,7 @@ init_vdp_g1
 	jsr vdp_set_g1_mode
 	jsr init_sprtpat_g1
 	jsr init_colours_g1
-	jsr init_sprites_g1
-	rts
+	jmp init_sprites_g1
 
 ;****************************************
 ;* init_vdp_g2
@@ -226,8 +236,7 @@ init_vdp_g2
 	jsr vdp_set_g2_mode
 	jsr init_sprtpat_g1		; Same as G1
 	jsr init_colours_g2
-	jsr init_sprites_g1		; Same as G1
-	rts
+	jmp init_sprites_g1		; Same as G1
 
 ;****************************************
 ;* init_vdp_hires
@@ -280,14 +289,12 @@ vdp_fill_vram
 ;* Regs affected : All
 ;****************************************
 clear_vram
-;	sei
 	ldx #0x00			; Low byte of address
 	lda #0x00			; High byte of address
 	jsr vdp_wr_addr		; Write address to VDP
 
 	ldy #0x40			; 0x40 pages = 16k (X already zero)
 	jsr vdp_fill_vram
-;	cli
 	rts
 	
 ;****************************************
@@ -298,6 +305,7 @@ clear_vram
 ;* Regs affected : All
 ;****************************************
 init_colours_g1
+	php
 	sei
 	ldx vdp_base+vdp_addr_col
 	lda vdp_base+vdp_addr_col+1
@@ -307,7 +315,7 @@ init_colours_g1
 	ldy #0x01					; Only 1 pass through
 	lda vdp_base+vdp_bord_col	; Border colour
 	jsr vdp_fill_vram
-	cli
+	plp
 	rts
 
 ;****************************************
@@ -318,16 +326,17 @@ init_colours_g1
 ;* Regs affected : All
 ;****************************************
 init_colours_g2
+	php
 	sei
 	ldx vdp_base+vdp_addr_col
 	lda vdp_base+vdp_addr_col+1
 	jsr vdp_wr_addr				; Set VDP address
 	
-	ldx #0x00					; 2048 bytes to fill	
-	ldy #0x08					; 8 pass through
+	ldx #0x00					; 6144 bytes to fill	
+	ldy #0x18					; 24x256 pass through
 	lda vdp_base+vdp_bord_col	; Border colour
 	jsr vdp_fill_vram
-	cli
+	plp
 	rts
 
 ;****************************************
@@ -338,6 +347,7 @@ init_colours_g2
 ;* Regs affected : All
 ;****************************************
 init_sprites_g1
+	php
 	sei
 	ldx vdp_base+vdp_addr_spa
 	lda vdp_base+vdp_addr_spa+1
@@ -347,7 +357,7 @@ init_sprites_g1
 	ldy #0x01					; Only 1 pass
 	lda #0xd0					; Sprite terminator
 	jsr vdp_fill_vram
-	cli
+	plp
 	rts
 
 ;****************************************
@@ -358,12 +368,12 @@ init_sprites_g1
 ;* Regs affected : All
 ;****************************************
 init_fonts
+	php
 	sei
 	ldx vdp_base+vdp_addr_pat
 	lda vdp_base+vdp_addr_pat+1
-	jsr vdp_wr_addr				; Write the address
 	jsr init_fonts_sub
-	cli
+	plp
 	rts
 
 ;****************************************
@@ -374,23 +384,26 @@ init_fonts
 ;* Regs affected : All
 ;****************************************
 init_sprtpat_g1
+	php
 	sei
 	ldx vdp_base+vdp_addr_spp
 	lda vdp_base+vdp_addr_spp+1
-	jsr vdp_wr_addr				; Write the address
 	jsr init_fonts_sub
-	cli
+	plp
 	rts
 	
 ;****************************************
 ;* init_fonts_sub
 ;* Initialise fonts common subroutine
-;* Input : None
+;* Input : X,A contains vram address
 ;* Output : None
 ;* Regs affected : All
 ;* INTERRUPTS MUST HAVE BEEN DISABLED BY CALLER!!!
 ;****************************************
 init_fonts_sub
+	php
+	sei
+	jsr vdp_wr_addr			; Write the address
 	stz tmp_a				; XOR with zero = no change
 	ldy #0					; byte within page
 init_write_fonts
@@ -413,6 +426,7 @@ init_pattern
 	eor	#0xff				; Invert the EOR mask
 	sta tmp_a				; And save for next go around
 	bne init_write_fonts
+	plp
 	rts
 
 ;**** BASE TABLES ****
@@ -433,22 +447,7 @@ vdp_base_table_g1
 	db	0x0800>>11		; R6 Sprite pattern table value
 	db	0xf4			; R7 White f/gnd, blue background
 
-vdp_base_table_g2
-	db	VDP_LONGDELAY	; Long delay
-	db	%00000010		; R0 - GR2HiRes,No-extvid
-	db	%11100000		; R1 - 16K,Disp-enable,Int-enable,8x8,No-mag
-	dw	0x3800			; Name table address
-	db	0x3800>>10		; R2 Name table value
-	dw	0x2000			; Colour table
-	db	0x9f			; R3 Colour table magic value 0x9f
-	dw	0x0000			; Pattern table
-	db	0x0000>>11		; R4 Pattern table value
-	dw	0x3b00			; Sprite attribute table
-	db	0x3b00>>7		; R5 Sprite attribute table value
-	dw	0x1800			; Sprite pattern table
-	db	0x1800>>11		; R6 Sprite pattern table value
-	db	0xfc			; R7 White f/gnd, green background
-
+vdp_base_table_g2		; Same as hires mode!
 vdp_base_table_hi
 	db	VDP_LONGDELAY	; Long delay
 	db	%00000010		; R0 - GR2HiRes,No-extvid

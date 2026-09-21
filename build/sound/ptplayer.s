@@ -1263,9 +1263,9 @@ SPCCOMS
 ; ==============================================================================================
 CHREGS	
         lda #00                                                  
-	    sta z80_A       ; save
+        sta z80_A       ; save
         sta Ampl                                                 
-	    lda z80_L                                            
+        lda z80_L                                            
         sta val3                                                 
         lda z80_H
         sta val3+1
@@ -1274,11 +1274,11 @@ CHREGS
         sta val1
         lda (z80_IX),y
         bit val1
-	    bne saq
+        bne saq
         jmp CH_EXIT                                              
 saq     	
                                                                  
-	    ldy #OrnPtr                                              
+        ldy #OrnPtr                                              
         lda (z80_IX),y
         sta z80_L
         sta val1            ; save L
@@ -1293,11 +1293,11 @@ saq
         iny
         lda (z80_L),y
         sta z80_D
-	    ldy #PsInOr                                              
+        ldy #PsInOr                                              
         lda (z80_IX),y
-	    sta z80_L                                                
+        sta z80_L                                                
         sta z80_A                                        
-	    clc
+        clc
         lda val1
         adc z80_L
         sta z80_L
@@ -1313,46 +1313,46 @@ saq
         lda z80_A                                                
         adc #01
         cmp z80_D                                                
-	    bcc CH_ORPS                                              
-	    clc
+        bcc CH_ORPS                                              
+        clc
         lda z80_E                                                
 CH_ORPS	
         ldy #PsInOr                                              
         sta (z80_IX),y
-	    ldy #Note                                                
+        ldy #Note                                                
         lda (z80_IX),y
-	    ldy #00                                                  
+        ldy #00                                                  
         adc (z80_L),y       ; adc ($AC,x)	
-	    bpl CH_NTP                                               
-	    lda #00                                                  
+        bpl CH_NTP                                               
+        lda #00                                                  
 CH_NTP	
         cmp #96                                                  
-	    bcc CH_NOK                                               
-	    lda #95                                                  
+        bcc CH_NOK                                               
+        lda #95                                                  
 CH_NOK	
         asl a                                                      
         sta z80_AP                                               
-	    ldy #SamPtr                                              
+        ldy #SamPtr                                              
         lda (z80_IX),y
         sta z80_L
-	    sta val1            ; save L
+        sta val1            ; save L
         iny                                                      
         lda (z80_IX),y
         sta z80_H
         sta val1+1          ; save H
-	    ldy #00
+        ldy #00
         lda (z80_L),y                                            
         sta z80_E   
         iny
         lda (z80_L),y
         sta z80_D   
 
-	    ldy #PsInSm                                              
+        ldy #PsInSm                                              
         lda (z80_IX),y
-	    sta z80_B                                                
-	    asl a                                                      
-	    asl a                                                      
-	    sta z80_L                                                                                           
+        sta z80_B                                                
+        asl a                                                      
+        asl a                                                      
+        sta z80_L                                                                                           
         clc
         adc val1
         sta z80_L
@@ -1366,11 +1366,11 @@ CH_NOK
         adc #00
         sta z80_H
 
-	    lda z80_B                                                                                                      
+        lda z80_B                                                                                                      
         adc #01
-	    cmp z80_D                                                
-	    bcc CH_SMPS                                              
-	    lda z80_E                                                
+        cmp z80_D                                                
+        bcc CH_SMPS                                              
+        lda z80_E                                                
 CH_SMPS	
         ldy #PsInSm                                              
         sta (z80_IX),y
@@ -1386,8 +1386,8 @@ CH_SMPS
         sta z80_E
         iny
         lda (z80_IX),y
-	    sta z80_D                                                
-	    clc                                                      
+        sta z80_D                                                
+        clc                                                      
         ldy #02
         lda (z80_L),y                                            
         adc z80_E
@@ -1403,11 +1403,11 @@ CH_SMPS
 
         lda #%01000000                                           
         bit z80_B
-	    beq CH_NOAC                                              
-	    ldy #TnAcc                                               
+        beq CH_NOAC                                              
+        ldy #TnAcc                                               
         lda z80_L
         sta (z80_IX),y
-	    iny                                                      
+        iny                                                      
         lda z80_H
         sta (z80_IX),y
 CH_NOAC 												             
@@ -1845,61 +1845,65 @@ PL2
         sta z80_IX
         lda #hi(ChanA)
         sta z80_IX+1
-	    lda AYREGS+TonA                                          
+        lda AYREGS+TonA                                          
         sta z80_L
         lda AYREGS+TonA+1
         sta z80_H
-	    jsr CHREGS                                               
-	    lda z80_L                                                
+        jsr CHREGS                                               
+        lda z80_L                                                
         sta AYREGS+TonA
         lda z80_H
         sta AYREGS+TonA+1
-	    lda Ampl                                                 
-	    sta AYREGS+AmplA                                         
+        lda Ampl                                                 
+        sta AYREGS+AmplA
+        sta pt3_amplA
 	
         lda #lo(ChanB)                                              
         sta z80_IX
         lda #hi(ChanB)
         sta z80_IX+1
-	    lda AYREGS+TonB                                          
+        lda AYREGS+TonB                                          
         sta z80_L
         lda AYREGS+TonB+1
         sta z80_H
-	    jsr CHREGS                                               
-	    lda z80_L                                                
+        jsr CHREGS                                               
+        lda z80_L                                                
         sta AYREGS+TonB
         lda z80_H
         sta AYREGS+TonB+1
-	    lda Ampl                                                 
-	    sta AYREGS+AmplB                                         
+        lda Ampl                                                 
+        sta AYREGS+AmplB                                         
+        sta pt3_amplB
 	    
         lda #lo(ChanC)                                              
         sta z80_IX
         lda #hi(ChanC)
         sta z80_IX+1
-	    lda AYREGS+TonC                                          
+        lda AYREGS+TonC                                          
         sta z80_L
         lda AYREGS+TonC+1
         sta z80_H
-	    jsr CHREGS                                               
-	    lda z80_L                                                
+        jsr CHREGS                                               
+        lda z80_L                                                
         sta AYREGS+TonC
         lda z80_H
         sta AYREGS+TonC+1
+        lda Ampl                                                 
+        sta pt3_amplC
 
-	    lda Ns_Base_AddToNs                                      
+        lda Ns_Base_AddToNs                                      
         sta z80_L
         lda Ns_Base_AddToNs+1
         sta z80_H                                              
-	    clc                                                      
+        clc                                                      
         adc z80_L
-	    sta AYREGS+Noise                                         
+        sta AYREGS+Noise                                         
 
 AddToEn
-	    lda #$3E                                                 
-	    sta z80_E                                                
-	    asl a                                                      
-	    bcc sau                                                  
+        lda #$3E                                                 
+        sta z80_E                                                
+        asl a                                                      
+        bcc sau                                                  
         lda #$FF
         bne sau1      ; always
 sau     lda #00

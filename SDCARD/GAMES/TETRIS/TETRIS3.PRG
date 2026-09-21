@@ -355,19 +355,34 @@
  ;
  ;** INITIALISE **
  def_init()
-   local i
+   local i,d
    reset t:r=rnd(t)
    mode 2:cursor 1:colour 32,1,1
    sizeX=10:sizeY=20:bgcol=1:fgcol=4:blcol=15
    colour 16,blcol,bgcol:colour 32,blcol,bgcol:for s=0,15,1:colour s,fgcol,bgcol:next
    plot 10,11,"PLEASE  WAIT":plot 10,12,"INITIALISING"
    chdir "/font":font "conapt.fbd"
+   for i=0x0,0x800,1
+     d=vpeek(i)
+     vpoke i+0x800,d
+     vpoke i+0x1000,d
+   next
    for i=0x2000,0x23ff,1
      v=i&4
-     if (v<4):vpoke i,0xb1:else:vpoke i,0x31:endif
+     if (v<4)
+       vpoke i,0xb1
+       vpoke i+0x800,0xb1
+       vpoke i+0x1000,0xb1
+     else
+       vpoke i,0x31
+       vpoke i+0x800,0x31
+       vpoke i+0x1000,0x31
+     endif
    next
    for i=0x2400,0x27ff,1
      vpoke i,0xe1
+     vpoke i+0x800,0xe1
+     vpoke i+0x1000,0xe1
    next
    gameXOff=11:gameYOff=2
    sprXOff=gameXOff-2:sprYOff=gameYOff-2
@@ -391,6 +406,8 @@
      read shapeP[s],shapeC[s]
      for i=0,7,1
        vpoke 0x2000+8*shapeP[s]+i,shapeC[s]
+       vpoke 0x2000+8*shapeP[s]+i+0x800,shapeC[s]
+       vpoke 0x2000+8*shapeP[s]+i+0x1000,shapeC[s]
      next
      for r=1,4,1
        read mapX1[s,r],mapY1[s,r]
@@ -414,6 +431,8 @@
        for r=0,7,1
          read d
          vpoke (s*8)+r,d
+         vpoke (s*8)+r+0x800,d
+         vpoke (s*8)+r+0x1000,d
        next
      endif
    until s==0
@@ -424,13 +443,23 @@
        for l=0,7,1
          if l<(7-r)
            vpoke a+l,0
+           vpoke a+l+0x800,0
+           vpoke a+l+0x1000,0
            vpoke 0x2000+a+l,0x10+bgcol
+           vpoke 0x2000+a+l+0x800,0x10+bgcol
+           vpoke 0x2000+a+l+0x1000,0x10+bgcol
          else
            vpoke 0x2000+a+l,shapeC[s+1]
+           vpoke 0x2000+a+l+0x800,shapeC[s+1]
+           vpoke 0x2000+a+l+0x1000,shapeC[s+1]
            if (l==(7-r))|(l==7)
              vpoke a+l,0
+             vpoke a+l+0x800,0
+             vpoke a+l+0x1000,0
            else
              vpoke a+l,126
+             vpoke a+l+0x800,126
+             vpoke a+l+0x1000,126
            endif
          endif
        next

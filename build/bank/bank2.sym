@@ -170,7 +170,7 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
           df_lineidx : $00c8            200
           df_lineptr : $00c6            198
            df_linoff : $00b2            178
-           df_memtop : $0cb4           3252
+           df_memtop : $0cb7           3255
           df_nextlin : $00bf            191
          df_nxtstidx : $00b5            181
           df_parmtop : $00ad            173
@@ -250,7 +250,7 @@ AS65 Assembler for R6502 [1.42].                                     Page    1
          FS_FOLDERCH : $002f             47   *
   fh_create_skip_dir : $d48c          54412
            fh_handle : $004a             74
-         fs_bootsect : $0c7e           3198
+         fs_bootsect : $0c81           3201
             fs_chdir : $d58c          54668
      fs_chdir_direct : $d574          54644
 fs_chdir_direct_sect : $d583          54659
@@ -272,14 +272,14 @@ fs_create_copy_fspec_done : $d49c          54428
     fs_create_dirptr : $d4bf          54463
     fs_create_fd_err : $d4bb          54459
    fs_create_filedir : $d478          54392
-         fs_datasect : $0c8a           3210
+         fs_datasect : $0c8d           3213
            fs_delete : $d52f          54575
      fs_delete_clust : $d546          54598
        fs_delete_fin : $d565          54629
          fs_delete_w : $d566          54630
-         fs_dirclust : $0c92           3218
-         fs_direntry : $0c5e           3166
-          fs_dirsect : $0c8e           3214
+         fs_dirclust : $0c95           3221
+         fs_direntry : $0c61           3169
+          fs_dirsect : $0c91           3217
   fs_dir_check_entry : $d04b          53323
   fs_dir_clear_entry : $d142          53570
 fs_dir_copy_entry_sd_byte : $d3be          54206
@@ -330,7 +330,7 @@ fs_dir_get_fs_name_ch : $d0c9          53449
 fs_dir_skip_fs_dot_ch : $d0db          53467
 fs_dir_skip_fs_name_ch : $d0de          53470
           fs_dir_str : $d66b          54891
-          fs_fatsect : $0c82           3202
+          fs_fatsect : $0c85           3205
  fs_find_active_slot : $d065          53349
   fs_find_check_name : $d3d4          54228
  fs_find_empty_clust : $d2bc          53948
@@ -403,8 +403,8 @@ fs_putword_sd_buf_hi : $d021          53281
      fs_put_inc_size : $d38d          54157
 fs_put_inc_size_byte : $d392          54162
      fs_put_skip_err : $d35d          54109
-         fs_rootsect : $0c86           3206
-          fs_scratch : $0c94           3220
+         fs_rootsect : $0c89           3209
+          fs_scratch : $0c97           3223
            fs_setEOF : $d1da          53722
    fs_skip_load_sect : $d220          53792
     fs_stamptimedate : $d41f          54303
@@ -491,11 +491,11 @@ fs_put_inc_size_byte : $d392          54162
          int_vdp_fin : $c86e          51310
      int_vdp_handler : $c843          51267
     io_active_device : $c578          50552
-            io_block : $0c4e           3150
+            io_block : $0c51           3153
             io_close : $c59c          50588
           io_close_f : $0008              8
         io_copy_data : $c57f          50559
-          io_default : $0c4d           3149
+          io_default : $0c50           3152
            io_delete : $c59f          50591
             io_del_f : $000a             10
           io_devices : $c5f3          50675
@@ -598,7 +598,7 @@ fs_put_inc_size_byte : $d392          54162
                MM_Y1 : $0080            128   *
                 main : $c6e2          50914
         mem_clr_byte : $c8c4          51396
-           mem_start : $0cb6           3254
+           mem_start : $0cb9           3257
          mod_sz_io_e : $c623          50723
          mod_sz_io_s : $c559          50521
      mod_sz_kernel_e : $cc17          52247
@@ -634,6 +634,9 @@ fs_put_inc_size_byte : $d392          54162
         print_a_to_d : $cb56          52054
      print_a_to_d_ch : $cb5b          52059
     print_a_to_d_fin : $cb66          52070
+           pt3_amplA : $0c4d           3149
+           pt3_amplB : $0c4e           3150
+           pt3_amplC : $0c4f           3151
              pt3_int : $0c4c           3148
            RAM_ZMASK : $00cf            207   *
            ROM_ZMASK : $003f             63   *
@@ -645,12 +648,12 @@ fs_put_inc_size_byte : $d392          54162
               RTC_DM : $0004              4   *
              RTC_DOW : $0006              6   *
              RTC_DSE : $0001              1   *
-             RTC_DV0 : $0010             16   *
-             RTC_DV1 : $0020             32   *
-             RTC_DV2 : $0040             64   *
 AS65 Assembler for R6502 [1.42].                                     Page   11
 ---------------------------------- bank2.s -----------------------------------
 
+             RTC_DV0 : $0010             16   *
+             RTC_DV1 : $0020             32   *
+             RTC_DV2 : $0040             64   *
               RTC_HR : $0004              4   *
              RTC_HRA : $0005              5   *
             RTC_IRQF : $0080            128   *
@@ -710,12 +713,12 @@ fs_put_inc_size_byte : $d392          54162
            SER_RESET : $0581           1409   *
              SER_SBN : $0080            128   *
              SER_SBR : $000f             15   *
-            SER_SBR0 : $0001              1   *
-            SER_SBR1 : $0002              2   *
-            SER_SBR2 : $0004              4   *
 AS65 Assembler for R6502 [1.42].                                     Page   12
 ---------------------------------- bank2.s -----------------------------------
 
+            SER_SBR0 : $0001              1   *
+            SER_SBR1 : $0002              2   *
+            SER_SBR2 : $0004              4   *
             SER_SBR3 : $0008              8   *
           SER_STATUS : $0581           1409   *
             SER_TDRE : $0010             16   *
@@ -775,12 +778,12 @@ fs_put_inc_size_byte : $d392          54162
       sd_resptimeout : $cd45          52549
              sd_sect : $0042             66
          sd_sendbyte : $cc9e          52382
-         sd_sendcmd0 : $cd5f          52575
-        sd_sendcmd16 : $cdc5          52677
-        sd_sendcmd17 : $cdef          52719
 AS65 Assembler for R6502 [1.42].                                     Page   13
 ---------------------------------- bank2.s -----------------------------------
 
+         sd_sendcmd0 : $cd5f          52575
+        sd_sendcmd16 : $cdc5          52677
+        sd_sendcmd17 : $cdef          52719
         sd_sendcmd24 : $ce68          52840
         sd_sendcmd41 : $cda3          52643
         sd_sendcmd55 : $cd81          52609
@@ -840,12 +843,12 @@ twos_complement_skip_X : $ca98          51864
              UTF_BRK : $001a             26   *
               UTF_CR : $000d             13   *
              UTF_DEL : $007f            127   *
-             UTF_ETB : $0017             23   *
-             UTF_ETX : $0003              3   *
-              UTF_FF : $000c             12   *
 AS65 Assembler for R6502 [1.42].                                     Page   14
 ---------------------------------- bank2.s -----------------------------------
 
+             UTF_ETB : $0017             23   *
+             UTF_ETX : $0003              3   *
+              UTF_FF : $000c             12   *
             UTF_NACK : $0015             21   *
              UTF_SOH : $0001              1   *
          UTF_SPECIAL : $0020             32   *
@@ -905,12 +908,12 @@ twos_complement_skip_X : $ca98          51864
        _command_line : $c2b9          49849
           _cpu_stack : $0100            256
           _cpyZPWord : <macro>
-          _decZPWord : <macro>
-         _decZPWordA : <macro>
-            _df_init : $c031          49201
 AS65 Assembler for R6502 [1.42].                                     Page   15
 ---------------------------------- bank2.s -----------------------------------
 
+          _decZPWord : <macro>
+         _decZPWordA : <macro>
+            _df_init : $c031          49201
     _df_ost_peekType : <macro>
         _df_pg_dflat : $c049          49225
       _end_zero_page : $00e1            225
@@ -970,12 +973,12 @@ _fs_dir_root_start_w : $c151          49489
            _rtc_init : $c421          50209
          _rtc_nvread : $c469          50281
         _rtc_nvwrite : $c481          50305
-    _rtc_setdatetime : $c451          50257
-          _sbcZPByte : <macro>
-       _sd_sendcmd17 : $c4b1          50353
 AS65 Assembler for R6502 [1.42].                                     Page   16
 ---------------------------------- bank2.s -----------------------------------
 
+    _rtc_setdatetime : $c451          50257
+          _sbcZPByte : <macro>
+       _sd_sendcmd17 : $c4b1          50353
        _sd_sendcmd24 : $c4c9          50377
             _sendcmd : <macro>
        _ser_get_byte : $c169          49513
@@ -987,9 +990,9 @@ _fs_dir_root_start_w : $c151          49489
            _vdp_poke : $c3f1          50161
           __65SC02__ : $0001              1
 
-908 labels used
+911 labels used
 
-5841 lines read, no errors in pass 1.
+5843 lines read, no errors in pass 1.
 No errors in pass 2.
 Wrote binary from address $c000 through $ffff.
 Total size 16384 bytes.

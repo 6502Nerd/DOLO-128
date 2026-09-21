@@ -1,0 +1,1 @@
+call hb128bbc hb128bbc -hard ./software/filesystem/sdcard64m.img -serial null_modem -bitb socket.localhost:6502
