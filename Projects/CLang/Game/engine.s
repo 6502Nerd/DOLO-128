@@ -1,10 +1,13 @@
 .include "../hb128/hb128.inc"
 
+MAPROWCOUNT=10
+
 .export _renderViewAsm
 
 .importzp ptr1,ptr2,ptr3,ptr4,tmp1,tmp2,tmp3,tmp4
 .import _tileDef, _superTileDef, _superTileMap, _tileCombos
-.import _mapX, _mapS, _scrBuf
+.import _mapX, _mapS, _scrBuf,_laser_name,_scroll
+.import _maxstars,_staridxl,_staridxh,_staryoff,_starpat
 
 
 .segment "BSS"
@@ -168,7 +171,7 @@ skipOddOffset:
     sta ptr4
     lda #>(_scrBuf+32)
     sta ptr4+1
-    lda #8                      ; Number of supertile rows in map
+    lda #MAPROWCOUNT            ; Number of supertile rows in map
     sta mapRowCount
 renderYLoop:
     stz scrIndex                ; Index into screen
@@ -235,5 +238,56 @@ renderXLoop:
 
     dec mapRowCount             ; Count down map tiles to go
     bne renderYLoop             ; Still more rows to do
+
+    lda _scroll+1               ; Map 1024->128 positions (divide by 8)
+    sta tmp3
+    lda _scroll
+    lsr tmp3
+    ror a
+    lsr tmp3                    ; no more high byte bits left
+    ror a
+    lsr a                       ; Value between 0..128
+    pha
+
+    ; Calc scroll value 0..3
+    and #3
+    sta tmp2
+    lda #3
+    sec
+    sbc tmp2
+    sta tmp2
+
+    pla
+    lsr a
+    lsr a
+    sta tmp3                    ; Screen offset 0..31
+
+    ldx _maxstars               ; Put some stars on
+starLoop:
+    clc
+    lda _staridxl-1,x
+    adc #<_scrBuf
+    sta tmp4
+    lda _staridxh-1,x
+    adc #>_scrBuf
+    sta tmp4+1
+    lda _staryoff-1,x
+    sec
+    sbc tmp3
+    bcc nowrap
+    adc #31
+nowrap:
+    and #31
+    tay
+    lda (tmp4),y
+    cmp #132
+    bcs nextStar
+    lda _starpat-1,x
+    clc
+    adc tmp2
+    sta (tmp4),y
+nextStar:
+    dex
+    bne starLoop
 
     rts

@@ -14,82 +14,177 @@
 	.import		_printf
 	.import		_dfcl_wait
 	.import		_dfcl_vbint
-	.import		_dfcl_vdp_setreg
 	.import		_dfcl_vpoke
-	.import		_dfcl_stick
 	.import		_dfcl_mode
 	.import		_dfcl_cursor
 	.import		_dfcl_colour
 	.import		_dfcl_plot
 	.import		_vb_handler
+	.import		_move_player
+	.import		_move_laser
+	.import		_spr_to_buf
 	.import		_tileDef
 	.import		_superTileDef
 	.import		_superTileMap
 	.import		_spritePattern
+	.import		_starfield
 	.import		_renderViewAsm
 	.export		_scrBuf
 	.export		_tileCombos
-	.export		_int_v
+	.export		_tileHit
+	.export		_int_delay
 	.export		_int_c
+	.export		_int_invoked
+	.export		_int_render
+	.export		_int_sprite
 	.export		_mapX
 	.export		_mapS
 	.export		_sprite_space
+	.export		_p_dx
+	.export		_p_dy
+	.export		_p_fx
+	.export		_p_fy
+	.export		_p_ddx
+	.export		_p_ddy
+	.export		_p_vy
+	.export		_p_vx
+	.export		_p_ex
+	.export		_p_ey
+	.export		_p_x
+	.export		_p_y
+	.export		_p_spr
+	.export		_p_hit
+	.export		_scroll
 	.export		_maxCombos
 	.export		_nameIdx
-	.import		_x_coord
-	.import		_y_coord
-	.export		_msg
+	.export		_staridxl
+	.export		_staridxh
+	.export		_staryoff
+	.export		_starpat
+	.export		_maxstars
 	.export		_spr_x
 	.export		_spr_y
 	.export		_spr_pat
 	.export		_spr_col
+	.export		_sprb_x
+	.export		_sprb_y
+	.export		_sprb_pat
+	.export		_sprb_col
+	.export		_laser_x
+	.export		_laser_y
+	.export		_laser_dx
+	.export		_laser_pat
+	.export		_laser_ptrl
+	.export		_laser_ptrh
 	.export		_spr_cycle
+	.export		_foe_xl
+	.export		_foe_xh
+	.export		_foe_y
+	.export		_foe_pat1
+	.export		_foe_pat2
+	.export		_foe_col1
+	.export		_foe_col2
+	.export		_foe_data1
+	.export		_foe_data2
+	.export		_foe_counter
+	.export		_foe_state
+	.export		_foe_vecl
+	.export		_foe_vech
+	.import		_move_foes
+	.import		_foe_simple
+	.import		_foe_static
+	.export		_writeNormalTiles
 	.export		_writeTileCombos
+	.export		_calcTileHit
+	.export		_processTileHit
 	.export		_processTileCombo
 	.export		_initSuperTileDef
+	.export		_process_starfield
 	.export		_initScrBuf
 	.export		_showStats
-	.export		_renderView
-	.export		_init_spr
-	.export		_move_spr
+	.export		_init_sprites
 	.export		_main
-
-.segment	"DATA"
-
-_msg:
-	.byte	$61,$62,$63,$64,$65,$66,$67,$68,$69,$6A,$6B,$6C,$6D,$6E,$6F,$70
-	.byte	$71,$72,$73,$74,$75,$76,$77,$78,$74,$7A,$30,$31,$32,$33,$34,$35
-	.byte	$00
 
 .segment	"RODATA"
 
-S0002:
+S0001:
 	.byte	$20,$20,$4D,$61,$78,$20,$63,$6F,$6D,$62,$6F,$73,$20,$3D,$20,$25
 	.byte	$64,$20,$20,$0D,$00
 S0003:
+	.byte	$20,$20,$53,$74,$61,$72,$20,$69,$64,$78,$20,$3D,$20,$25,$64,$20
+	.byte	$20,$0D,$00
+S0002:
 	.byte	$20,$20,$4E,$61,$6D,$65,$20,$69,$64,$78,$20,$3D,$20,$25,$64,$20
 	.byte	$20,$0D,$00
 
 .segment	"BSS"
 
 _scrBuf:
-	.res	512,$00
+	.res	640,$00
 _tileCombos:
 	.res	256,$00
-_int_v:
+_tileHit:
+	.res	256,$00
+_int_delay:
 	.res	1,$00
 _int_c:
 	.res	1,$00
+_int_invoked:
+	.res	2,$00
+_int_render:
+	.res	2,$00
+_int_sprite:
+	.res	2,$00
 _mapX:
 	.res	1,$00
 _mapS:
 	.res	1,$00
 _sprite_space:
 	.res	1,$00
+_p_dx:
+	.res	1,$00
+_p_dy:
+	.res	1,$00
+_p_fx:
+	.res	1,$00
+_p_fy:
+	.res	1,$00
+_p_ddx:
+	.res	1,$00
+_p_ddy:
+	.res	1,$00
+_p_vy:
+	.res	1,$00
+_p_vx:
+	.res	1,$00
+_p_ex:
+	.res	2,$00
+_p_ey:
+	.res	2,$00
+_p_x:
+	.res	1,$00
+_p_y:
+	.res	1,$00
+_p_spr:
+	.res	1,$00
+_p_hit:
+	.res	1,$00
+_scroll:
+	.res	2,$00
 _maxCombos:
 	.res	2,$00
 _nameIdx:
 	.res	2,$00
+_staridxl:
+	.res	128,$00
+_staridxh:
+	.res	128,$00
+_staryoff:
+	.res	128,$00
+_starpat:
+	.res	128,$00
+_maxstars:
+	.res	1,$00
 _spr_x:
 	.res	32,$00
 _spr_y:
@@ -98,8 +193,185 @@ _spr_pat:
 	.res	32,$00
 _spr_col:
 	.res	32,$00
+_sprb_x:
+	.res	32,$00
+_sprb_y:
+	.res	32,$00
+_sprb_pat:
+	.res	32,$00
+_sprb_col:
+	.res	32,$00
+_laser_x:
+	.res	8,$00
+_laser_y:
+	.res	8,$00
+_laser_dx:
+	.res	8,$00
+_laser_pat:
+	.res	8,$00
+_laser_ptrl:
+	.res	8,$00
+_laser_ptrh:
+	.res	8,$00
 _spr_cycle:
 	.res	2,$00
+_foe_xl:
+	.res	14,$00
+_foe_xh:
+	.res	14,$00
+_foe_y:
+	.res	14,$00
+_foe_pat1:
+	.res	14,$00
+_foe_pat2:
+	.res	14,$00
+_foe_col1:
+	.res	14,$00
+_foe_col2:
+	.res	14,$00
+_foe_data1:
+	.res	14,$00
+_foe_data2:
+	.res	14,$00
+_foe_counter:
+	.res	14,$00
+_foe_state:
+	.res	14,$00
+_foe_vecl:
+	.res	14,$00
+_foe_vech:
+	.res	14,$00
+
+; ---------------------------------------------------------------
+; void __near__ writeNormalTiles (void)
+; ---------------------------------------------------------------
+
+.segment	"CODE"
+
+.proc	_writeNormalTiles: near
+
+.segment	"CODE"
+
+	jsr     decsp7
+	lda     #<(_tileDef+128)
+	ldx     #>(_tileDef+128)
+	ldy     #$03
+	jsr     staxysp
+	ldx     #$00
+	txa
+	ldy     #$01
+	jsr     staxysp
+	lda     #$80
+	ldy     #$05
+	jsr     staxysp
+L0002:	ldy     #$06
+	jsr     ldaxysp
+	cmp     #$00
+	txa
+	sbc     #$01
+	bvc     L0006
+	eor     #$80
+L0006:	jpl     L0003
+	ldy     #$04
+	jsr     ldptr1ysp
+	lda     (ptr1)
+	sta     (c_sp)
+	ldy     #$04
+	jsr     pushwysp
+	ldy     #$02
+	lda     (c_sp),y
+	jsr     _dfcl_vpoke
+	clc
+	ldy     #$01
+	lda     (c_sp),y
+	pha
+	lda     #$08
+	iny
+	adc     (c_sp),y
+	tax
+	pla
+	jsr     pushax
+	ldy     #$02
+	lda     (c_sp),y
+	jsr     _dfcl_vpoke
+	clc
+	ldy     #$01
+	lda     (c_sp),y
+	pha
+	lda     #$10
+	iny
+	adc     (c_sp),y
+	tax
+	pla
+	jsr     pushax
+	ldy     #$02
+	lda     (c_sp),y
+	jsr     _dfcl_vpoke
+	ldy     #$01
+	ldx     #$20
+	lda     #$00
+	jsr     addeqysp
+	clc
+	ldy     #$03
+	lda     (c_sp),y
+	sta     ptr1
+	lda     #$01
+	iny
+	adc     (c_sp),y
+	sta     ptr1+1
+	lda     (ptr1)
+	sta     (c_sp)
+	ldy     #$04
+	jsr     pushwysp
+	ldy     #$02
+	lda     (c_sp),y
+	jsr     _dfcl_vpoke
+	clc
+	ldy     #$01
+	lda     (c_sp),y
+	pha
+	lda     #$08
+	iny
+	adc     (c_sp),y
+	tax
+	pla
+	jsr     pushax
+	ldy     #$02
+	lda     (c_sp),y
+	jsr     _dfcl_vpoke
+	clc
+	ldy     #$01
+	lda     (c_sp),y
+	pha
+	lda     #$10
+	iny
+	adc     (c_sp),y
+	tax
+	pla
+	jsr     pushax
+	ldy     #$02
+	lda     (c_sp),y
+	jsr     _dfcl_vpoke
+	ldx     #$20
+	lda     #$00
+	ldy     #$01
+	jsr     subeqysp
+	ldy     #$03
+	ldx     #$00
+	lda     #$01
+	jsr     addeqysp
+	ldy     #$01
+	ldx     #$00
+	tya
+	jsr     addeqysp
+	ldy     #$05
+	ldx     #$00
+	lda     #$01
+	jsr     addeqysp
+	jmp     L0002
+L0003:	jmp     incsp7
+
+.endproc
 
 ; ---------------------------------------------------------------
 ; void __near__ writeTileCombos (void)
@@ -284,15 +556,17 @@ L0016:	jpl     L000F
 	ldx     #$20
 	lda     #$00
 	jsr     addeq0sp
-	ldy     #$05
-	jsr     ldaxysp
-	ldy     #$80
-	jsr     incaxy
+	clc
+	ldy     #$04
+	lda     (c_sp),y
 	sta     ptr1
-	stx     ptr1+1
+	lda     #$01
+	iny
+	adc     (c_sp),y
+	sta     ptr1+1
 	ldx     #$00
 	lda     (ptr1)
-	ldy     #$06
+	iny
 	jsr     staxysp
 	ldy     #$0A
 	lda     (c_sp),y
@@ -303,12 +577,14 @@ L0016:	jpl     L000F
 	lda     (c_sp),y
 	and     #$0F
 	jsr     pusha0
-	ldy     #$05
-	jsr     ldaxysp
-	ldy     #$80
-	jsr     incaxy
+	clc
+	ldy     #$04
+	lda     (c_sp),y
 	sta     ptr1
-	stx     ptr1+1
+	lda     #$01
+	iny
+	adc     (c_sp),y
+	sta     ptr1+1
 	lda     (ptr1)
 	and     #$F0
 	jsr     tosora0
@@ -382,6 +658,126 @@ L0003:	ldy     #$18
 .endproc
 
 ; ---------------------------------------------------------------
+; void __near__ calcTileHit (unsigned char tile, unsigned char idx)
+; ---------------------------------------------------------------
+
+.segment	"CODE"
+
+.proc	_calcTileHit: near
+
+.segment	"CODE"
+
+	jsr     pusha
+	jsr     decsp1
+	lda     #$00
+	sta     (c_sp)
+	ldy     #$02
+	lda     (c_sp),y
+	beq     L0017
+	cmp     #$06
+	bcs     L0017
+	lda     #$01
+	sta     (c_sp)
+	ldy     #$02
+L0017:	lda     (c_sp),y
+	cmp     #$06
+	bcc     L001C
+	cmp     #$08
+	bcs     L001C
+	tya
+	sta     (c_sp)
+	tay
+L001C:	lda     (c_sp),y
+	cmp     #$08
+	bcc     L0021
+	cmp     #$0A
+	bcs     L0021
+	lda     #$03
+	sta     (c_sp)
+	ldy     #$02
+L0021:	lda     (c_sp),y
+	cmp     #$0A
+	bcc     L000E
+	cmp     #$0C
+	bcs     L000E
+	lda     #$04
+	sta     (c_sp)
+L000E:	dey
+	lda     (c_sp),y
+	tax
+	lda     (c_sp)
+	sta     _tileHit,x
+	jmp     incsp3
+
+.endproc
+
+; ---------------------------------------------------------------
+; void __near__ processTileHit (unsigned char lhs, unsigned char rhs)
+; ---------------------------------------------------------------
+
+.segment	"CODE"
+
+.proc	_processTileHit: near
+
+.segment	"CODE"
+
+	jsr     pusha
+	jsr     decsp1
+	lda     _nameIdx
+	sta     (c_sp)
+	ldy     #$02
+	lda     (c_sp),y
+	jsr     pusha
+	ldy     #$01
+	lda     (c_sp),y
+	pha
+	clc
+	tya
+	adc     (c_sp),y
+	sta     (c_sp),y
+	pla
+	jsr     _calcTileHit
+	ldy     #$02
+	lda     (c_sp),y
+	jsr     pusha
+	ldy     #$01
+	lda     (c_sp),y
+	pha
+	clc
+	tya
+	adc     (c_sp),y
+	sta     (c_sp),y
+	pla
+	jsr     _calcTileHit
+	ldy     #$01
+	lda     (c_sp),y
+	jsr     pusha
+	ldy     #$01
+	lda     (c_sp),y
+	pha
+	clc
+	tya
+	adc     (c_sp),y
+	sta     (c_sp),y
+	pla
+	jsr     _calcTileHit
+	ldy     #$01
+	lda     (c_sp),y
+	jsr     pusha
+	ldy     #$01
+	lda     (c_sp),y
+	pha
+	clc
+	tya
+	adc     (c_sp),y
+	sta     (c_sp),y
+	pla
+	jsr     _calcTileHit
+	jmp     incsp3
+
+.endproc
+
+; ---------------------------------------------------------------
 ; void __near__ processTileCombo (unsigned char t1, unsigned char t2)
 ; ---------------------------------------------------------------
 
@@ -426,6 +822,12 @@ L0005:	sta     ptr1
 	stx     ptr1+1
 	lda     _nameIdx
 	sta     (ptr1)
+	ldy     #$01
+	lda     (c_sp),y
+	jsr     pusha
+	ldy     #$01
+	lda     (c_sp),y
+	jsr     _processTileHit
 	inc     _maxCombos
 	bne     L0003
 	inc     _maxCombos+1
@@ -453,29 +855,57 @@ L0002:	jmp     incsp2
 	jsr     subysp
 	ldx     #$00
 	txa
-	ldy     #$06
+	ldy     #$08
 	jsr     staxysp
 L0002:	ldy     #$09
 	jsr     ldaxysp
-	cmp     #$10
+	cmp     #$00
 	txa
-	sbc     #$00
+	sbc     #$01
 	bvc     L0006
 	eor     #$80
 L0006:	asl     a
 	lda     #$00
 	tax
-	bcc     L0021
+	bcc     L0026
+	ldy     #$09
+	jsr     ldaxysp
+	clc
+	adc     #<(_tileHit)
+	sta     ptr1
+	txa
+	adc     #>(_tileHit)
+	sta     ptr1+1
+	lda     #$00
+	sta     (ptr1)
 	ldy     #$08
+	tax
+	ina
+	jsr     addeqysp
+	bra     L0002
+L0026:	ldy     #$06
 	jsr     staxysp
-L0007:	ldy     #$09
+L0007:	ldy     #$07
 	jsr     ldaxysp
 	cmp     #$10
 	txa
 	sbc     #$00
 	bvc     L000B
 	eor     #$80
-L000B:	bpl     L0004
+L000B:	asl     a
+	lda     #$00
+	tax
+	bcc     L0028
+	ldy     #$08
+	jsr     staxysp
+L000C:	ldy     #$09
+	jsr     ldaxysp
+	cmp     #$10
+	txa
+	sbc     #$00
+	bvc     L0010
+	eor     #$80
+L0010:	bpl     L0009
 	ldy     #$07
 	jsr     ldaxysp
 	jsr     aslax4
@@ -499,13 +929,13 @@ L000B:	bpl     L0004
 	tax
 	ina
 	jsr     addeqysp
-	bra     L0007
-L0004:	ldy     #$06
+	bra     L000C
+L0009:	ldy     #$06
 	ldx     #$00
 	lda     #$01
 	jsr     addeqysp
-	bra     L0002
-L0021:	stz     _maxCombos
+	bra     L0007
+L0028:	stz     _maxCombos
 	stz     _maxCombos+1
 	lda     #$80
 	sta     _nameIdx
@@ -513,17 +943,17 @@ L0021:	stz     _maxCombos
 	txa
 	ldy     #$06
 	jsr     staxysp
-L000C:	ldy     #$07
+L0011:	ldy     #$07
 	jsr     ldaxysp
-	cmp     #$12
+	cmp     #$0B
 	txa
 	sbc     #$00
-	bvc     L0010
+	bvc     L0015
 	eor     #$80
-L0010:	asl     a
+L0015:	asl     a
 	lda     #$00
 	tax
-	jcc     L0023
+	jcc     L002A
 	ldy     #$07
 	jsr     ldaxysp
 	jsr     aslax2
@@ -547,9 +977,9 @@ L0010:	asl     a
 	tax
 	tya
 	ina
-	bne     L0011
+	bne     L0016
 	inx
-L0011:	sta     ptr1
+L0016:	sta     ptr1
 	stx     ptr1+1
 	lda     (ptr1)
 	sta     (c_sp)
@@ -587,9 +1017,9 @@ L0011:	sta     ptr1
 	tya
 	jsr     incax2
 	ina
-	bne     L0012
+	bne     L0017
 	inx
-L0012:	sta     ptr1
+L0017:	sta     ptr1
 	stx     ptr1+1
 	lda     (ptr1)
 	sta     (c_sp)
@@ -603,29 +1033,29 @@ L0012:	sta     ptr1
 	ldx     #$00
 	lda     #$01
 	jsr     addeqysp
-	jmp     L000C
-L0023:	ldy     #$06
+	jmp     L0011
+L002A:	ldy     #$06
 	jsr     staxysp
-L0013:	ldy     #$07
+L0018:	ldy     #$07
 	jsr     ldaxysp
-	cmp     #$08
-	txa
-	sbc     #$00
-	bvc     L0017
-	eor     #$80
-L0017:	jpl     L0014
-	ldx     #$00
-	txa
-	ldy     #$08
-	jsr     staxysp
-L0018:	ldy     #$09
-	jsr     ldaxysp
-	cmp     #$7F
+	cmp     #$0A
 	txa
 	sbc     #$00
 	bvc     L001C
 	eor     #$80
-L001C:	jpl     L0015
+L001C:	jpl     L0019
+	ldx     #$00
+	txa
+	ldy     #$08
+	jsr     staxysp
+L001D:	ldy     #$09
+	jsr     ldaxysp
+	cmp     #$7F
+	txa
+	sbc     #$00
+	bvc     L0021
+	eor     #$80
+L0021:	jpl     L001A
 	ldy     #$07
 	jsr     ldaxysp
 	jsr     aslax7
@@ -659,9 +1089,9 @@ L001C:	jpl     L0015
 	ldy     #$09
 	jsr     ldaxysp
 	ina
-	bne     L001D
+	bne     L0022
 	inx
-L001D:	clc
+L0022:	clc
 	adc     ptr1
 	sta     ptr1
 	txa
@@ -682,9 +1112,9 @@ L001D:	clc
 	tax
 	tya
 	ina
-	bne     L001E
+	bne     L0023
 	inx
-L001E:	sta     ptr1
+L0023:	sta     ptr1
 	stx     ptr1+1
 	lda     (ptr1)
 	ldy     #$01
@@ -718,9 +1148,9 @@ L001E:	sta     ptr1
 	tya
 	jsr     incax2
 	ina
-	bne     L001F
+	bne     L0024
 	inx
-L001F:	sta     ptr1
+L0024:	sta     ptr1
 	stx     ptr1+1
 	lda     (ptr1)
 	ldy     #$01
@@ -750,14 +1180,149 @@ L001F:	sta     ptr1
 	ldx     #$00
 	lda     #$01
 	jsr     addeqysp
-	jmp     L0018
-L0015:	ldy     #$06
+	jmp     L001D
+L001A:	ldy     #$06
 	ldx     #$00
 	lda     #$01
 	jsr     addeqysp
-	jmp     L0013
-L0014:	ldy     #$0A
+	jmp     L0018
+L0019:	ldy     #$0A
 	jmp     addysp
+
+.endproc
+
+; ---------------------------------------------------------------
+; void __near__ process_starfield (void)
+; ---------------------------------------------------------------
+
+.segment	"CODE"
+
+.proc	_process_starfield: near
+
+.segment	"CODE"
+
+	jsr     decsp4
+	lda     #$00
+	stz     _maxstars
+	tax
+	jsr     stax0sp
+L0002:	jsr     ldax0sp
+	cmp     #$14
+	txa
+	sbc     #$00
+	bvc     L0006
+	eor     #$80
+L0006:	jpl     L0003
+	ldx     #$00
+	txa
+	ldy     #$02
+	jsr     staxysp
+L0007:	ldy     #$03
+	jsr     ldaxysp
+	cmp     #$20
+	txa
+	sbc     #$00
+	bvc     L000B
+	eor     #$80
+L000B:	jpl     L0004
+	jsr     ldax0sp
+	jsr     aslax4
+	jsr     aslax1
+	clc
+	adc     #<(_starfield)
+	sta     ptr1
+	txa
+	adc     #>(_starfield)
+	sta     ptr1+1
+	ldy     #$03
+	jsr     ldaxysp
+	clc
+	adc     ptr1
+	sta     ptr1
+	txa
+	adc     ptr1+1
+	sta     ptr1+1
+	lda     (ptr1)
+	jeq     L0009
+	lda     #<(_staridxl)
+	ldx     #>(_staridxl)
+	clc
+	adc     _maxstars
+	bcc     L000D
+	inx
+L000D:	jsr     pushax
+	ldy     #$03
+	jsr     ldaxysp
+	jsr     aslax4
+	jsr     aslax1
+	jsr     pushax
+	ldx     #$01
+	lda     #$00
+	jsr     tosmodax
+	ldy     #$00
+	jsr     staspidx
+	lda     #<(_staridxh)
+	ldx     #>(_staridxh)
+	clc
+	adc     _maxstars
+	bcc     L000E
+	inx
+L000E:	jsr     pushax
+	ldy     #$03
+	jsr     ldaxysp
+	jsr     aslax4
+	jsr     aslax1
+	jsr     pushax
+	ldx     #$01
+	lda     #$00
+	jsr     tosdivax
+	ldy     #$00
+	jsr     staspidx
+	ldy     #$02
+	lda     (c_sp),y
+	ldy     _maxstars
+	sta     _staryoff,y
+	lda     #<(_starpat)
+	ldx     #>(_starpat)
+	clc
+	adc     _maxstars
+	bcc     L0010
+	inx
+L0010:	jsr     pushax
+	ldy     #$03
+	jsr     ldaxysp
+	jsr     aslax4
+	jsr     aslax1
+	clc
+	adc     #<(_starfield)
+	sta     ptr1
+	txa
+	adc     #>(_starfield)
+	sta     ptr1+1
+	ldy     #$05
+	jsr     ldaxysp
+	clc
+	adc     ptr1
+	sta     ptr1
+	txa
+	adc     ptr1+1
+	sta     ptr1+1
+	ldy     #$00
+	lda     (ptr1)
+	asl     a
+	asl     a
+	jsr     staspidx
+	inc     _maxstars
+L0009:	ldy     #$02
+	ldx     #$00
+	lda     #$01
+	jsr     addeqysp
+	jmp     L0007
+L0004:	ldx     #$00
+	lda     #$01
+	jsr     addeq0sp
+	jmp     L0002
+L0003:	jmp     incsp4
 
 .endproc
 
@@ -812,20 +1377,27 @@ L0003:	jmp     incsp3
 .segment	"CODE"
 
 	jsr     decsp6
-	lda     #<(S0002)
-	ldx     #>(S0002)
+	lda     #<(S0001)
+	ldx     #>(S0001)
 	jsr     pushax
 	lda     _maxCombos
 	ldx     _maxCombos+1
 	jsr     pushax
 	ldy     #$04
 	jsr     _printf
-	lda     #<(S0003)
-	ldx     #>(S0003)
+	lda     #<(S0002)
+	ldx     #>(S0002)
 	jsr     pushax
 	lda     _nameIdx
 	ldx     _nameIdx+1
 	jsr     pushax
+	ldy     #$04
+	jsr     _printf
+	lda     #<(S0003)
+	ldx     #>(S0003)
+	jsr     pushax
+	lda     _maxstars
+	jsr     pusha0
 	ldy     #$04
 	jsr     _printf
 	ldx     #$00
@@ -884,670 +1456,12 @@ L0003:	jmp     incsp6
 .endproc
 
 ; ---------------------------------------------------------------
-; void __near__ renderView (int idx, int s)
+; void __near__ init_sprites (void)
 ; ---------------------------------------------------------------
 
 .segment	"CODE"
 
-.proc	_renderView: near
-
-.segment	"CODE"
-
-	jsr     pushax
-	ldy     #$0A
-	jsr     subysp
-	ldy     #$0D
-	jsr     ldaxysp
-	ldy     #$04
-	jsr     staxysp
-	ldy     #$0D
-	jsr     ldaxysp
-	jsr     asrax1
-	ldy     #$0C
-	jsr     staxysp
-	ldx     #$00
-	txa
-	ldy     #$06
-	jsr     staxysp
-L0002:	ldy     #$07
-	jsr     ldaxysp
-	cmp     #$08
-	txa
-	sbc     #$00
-	bvc     L0006
-	eor     #$80
-L0006:	jpl     L0003
-	ldx     #$00
-	txa
-	ldy     #$08
-	jsr     staxysp
-L0007:	ldy     #$09
-	jsr     ldaxysp
-	cmp     #$10
-	txa
-	sbc     #$00
-	bvc     L000B
-	eor     #$80
-L000B:	jpl     L0004
-	ldy     #$04
-	lda     (c_sp),y
-	and     #$01
-	jeq     L000C
-	ldy     #$07
-	jsr     ldaxysp
-	jsr     aslax7
-	clc
-	adc     #<(_superTileMap)
-	sta     ptr1
-	txa
-	adc     #>(_superTileMap)
-	sta     ptr1+1
-	ldy     #$0D
-	jsr     ldaxysp
-	clc
-	ldy     #$08
-	adc     (c_sp),y
-	pha
-	txa
-	iny
-	adc     (c_sp),y
-	tax
-	pla
-	clc
-	adc     ptr1
-	sta     ptr1
-	txa
-	adc     ptr1+1
-	sta     ptr1+1
-	lda     (ptr1)
-	ldy     #$03
-	sta     (c_sp),y
-	ldy     #$07
-	jsr     ldaxysp
-	jsr     aslax7
-	clc
-	adc     #<(_superTileMap)
-	sta     sreg
-	txa
-	adc     #>(_superTileMap)
-	sta     sreg+1
-	ldy     #$09
-	jsr     ldaxysp
-	ina
-	bne     L000D
-	inx
-L000D:	sta     ptr1
-	stx     ptr1+1
-	ldy     #$0D
-	jsr     ldaxysp
-	clc
-	adc     ptr1
-	pha
-	txa
-	adc     ptr1+1
-	tax
-	pla
-	clc
-	adc     sreg
-	sta     ptr1
-	txa
-	adc     sreg+1
-	sta     ptr1+1
-	lda     (ptr1)
-	ldy     #$02
-	sta     (c_sp),y
-	iny
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	ina
-	bne     L000E
-	inx
-L000E:	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	ldy     #$01
-	sta     (c_sp),y
-	iny
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	sta     ptr1
-	txa
-	clc
-	adc     #>(_superTileDef)
-	sta     ptr1+1
-	ldy     #<(_superTileDef)
-	lda     (ptr1),y
-	sta     (c_sp)
-	ldy     #$08
-	lda     (c_sp),y
-	asl     a
-	jsr     pusha
-	ldy     #$07
-	lda     (c_sp),y
-	asl     a
-	jsr     pusha
-	ldy     #$02
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax4
-	clc
-	adc     #<(_tileCombos)
-	sta     ptr1
-	txa
-	adc     #>(_tileCombos)
-	sta     ptr1+1
-	iny
-	lda     (c_sp),y
-	tay
-	lda     (ptr1),y
-	sta     ptr1
-	ldy     #$0C
-	lda     (c_sp),y
-	clc
-	adc     ptr1
-	jsr     _dfcl_plot
-	ldy     #$03
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	jsr     incax2
-	ina
-	bne     L000F
-	inx
-L000F:	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	ldy     #$01
-	sta     (c_sp),y
-	iny
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	jsr     incax2
-	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	sta     (c_sp)
-	ldy     #$08
-	lda     (c_sp),y
-	asl     a
-	jsr     pusha
-	ldy     #$07
-	lda     (c_sp),y
-	asl     a
-	ina
-	jsr     pusha
-	ldy     #$02
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax4
-	clc
-	adc     #<(_tileCombos)
-	sta     ptr1
-	txa
-	adc     #>(_tileCombos)
-	sta     ptr1+1
-	iny
-	lda     (c_sp),y
-	tay
-	lda     (ptr1),y
-	sta     ptr1
-	ldy     #$0C
-	lda     (c_sp),y
-	clc
-	adc     ptr1
-	jsr     _dfcl_plot
-	ldy     #$02
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	sta     ptr1
-	txa
-	clc
-	adc     #>(_superTileDef)
-	sta     ptr1+1
-	ldy     #<(_superTileDef)
-	lda     (ptr1),y
-	ldy     #$01
-	sta     (c_sp),y
-	iny
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	ina
-	bne     L0011
-	inx
-L0011:	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	sta     (c_sp)
-	ldy     #$08
-	lda     (c_sp),y
-	asl     a
-	ina
-	jsr     pusha
-	ldy     #$07
-	lda     (c_sp),y
-	asl     a
-	jsr     pusha
-	ldy     #$02
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax4
-	clc
-	adc     #<(_tileCombos)
-	sta     ptr1
-	txa
-	adc     #>(_tileCombos)
-	sta     ptr1+1
-	iny
-	lda     (c_sp),y
-	tay
-	lda     (ptr1),y
-	sta     ptr1
-	ldy     #$0C
-	lda     (c_sp),y
-	clc
-	adc     ptr1
-	jsr     _dfcl_plot
-	ldy     #$02
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	jsr     incax2
-	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	ldy     #$01
-	sta     (c_sp),y
-	iny
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	jsr     incax2
-	ina
-	jne     L004A
-	inx
-	jmp     L004A
-L000C:	ldy     #$07
-	jsr     ldaxysp
-	jsr     aslax7
-	clc
-	adc     #<(_superTileMap)
-	sta     ptr1
-	txa
-	adc     #>(_superTileMap)
-	sta     ptr1+1
-	ldy     #$0D
-	jsr     ldaxysp
-	clc
-	ldy     #$08
-	adc     (c_sp),y
-	pha
-	txa
-	iny
-	adc     (c_sp),y
-	tax
-	pla
-	clc
-	adc     ptr1
-	sta     ptr1
-	txa
-	adc     ptr1+1
-	sta     ptr1+1
-	lda     (ptr1)
-	ldy     #$03
-	sta     (c_sp),y
-	ldy     #$07
-	jsr     ldaxysp
-	jsr     aslax7
-	clc
-	adc     #<(_superTileMap)
-	sta     sreg
-	txa
-	adc     #>(_superTileMap)
-	sta     sreg+1
-	ldy     #$09
-	jsr     ldaxysp
-	ina
-	bne     L0017
-	inx
-L0017:	sta     ptr1
-	stx     ptr1+1
-	ldy     #$0D
-	jsr     ldaxysp
-	clc
-	adc     ptr1
-	pha
-	txa
-	adc     ptr1+1
-	tax
-	pla
-	clc
-	adc     sreg
-	sta     ptr1
-	txa
-	adc     sreg+1
-	sta     ptr1+1
-	lda     (ptr1)
-	ldy     #$02
-	sta     (c_sp),y
-	iny
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	sta     ptr1
-	txa
-	clc
-	adc     #>(_superTileDef)
-	sta     ptr1+1
-	ldy     #<(_superTileDef)
-	lda     (ptr1),y
-	ldy     #$01
-	sta     (c_sp),y
-	ldy     #$03
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	ina
-	bne     L0018
-	inx
-L0018:	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	sta     (c_sp)
-	ldy     #$08
-	lda     (c_sp),y
-	asl     a
-	jsr     pusha
-	ldy     #$07
-	lda     (c_sp),y
-	asl     a
-	jsr     pusha
-	ldy     #$02
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax4
-	clc
-	adc     #<(_tileCombos)
-	sta     ptr1
-	txa
-	adc     #>(_tileCombos)
-	sta     ptr1+1
-	iny
-	lda     (c_sp),y
-	tay
-	lda     (ptr1),y
-	sta     ptr1
-	ldy     #$0C
-	lda     (c_sp),y
-	clc
-	adc     ptr1
-	jsr     _dfcl_plot
-	ldy     #$03
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	jsr     incax2
-	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	ldy     #$01
-	sta     (c_sp),y
-	ldy     #$03
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	jsr     incax2
-	ina
-	bne     L0019
-	inx
-L0019:	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	sta     (c_sp)
-	ldy     #$08
-	lda     (c_sp),y
-	asl     a
-	jsr     pusha
-	ldy     #$07
-	lda     (c_sp),y
-	asl     a
-	ina
-	jsr     pusha
-	ldy     #$02
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax4
-	clc
-	adc     #<(_tileCombos)
-	sta     ptr1
-	txa
-	adc     #>(_tileCombos)
-	sta     ptr1+1
-	iny
-	lda     (c_sp),y
-	tay
-	lda     (ptr1),y
-	sta     ptr1
-	ldy     #$0C
-	lda     (c_sp),y
-	clc
-	adc     ptr1
-	jsr     _dfcl_plot
-	ldy     #$03
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	ina
-	bne     L001B
-	inx
-L001B:	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	ldy     #$01
-	sta     (c_sp),y
-	iny
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	sta     ptr1
-	txa
-	clc
-	adc     #>(_superTileDef)
-	sta     ptr1+1
-	ldy     #<(_superTileDef)
-	lda     (ptr1),y
-	sta     (c_sp)
-	ldy     #$08
-	lda     (c_sp),y
-	asl     a
-	ina
-	jsr     pusha
-	ldy     #$07
-	lda     (c_sp),y
-	asl     a
-	jsr     pusha
-	ldy     #$02
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax4
-	clc
-	adc     #<(_tileCombos)
-	sta     ptr1
-	txa
-	adc     #>(_tileCombos)
-	sta     ptr1+1
-	iny
-	lda     (c_sp),y
-	tay
-	lda     (ptr1),y
-	sta     ptr1
-	ldy     #$0C
-	lda     (c_sp),y
-	clc
-	adc     ptr1
-	jsr     _dfcl_plot
-	ldy     #$03
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	jsr     incax2
-	ina
-	bne     L001D
-	inx
-L001D:	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	ldy     #$01
-	sta     (c_sp),y
-	iny
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax2
-	clc
-	adc     #<(_superTileDef)
-	tay
-	txa
-	adc     #>(_superTileDef)
-	tax
-	tya
-	jsr     incax2
-L004A:	sta     ptr1
-	stx     ptr1+1
-	lda     (ptr1)
-	sta     (c_sp)
-	ldy     #$08
-	lda     (c_sp),y
-	asl     a
-	ina
-	jsr     pusha
-	ldy     #$07
-	lda     (c_sp),y
-	asl     a
-	ina
-	jsr     pusha
-	ldy     #$02
-	ldx     #$00
-	lda     (c_sp),y
-	jsr     aslax4
-	clc
-	adc     #<(_tileCombos)
-	sta     ptr1
-	txa
-	adc     #>(_tileCombos)
-	sta     ptr1+1
-	iny
-	lda     (c_sp),y
-	tay
-	lda     (ptr1),y
-	sta     ptr1
-	ldy     #$0C
-	lda     (c_sp),y
-	clc
-	adc     ptr1
-	jsr     _dfcl_plot
-	ldy     #$08
-	ldx     #$00
-	lda     #$01
-	jsr     addeqysp
-	jmp     L0007
-L0004:	ldy     #$06
-	ldx     #$00
-	lda     #$01
-	jsr     addeqysp
-	jmp     L0002
-L0003:	ldy     #$0E
-	jmp     addysp
-
-.endproc
-
-; ---------------------------------------------------------------
-; void __near__ init_spr (void)
-; ---------------------------------------------------------------
-
-.segment	"CODE"
-
-.proc	_init_spr: near
+.proc	_init_sprites: near
 
 .segment	"CODE"
 
@@ -1556,74 +1470,44 @@ L0003:	ldy     #$0E
 	txa
 	jsr     stax0sp
 L0002:	jsr     ldax0sp
-	cmp     #$20
+	cmp     #$0E
 	txa
 	sbc     #$00
 	bvc     L0006
 	eor     #$80
 L0006:	asl     a
-	lda     #$00
-	tax
-	jcc     L0013
+	jcc     L0010
 	jsr     ldax0sp
 	clc
-	adc     #<(_spr_x)
-	sta     ptr1
-	txa
-	adc     #>(_spr_x)
-	sta     ptr1+1
-	lda     #$00
-	sta     (ptr1)
-	jsr     ldax0sp
-	clc
-	adc     #<(_spr_y)
-	sta     ptr1
-	txa
-	adc     #>(_spr_y)
-	sta     ptr1+1
-	lda     #$C8
-	sta     (ptr1)
-	jsr     ldax0sp
-	clc
-	adc     #<(_spr_pat)
+	adc     #<(_foe_col1)
 	tay
 	txa
-	adc     #>(_spr_pat)
+	adc     #>(_foe_col1)
 	tax
 	tya
 	jsr     pushax
-	ldy     #$03
-	jsr     ldaxysp
-	sta     ptr1
-	txa
+	ldy     #$05
+	jsr     pushwysp
+	ldy     #$00
+	ldx     #$00
+	lda     #$0E
+	jsr     tosmoda0
 	clc
-	adc     #>(_msg)
-	sta     ptr1+1
-	ldy     #<(_msg)
-	lda     (ptr1),y
+	adc     #$02
 	ldy     #$00
 	jsr     staspidx
 	jsr     ldax0sp
 	clc
-	adc     #<(_spr_pat)
-	sta     ptr1
-	txa
-	adc     #>(_spr_pat)
-	sta     ptr1+1
-	lda     #$00
-	sta     (ptr1)
-	jsr     ldax0sp
-	clc
-	adc     #<(_spr_col)
+	adc     #<(_foe_col2)
 	tay
 	txa
-	adc     #>(_spr_col)
+	adc     #>(_foe_col2)
 	tax
 	tya
 	jsr     pushax
 	ldy     #$03
 	jsr     ldaxysp
-	jsr     mulax3
+	jsr     incax3
 	jsr     pushax
 	ldx     #$00
 	lda     #$0E
@@ -1632,54 +1516,216 @@ L0006:	asl     a
 	adc     #$02
 	ldy     #$00
 	jsr     staspidx
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_pat1)
+	tay
+	txa
+	adc     #>(_foe_pat1)
+	tax
+	tya
+	jsr     pushax
+	ldy     #$05
+	jsr     pushwysp
+	ldy     #$00
+	ldx     #$00
+	lda     #$04
+	jsr     tosmoda0
+	ldy     #$10
+	jsr     incaxy
+	ldy     #$00
+	jsr     staspidx
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_pat2)
+	tay
+	txa
+	adc     #>(_foe_pat2)
+	tax
+	tya
+	jsr     pushax
+	ldy     #$05
+	jsr     pushwysp
+	ldy     #$00
+	ldx     #$00
+	lda     #$04
+	jsr     tosmoda0
+	ldy     #$14
+	jsr     incaxy
+	ldy     #$00
+	jsr     staspidx
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_data1)
+	sta     ptr1
+	txa
+	adc     #>(_foe_data1)
+	sta     ptr1+1
+	jsr     ldax0sp
+	jsr     aslax2
+	ldy     #$28
+	jsr     incaxy
+	sta     (ptr1)
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_data2)
+	tay
+	txa
+	adc     #>(_foe_data2)
+	tax
+	tya
+	jsr     pushax
+	ldy     #$03
+	jsr     ldaxysp
+	jsr     mulax5
+	jsr     pushax
+	ldx     #$00
+	lda     #$80
+	jsr     tosmoda0
+	ldy     #$00
+	jsr     staspidx
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_counter)
+	sta     ptr1
+	txa
+	adc     #>(_foe_counter)
+	sta     ptr1+1
+	lda     #$08
+	sta     (ptr1)
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_y)
+	sta     sreg
+	txa
+	adc     #>(_foe_y)
+	sta     sreg+1
+	jsr     ldax0sp
+	sta     ptr1
+	txa
+	clc
+	adc     #>(_foe_data1)
+	sta     ptr1+1
+	ldy     #<(_foe_data1)
+	lda     (ptr1),y
+	sta     (sreg)
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_xl)
+	tay
+	txa
+	adc     #>(_foe_xl)
+	tax
+	tya
+	jsr     pushax
+	ldy     #$05
+	jsr     pushwysp
+	lda     #$1D
+	jsr     tosmula0
+	jsr     pushax
+	ldx     #$04
+	lda     #$00
+	jsr     tosmodax
+	jsr     pushax
+	ldx     #$01
+	lda     #$00
+	jsr     tosmodax
+	ldy     #$00
+	jsr     staspidx
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_xh)
+	tay
+	txa
+	adc     #>(_foe_xh)
+	tax
+	tya
+	jsr     pushax
+	ldy     #$05
+	jsr     pushwysp
+	lda     #$1D
+	jsr     tosmula0
+	jsr     pushax
+	ldx     #$04
+	lda     #$00
+	jsr     tosmodax
+	jsr     pushax
+	ldx     #$01
+	lda     #$00
+	jsr     tosdivax
+	ldy     #$00
+	jsr     staspidx
+	lda     (c_sp)
+	and     #$01
+	beq     L0007
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_vecl)
+	sta     ptr1
+	txa
+	adc     #>(_foe_vecl)
+	sta     ptr1+1
+	lda     #<(_foe_simple)
+	sta     (ptr1)
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_vech)
+	tay
+	txa
+	adc     #>(_foe_vech)
+	tax
+	tya
+	jsr     pushax
+	lda     #>(_foe_simple)
+	bra     L0011
+L0007:	jsr     ldax0sp
+	clc
+	adc     #<(_foe_vecl)
+	sta     ptr1
+	txa
+	adc     #>(_foe_vecl)
+	sta     ptr1+1
+	lda     #<(_foe_static)
+	sta     (ptr1)
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_vech)
+	tay
+	txa
+	adc     #>(_foe_vech)
+	tax
+	tya
+	jsr     pushax
+	lda     #>(_foe_static)
+L0011:	ldy     #$00
+	jsr     staspidx
 	ldx     #$00
 	lda     #$01
 	jsr     addeq0sp
 	jmp     L0002
-L0013:	jsr     stax0sp
-L0007:	jsr     ldax0sp
-	cmp     #$20
-	txa
-	sbc     #$00
-	bvc     L000B
-	eor     #$80
-L000B:	asl     a
-	lda     #$00
-	tax
-	bcc     L0015
-	jsr     ldax0sp
-	clc
-	adc     #<(_spr_pat)
-	sta     ptr1
-	txa
-	adc     #>(_spr_pat)
-	sta     ptr1+1
-	lda     #$00
-	sta     (ptr1)
-	jsr     ldax0sp
+L0010:	stz     _spr_pat
+	lda     #$01
+	sta     _spr_pat+1
 	ina
-	bne     L000C
-	inx
-L000C:	clc
-	adc     #<(_spr_pat)
-	sta     ptr1
-	txa
-	adc     #>(_spr_pat)
-	sta     ptr1+1
+	sta     _spr_pat+2
+	ina
+	sta     _spr_pat+3
+	lda     #$0E
+	sta     _spr_col
+	sta     _spr_col+1
 	lda     #$04
-	sta     (ptr1)
+	sta     _spr_col+2
+	sta     _spr_col+3
 	ldx     #$00
-	lda     #$02
-	jsr     addeq0sp
-	bra     L0007
-L0015:	jsr     stax0sp
-L000D:	jsr     ldax0sp
-	cmp     #$40
+	txa
+	jsr     stax0sp
+L0009:	jsr     ldax0sp
+	cmp     #$C0
 	txa
 	sbc     #$00
-	bvc     L0011
+	bvc     L000D
 	eor     #$80
-L0011:	bpl     L000E
+L000D:	bpl     L000A
 	clc
 	lda     (c_sp)
 	pha
@@ -1702,131 +1748,8 @@ L0011:	bpl     L000E
 	ldx     #$00
 	lda     #$01
 	jsr     addeq0sp
-	bra     L000D
-L000E:	jmp     incsp2
-
-.endproc
-
-; ---------------------------------------------------------------
-; void __near__ move_spr (void)
-; ---------------------------------------------------------------
-
-.segment	"CODE"
-
-.proc	_move_spr: near
-
-.segment	"CODE"
-
-	jsr     decsp4
-	lda     _spr_cycle
-	ldx     _spr_cycle+1
-	ldy     #$02
-	jsr     staxysp
-	ldx     #$00
-	txa
-	jsr     stax0sp
-L0002:	jsr     ldax0sp
-	cmp     #$20
-	txa
-	sbc     #$00
-	bvc     L0006
-	eor     #$80
-L0006:	jpl     L0003
-	jsr     ldax0sp
-	clc
-	adc     #<(_spr_x)
-	sta     sreg
-	txa
-	adc     #>(_spr_x)
-	sta     sreg+1
-	ldy     #$03
-	jsr     ldaxysp
-	sta     ptr1
-	txa
-	clc
-	adc     #>(_x_coord)
-	sta     ptr1+1
-	ldy     #<(_x_coord)
-	lda     (ptr1),y
-	sta     (sreg)
-	jsr     ldax0sp
-	clc
-	adc     #<(_spr_y)
-	sta     sreg
-	txa
-	adc     #>(_spr_y)
-	sta     sreg+1
-	ldy     #$03
-	jsr     ldaxysp
-	sta     ptr1
-	txa
-	clc
-	adc     #>(_y_coord)
-	sta     ptr1+1
-	ldy     #<(_y_coord)
-	lda     (ptr1),y
-	sta     (sreg)
-	jsr     ldax0sp
-	ina
-	bne     L0007
-	inx
-L0007:	clc
-	adc     #<(_spr_x)
-	sta     sreg
-	txa
-	adc     #>(_spr_x)
-	sta     sreg+1
-	ldy     #$03
-	jsr     ldaxysp
-	sta     ptr1
-	txa
-	clc
-	adc     #>(_x_coord)
-	sta     ptr1+1
-	ldy     #<(_x_coord)
-	lda     (ptr1),y
-	sta     (sreg)
-	jsr     ldax0sp
-	ina
-	bne     L0008
-	inx
-L0008:	clc
-	adc     #<(_spr_y)
-	sta     sreg
-	txa
-	adc     #>(_spr_y)
-	sta     sreg+1
-	ldy     #$03
-	jsr     ldaxysp
-	sta     ptr1
-	txa
-	clc
-	adc     #>(_y_coord)
-	sta     ptr1+1
-	ldy     #<(_y_coord)
-	lda     (ptr1),y
-	sta     (sreg)
-	ldx     #$00
-	lda     _sprite_space
-	ldy     #$02
-	jsr     addeqysp
-	ldy     #$03
-	jsr     ldaxysp
-	cmp     #$00
-	txa
-	sbc     #$01
-	bvs     L000A
-	eor     #$80
-L000A:	bpl     L0004
-	ldx     #$00
-	lda     #$FF
-	ldy     #$02
-	jsr     subeqysp
-L0004:	ldx     #$00
-	lda     #$02
-	jsr     addeq0sp
-	jmp     L0002
-L0003:	jmp     incsp4
+	bra     L0009
+L000A:	jmp     incsp2
 
 .endproc
 
@@ -1840,7 +1763,7 @@ L0003:	jmp     incsp4
 
 .segment	"CODE"
 
-	jsr     decsp8
+	jsr     decsp3
 	lda     #$02
 	jsr     _dfcl_mode
 	lda     #$01
@@ -1850,26 +1773,23 @@ L0003:	jmp     incsp4
 	lda     #$01
 	jsr     pusha
 	jsr     _dfcl_colour
-	lda     #$01
-	jsr     pusha
-	lda     #$E2
-	jsr     _dfcl_vdp_setreg
-	stz     _int_v
+	stz     _int_delay
 	stz     _int_c
 	lda     #<(_vb_handler)
 	ldx     #>(_vb_handler)
 	jsr     _dfcl_vbint
 	lda     #$00
-	ldy     #$07
-	sta     (c_sp),y
-	dey
+	ldy     #$02
 	sta     (c_sp),y
 	dey
 	sta     (c_sp),y
 	jsr     _initScrBuf
 	jsr     _initSuperTileDef
 	jsr     _writeTileCombos
-	jsr     _init_spr
+	jsr     _writeNormalTiles
+	jsr     _process_starfield
+	jsr     _init_sprites
+	jsr     _showStats
 	ldx     #$00
 	lda     #$64
 	jsr     _dfcl_wait
@@ -1877,142 +1797,45 @@ L0003:	jmp     incsp4
 	txa
 	stz     _spr_cycle
 	stz     _spr_cycle+1
-	ldy     #$02
-	jsr     staxysp
-	jsr     stax0sp
-	ldy     #$04
-	sta     (c_sp),y
+	stz     _scroll
+	stz     _scroll+1
+	sta     (c_sp)
 	lda     #$10
 	sta     _sprite_space
-L0002:	ldy     #$04
-	clc
-	lda     #$01
-	adc     (c_sp),y
-	sta     (c_sp),y
-	and     #$07
-	cmp     #$07
-	bne     L0024
-	lda     #$FF
-	jsr     _dfcl_stick
-	ldy     #$06
-	sta     (c_sp),y
-	and     #$40
-	beq     L001E
-	ldx     #$00
-	lda     #$01
-	jsr     subeq0sp
-	jsr     ldax0sp
-	cmp     #$F8
-	txa
-	sbc     #$FF
-	bvc     L0009
-	eor     #$80
-L0009:	bpl     L0008
-	ldx     #$FF
-	lda     #$F8
-	jsr     stax0sp
-L0008:	ldy     #$06
-L001E:	lda     (c_sp),y
-	and     #$20
-	beq     L0020
-	ldx     #$00
-	lda     #$01
-	jsr     addeq0sp
-	jsr     ldax0sp
-	cmp     #$09
-	txa
-	sbc     #$00
-	bvs     L000C
-	eor     #$80
-L000C:	bpl     L000B
-	ldx     #$00
+	stz     _int_invoked
+	stz     _int_invoked+1
+	stz     _int_render
+	stz     _int_render+1
+	lda     #$80
+	sta     _p_x
+	lda     #$0A
+	sta     _p_y
+	stz     _p_dx
+	stz     _p_ddx
+	stz     _p_vx
 	lda     #$08
-	jsr     stax0sp
-L000B:	ldy     #$06
-L0020:	lda     (c_sp),y
-	and     #$08
-	beq     L0022
-	inc     _sprite_space
-	lda     _sprite_space
-	cmp     #$11
-	bcc     L0022
-	lda     #$10
-	sta     _sprite_space
-L0022:	lda     (c_sp),y
-	and     #$10
-	beq     L0010
-	dec     _sprite_space
-	lda     _sprite_space
-	cmp     #$04
-	bcs     L0010
-	lda     #$04
-	sta     _sprite_space
-L0010:	ldy     #$04
-L0024:	lda     (c_sp),y
-	and     #$03
-	cmp     #$03
-	bne     L0013
-	jsr     _move_spr
-	inc     _spr_cycle
-	bne     L0014
-	inc     _spr_cycle+1
-L0014:	lda     _spr_cycle
-	cmp     #$00
-	lda     _spr_cycle+1
-	sbc     #$01
-	bvs     L0015
-	eor     #$80
-L0015:	bpl     L0013
-	lda     _spr_cycle
-	sec
-	sbc     #$FF
-	sta     _spr_cycle
-	bcs     L0013
-	dec     _spr_cycle+1
-L0013:	jsr     ldax0sp
-	ldy     #$02
-	jsr     addeqysp
-	ldy     #$03
-	jsr     ldaxysp
-	cpx     #$80
-	bcc     L0017
-	ldy     #$02
-	ldx     #$04
-	lda     #$00
-	jsr     addeqysp
-L0017:	ldy     #$03
-	jsr     ldaxysp
-	cmp     #$00
+	sta     _p_fx
 	txa
-	sbc     #$04
-	bvs     L0019
-	eor     #$80
-L0019:	bpl     L0018
-	ldx     #$04
-	lda     #$00
-	ldy     #$02
-	jsr     subeqysp
-L0018:	ldy     #$03
-	jsr     ldaxysp
+	stz     _p_spr
+L0002:	jsr     _move_player
+	lda     _scroll
+	ldx     _scroll+1
 	jsr     asrax2
 	sta     _mapX
-	ldy     #$02
-	lda     (c_sp),y
+	lda     _scroll
 	and     #$03
 	ldx     #$00
 	sta     _mapS
+	jsr     _move_laser
+	jsr     _move_foes
+L0005:	lda     _int_delay
+	bne     L0005
+	jsr     _spr_to_buf
 	jsr     _renderViewAsm
+	ldx     #$00
 	lda     #$01
-	sta     _int_v
-L001A:	lda     _int_v
-	bne     L001A
-	ldy     #$06
-	lda     (c_sp),y
-	and     #$80
-	jeq     L0002
-	ldx     #$D0
-	lda     #$10
-	rts
+	sta     _int_delay
+	bra     L0002
 
 .endproc
 

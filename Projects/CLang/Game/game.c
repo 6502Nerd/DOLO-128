@@ -4,30 +4,81 @@
 #include "../HB128/hb128.h"
 #include "assets/tiles_meta.h"
 
+#define VBDELAY 1
+#define FOES 14
+
 extern char getch();
 
 extern void vb_handler();
+extern void move_spr();
+extern void move_player();
+extern void move_laser();
+extern void spr_to_buf();
+
 extern unsigned char tileDef[PROJECT_TILE_COUNT*16];
 extern unsigned char superTileDef[PROJECT_SUPERTILE_COUNT][SUPERTILE_GRID_HEIGHT][SUPERTILE_GRID_WIDTH];
 extern unsigned char superTileMap[PROJECT_MAP_HEIGHT][PROJECT_MAP_WIDTH];
 extern unsigned char spritePattern[2*2*8];
+extern unsigned char starfield[PROJECT_MAP_HEIGHT*2][32];
 
 extern void renderViewAsm();
 
 unsigned char scrBuf[32*PROJECT_MAP_HEIGHT*2];
 
-unsigned char tileCombos[PROJECT_TILE_COUNT][PROJECT_TILE_COUNT];
+unsigned char tileCombos[16][16];
+unsigned char tileHit[256];
 
-unsigned char int_v, int_c;
+unsigned char int_delay,int_c;
+unsigned int int_invoked,int_render,int_sprite;
 unsigned char mapX,mapS;
 unsigned char sprite_space;
+
+signed char p_dx,p_dy,p_fx,p_fy,p_ddx,p_ddy,p_vy,p_vx;
+int p_ex,p_ey;
+unsigned char p_x,p_y,p_spr,p_hit;
+int scroll;
 
 int maxCombos,nameIdx;
 
 extern unsigned char x_coord[], y_coord[];
-char msg[] = "abcdefghijklmnopqrstuvwxtz012345";
+
+unsigned char staridxl[128],staridxh[128],staryoff[128];
+unsigned char starpat[128],maxstars;
+
 unsigned char spr_x[32], spr_y[32], spr_pat[32], spr_col[32];
+unsigned char sprb_x[32], sprb_y[32], sprb_pat[32], sprb_col[32];
+char laser_x[8],laser_y[8],laser_dx[8],laser_pat[8],laser_ptrl[8],laser_ptrh[8];
 int spr_cycle;
+
+unsigned char foe_xl[FOES],foe_xh[FOES],foe_y[FOES];
+unsigned char foe_pat1[FOES],foe_pat2[FOES],foe_col1[FOES],foe_col2[FOES];
+unsigned char foe_data1[FOES],foe_data2[FOES],foe_counter[FOES];
+unsigned char foe_state[FOES],foe_vecl[FOES],foe_vech[FOES];
+extern void move_foes();
+extern void foe_simple();
+extern void foe_static();
+
+
+void writeNormalTiles() {
+    int i;
+    unsigned char *src1,*dst,data;
+
+    src1=&tileDef[16*8];                    // Max 16 tiles in supertiles
+    dst=(unsigned char*)(0x0000);           // Start at low 32 chars
+    for(i=(8*16);i<(8*PROJECT_TILE_COUNT);i++) {
+        data=*src1;
+        dfcl_vpoke(dst,data);
+        dfcl_vpoke(dst+0x800,data);
+        dfcl_vpoke(dst+0x1000,data);
+        dst+=0x2000;
+        data=*(src1+PROJECT_TILE_COUNT*8);
+        dfcl_vpoke(dst,data);
+        dfcl_vpoke(dst+0x800,data);
+        dfcl_vpoke(dst+0x1000,data);
+        dst-=0x2000;
+        src1++;dst++;
+    }
+}
 
 void writeTileCombos() {
     int i,j,d,s;
@@ -35,8 +86,8 @@ void writeTileCombos() {
     unsigned int shf,lhs,rhs,col;
     unsigned char *src1, *src2,*dst;
 
-    for(j=0;j<PROJECT_TILE_COUNT;j++) {
-        for(i=0;i<PROJECT_TILE_COUNT;i++) {
+    for(j=0;j<16;j++) {
+        for(i=0;i<16;i++) {
             pat=tileCombos[j][i];
             if(pat) {
                 // Shifting 0 to 3, 2 pix at a time
@@ -83,6 +134,31 @@ void writeTileCombos() {
     }
 }
 
+void calcTileHit(unsigned char tile, unsigned char idx) {
+    unsigned char hit;
+
+    hit=0;
+
+    if((tile>=1)&&(tile<=5)) hit=1;         // Piece of land
+    if((tile>=6)&&(tile<=7)) hit=2;         // Fuel
+    if((tile>=8)&&(tile<=9)) hit=3;         // Bonus
+    if((tile>=10)&&(tile<=11)) hit=4;       // Life pod
+
+    tileHit[idx]=hit;
+}
+
+// Index to tiles and what the hit means
+// lhs takes precendce most of the time
+void processTileHit(unsigned char lhs, unsigned char rhs) {
+    unsigned char idx;
+
+    idx=nameIdx;
+    calcTileHit(lhs, idx++);
+    calcTileHit(lhs, idx++);
+    calcTileHit(rhs, idx++);
+    calcTileHit(rhs, idx++);
+}
+
 // Each tile needs a scrolled version with each version an adjacent tile including self
 // Scrolling is 2 pixels so need 4 versions of each tile including un-scrolled
 // Total tiles needed t = PROJECT_TILE_COUNT*PROJECT_TILE_COUNT*4
@@ -91,6 +167,7 @@ void writeTileCombos() {
 void processTileCombo(unsigned char t1, unsigned char t2) {
     if(tileCombos[t2][t1]==0) {
         tileCombos[t2][t1]=nameIdx;
+        processTileHit(t1, t2);
         maxCombos++;
         nameIdx += 4;
     }
@@ -100,8 +177,11 @@ void initSuperTileDef() {
     int i,j,superIdx1,superIdx2;
     unsigned char tile1, tile2;
 
-    for(j=0; i<PROJECT_TILE_COUNT; j++) {
-        for(i=0; i<PROJECT_TILE_COUNT; i++) {
+    for(i=0;i<256;i++) {
+        tileHit[i]=0;
+    }
+    for(j=0; j<16; j++) {
+        for(i=0; i<16; i++) {
             tileCombos[j][i]=0;
         }
     }
@@ -139,6 +219,22 @@ void initSuperTileDef() {
     }
 }
 
+void process_starfield() {
+    int x,y;
+
+    maxstars=0;
+    for(y=0;y<(PROJECT_MAP_HEIGHT*2);y++) {
+        for(x=0;x<32;x++) {
+            if(starfield[y][x]) {
+                staridxl[maxstars]=(y*32)%256;
+                staridxh[maxstars]=(y*32)/256;
+                staryoff[maxstars]=x;
+                starpat[maxstars]=starfield[y][x]*4;
+                maxstars++;
+            }
+        }
+    }
+}
 
 void initScrBuf(unsigned char j) {
     int i;
@@ -153,6 +249,7 @@ void showStats() {
 
     printf("  Max combos = %d  \r",maxCombos);
     printf("  Name idx = %d  \r", nameIdx);
+    printf("  Star idx = %d  \r", maxstars);
 
     k=0;
     for(j=0;j<8;j++) {
@@ -162,179 +259,103 @@ void showStats() {
     }
 }
 
-// Index into map, s=shift
-void renderView(int idx, int s) {
-    int i,j,t;
-    unsigned char st1,st2,t1,t2;
 
-    t=idx;
-    idx>>=1;
-    for(j=0;j<PROJECT_MAP_HEIGHT;j++) {
-        for(i=0;i<16;i++) {
-            // If idx is odd then right hand side is plotted first
-            if(t&1) {
-                st1=superTileMap[j][i+idx];
-                st2=superTileMap[j][i+1+idx];
-                // Left side is from st1 rhs and st2 lhs
-                // Top
-                t1 = superTileDef[st1][0][1];
-                t2 = superTileDef[st2][0][0];
-                dfcl_plot(i*2,j*2,tileCombos[t2][t1]+s);
-                // Bottom
-                t1 = superTileDef[st1][1][1];
-                t2 = superTileDef[st2][1][0];
-                dfcl_plot(i*2,j*2+1,tileCombos[t2][t1]+s);
-
-                // Right side is from st2 lhs and rhs
-                // Top
-                t1 = superTileDef[st2][0][0];
-                t2 = superTileDef[st2][0][1];
-                dfcl_plot(i*2+1,j*2,tileCombos[t2][t1]+s);
-                // Bottom
-                t1 = superTileDef[st2][1][0];
-                t2 = superTileDef[st2][1][1];
-                dfcl_plot(i*2+1,j*2+1,tileCombos[t2][t1]+s);
-                // Right side is from st1 and st2
-            } else
-            {
-                st1=superTileMap[j][i+idx];
-                st2=superTileMap[j][i+1+idx];
-                // Left side is only from st1
-                // Top
-                t1 = superTileDef[st1][0][0];
-                t2 = superTileDef[st1][0][1];
-                dfcl_plot(i*2,j*2,tileCombos[t2][t1]+s);
-                // Bottom
-                t1 = superTileDef[st1][1][0];
-                t2 = superTileDef[st1][1][1];
-                dfcl_plot(i*2,j*2+1,tileCombos[t2][t1]+s);
-                // Right side is from st1 and st2
-                // Top
-                t1 = superTileDef[st1][0][1];
-                t2 = superTileDef[st2][0][0];
-                dfcl_plot(i*2+1,j*2,tileCombos[t2][t1]+s);
-                // Bottom
-                t1 = superTileDef[st1][1][1];
-                t2 = superTileDef[st2][1][0];
-                dfcl_plot(i*2+1,j*2+1,tileCombos[t2][t1]+s);
-            }
-        }
-    }
-}
-
-
-void init_spr() {
+void init_sprites() {
     int i;
 
-    for(i=0; i<32; i++) {
-        spr_x[i]=0;
-        spr_y[i]=200;
-        spr_pat[i]=msg[i];
-        spr_pat[i]=0;
-        spr_col[i]=(i*3)%14+2;
+    for(i=0; i<FOES;i++) {
+        foe_col1[i]=i%14+2;
+        foe_col2[i]=(i+3)%14+2;
+        foe_pat1[i]=16+(i%4);
+        foe_pat2[i]=20+(i%4);
+        foe_data1[i]=40+i*4;
+        foe_data2[i]=(i*5)%128;
+        foe_counter[i]=8;
+        foe_y[i]=foe_data1[i];
+        foe_xl[i]=((i*29)%1024)%256;
+        foe_xh[i]=((i*29)%1024)/256;
+        if(i&1) {
+            foe_vecl[i]=((unsigned int)&foe_simple)%256;
+            foe_vech[i]=((unsigned int)&foe_simple)/256;
+        } else {
+            foe_vecl[i]=((unsigned int)&foe_static)%256;
+            foe_vech[i]=((unsigned int)&foe_static)/256;
+        }
     }
 
-    for(i=0; i<32; i+=2) {
-        spr_pat[i]=0;
-        spr_pat[i+1]=4;
-    }
+    // Player pattern
+    // 0,1=right colour 1
+    // 2,3=right colour 2
+    spr_pat[0]=0;
+    spr_pat[1]=1;
+    spr_pat[2]=2;
+    spr_pat[3]=3;
+    // 0,1 = colour 1 white
+    // 2,3 = colour 2 blue
+    spr_col[0]=14;
+    spr_col[1]=14;
+    spr_col[2]=4;
+    spr_col[3]=4;
 
-    for(i=0; i<64; i++) {
+    for(i=0; i<(24*8); i++) {
         dfcl_vpoke((unsigned char*)(0x1800+i),spritePattern[i]);
     }
 }
 
-void move_spr() {
-    int j,s;
 
-    j=spr_cycle;
-    for(s=0; s<32; s+=2) {
-        spr_x[s]=x_coord[j];
-        spr_y[s]=y_coord[j];
-        spr_x[s+1]=x_coord[j];
-        spr_y[s+1]=y_coord[j];
-        j+=sprite_space;
-        if(j>255) {
-            j-=255;
-        }
-    }
-}
 int main() {
     char k;
-    unsigned char joy, z, del;
-    int scroll, dx;
+    unsigned char z, del;
 
     dfcl_mode(0x2);
     dfcl_cursor(1);
     dfcl_colour(32,1,1);
-    dfcl_vdp_setreg(1,0b11100010);  // Bit 1=sprites 16x16
 
-    int_v=0;
+    int_delay=0;
     int_c=0;
 
     dfcl_vbint(vb_handler);
 
     k=0;
-    joy=0;
 
    
     z=0;
     initScrBuf(0);
     initSuperTileDef();
     writeTileCombos();
+    writeNormalTiles();
+    process_starfield();
+    init_sprites();
 
-//    showStats();
-    init_spr();
+    showStats();
     dfcl_wait(100);
     spr_cycle=0;
     scroll=0;
-    dx=0;
     del=0;
     sprite_space=16;
+    int_invoked=0;
+    int_render=0;
+    p_x=128;
+    p_y=10;
+    p_dx=0;
+    p_ddx=0;
+    p_vx=0;
+    p_fx=8;
+    p_spr=0;
     do {
-        del++;
-        if((del&7)==7) {
-            joy=dfcl_stick(0xff);
-            if(joy & 64) {
-                dx--;
-                if(dx<-8) dx=-8;
-            }
-            if(joy & 32) {
-                dx++;
-                if(dx>8) dx=8;
-            }
-            if(joy & 8) {
-                sprite_space++;
-                if(sprite_space>16) sprite_space=16;
-            }
-            if(joy & 16) {
-                sprite_space--;
-                if(sprite_space<4) sprite_space=4;
-            }
-
-        }
-
-        if((del&3)==3) {
-            move_spr();
-            if(++spr_cycle>255) {
-                spr_cycle-=255;
-            }
-        }
-
-        scroll+=dx;
-        if(scroll<0) {
-            scroll += 1024;
-        }
-        if(scroll>1023) {
-            scroll -= 1024;
-        }
+        move_player();
         mapX=scroll>>2;
         mapS=scroll&3;
+        move_laser();
+        move_foes();
+        while(int_delay) {}
+        spr_to_buf();
         renderViewAsm();
+        int_delay=VBDELAY;
 
-        int_v=1;
-        while(int_v) {}
-    }while(!(joy&128));
+//        dfcl_gotoxy(0,22);
+//        printf("%5d %5d %5d %5d    ",p_ddx,p_dx,p_vx,p_ex);
+    }while(1);
 
     return 0xd010;
 } 
