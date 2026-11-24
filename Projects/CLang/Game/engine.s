@@ -8,31 +8,37 @@ MAPROWCOUNT=10
 .import _tileDef, _superTileDef, _superTileMap, _tileCombos
 .import _mapX, _mapS, _scrBuf,_laser_name,_scroll
 .import _maxstars,_staridxl,_staridxh,_staryoff,_starpat
+.import _scrBufOffL,_scrBufOffH
 
+.segment "DATA"
+tile_high:
+    .byte $00,$10,$20,$30,$40,$50,$60,$70,$80,$90,$a0,$b0,$c0,$d0,$e0,$f0
+scroll_value:
+    .byte 3,2,1,0
+
+mapS=ptr2
+scrIndex=ptr2+1
 
 .segment "BSS"
 mapRowCount:
     .res 1
-scrIndex:
-    .res 1
 mapIndex:
+    .res 1
+mapX:
     .res 1
 
 .segment  "CODE"
 
 ; Given two tile indexes in tmp3,4
 ; Get right pattern tile with scroll value in _mapS
-getPatternName:
-    lda tmp4                    ; Get second tile
-    asl a                       ; x16
-    asl a
-    asl a
-    asl a
+.macro getPatternName
+    tay                         ; From A, get second tile as high nibble
+    lda tile_high,y
     ora tmp3                    ; Or in first tile
     tay                         ; We have the index
     lda _tileCombos,y           ; Get the base pattern
-    adc _mapS                   ; Add scroll offset
-    rts
+    ora mapS                    ; Or in the scroll offset 0..3
+.endmacro
 
 ; Do even map offset supertile decoding
 doEvenOffset:
@@ -43,7 +49,7 @@ doEvenOffset:
     ; Get adjacent tile from same supertile into tmp4
     lda _superTileDef+1,y
     sta tmp4
-    jsr getPatternName          ; Get pattern for top-left
+    getPatternName          ; Get pattern for top-left
     ldy scrIndex
     sta (ptr3),y
 
@@ -54,7 +60,7 @@ doEvenOffset:
     ldy tmp2
     lda _superTileDef,y
     sta tmp4
-    jsr getPatternName          ; Get pattern for top-left
+    getPatternName          ; Get pattern for top-left
     ldy scrIndex
     iny
     sta (ptr3),y
@@ -66,7 +72,7 @@ doEvenOffset:
     ; Get adjacent tile from same supertile into tmp4
     lda _superTileDef+3,y
     sta tmp4
-    jsr getPatternName          ; Get pattern for top-left
+    getPatternName          ; Get pattern for top-left
     ldy scrIndex
     sta (ptr4),y
 
@@ -77,7 +83,7 @@ doEvenOffset:
     ldy tmp2
     lda _superTileDef+2,y
     sta tmp4
-    jsr getPatternName          ; Get pattern for top-left
+    getPatternName          ; Get pattern for top-left
     ldy scrIndex
     iny
     sta (ptr4),y
@@ -93,7 +99,7 @@ doOddOffset:
     ldy tmp2
     lda _superTileDef,y
     sta tmp4
-    jsr getPatternName          ; Get pattern for top-left
+    getPatternName          ; Get pattern for top-left
     ldy scrIndex
     sta (ptr3),y
 
@@ -104,7 +110,7 @@ doOddOffset:
     ldy tmp2
     lda _superTileDef+1,y
     sta tmp4
-    jsr getPatternName          ; Get pattern for top-left
+    getPatternName          ; Get pattern for top-left
     ldy scrIndex
     iny
     sta (ptr3),y
@@ -117,7 +123,7 @@ doOddOffset:
     ldy tmp2
     lda _superTileDef+2,y
     sta tmp4
-    jsr getPatternName          ; Get pattern for top-left
+    getPatternName          ; Get pattern for top-left
     ldy scrIndex
     sta (ptr4),y
 
@@ -128,7 +134,7 @@ doOddOffset:
     ldy tmp2
     lda _superTileDef+3,y
     sta tmp4
-    jsr getPatternName          ; Get pattern for top-left
+    getPatternName          ; Get pattern for top-left
     ldy scrIndex
     iny
     sta (ptr4),y
@@ -141,6 +147,8 @@ doOddorEvenOffset:
 
 ; Render view using _mapX (0..255), _mapS (0..3)
 _renderViewAsm:
+    lda _mapS           ; Cache in zero page
+    sta mapS
     ; Supertile map start adddress
     lda #<_superTileMap
     sta ptr1
@@ -154,7 +162,9 @@ _renderViewAsm:
     sta doOddorEvenOffset+2
 
     ; _mapX needs to normalised to supertile index div 2
-    lsr _mapX
+    lda _mapX
+    lsr a
+    sta mapX
     ; If C then it's an odd offset
     bcc skipOddOffset
     lda #<doOddOffset
@@ -175,7 +185,7 @@ skipOddOffset:
     sta mapRowCount
 renderYLoop:
     stz scrIndex                ; Index into screen
-    lda _mapX                   ; Start at X offset into map
+    lda mapX                   ; Start at X offset into map
     sta mapIndex
     ldx #0
 renderXLoop:
@@ -187,15 +197,13 @@ renderXLoop:
     asl a
     sta tmp1
     iny                         ; Point to next supertile
-    tya                         ; But only lower 7 bits
-    and #$7f
-    tay
+    bpl skip_reset              ; But only lower 7 bits
+    ldy #0
+skip_reset:
     lda (ptr1),y
     asl a
     asl a
     sta tmp2
-    ; Use the current index
-    ldy mapIndex
     ; process the tiles for one supertile row (2 screen rows)
     jsr doOddorEvenOffset
 
@@ -217,28 +225,30 @@ renderXLoop:
     lda ptr1
     adc #128
     sta ptr1
-    lda ptr1+1
-    adc #0
-    sta ptr1+1
-
+    bcc skip_maph
+    inc ptr1+1
+skip_maph:
     ; Increment scrBuf pointers by 64 (2 screen rows)
     clc
     lda ptr3
     adc #64
     sta ptr3
-    lda ptr3+1
-    adc #0
-    sta ptr3+1
+    bcc skip_scrbuf1
+    inc ptr3+1
+skip_scrbuf1:
+    clc
     lda ptr4
     adc #64
     sta ptr4
-    lda ptr4+1
-    adc #0
-    sta ptr4+1
+    bcc skip_scrbuf2
+    inc ptr4+1
+skip_scrbuf2:
 
     dec mapRowCount             ; Count down map tiles to go
     bne renderYLoop             ; Still more rows to do
 
+    ; Set up for plotting stars
+    
     lda _scroll+1               ; Map 1024->128 positions (divide by 8)
     sta tmp3
     lda _scroll
@@ -251,10 +261,8 @@ renderXLoop:
 
     ; Calc scroll value 0..3
     and #3
-    sta tmp2
-    lda #3
-    sec
-    sbc tmp2
+    tax
+    lda scroll_value,x
     sta tmp2
 
     pla
@@ -264,28 +272,22 @@ renderXLoop:
 
     ldx _maxstars               ; Put some stars on
 starLoop:
-    clc
     lda _staridxl-1,x
-    adc #<_scrBuf
-    sta tmp4
+    sta ptr1
     lda _staridxh-1,x
-    adc #>_scrBuf
-    sta tmp4+1
+    sta ptr1+1
     lda _staryoff-1,x
     sec
     sbc tmp3
-    bcc nowrap
-    adc #31
-nowrap:
     and #31
     tay
-    lda (tmp4),y
+    lda (ptr1),y
     cmp #132
     bcs nextStar
     lda _starpat-1,x
     clc
     adc tmp2
-    sta (tmp4),y
+    sta (ptr1),y
 nextStar:
     dex
     bne starLoop

@@ -2,7 +2,7 @@
 ; Project Basename: tiles
 
 ; --- Tileset Data ---
-PROJECT_TILE_COUNT:   .equ 32
+PROJECT_TILE_COUNT:   .equ 48
 
 ; --- Supertile Data ---
 PROJECT_SUPERTILE_COUNT: .equ 11

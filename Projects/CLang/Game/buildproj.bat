@@ -20,8 +20,10 @@ CALL %HBSDK%\bin\ca65 --cpu 65sc02 player.s
 CALL %HBSDK%\bin\ca65 --cpu 65sc02 laser.s
 CALL %HBSDK%\bin\ca65 --cpu 65sc02 sprite.s
 CALL %HBSDK%\bin\ca65 --cpu 65sc02 foe.s
+CALL %HBSDK%\bin\ca65 --cpu 65sc02 collision.s
+CALL %HBSDK%\bin\ca65 --cpu 65sc02 sound.s
 
-CALL %HBSDK%\bin\ld65 -C ..\HB128\dolo128.cfg -vm -m game.map -o game.bin game.o player.o foe.o laser.o sprite.o data.o vbint.o engine.o ..\HB128\sbc.lib
+CALL %HBSDK%\bin\ld65 -C ..\HB128\dolo128.cfg -vm -m game.map -o game.bin sound.o game.o player.o foe.o collision.o laser.o sprite.o data.o vbint.o engine.o ..\HB128\sbc.lib
 
 CALL imdisk -a -o rem -t file -m F: -f ..\..\..\emu\software\filesystem\sdcard64m.img -v 1 > nul
 mkdir f:\demos\game

@@ -12,9 +12,11 @@
 	.macpack	longbranch
 	.forceimport	__STARTUP__
 	.import		_printf
-	.import		_dfcl_wait
 	.import		_dfcl_vbint
+	.import		_dfcl_vdp_setreg
 	.import		_dfcl_vpoke
+	.import		_dfcl_sndconfig
+	.import		_dfcl_sndchannel
 	.import		_dfcl_mode
 	.import		_dfcl_cursor
 	.import		_dfcl_colour
@@ -23,17 +25,23 @@
 	.import		_move_player
 	.import		_move_laser
 	.import		_spr_to_buf
+	.import		_do_sound
+	.export		_zap_snd
+	.export		_foe_snd
 	.import		_tileDef
 	.import		_superTileDef
 	.import		_superTileMap
 	.import		_spritePattern
 	.import		_starfield
+	.export		_superTileMapL
+	.export		_superTileMapH
 	.import		_renderViewAsm
 	.export		_scrBuf
+	.export		_scrBufOffL
+	.export		_scrBufOffH
 	.export		_tileCombos
 	.export		_tileHit
 	.export		_int_delay
-	.export		_int_c
 	.export		_int_invoked
 	.export		_int_render
 	.export		_int_sprite
@@ -87,12 +95,14 @@
 	.export		_foe_data1
 	.export		_foe_data2
 	.export		_foe_counter
+	.export		_foe_dx
+	.export		_foe_dy
 	.export		_foe_state
 	.export		_foe_vecl
 	.export		_foe_vech
+	.import		_init_foe_type
 	.import		_move_foes
-	.import		_foe_simple
-	.import		_foe_static
+	.import		_check_collision
 	.export		_writeNormalTiles
 	.export		_writeTileCombos
 	.export		_calcTileHit
@@ -119,15 +129,25 @@ S0002:
 
 .segment	"BSS"
 
+_zap_snd:
+	.res	1,$00
+_foe_snd:
+	.res	1,$00
+_superTileMapL:
+	.res	10,$00
+_superTileMapH:
+	.res	10,$00
 _scrBuf:
-	.res	640,$00
+	.res	768,$00
+_scrBufOffL:
+	.res	24,$00
+_scrBufOffH:
+	.res	24,$00
 _tileCombos:
 	.res	256,$00
 _tileHit:
 	.res	256,$00
 _int_delay:
-	.res	1,$00
-_int_c:
 	.res	1,$00
 _int_invoked:
 	.res	2,$00
@@ -235,6 +255,10 @@ _foe_data2:
 	.res	14,$00
 _foe_counter:
 	.res	14,$00
+_foe_dx:
+	.res	14,$00
+_foe_dy:
+	.res	14,$00
 _foe_state:
 	.res	14,$00
 _foe_vecl:
@@ -266,7 +290,7 @@ _foe_vech:
 	jsr     staxysp
 L0002:	ldy     #$06
 	jsr     ldaxysp
-	cmp     #$00
+	cmp     #$80
 	txa
 	sbc     #$01
 	bvc     L0006
@@ -311,9 +335,10 @@ L0006:	jpl     L0003
 	ldx     #$20
 	lda     #$00
 	jsr     addeqysp
+	lda     #$80
 	clc
 	ldy     #$03
-	lda     (c_sp),y
+	adc     (c_sp),y
 	sta     ptr1
 	lda     #$01
 	iny
@@ -556,9 +581,10 @@ L0016:	jpl     L000F
 	ldx     #$20
 	lda     #$00
 	jsr     addeq0sp
+	lda     #$80
 	clc
 	ldy     #$04
-	lda     (c_sp),y
+	adc     (c_sp),y
 	sta     ptr1
 	lda     #$01
 	iny
@@ -577,9 +603,10 @@ L0016:	jpl     L000F
 	lda     (c_sp),y
 	and     #$0F
 	jsr     pusha0
+	lda     #$80
 	clc
 	ldy     #$04
-	lda     (c_sp),y
+	adc     (c_sp),y
 	sta     ptr1
 	lda     #$01
 	iny
@@ -1044,6 +1071,40 @@ L0018:	ldy     #$07
 	bvc     L001C
 	eor     #$80
 L001C:	jpl     L0019
+	ldy     #$07
+	jsr     ldaxysp
+	clc
+	adc     #<(_superTileMapL)
+	sta     ptr1
+	txa
+	adc     #>(_superTileMapL)
+	sta     ptr1+1
+	ldy     #$07
+	jsr     ldaxysp
+	jsr     aslax7
+	clc
+	adc     #<(_superTileMap)
+	tay
+	txa
+	adc     #>(_superTileMap)
+	tya
+	sta     (ptr1)
+	ldy     #$07
+	jsr     ldaxysp
+	clc
+	adc     #<(_superTileMapH)
+	sta     ptr1
+	txa
+	adc     #>(_superTileMapH)
+	sta     ptr1+1
+	ldy     #$07
+	jsr     ldaxysp
+	jsr     aslax7
+	clc
+	adc     #<(_superTileMap)
+	txa
+	adc     #>(_superTileMap)
+	sta     (ptr1)
 	ldx     #$00
 	txa
 	ldy     #$08
@@ -1250,34 +1311,40 @@ L000B:	jpl     L0004
 	adc     _maxstars
 	bcc     L000D
 	inx
-L000D:	jsr     pushax
-	ldy     #$03
-	jsr     ldaxysp
+L000D:	sta     sreg
+	stx     sreg+1
+	jsr     ldax0sp
 	jsr     aslax4
 	jsr     aslax1
-	jsr     pushax
-	ldx     #$01
-	lda     #$00
-	jsr     tosmodax
-	ldy     #$00
-	jsr     staspidx
+	sta     ptr1
+	stx     ptr1+1
+	lda     #<(_scrBuf)
+	clc
+	adc     ptr1
+	pha
+	lda     #>(_scrBuf)
+	adc     ptr1+1
+	pla
+	sta     (sreg)
 	lda     #<(_staridxh)
 	ldx     #>(_staridxh)
 	clc
 	adc     _maxstars
 	bcc     L000E
 	inx
-L000E:	jsr     pushax
-	ldy     #$03
-	jsr     ldaxysp
+L000E:	sta     sreg
+	stx     sreg+1
+	jsr     ldax0sp
 	jsr     aslax4
 	jsr     aslax1
-	jsr     pushax
-	ldx     #$01
-	lda     #$00
-	jsr     tosdivax
-	ldy     #$00
-	jsr     staspidx
+	sta     ptr1
+	stx     ptr1+1
+	lda     #<(_scrBuf)
+	clc
+	adc     ptr1
+	lda     #>(_scrBuf)
+	adc     ptr1+1
+	sta     (sreg)
 	ldy     #$02
 	lda     (c_sp),y
 	ldy     _maxstars
@@ -1288,9 +1355,9 @@ L000E:	jsr     pushax
 	adc     _maxstars
 	bcc     L0010
 	inx
-L0010:	jsr     pushax
-	ldy     #$03
-	jsr     ldaxysp
+L0010:	sta     sreg
+	stx     sreg+1
+	jsr     ldax0sp
 	jsr     aslax4
 	jsr     aslax1
 	clc
@@ -1299,7 +1366,7 @@ L0010:	jsr     pushax
 	txa
 	adc     #>(_starfield)
 	sta     ptr1+1
-	ldy     #$05
+	ldy     #$03
 	jsr     ldaxysp
 	clc
 	adc     ptr1
@@ -1307,11 +1374,10 @@ L0010:	jsr     pushax
 	txa
 	adc     ptr1+1
 	sta     ptr1+1
-	ldy     #$00
 	lda     (ptr1)
 	asl     a
 	asl     a
-	jsr     staspidx
+	sta     (sreg)
 	inc     _maxstars
 L0009:	ldy     #$02
 	ldx     #$00
@@ -1327,7 +1393,7 @@ L0003:	jmp     incsp4
 .endproc
 
 ; ---------------------------------------------------------------
-; void __near__ initScrBuf (unsigned char j)
+; void __near__ initScrBuf (unsigned char k)
 ; ---------------------------------------------------------------
 
 .segment	"CODE"
@@ -1337,32 +1403,87 @@ L0003:	jmp     incsp4
 .segment	"CODE"
 
 	jsr     pusha
-	jsr     decsp2
+	jsr     decsp4
 	ldx     #$00
 	txa
 	jsr     stax0sp
 L0002:	jsr     ldax0sp
-	cmp     #$00
+	cmp     #$18
 	txa
-	sbc     #$03
+	sbc     #$00
 	bvc     L0006
 	eor     #$80
-L0006:	bpl     L0003
+L0006:	jpl     L0003
 	jsr     ldax0sp
+	clc
+	adc     #<(_scrBufOffL)
+	sta     ptr1
+	txa
+	adc     #>(_scrBufOffL)
+	sta     ptr1+1
+	jsr     ldax0sp
+	jsr     aslax4
+	jsr     aslax1
+	clc
+	adc     #<(_scrBuf)
+	tay
+	txa
+	adc     #>(_scrBuf)
+	tya
+	sta     (ptr1)
+	jsr     ldax0sp
+	clc
+	adc     #<(_scrBufOffH)
+	sta     ptr1
+	txa
+	adc     #>(_scrBufOffH)
+	sta     ptr1+1
+	jsr     ldax0sp
+	jsr     aslax4
+	jsr     aslax1
+	clc
+	adc     #<(_scrBuf)
+	txa
+	adc     #>(_scrBuf)
+	sta     (ptr1)
+	ldx     #$00
+	txa
+	ldy     #$02
+	jsr     staxysp
+L0007:	ldy     #$03
+	jsr     ldaxysp
+	cmp     #$20
+	txa
+	sbc     #$00
+	bvc     L000B
+	eor     #$80
+L000B:	bpl     L0004
+	ldy     #$05
+	jsr     pushwysp
+	ldy     #$05
+	jsr     pushwysp
+	lda     #$18
+	jsr     tosmula0
+	jsr     tosaddax
 	clc
 	adc     #<(_scrBuf)
 	sta     ptr1
 	txa
 	adc     #>(_scrBuf)
 	sta     ptr1+1
-	ldy     #$02
+	ldy     #$04
 	lda     (c_sp),y
 	sta     (ptr1)
+	ldy     #$02
 	ldx     #$00
 	lda     #$01
+	jsr     addeqysp
+	bra     L0007
+L0004:	ldx     #$00
+	lda     #$01
 	jsr     addeq0sp
-	bra     L0002
-L0003:	jmp     incsp3
+	jmp     L0002
+L0003:	jmp     incsp5
 
 .endproc
 
@@ -1477,6 +1598,17 @@ L0002:	jsr     ldax0sp
 	eor     #$80
 L0006:	asl     a
 	jcc     L0010
+	lda     (c_sp)
+	jsr     pusha
+	ldy     #$04
+	jsr     pushwysp
+	ldy     #$00
+	ldx     #$00
+	lda     #$04
+	jsr     tosmoda0
+	clc
+	adc     #$02
+	jsr     _init_foe_type
 	jsr     ldax0sp
 	clc
 	adc     #<(_foe_col1)
@@ -1533,6 +1665,15 @@ L0006:	asl     a
 	jsr     tosmoda0
 	ldy     #$10
 	jsr     incaxy
+	jsr     pushax
+	ldy     #$07
+	jsr     pushwysp
+	ldy     #$00
+	ldx     #$00
+	lda     #$02
+	jsr     tosmoda0
+	jsr     aslax3
+	jsr     tosaddax
 	ldy     #$00
 	jsr     staspidx
 	jsr     ldax0sp
@@ -1552,8 +1693,38 @@ L0006:	asl     a
 	jsr     tosmoda0
 	ldy     #$14
 	jsr     incaxy
+	jsr     pushax
+	ldy     #$07
+	jsr     pushwysp
+	ldy     #$00
+	ldx     #$00
+	lda     #$02
+	jsr     tosmoda0
+	jsr     aslax3
+	jsr     tosaddax
 	ldy     #$00
 	jsr     staspidx
+	lda     (c_sp)
+	and     #$01
+	beq     L0007
+	jsr     ldax0sp
+	clc
+	adc     #<(_foe_dx)
+	sta     ptr1
+	txa
+	adc     #>(_foe_dx)
+	sta     ptr1+1
+	lda     #$01
+	bra     L0011
+L0007:	jsr     ldax0sp
+	clc
+	adc     #<(_foe_dx)
+	sta     ptr1
+	txa
+	adc     #>(_foe_dx)
+	sta     ptr1+1
+	lda     #$FF
+L0011:	sta     (ptr1)
 	jsr     ldax0sp
 	clc
 	adc     #<(_foe_data1)
@@ -1655,50 +1826,6 @@ L0006:	asl     a
 	jsr     tosdivax
 	ldy     #$00
 	jsr     staspidx
-	lda     (c_sp)
-	and     #$01
-	beq     L0007
-	jsr     ldax0sp
-	clc
-	adc     #<(_foe_vecl)
-	sta     ptr1
-	txa
-	adc     #>(_foe_vecl)
-	sta     ptr1+1
-	lda     #<(_foe_simple)
-	sta     (ptr1)
-	jsr     ldax0sp
-	clc
-	adc     #<(_foe_vech)
-	tay
-	txa
-	adc     #>(_foe_vech)
-	tax
-	tya
-	jsr     pushax
-	lda     #>(_foe_simple)
-	bra     L0011
-L0007:	jsr     ldax0sp
-	clc
-	adc     #<(_foe_vecl)
-	sta     ptr1
-	txa
-	adc     #>(_foe_vecl)
-	sta     ptr1+1
-	lda     #<(_foe_static)
-	sta     (ptr1)
-	jsr     ldax0sp
-	clc
-	adc     #<(_foe_vech)
-	tay
-	txa
-	adc     #>(_foe_vech)
-	tax
-	tya
-	jsr     pushax
-	lda     #>(_foe_static)
-L0011:	ldy     #$00
-	jsr     staspidx
 	ldx     #$00
 	lda     #$01
 	jsr     addeq0sp
@@ -1720,9 +1847,9 @@ L0010:	stz     _spr_pat
 	txa
 	jsr     stax0sp
 L0009:	jsr     ldax0sp
-	cmp     #$C0
+	cmp     #$40
 	txa
-	sbc     #$00
+	sbc     #$01
 	bvc     L000D
 	eor     #$80
 L000D:	bpl     L000A
@@ -1763,7 +1890,6 @@ L000A:	jmp     incsp2
 
 .segment	"CODE"
 
-	jsr     decsp3
 	lda     #$02
 	jsr     _dfcl_mode
 	lda     #$01
@@ -1774,38 +1900,41 @@ L000A:	jmp     incsp2
 	jsr     pusha
 	jsr     _dfcl_colour
 	stz     _int_delay
-	stz     _int_c
 	lda     #<(_vb_handler)
 	ldx     #>(_vb_handler)
 	jsr     _dfcl_vbint
 	lda     #$00
-	ldy     #$02
-	sta     (c_sp),y
-	dey
-	sta     (c_sp),y
 	jsr     _initScrBuf
 	jsr     _initSuperTileDef
 	jsr     _writeTileCombos
 	jsr     _writeNormalTiles
 	jsr     _process_starfield
 	jsr     _init_sprites
-	jsr     _showStats
+	lda     #$00
+	jsr     pusha
+	lda     #$15
+	jsr     pusha
+	lda     #$10
+	jsr     _dfcl_plot
+	lda     #$01
+	jsr     pusha
+	lda     #$15
+	jsr     pusha
+	lda     #$10
+	jsr     _dfcl_plot
+	lda     #$02
+	jsr     pusha
+	lda     #$15
+	jsr     pusha
+	lda     #$10
+	jsr     _dfcl_plot
 	ldx     #$00
-	lda     #$64
-	jsr     _dfcl_wait
-	ldx     #$00
-	txa
 	stz     _spr_cycle
 	stz     _spr_cycle+1
 	stz     _scroll
 	stz     _scroll+1
-	sta     (c_sp)
 	lda     #$10
 	sta     _sprite_space
-	stz     _int_invoked
-	stz     _int_invoked+1
-	stz     _int_render
-	stz     _int_render+1
 	lda     #$80
 	sta     _p_x
 	lda     #$0A
@@ -1815,9 +1944,29 @@ L000A:	jmp     incsp2
 	stz     _p_vx
 	lda     #$08
 	sta     _p_fx
-	txa
 	stz     _p_spr
-L0002:	jsr     _move_player
+	stz     _int_invoked
+	stz     _int_invoked+1
+	stz     _int_render
+	stz     _int_render+1
+	lda     #$03
+	jsr     pusha
+	txa
+	jsr     pusha
+	jsr     pusha
+	jsr     _dfcl_sndconfig
+	lda     #$01
+	jsr     pusha
+	dea
+	jsr     pusha
+	tax
+	jsr     _dfcl_sndchannel
+	stz     _zap_snd
+L0008:	lda     #$07
+	jsr     pusha
+	lda     #$22
+	jsr     _dfcl_vdp_setreg
+	jsr     _move_player
 	lda     _scroll
 	ldx     _scroll+1
 	jsr     asrax2
@@ -1828,14 +1977,27 @@ L0002:	jsr     _move_player
 	sta     _mapS
 	jsr     _move_laser
 	jsr     _move_foes
+	jsr     _check_collision
+	jsr     _do_sound
+	lda     #$07
+	jsr     pusha
+	lda     #$44
+	jsr     _dfcl_vdp_setreg
 L0005:	lda     _int_delay
 	bne     L0005
-	jsr     _spr_to_buf
+	lda     #$07
+	jsr     pusha
+	lda     #$AA
+	jsr     _dfcl_vdp_setreg
 	jsr     _renderViewAsm
-	ldx     #$00
+	lda     #$07
+	jsr     pusha
+	lda     #$DD
+	jsr     _dfcl_vdp_setreg
+	jsr     _spr_to_buf
 	lda     #$01
 	sta     _int_delay
-	bra     L0002
+	bra     L0008
 
 .endproc
 

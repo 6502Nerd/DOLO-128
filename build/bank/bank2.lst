@@ -2177,7 +2177,7 @@ c6e8 :                       msg_hello_world
                              	;* all it does is echo an assembler line to
                              	;* including the build date in the message.
                              	include "kernel\build.s"
-c6e8 : 4275696c64203a..       db "Build : 19-09-2026\r"
+c6e8 : 4275696c64203a..       db "Build : 04-11-2026\r"
 c6fb : 3132384b204272..       db "128K Breadboard Computer\r"
 c714 : 42792040363530..       db "By @6502Nerd\r"
 c721 : 436f7079726967..       db "Copyright (c) 2025\r",0

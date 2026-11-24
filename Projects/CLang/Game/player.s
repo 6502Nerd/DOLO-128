@@ -1,6 +1,7 @@
 .include "../hb128/hb128.inc"
 
 PLAYER_XSPEED=2
+PLAYER_YMAX=16
 
 .export _move_player
 
@@ -9,12 +10,16 @@ PLAYER_XSPEED=2
 
 .import _spr_x,_spr_y,_spr_pat,_x_coord,_y_coord
 .import _sprite_space,_scroll
-.import _scrn_off_l,_scrn_off_h
+.import _scrBufOffL,_scrBufOffH
 .import _tileHit
+
+.import _superTileMap,_superTileMapL,_superTileMapH
+.import _mapX, _mapS, _scrBuf,_scroll
 
 .import _p_x,_p_y,_p_dx,_p_ddx,_p_ddy,_p_dy,_p_fx,_p_fy,_p_vx,_p_vy,_p_ex,_p_ey,_p_spr,_p_hit
 
-.import _laser_x,_laser_y,_laser_dx,_laser_pat,_laser_ptrl,_laser_ptrh,_scrBuf
+.import _laser_x,_laser_y,_laser_dx,_laser_pat,_laser_ptrl,_laser_ptrh
+.import _zap_snd
 
 .import _dfcl_stick
 
@@ -32,11 +37,13 @@ do_player_gravity:
     lda _p_dy
     inc a
     bmi nody_adjust
-    cmp #8
+    cmp #PLAYER_YMAX+1
     bcc nody_adjust
-    lda #7
+    lda #PLAYER_YMAX
 nody_adjust:
     sta _p_dy
+    cmp #128
+    ror a
     cmp #128
     ror a
     cmp #128
@@ -44,9 +51,14 @@ nody_adjust:
     clc
     adc _p_y
     cmp #(18*8+1)
-    bcs skip_py_adjust
+    bcs hit_top
     sta _p_y
-skip_py_adjust:
+    rts
+hit_top:
+    lda _p_dy
+    eor #$ff
+    inc a
+    sta _p_dy
     rts   
 
 do_player_physics:
@@ -121,47 +133,67 @@ ex_update_vx:
     sta _p_vx
 update_scroll:
     ; Now check where are we in the screen buffer
+    ; Y = which char to left or right we're checking for hit
     ldy #16             ; Player is in the middle facing right
     lda _p_ex+1         ; Unless facing left!
     bpl skip_left_facing
     ldy #16
 skip_left_facing:
     lda _p_y            ; Get char row from y pos
-    clc                 ; Add 3 pixels for rounding
-    adc #3
+    clc
+    adc #8              ; Add 8 pixels for rounding to next row
     lsr a
     lsr a
     lsr a
     tax
-    clc
-    lda #<_scrBuf
-    adc _scrn_off_l,x
+    sta tmp1            ; Need this for later if collision
+    lda _scrBufOffL,x
     sta ptr1
-    lda #>_scrBuf
-    adc _scrn_off_h,x
+    lda _scrBufOffH,x
     sta ptr1+1
+    ; Ok get char on the screen and check if hit
     lda (ptr1),y
     tax
     lda _tileHit,x
-    asl a
-    asl a
-    asl a
-    asl a
-    sta _p_hit
-check_next_row:
-    tya                     ; Check next row
-    clc
-    adc #32
-    tay
-    lda (ptr1),y
-    tax
-    lda _tileHit,x
-    ora _p_hit
+;    ora _p_hit
     sta _p_hit
     beq no_collision
 collision:
     stz _p_dx           ; No residual x velocity
     stz _p_dy
+    cmp #2              ; If A<2 then no collision action
+    bcc no_collision
+    lda tmp1            ; Y position as saved earlier need div 2 for tile pos
+    lsr a
+    tax
+    ; Get supertile row into ptr1
+    lda _superTileMapL,x
+    sta ptr1
+    lda _superTileMapH,x
+    sta ptr1+1
+    ; Add index into supertile map for current screen
+    ; MapX is 0..255 need to div 2
+    ; Player x pos div 2 add scroll value then div 8 to get tile pos
+    lda _p_x
+    clc         ; Add 4 to round to next column
+    adc #4
+    lsr a
+    clc
+    adc _mapS
+    lsr a
+    lsr a
+    clc
+    adc _mapX
+    ror a
+    pha
+    lda _mapX
+    lsr a
+    pla
+;    adc #0
+    and #127
+    tay
+    lda #0
+    sta (ptr1),y    ; Clear it    
     rts
 no_collision:
     ; Add to scroll value, clamp to 0-1023
@@ -295,9 +327,9 @@ move_up:
     lda _p_dy
     sbc #2
     bpl skip_dy_lower
-    cmp #(256-8)
+    cmp #(256-PLAYER_YMAX-1)
     bcs skip_dy_lower
-    lda #(256-7)
+    lda #(256-PLAYER_YMAX)
 skip_dy_lower:
     sta _p_dy
     rts
@@ -305,11 +337,11 @@ skip_dy_lower:
 move_down:
     clc
     lda _p_dy
-    adc #2
+    inc a
     bmi skip_dy_upper
-    cmp #8
+    cmp #PLAYER_YMAX+1
     bcc skip_dy_upper
-    lda #7
+    lda #PLAYER_YMAX
 skip_dy_upper:
     sta _p_dy
     rts
@@ -324,6 +356,9 @@ find_laser_slot:
     bne find_laser_slot
     rts
 found_laser_slot:
+    ; Sound starts from high freq
+    lda #10
+    sta _zap_snd
     ; Store x coord as byte offset
     lda _p_x
     lsr a
@@ -331,21 +366,19 @@ found_laser_slot:
     lsr a
     sta _laser_x,x
 
-    ; Store y coord as byte offset
+    ; Store y coord as 8 down from top of player
     ; also calculate pointer
     lda _p_y
-    lsr a
-    lsr a
-    lsr a
-    inc a
-    sta _laser_y,x
-    tay
     clc
-    lda _scrn_off_l,y
-    adc #<_scrBuf
+    adc #8
+    sta _laser_y,x
+    lsr a
+    lsr a
+    lsr a
+    tay
+    lda _scrBufOffL,y
     sta _laser_ptrl,x
-    lda _scrn_off_h,y
-    adc #>_scrBuf
+    lda _scrBufOffH,y
     sta _laser_ptrh,x
 
     ; Store which pattern to use - 0,1,2,3

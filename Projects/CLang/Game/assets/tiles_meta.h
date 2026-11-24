@@ -6,7 +6,7 @@
 #define TILES_META_H
 
 // --- Defines for Metadata ---
-#define PROJECT_TILE_COUNT      32
+#define PROJECT_TILE_COUNT      48
 #define PROJECT_SUPERTILE_COUNT 11
 #define SUPERTILE_GRID_WIDTH    2
 #define SUPERTILE_GRID_HEIGHT   2

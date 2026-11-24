@@ -15,20 +15,28 @@ extern void move_player();
 extern void move_laser();
 extern void spr_to_buf();
 
+extern void do_sound();
+unsigned char zap_snd,foe_snd;
+
 extern unsigned char tileDef[PROJECT_TILE_COUNT*16];
 extern unsigned char superTileDef[PROJECT_SUPERTILE_COUNT][SUPERTILE_GRID_HEIGHT][SUPERTILE_GRID_WIDTH];
 extern unsigned char superTileMap[PROJECT_MAP_HEIGHT][PROJECT_MAP_WIDTH];
 extern unsigned char spritePattern[2*2*8];
 extern unsigned char starfield[PROJECT_MAP_HEIGHT*2][32];
+unsigned char superTileMapL[PROJECT_MAP_HEIGHT];
+unsigned char superTileMapH[PROJECT_MAP_HEIGHT];
+
 
 extern void renderViewAsm();
 
-unsigned char scrBuf[32*PROJECT_MAP_HEIGHT*2];
+unsigned char scrBuf[32*24];
+unsigned char scrBufOffL[24];
+unsigned char scrBufOffH[24];
 
 unsigned char tileCombos[16][16];
 unsigned char tileHit[256];
 
-unsigned char int_delay,int_c;
+unsigned char int_delay;
 unsigned int int_invoked,int_render,int_sprite;
 unsigned char mapX,mapS;
 unsigned char sprite_space;
@@ -53,10 +61,11 @@ int spr_cycle;
 unsigned char foe_xl[FOES],foe_xh[FOES],foe_y[FOES];
 unsigned char foe_pat1[FOES],foe_pat2[FOES],foe_col1[FOES],foe_col2[FOES];
 unsigned char foe_data1[FOES],foe_data2[FOES],foe_counter[FOES];
+unsigned char foe_dx[FOES],foe_dy[FOES];
 unsigned char foe_state[FOES],foe_vecl[FOES],foe_vech[FOES];
+extern void init_foe_type(unsigned char index, unsigned char type);
 extern void move_foes();
-extern void foe_simple();
-extern void foe_static();
+extern void check_collision();
 
 
 void writeNormalTiles() {
@@ -204,6 +213,8 @@ void initSuperTileDef() {
     // We need to consider two adjacent tiles
     // Then tiles overlapping between the right of one and the left of the other
     for (j=0; j<PROJECT_MAP_HEIGHT; j++) {
+        superTileMapL[j]=(unsigned int)superTileMap[j]%256;
+        superTileMapH[j]=(unsigned int)superTileMap[j]/256;
         for(i=0; i<PROJECT_MAP_WIDTH-1;i++) {
             superIdx1=superTileMap[j][i];
             superIdx2=superTileMap[j][i+1];
@@ -226,8 +237,8 @@ void process_starfield() {
     for(y=0;y<(PROJECT_MAP_HEIGHT*2);y++) {
         for(x=0;x<32;x++) {
             if(starfield[y][x]) {
-                staridxl[maxstars]=(y*32)%256;
-                staridxh[maxstars]=(y*32)/256;
+                staridxl[maxstars]=(y*32+(unsigned int)scrBuf)%256;
+                staridxh[maxstars]=(y*32+(unsigned int)scrBuf)/256;
                 staryoff[maxstars]=x;
                 starpat[maxstars]=starfield[y][x]*4;
                 maxstars++;
@@ -236,11 +247,15 @@ void process_starfield() {
     }
 }
 
-void initScrBuf(unsigned char j) {
-    int i;
+void initScrBuf(unsigned char k) {
+    int i,j;
 
-    for (i=0; i<32*24; i++) {
-        scrBuf[i]=j;
+    for(j=0;j<24;j++) {
+        scrBufOffL[j]= (unsigned int)(&scrBuf[j*32])%256;
+        scrBufOffH[j]= (unsigned int)(&scrBuf[j*32])/256;
+        for (i=0; i<32; i++) {
+            scrBuf[i+j*24]=k;
+        }
     }
 }
 
@@ -264,23 +279,21 @@ void init_sprites() {
     int i;
 
     for(i=0; i<FOES;i++) {
+        init_foe_type(i,(i%4)+2);
         foe_col1[i]=i%14+2;
         foe_col2[i]=(i+3)%14+2;
-        foe_pat1[i]=16+(i%4);
-        foe_pat2[i]=20+(i%4);
+        foe_pat1[i]=16+(i%4)+8*(i%2);
+        foe_pat2[i]=20+(i%4)+8*(i%2);
+        if(i&1)
+            foe_dx[i]=1;
+        else
+            foe_dx[i]=(256-1);
         foe_data1[i]=40+i*4;
         foe_data2[i]=(i*5)%128;
         foe_counter[i]=8;
         foe_y[i]=foe_data1[i];
         foe_xl[i]=((i*29)%1024)%256;
         foe_xh[i]=((i*29)%1024)/256;
-        if(i&1) {
-            foe_vecl[i]=((unsigned int)&foe_simple)%256;
-            foe_vech[i]=((unsigned int)&foe_simple)/256;
-        } else {
-            foe_vecl[i]=((unsigned int)&foe_static)%256;
-            foe_vech[i]=((unsigned int)&foe_static)/256;
-        }
     }
 
     // Player pattern
@@ -297,29 +310,21 @@ void init_sprites() {
     spr_col[2]=4;
     spr_col[3]=4;
 
-    for(i=0; i<(24*8); i++) {
+    for(i=0; i<(5*64); i++) {
         dfcl_vpoke((unsigned char*)(0x1800+i),spritePattern[i]);
     }
 }
 
 
 int main() {
-    char k;
-    unsigned char z, del;
-
     dfcl_mode(0x2);
     dfcl_cursor(1);
     dfcl_colour(32,1,1);
 
     int_delay=0;
-    int_c=0;
 
     dfcl_vbint(vb_handler);
 
-    k=0;
-
-   
-    z=0;
     initScrBuf(0);
     initSuperTileDef();
     writeTileCombos();
@@ -327,14 +332,15 @@ int main() {
     process_starfield();
     init_sprites();
 
-    showStats();
-    dfcl_wait(100);
+    dfcl_plot(0,21,16);
+    dfcl_plot(1,21,16);
+    dfcl_plot(2,21,16);
+
+//    showStats();
+//    dfcl_wait(100);
     spr_cycle=0;
     scroll=0;
-    del=0;
     sprite_space=16;
-    int_invoked=0;
-    int_render=0;
     p_x=128;
     p_y=10;
     p_dx=0;
@@ -342,15 +348,26 @@ int main() {
     p_vx=0;
     p_fx=8;
     p_spr=0;
+    int_invoked=0;
+    int_render=0;
+    dfcl_sndconfig(3,0,0,0);
+    dfcl_sndchannel(1,0,0);
+    zap_snd=0;
     do {
+        dfcl_vdp_setreg(7,0x22);
         move_player();
         mapX=scroll>>2;
         mapS=scroll&3;
         move_laser();
         move_foes();
+        check_collision();
+        do_sound();
+        dfcl_vdp_setreg(7,0x44);
         while(int_delay) {}
-        spr_to_buf();
+        dfcl_vdp_setreg(7,0xaa);
         renderViewAsm();
+        dfcl_vdp_setreg(7,0xdd);
+        spr_to_buf();
         int_delay=VBDELAY;
 
 //        dfcl_gotoxy(0,22);

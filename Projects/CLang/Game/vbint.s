@@ -5,11 +5,11 @@ MAX_SPRITES=32
 .export _vb_handler
 
 .import _tileDef, _superTileDef, _superTileMap
-.import _int_c, _int_delay, _scrBuf
+.import _int_delay, _scrBuf
 .import _int_invoked, _int_render,_int_sprite
-.import _sprb_x, _sprb_y, _sprb_pat, _sprb_col,_p_dy,_p_y,_p_hit
+.import _sprb_x, _sprb_y, _sprb_pat, _sprb_col,_p_dy,_p_y,playerHit,_p_hit
 
-.import _p_dx,_p_x
+.import _p_dx,_p_x,_p_x,_mapS,_mapX
 
 .segment  "CODE"
 
@@ -58,59 +58,34 @@ do_sprites:
     
     vdp_wr_addr $3b00           ; Mode 2 sprite attribute table
 
-    inc _int_c                  ; Alternate starting point
-    lda _int_c
-    and #3
-    cmp #1
-    beq spr_reverse
-    cmp #2
-    beq spr_middle
-    cmp #3
-    beq spr_middle_rev
-    ldx #0
-spr_forward_loop:
+    ldx #0                      ; 4 sprites of player goes first
     jsr vbint_write_sprite
     inx
-    cpx #MAX_SPRITES
-    bne spr_forward_loop
-    rts
-
-spr_reverse:
-    ldx #(MAX_SPRITES-1)
-spr_reverse_loop:
-    jsr vbint_write_sprite
-    dex
-    bpl spr_reverse_loop
-    rts
-
-spr_middle:
-    ldx #0
-spr_middle_loop1:
     jsr vbint_write_sprite
     inx
-    cpx #(MAX_SPRITES/2)
-    bne spr_middle_loop1
-    ldx #MAX_SPRITES-1
-spr_middle_loop2:
-    jsr vbint_write_sprite
-    dex
-    cpx #(MAX_SPRITES/2)
-    bne spr_middle_loop2
-    rts
-
-spr_middle_rev:
-    ldx #MAX_SPRITES-1
-spr_middle_rev_loop1:
-    jsr vbint_write_sprite
-    dex
-    cpx #(MAX_SPRITES/2)
-    bne spr_middle_rev_loop1
-    ldx #0
-spr_middle_rev_loop2:
     jsr vbint_write_sprite
     inx
-    cpx #(MAX_SPRITES/2)
-    bne spr_middle_rev_loop2
+    jsr vbint_write_sprite
+    inx
+    lda _int_invoked            ; Use this to determine rotation point
+    asl a
+    and #31
+    bne skip_wrap1
+    lda #4
+skip_wrap1:
+    tax
+    ldy #MAX_SPRITES-4          ; Player sprites already drawn
+spr_rot_loop:
+    jsr vbint_write_sprite
+    inx
+    txa
+    and #31
+    bne skip_wrap2
+    lda #4
+skip_wrap2:
+    tax
+    dey
+    bne spr_rot_loop
     rts
 
 _vb_handler:
@@ -168,12 +143,12 @@ vdp_byte3:
     bne vdp_byte3
 
     ; Write out diag counters
-    lda _int_invoked+1
+    lda _mapX
     jsr AtoX
     jsr vbint_write_delay
     txa
     jsr vbint_write_delay
-    lda _int_invoked
+    lda _mapS
     jsr AtoX
     jsr vbint_write_delay
     txa
@@ -182,12 +157,12 @@ vdp_byte3:
     lda #$20
     jsr vbint_write_delay
     jsr vbint_write_delay
-    lda _int_render+1
+    lda _p_x
     jsr AtoX
     jsr vbint_write_delay
     txa
     jsr vbint_write_delay
-    lda _int_render
+    lda _p_y
     jsr AtoX
     jsr vbint_write_delay
     txa
